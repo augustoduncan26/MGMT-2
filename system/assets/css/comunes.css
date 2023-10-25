@@ -1,0 +1,157 @@
+a:link{
+	color:#4682B4; 
+	text-decoration:none;
+}
+
+a:visited{
+	color:#4682B4; 
+	text-decoration:none;
+}
+
+a:hover{
+	color:red; 
+	text-decoration:underline;
+}
+
+a:active{
+	color:#4682B4; 
+	text-decoration:none;
+}
+
+/*LINK DE CERRAR SESION*/
+#linkCerrarSesion{
+	background-image: url(../ad_images/lock.gif);
+	background-position: left;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+/* TITULO EN LAS PÁGINAS*/
+.COMMON_titulo{
+	font-size: 80%;
+	border-bottom: 1px solid;
+	background:#FFF;
+	/*margin-bottom: 10px;*/
+	width:100%;
+	margin-bottom: 20px;
+	letter-spacing: 10px;
+	text-transform: uppercase;
+	padding-bottom: 4px;
+	margin-top: 2px;
+	text-align: center;
+}
+
+/* CAPA REMARCADA CON PUNTOS */
+div.zonaRemarcada{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	width: 90%;
+	
+	border: 2px dashed #4682B4;
+}
+
+
+/* CUADROS DE OPCIONES */
+ul.navlist{
+	width: 100%;
+	padding: 1px;
+	margin-left: 0;
+	font: 12px verdana, sans-serif;
+	color: gray; 
+}
+
+	ul.navlist li{
+		list-style: none;
+		margin: 0px;
+		border-left: 1px #004080 solid;
+		border-bottom: 1px gray dotted;
+		text-align: left;
+	}
+	
+	ul.navlist li.navtitulo{
+		display: block;
+		padding: 0.7em 0.5em 0.7em 0.9em;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: bolder;
+		color:#FFF;
+	}
+
+		ul.navlist li a{
+			display: block;
+			padding: 0.7em 0.5em 0.7em 0.9em;
+			text-decoration: none;
+		}
+
+		ul.navlist li a:link { 
+			/*color: #000;*/
+			color:#FFF;
+		}
+		
+		ul.navlist li a:visited { 
+			color: #006; 
+			color:#FFF;
+		}
+
+		ul.navlist li a:hover{
+			font-weight:bold;
+			color: #000080;
+			background: #b1d5ed;
+			border-left: 3px #004080 solid;
+		}
+		
+/* MENU IZQUIERDO */
+
+div #menuPrincipal{
+	width: 100%;
+}
+
+div #div_top
+{
+	background-color:#006;position: fixed;top:0; width:100%;
+}
+
+div #menuPrincipal ul{
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+	padding: 1px;
+	margin-left: 0;
+	font: 12px verdana, sans-serif;
+	color: gray; 
+	border-top: 1px solid #def1fb;
+	border-bottom: 1px solid #def1fb;
+}
+
+	div #menuPrincipal ul li{
+		list-style: none;
+		display:inline;
+		text-align:center;
+		
+	}
+
+		div #menuPrincipal ul li a{
+			display: inline-block;
+			padding: 0.7em 0.5em 0.7em 0.9em;
+			text-decoration: none;
+		}
+
+		div #menuPrincipal ul li a:link { 
+			color: #000;
+		}
+		
+		div #menuPrincipal ul li a:visited { 
+			color: #006; 
+		}
+
+		div #menuPrincipal ul li a:hover{
+			font-weight:bold;
+			color: #000080;
+			background: #FFE4B5;
+		}
+
+
+.ETitulos
+{ margin-top:5px;background:#FFF; margin-left:10px; }
+

@@ -1,0 +1,1 @@
+Su pago ha sido aceptado

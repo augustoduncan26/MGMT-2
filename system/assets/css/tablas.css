@@ -1,0 +1,313 @@
+table.TablaDato{
+	width:100%;
+}	
+
+table.TablaDato tr.filaTitulo{
+	width:auto;	
+	background-color:#91c9f6;
+	height:15px;
+	overflow:hidden;
+}
+
+table.TablaDato tr.filaTitulo th{
+	font-weight:bolder;	
+	text-align:center;
+	vertical-align:middle;	
+	border-right: 1px solid #FFFFFF;
+}
+
+table.TablaDato tr{
+	width:inherit;
+	height:50px;
+	background-color:#f6fbfe;
+	position:static;
+	overflow:visible;
+}
+
+table.TablaDato tr.filaNormalEven{
+	width:inherit;
+	height:50px;
+	background-color:#f6fbfe;
+	overflow:visible;
+}
+
+table.TablaDato tr.filaNormalOdd{
+	width:inherit;
+	height:50px;	
+	overflow:visible;
+	background-color:#def1fb;
+}
+
+table.TablaDato tr.filaNormalHover{
+	width:inherit;
+	height:50px;
+	background-color:#FFE4B5;	
+	position:static;
+	overflow:visible;
+}
+
+
+table.TablaReporte{
+    background-color:#CCCCCC;
+    border-bottom-color:#999999;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:5px;
+	border-right:1.0px solid #778a99;
+	border-top:1px solid #778a99;
+	border-bottom:1.0px solid #778a99; 
+	border-left:1.0px solid #778a99;
+	font-size:11px;
+}
+
+.bordeTodalaTabla {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #010066;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color:#010066;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #010066;
+	background-position: left top;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color:#010066;
+}
+
+.bordeTodalaTabla_2 {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #BAD80A;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color:#BAD80A;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #BAD80A;
+	background-position: left top;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color:#BAD80A;
+}
+
+.bordeTodalaTabla_3 {
+	font-size:12px;
+	font-family:Verdana, Geneva, sans-serif;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color:#CCC;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color:#CCC;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color:#CCC;
+	background-position: left top;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color:#CCC;
+	 -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+	border-radius: 6px;
+	 -webkit-box-shadow: 0 1px 1px #ccc; 
+    -moz-box-shadow: 0 1px 1px #ccc;
+	box-shadow: 0 1px 1px #ccc;
+}
+/* 
+ *	Estilo par los los botones
+ *	- Estilo sencillo / Estilo_botones
+ *  - Estilo 3D EstiloBoto3D / color naranja
+ *  - Estilo boton para cerrar con fondo imagen X
+ */
+ .Estilo_Botones{
+	 background-color:#E3EEE6;
+	 border: solid 1px #000000;
+	 background-image:url(../ad_images/fondo_boton.png); 
+	 background-position:center;
+	 cursor:pointer;
+	 width:100px;
+}
+
+.Estilo_Botones_X{
+	background-image:url(b_drop.png);
+	background-repeat:no-repeat; 
+	background-position:right; 
+	background-color:#F90	
+}
+
+.Estilo_Boton3D{
+	background-repeat:no-repeat; 
+	background-position:right; 
+	background-color:#F90;
+	cursor:pointer;
+}
+
+.fondoAbajoGris
+{
+	background-image:url(../ad_images/abajo_gris.jpg);
+	font-size:14px;
+}
+
+.sub_title
+{
+	font-size:14px; color:#333
+}
+/*COLOR DE FONDO DE LOS TITULOS*/
+.comun_titulos
+{ 
+	/*background-color:#D2DFF7;*/
+	background-color:#666;
+	background-image:url(../ad_images/barra_verde.png);
+	font-size:14px;
+	color:#300;
+}
+.comun_titulos_2
+{ 
+	/*background-color:#D2DFF7;*/
+	background-color:#666;
+	background-image:url(../ad_images/menu-barra.gif);
+	font-size:14px;
+	color:#300;
+}
+.comun_titulos_3
+{
+	background-image:url(../ad_images/linea_fondo_brown.png);
+	font-size:14px;
+	color:#300;
+}
+.comun_titulos_4
+{
+	background-image:url(../ad_images/fondo02.jpg);
+	background-repeat:repeat-x ;
+	font-size:14px;
+	color:#300;
+}
+
+.Comunes_CuadroText{
+	border: solid 1px #000000;
+	}
+
+.lineaabajo {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #ccc;
+}
+
+.alrededor {
+	/* ABAJO */
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000066;
+	/* ARRIBA */
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000066;
+}
+
+.alrededor_rojo {
+	/* ABAJO */
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #F00;
+	/* ARRIBA */
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #F00;
+	
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color:#F00;
+	
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color:#F00;
+}
+.cuadro2 {
+	border: 2px solid #EBEBEB;
+}
+.linea_deresa {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	/*border-top-style: solid;*/
+	border-right-style: solid;
+	/*border-top-color: #000066;*/
+	border-right-color: #000066;
+	/*border-bottom-color: #000066;*/
+	border-left-color: #000066;
+}
+
+.line_deresa_gris {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #ccc;
+	border-left-color: #ccc;
+}
+
+.izesa {
+	border-top-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-top-color: #000066;
+	border-right-color: #000066;
+	border-bottom-color: #000066;
+	border-left-color: #000066;
+}
+
+.deresa {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-top-color: #000066;
+	border-right-color: #000066;
+	border-bottom-color: #000066;
+	border-left-color: #000066;
+}
+.linea_izq {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #000066;
+}
+.linea_deresa2 {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #BAD80A;
+}
+.linea_arriba {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000066;
+}
+.linea_abajo {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #010066;
+}
+.linea_abajo_gris {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color:#CCC;
+}
+.linea_abajo_verd {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #BAD80A;
+}
+.top_tabla {
+	background-image:  url(../ad_images/fondo02.jpg);/*url(graf/topjj.jpg);*/
+	background-repeat: repeat-x;
+	background-position:top;
+}
+.tamanyo_letras_dmc{
+	
+	font-size:-1;
+	font-family:Verdana, Geneva, sans-serif;
+}
+.ETitulos
+{ margin-top:5px;background:#FFF; margin-left:10px; }
+
+

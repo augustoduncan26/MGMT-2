@@ -1,0 +1,10 @@
+div.dataTables_wrapper div.dataTables_filter { text-align: left !important; }
+table.dataTable.nowrap th, table.dataTable.nowrap td { white-space: normal !important;} 
+div#list-table-events_length.dataTables_length { width: 50% !important;}
+.dataTables_filter { float: left !important; }
+.dataTables_length { float: right !important; }
+.dataTables_length label {  margin: 0px 20px 0px 0px !important; width: 90% !important; display: flex; justify-content: flex-end;}
+.dataTables_length select { margin-left: 10px; margin-right: 10px}
+div.dataTables_wrapper div.dataTables_filter input { width: 300px !important; }
+td.details-control { text-align: center; cursor: pointer;}
+tr.shown td.details-control { text-align: center; background-color: white !important;}

@@ -1,0 +1,73 @@
+html {
+	background: url("../brushedsilver-medium.jpg") repeat top center fixed;
+}
+body {
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align:center;
+	margin: 30px 0px 40px;
+}
+a, a:link, a:visited, a:hover, a:active {
+	outline: none;
+}
+a:link, a:visited, a:active {
+	color: #0000ff;
+}
+a:hover {
+	color: #ff0000;
+}
+p {
+	font-size: 22px;
+}
+img {
+	border: none;
+}
+video {
+	border: 1px solid #ffffff;
+}
+textarea {
+	border:1px solid #000000;
+	background-color:#e0e0e0;
+	padding:5px;
+	resize: none;
+	tab-size:4;
+	-moz-tab-size:4;
+}
+.homelink {
+	width: 700px;
+	margin: 0px auto -20px;
+	text-align: left;
+}
+#player {
+	display: table;
+	margin: 0 auto 10px;
+}
+#playerresp {
+	text-align: center;
+	width: auto;
+}
+#playernocont {
+	display: none;
+}
+#players {
+	width: 984px;
+	margin: 0 auto;
+}
+#players:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+#myElement, #myElement2, #myElement3, #myElement4 {
+	border: 1px solid #ffffff;
+	outline: none;
+}
+.pcont {
+	float: left;
+	margin: 5px;
+}
+#narrative {
+	text-align: left;
+	width: 600px;
+	margin: 0px auto 25px;
+}
+

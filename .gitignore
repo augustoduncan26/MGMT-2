@@ -1,0 +1,10 @@
+# Ignore everything
+/*
+
+# But not these files...
+!.gitignore
+!system
+!assets
+!vendors
+!index.php
+!.htaccess

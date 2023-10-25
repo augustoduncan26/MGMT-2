@@ -1,0 +1,48 @@
+/*
+	ESTILO PARA CALENDARIO DE MESES
+*/
+
+#calendario{
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border-right: 2px solid #999999;
+	border-bottom: 2px solid #999999;
+}
+
+/*#mesCalendario para configurar aspectos de la caja que muestra el mes y el año*/
+#mesCalendario{
+	font-weight: bold;
+	text-align: center;
+	color: #CC6633;
+	background-color: #E4CAAF;
+
+
+}
+#calendario th, #calendario td{
+	border: 1px solid #999999;
+	padding: 3px;
+	font-size: 110%;
+}
+#calendario th{
+	color: #CC6633;
+}
+/*.Hoy para configurar aspectos de la caja que muestra el día actual*/
+.Hoy{
+	color: #ffffff;
+	background-color: #666666;
+	font-weight: normal;
+}
+#miCalendario{
+	text-align: center;
+}
+/*.selectores para configurar aspectos de los campos para el mes y el año*/
+.selectores{
+	font-family: verdana;
+	font-size: 10px;
+	color: #990000;
+	margin-bottom: 2px;
+}

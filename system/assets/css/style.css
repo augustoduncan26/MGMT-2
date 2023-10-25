@@ -1,0 +1,65 @@
+/*
+*
+*/
+/* .view-container { font-size: 11px; } */
+.view-container , .panel-heading { font-size: 12px; }
+.venta {
+    width: 940px;
+    border: 1px solid #D4D4D4;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    -moz-box-shadow: 3px 3px 4px #ccc;
+    -webkit-box-shadow: 3px 3px 4px #ccc;
+    box-shadow: 3px 3px 4px #ccc;
+}
+
+.textfield_oculto { border:none !important; background:none; }
+.textfield_oculto:active { border:none; background:none; }
+.textfield_oculto:focus { border:none; background:none; }
+
+.textfield_oculto_negrita { 
+    border:none !important; 
+    background:none !important; 
+    font-weight:bold;  
+    width:70px;
+}
+.textfield_oculto_negrita:active { border:none; background:none;  font-weight:bold; width:70px;}
+.textfield_oculto_negrita:focus { border:none; background:none;  font-weight:bold; width:70px;}
+
+.select_total_registros {
+    background-clip: padding-box !important;
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+    border: 1px solid #CCCCCC !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #555555 !important;
+    display: block !important;
+    height: 30px !important;
+    line-height: 29px !important;
+    margin-top: 3px !important;
+    overflow: hidden !important;
+    padding: 0 12px 0 8px !important;
+    position: relative !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+/* Anchos para campos, columnas, celdas, etc...*/
+.width-cincuenta { width: 50px; }
+.width-ochenta { width: 80px; }
+.width-cien { width: 100px !important; }
+.width-docientos {  width: 200px !important; }
+.width-trecientos{ width: 300px !important; }
+/* End diferent style */
+
+#botones_pallets { width: 60%; }
+
+/** COLORS */
+.color-red { color: red;}

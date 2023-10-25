@@ -1,0 +1,143 @@
+div.mensaje{
+	width:50%;
+	
+	min-height:50px;
+	height:auto !important;	
+	height:50px;
+	
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+	margin-top:30px;
+	
+	padding-left:60px;
+	padding-top:5px;
+	padding-bottom:5px;	
+	border: 1px solid #999999;
+	
+	background-color:#FFFF99;
+	background-image:url(../image/css_mensaje_informacion.png);
+	background-position:left;
+	background-repeat:no-repeat;	
+	
+	color:#000000;
+	font-weight:bolder;
+	font-size: 100%;
+	overflow:visible;
+}
+
+div.mensajeValidacion{
+	width:50%;
+	
+	min-height:50px;
+	height:auto !important;	
+	height:50px;
+	
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+	margin-top:30px;
+	
+	padding-left:60px;
+	padding-top:5px;
+	padding-bottom:5px;	
+	border: 0;
+	border-top: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	
+	background-color:#E0FFFF;
+	background-image:url(../image/css_mensaje_informacion.png);
+	background-position:left;
+	background-repeat:no-repeat;	
+	
+	color:#000000;
+	font-weight:bolder;
+	/*font-family: Arial;*/
+	font-size: 100%;
+	overflow:visible;
+}
+
+div.mensajeError{
+	width:50%;
+	
+	min-height:50px;
+	height:auto !important;	
+	height:50px;
+	
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+	margin-top:30px;
+	
+	padding-left:60px;
+	padding-top:5px;
+	padding-bottom:5px;	
+	border: 0;
+	border-top: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	
+	background-color:#FF0000;
+	background-image:url(../image/css_mensaje_informacion.png);
+	background-position:left;
+	background-repeat:no-repeat;	
+	
+	color:#FFFFFF;
+	font-weight:bolder;
+	/*font-family: Arial;*/
+	font-size: 125%;
+	overflow:visible;
+}
+
+div.importante{
+	width : 70%;
+	border: 2px dashed #808080; 
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 50px;
+	padding-right: 2px;
+	background-image: url('../image/css_mensaje_informacion.png');
+	background-repeat: no-repeat;
+	background-position:left;
+}
+
+div.loadingWindow{
+	z-index:10000; 
+	position:absolute; 
+	width:100%; 
+	top:0; 
+	left:0; 
+	background-image: url(../image/overlay.png) ; 
+	background-color: transparent;
+	background-image: url(../image/blank.gif) !important; 
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='image/overlay.png', sizingMethod='scale') ;
+}
+
+div.loadingWindow div {
+	position: fixed;
+	width:20%;
+	height:50px;
+	margin-left:40%;
+	margin-right:40%;
+	margin-top:25%;
+	padding-top:10px;
+	
+	background-color:#FFFFFF;
+	border:1px double black;
+	text-decoration: blink;
+}
+
+div.loadingWindow div img{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+div.MsgRespuesta
+{
+	background-color:#D5FFFF; 
+	border: solid 2px red;
+	font-size:13px; 
+	text-align:center; 
+	font-family:Verdana, Geneva, sans-serif;color:blue;
+	}

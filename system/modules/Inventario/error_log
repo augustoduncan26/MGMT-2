@@ -1,0 +1,146 @@
+[09-Nov-2017 19:31:23 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/database.php on line 18
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[09-Nov-2017 23:39:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[09-Nov-2017 23:40:29 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 05:22:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 05:23:13 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 05:23:13 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 05:23:13 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 05:23:13 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 05:23:13 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/sql.php on line 186
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 19:17:55 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 19:18:08 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 19:18:20 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 19:18:38 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[11-Nov-2017 19:19:17 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:19:17 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:19:17 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:19:17 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[11-Nov-2017 19:19:18 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[27-Nov-2017 21:17:55 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[27-Nov-2017 21:17:55 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[27-Nov-2017 21:17:55 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[27-Nov-2017 21:17:55 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[27-Nov-2017 21:17:56 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_HOST already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 5
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_USER already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 6
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_PASS already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 7
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Constant DB_NAME already defined in /home/duncanyz/public_html/hhs/system/modules/Inventario/includes/config.php on line 8
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: image in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 29
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: name in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 30
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: id in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 34
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 58
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 62
+[29-Nov-2017 01:51:16 Etc/GMT] PHP Notice:  Undefined index: user_level in /home/duncanyz/public_html/hhs/system/modules/Inventario/layouts/header.php on line 66

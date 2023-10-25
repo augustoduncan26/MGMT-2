@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document 
+	
+	Referentes a campos de textos
+*/
+
+.quitar_bordes
+{
+	border-color:#FFF; 
+	border:none;
+}
+
+
