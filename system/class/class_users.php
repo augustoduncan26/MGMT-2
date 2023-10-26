@@ -62,7 +62,7 @@ class Users {
 	function __construct ( $tablaUsuarios = false) {
 
 		$this->tablaUsuarios 		= "ad_users";
-		$this->tablaUsuarios_otros 	= "usuario_otros";
+		//$this->tablaUsuarios_otros 	= "usuario_otros";
 		$this->tablaEmpresa 		= "ad_admin_empresas";
 		$this->tablaUserEmpresa		= "ad_admin_empresas_users";
 		$this->campoLlave 			= "id_usuario";

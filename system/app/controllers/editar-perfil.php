@@ -1,10 +1,18 @@
 <?php
-	
-	include_once ('../../framework.php');
 
-	$id_user 		=	$_SESSION['id_user'];
-	$id_empresa 	=	$_SESSION['id_empresa'];
+	include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+	
 	$P_Tabla 		=	"usuarios";
+
+	$ObjMante   = new Mantenimientos();
+	$ObjEjec    = new ejecutorSQL();
+	$id_user    = $_SESSION["id_user"];
+	$id_empresa = $_SESSION['id_empresa'];
+	$email 		= $_SESSION['email'];
+	$username 	= $_SESSION['username'];
+
+	$ObjMante   = new Mantenimientos();
+	$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_empresa'].' and usuario="'.$email.'"','extract');
 
 
 // Add

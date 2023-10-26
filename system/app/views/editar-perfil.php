@@ -1,141 +1,3 @@
-
-<script>
-
-
-// Add Category
-function addUser () {
-
-  var nombre      =   $('#nombre').val();
-  var email       =   $('#email').val();
-  var telefono    =   $('#telefono').val();
-  var direccion   =   $('#direccion').val();
-  var estado      =   $('#estado').val();
-
-  if (nombre.length < 1  || email.length < 1) {
-    $('#mssg-label').html('Los campos con (*) son necesarios.');
-    $('#nombre').css({'border-color': '#007AFF'});
-    $('#email').css({'border-color': '#007AFF'});
-    return false;
-  }
-    //$('#cargando_add').show()
-    ajax2   = nuevoAjax();
-    ajax2.open("GET", "app/controllers/editar-perfil.php?add=1&nombre="+nombre+"&direccion="+direccion+"&telefono="+telefono+"&email="+email+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
-    ajax2.onreadystatechange=function() {
-
-    if (ajax2.readyState==4) {
-      $('#mssg-label').html(ajax2.responseText);
-      //$('#cargando_add').hide();
-      listCategory();
-      $('#nombre').val('');
-    }
-  }
-
-  ajax2.send(null);
-
-}
-
-// Listar Usuarios de la Cia
-function listarUsuarios () {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-
-  var contenido_editor = $('#list-of-users')[0];
-  //$('#cargando_list').show()
-  ajax1   = nuevoAjax();
-  ajax1.open("GET", "ajax/ajax_list_company_users.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax1.onreadystatechange=function() {
-
-    if (ajax1.readyState==4) {
-      contenido_editor.innerHTML = ajax1.responseText;
-      //$('#cargando_list').hide()
-      $('#list-table-users').dataTable({aaSorting : [[0, 'desc']]});
-    }
-  }
-
-  ajax1.send(null);
-}
-
-
-
-function verifyActualPasswd () {
-
-    var id_user     = '<?php echo $_SESSION["id_user"]?>';
-    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-    var actualpasswd   = $('input[name=actual-password]').val();
-    var newpasswd   = $('input[name=new-password]').val();
-
-    var contenido_editor = $('#lbl-mssg')[0];
-
-    ajax1   = nuevoAjax();
-    ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&actualpasswd="+actualpasswd+"&que=verifyP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
-    ajax1.onreadystatechange=function() {
-
-      if (ajax1.readyState==4) {
-        contenido_editor.innerHTML = ajax1.responseText;
-      }
-    }
-
-    ajax1.send(null);
-}
-
- function ChangePasswd () {
-    
-    var id_user     = '<?php echo $_SESSION["id_user"]?>';
-    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-    var newpasswd   = $('input[name=new-password]').val();
-
-    var contenido_editor = $('#lbl-mssg')[0];
-
-    ajax1   = nuevoAjax();
-    ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&que=changeP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
-    ajax1.onreadystatechange=function() {
-
-      if (ajax1.readyState==4) {
-        contenido_editor.innerHTML = ajax1.responseText;
-      }
-    }
-
-    ajax1.send(null);
- }
-
-
-$( document ).ready(function() {
- 
-    $( "#btnUpdatePassword" ).click(function( event ) {
- 
-       var pass = $('input[name=new-password]').val();
-       var repass = $('input[name=repeat-password]').val();
-
-      if ( !$('#new-password').val() || !$('#repeat-password').val() || !$('#actual-password').val()) {
-           $('#lbl-mssg').html('<font color="red">Existen campos vacios</font>');
-         } else {
-
-        //if (verifyActualPasswd ()) {
-
-          if ( pass != repass ) {
-            //$('#new-password').addClass('has-error');
-            //$('#repeat-password').addClass('has-error');
-
-            $('#lbl-mssg').html('<font color="red">LAS CLAVES SON DIFERENTES</font>');
-            //$('#btnUpdatePassword').attr('type','button');
-            //$('#new-password').focus();
-
-            return false;
-          } else { 
-
-            ChangePasswd();
-            //$('#lbl-mssg').html('<font color="red">Ha cambiado su contraseña con éxito</font>');
-            $('#btnUpdatePassword').attr('type', 'submit'); 
-          }
-      }
- 
-    });
- 
-});
-
-
-</script>
-
 <!-- End PNotify -->
 
  <div class="col-md-12 col-xs-12">
@@ -508,4 +370,139 @@ $( document ).ready(function() {
 
 <?php //get_template_part('footer_scripts');?>
 
+<script>
 
+
+// Add Category
+function addUser () {
+
+  var nombre      =   $('#nombre').val();
+  var email       =   $('#email').val();
+  var telefono    =   $('#telefono').val();
+  var direccion   =   $('#direccion').val();
+  var estado      =   $('#estado').val();
+
+  if (nombre.length < 1  || email.length < 1) {
+    $('#mssg-label').html('Los campos con (*) son necesarios.');
+    $('#nombre').css({'border-color': '#007AFF'});
+    $('#email').css({'border-color': '#007AFF'});
+    return false;
+  }
+    //$('#cargando_add').show()
+    ajax2   = nuevoAjax();
+    ajax2.open("GET", "app/controllers/editar-perfil.php?add=1&nombre="+nombre+"&direccion="+direccion+"&telefono="+telefono+"&email="+email+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
+    ajax2.onreadystatechange=function() {
+
+    if (ajax2.readyState==4) {
+      $('#mssg-label').html(ajax2.responseText);
+      //$('#cargando_add').hide();
+      listCategory();
+      $('#nombre').val('');
+    }
+  }
+
+  ajax2.send(null);
+
+}
+
+// Listar Usuarios de la Cia
+function listarUsuarios () {
+  var id_user     = '<?php echo $_SESSION["id_user"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+
+  var contenido_editor = $('#list-of-users')[0];
+  //$('#cargando_list').show()
+  ajax1   = nuevoAjax();
+  ajax1.open("GET", "ajax/ajax_list_company_users.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
+  ajax1.onreadystatechange=function() {
+
+    if (ajax1.readyState==4) {
+      contenido_editor.innerHTML = ajax1.responseText;
+      //$('#cargando_list').hide()
+      $('#list-table-users').dataTable({aaSorting : [[0, 'desc']]});
+    }
+  }
+
+  ajax1.send(null);
+}
+
+
+
+function verifyActualPasswd () {
+
+    var id_user     = '<?php echo $_SESSION["id_user"]?>';
+    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+    var actualpasswd   = $('input[name=actual-password]').val();
+    var newpasswd   = $('input[name=new-password]').val();
+
+    var contenido_editor = $('#lbl-mssg')[0];
+
+    ajax1   = nuevoAjax();
+    ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&actualpasswd="+actualpasswd+"&que=verifyP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
+    ajax1.onreadystatechange=function() {
+
+      if (ajax1.readyState==4) {
+        contenido_editor.innerHTML = ajax1.responseText;
+      }
+    }
+
+    ajax1.send(null);
+}
+
+ function ChangePasswd () {
+    
+    var id_user     = '<?php echo $_SESSION["id_user"]?>';
+    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+    var newpasswd   = $('input[name=new-password]').val();
+
+    var contenido_editor = $('#lbl-mssg')[0];
+
+    ajax1   = nuevoAjax();
+    ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&que=changeP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
+    ajax1.onreadystatechange=function() {
+
+      if (ajax1.readyState==4) {
+        contenido_editor.innerHTML = ajax1.responseText;
+      }
+    }
+
+    ajax1.send(null);
+ }
+
+
+$( document ).ready(function() {
+ 
+    $( "#btnUpdatePassword" ).click(function( event ) {
+ 
+       var pass = $('input[name=new-password]').val();
+       var repass = $('input[name=repeat-password]').val();
+
+      if ( !$('#new-password').val() || !$('#repeat-password').val() || !$('#actual-password').val()) {
+           $('#lbl-mssg').html('<font color="red">Existen campos vacios</font>');
+         } else {
+
+        //if (verifyActualPasswd ()) {
+
+          if ( pass != repass ) {
+            //$('#new-password').addClass('has-error');
+            //$('#repeat-password').addClass('has-error');
+
+            $('#lbl-mssg').html('<font color="red">LAS CLAVES SON DIFERENTES</font>');
+            //$('#btnUpdatePassword').attr('type','button');
+            //$('#new-password').focus();
+
+            return false;
+          } else { 
+
+            ChangePasswd();
+            //$('#lbl-mssg').html('<font color="red">Ha cambiado su contraseña con éxito</font>');
+            $('#btnUpdatePassword').attr('type', 'submit'); 
+          }
+      }
+ 
+    });
+ 
+});
+
+
+</script>

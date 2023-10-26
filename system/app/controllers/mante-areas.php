@@ -38,7 +38,11 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".$_GET['nombre']."', telephone = '".$_GET['telefono']."',active = '".$_GET['activo']."', updated_at=NOW()";
+	//$P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
+	//$P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
+	$P_Valores = "name = '".$_GET['nombre']."', id_depts = '".$_GET['departamento']."', users = '".$_GET['total_usuarios']."', 
+	turn_a = '".$_GET['turno_a']."', turn_b = '".$_GET['turno_b']."', turn_c = '".$_GET['turno_c']."', turn_d = '".$_GET['turno_d']."', turn_e = '".$_GET['turno_e']."',
+	active = '".$_GET['activo']."', updated_at=NOW()";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_areas', 'id = "'.$_GET['id'].'"');
   	echo 'Se ha actualizado el registro con éxito';
 }

@@ -1,7 +1,10 @@
 <?php
 // CONFIRM USER REGISTER
-// 
+
 include_once ('framework.php');
+
+$ObjMante   = new Mantenimientos();
+$ObjEjec    = new ejecutorSQL();
 
 	if(isset($_GET['Z']) && $_GET['Z']!='') { 
 
@@ -10,15 +13,23 @@ include_once ('framework.php');
 		$PCod			=	explode('-000-',$_GET['Z']);
 		$exito 			=	false;
 		
-		$DSQ			=	mysqli_query($link,"SELECT * FROM ".PREFIX."users WHERE caracteres = '".$PCod[1]."' and activo = 0");
-		$Data			=	mysqli_fetch_array($DSQ);
-		$Son			=	mysqli_num_rows($DSQ);
+		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','caracteres = "'.$PCod[1].'" and activo=0','extract');
 		
-		if( $Son > 0 ):
+		//$DSQ			=	mysqli_query($link,"SELECT * FROM ".PREFIX."users WHERE caracteres = '".$PCod[1]."' and activo = 0");
+		//$Data			=	mysqli_fetch_array($DSQ);
+		//$Son			=	mysqli_num_rows($DSQ);
 		
-			$Hecho		=	mysqli_query($link,"UPDATE usuarios set activo = 1, id_empresa='".$Data['id_usuario']."' WHERE id_usuario = '".$Data['id_usuario']."'");
+		if ( $Data["total"] == 1 ):
+		
+			$P_Valores  = 	"activo = '1', id_cia = '".$Data['id_cia']."', updated_at=NOW()";
+			$P_Tabla 	=   PREFIX."users";
+			$P_condicion= 	"id_usuario='".$Data['id_usuario']."'";
+			$Hecho 		=	$ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, $P_condicion);
 			
-			$sql 		=	mysqli_query($link,"Select * From empresas Where id_usuario = '".$Data['id_usuario']."'");
+			//$Hecho		=	mysqli_query($link,"UPDATE usuarios set activo = 1, id_empresa='".$Data['id_usuario']."' WHERE id_usuario = '".$Data['id_usuario']."'");
+			//$sql 		=	mysqli_query($link,"Select * From empresas Where id_usuario = '".$Data['id_usuario']."'");
+			$sql 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'admin_cia','caracteres = "'.$PCod[1].'" and activo=0','extract');
+
 			if (mysqli_num_rows($sql) < 1) {
 				mysqli_query($link,"Insert into empresas (id_usuario,name_empresa) values('".$Data['id_usuario']."','".$Data['name_cia']."')");
 			}

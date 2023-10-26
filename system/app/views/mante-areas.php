@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
+<!-- 
+<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
+<script src="assets/plugins/select2/select2.min.js"></script> -->
 
 <body onload="$('#cargando_add').hide()">
 
@@ -80,7 +83,6 @@
                         }
                       ?>
                   </select>
-                   <!-- <input name="pais" type="text" required="" class="form-control" id="pais"  placeholder="País"  ></td> -->
                  </td>
                  </tr>
 
@@ -133,9 +135,9 @@
       </div>
     </div>
   </div>
-<!-- End Add Direcctions -->
+<!-- End Add Row -->
 
-<!-- Edit Direcctions -->
+<!-- Edit Row -->
 <?php /////////// Editar algo ?>
 <div class="<?php echo "modal fade"; ?>" id="edit_event" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?>">
@@ -144,7 +146,7 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Departamento.</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Área.</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
@@ -158,7 +160,7 @@ Cargando contenidos...
 </div>
 </div>
 </div>  <?php //////  Fin de editor ?>
-<!-- End Edit Events -->
+<!-- End Edit Rows -->
 
 <?php get_template_part('footer_scripts');?>
 
@@ -211,7 +213,8 @@ listResultTable();
 
 // Delete Row
 function deleteRow ( id ) {
-  let route = "app/controllers/mante-departamentos.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-areas.php";
+  //?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -219,7 +222,11 @@ function deleteRow ( id ) {
     },
     url: route,
     type: "GET",
-    data: "",
+    data: {
+      delete : 1,
+      id     : id,
+      nocache: '<?php echo rand(99999,66666)?>',
+    },
     dataType        : 'html',
     success         : function (response) { 
         $('html, body').animate({scrollTop: '0px'},'slow');
@@ -239,7 +246,7 @@ function addRows () {
   
   let nombre      = $('#nombre').val();
   let departamento= $('#departamento').val();
-  let total_usuarios    = $('#total_usuarios').val();
+  let total_usuarios= $('#total_usuarios').val();
   let turno_a    = $('#turno_a').val();
   let turno_b    = $('#turno_b').val();
   let turno_c    = $('#turno_c').val();
@@ -298,7 +305,7 @@ function editRow ( id ) {
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
-  let route = "ajax/ajax_editar_departamentos.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "ajax/ajax_editar_areas.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -321,13 +328,20 @@ function editRow ( id ) {
 
 // Update Row
 function updateRow ( id ) {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  var nombre      = $('#txt_nombre').val();
-  var precio      = $('#txt_precio').val();
-  var estado      = $('#txt_estado').val();
+  let id_user     = '<?php echo $_SESSION["id_user"]?>';
+  let id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  let nombre      = $('#txt_nombre').val();
+  let departamento= $('#txt_departamento').val();
+  let total_usuarios= $('#txt_total_usuarios').val();
+  let turno_a    = $('#txt_turno_a').val();
+  let turno_b    = $('#txt_turno_b').val();
+  let turno_c    = $('#txt_turno_c').val();
+  let turno_d    = $('#txt_turno_d').val();
+  let turno_e    = $('#txt_turno_e').val();
+  let estado      = $('#txt_estado').val();
 
-  let route = "app/controllers/mante-departamentos.php?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-areas.php";
+  //?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -335,7 +349,19 @@ function updateRow ( id ) {
     },
     url: route,
     type: "GET",
-    data: "",
+    data: {
+      edit    : 1,
+      id        : id,
+      nombre    : nombre,
+      departamento : departamento,
+      total_usuarios : total_usuarios,
+      turno_a   : turno_a,
+      turno_b   : turno_b,
+      turno_c   : turno_c,
+      turno_d   : turno_d,
+      turno_e   : turno_e,
+      activo    : estado,
+    },
     dataType        : 'html',
     success         : function (response) { 
       $("#mssg-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
@@ -409,3 +435,5 @@ setTimeout(() => {
 }
 
 </script>
+
+<!-- <script>$("#estado").select2({ width: '100%', dropdownCssClass: "bigdrop"});</script> -->
