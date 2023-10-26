@@ -1,12 +1,8 @@
 <?php
 include_once('framework.php');
-//include_once ( dirname(dirname(__DIR__)) . '/framework.php');
-//Clase: 	EnviarCorreo
-//			Rutina que contiene el esquema de correo para todo el sistema
-//			Desarrollado por:
-//			SAD:	Sinclair Augusto Duncan
-//					2009 - augustoduncan26@hotmail.com
-//			Para:	AAEEPP
+/**
+ * Class enviar correos
+ */
 
 	class EnviarCorreo
 	{
