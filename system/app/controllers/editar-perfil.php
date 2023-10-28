@@ -7,13 +7,17 @@
 	$ObjMante   = new Mantenimientos();
 	$ObjEjec    = new ejecutorSQL();
 	$id_user    = $_SESSION["id_user"];
-	echo $id_empresa = $_SESSION['id_empresa'];
+	$id_cia 	= $_SESSION['id_cia'];
 	$email 		= $_SESSION['email'];
 	$username 	= $_SESSION['username'];
 
 	$ObjMante   = new Mantenimientos();
-	$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_empresa'].' and usuario="'.$email.'"','extract');
+	$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_cia'].' and usuario="'.$email.'"','extract');
 
+// Editar Perfil
+if (isset($_POST['btn_actualizar_perfil'])) {
+echo 9;
+}
 
 // Add
 if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
@@ -22,8 +26,8 @@ if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	//echo $datosEmpresa['name_cia'];
 
     $PCLAVE			=	"AES_ENCRYPT('".htmlentities('123456')."','toga')";
-	$P_Campos 		=	'usuario,contrasena, email, nombre, apellido, id_empresa,name_cia,fecha_registro,fecha_ult_act,principal,idioma,activo,telephone,direcction,tipo_moneda';
-	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('123456','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '---' ,'".$_SESSION['id_empresa']."', '".$datosEmpresa['name_cia']."' , '".date("Y-m-d H:i:s")."' , '".date("Y-m-d H:i:s")."' , 0 , '".$datosEmpresa['idioma']."' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."', '".$datosEmpresa['tipo_moneda']."'";
+	$P_Campos 		=	'usuario,contrasena, email, nombre, apellido, id_cia,name_cia,fecha_registro,fecha_ult_act,principal,idioma,activo,telephone,direcction,tipo_moneda';
+	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('123456','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '---' ,'".$_SESSION['id_cia']."', '".$datosEmpresa['name_cia']."' , '".date("Y-m-d H:i:s")."' , '".date("Y-m-d H:i:s")."' , 0 , '".$datosEmpresa['idioma']."' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."', '".$datosEmpresa['tipo_moneda']."'";
 	
 	$busca 			=	mysql_query("Select * From ".$P_Tabla." Where email = '".$_GET['email']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
 

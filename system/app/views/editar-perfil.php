@@ -20,7 +20,7 @@
                   Mi Perfil
                 </div>
                 <div class="panel-body">
-                  <form id="demo-form2" enctype="multipart/form-data" action="" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="form-editar-perfil" enctype="multipart/form-data" action="" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
                     <div class="form-group">
                       <label class="col-sm-2 control-label">
@@ -42,7 +42,7 @@
                       </label>
                       <div class="col-sm-7">
                       <span class="input-icon">
-                        <input type="email" required autocomplete="off" name="username" id="username" placeholder="Usuario" id="form-field-7" class="form-control" value="<?php echo $datos['usuario']?>">
+                        <input type="email" name="username" id="username" placeholder="Usuario" id="form-field-7" class="form-control" disabled value="<?php echo $datos['usuario']?>">
                         <i class="fa fa-user"></i> 
                       </span>
                       </div>
@@ -69,7 +69,7 @@
                       </label>
                       <div class="col-sm-7">
                         <span class="input-icon">
-                          <input type="text" autocomplete="off" name="telephone" id="telephone" placeholder="Nombre Completo" id="form-field-14" class="form-control" value="<?php echo $datos['telephone']?>">
+                          <input type="text" autocomplete="off" name="telephone" id="telephone" placeholder="Teléfono" id="form-field-14" class="form-control" value="<?php echo $datos['telephone']?>">
                           <i class="fa fa-phone"></i> 
                         </span>
                       </div>
@@ -83,7 +83,7 @@
                       </label>
                       <div class="col-sm-7">
                         <span class="input-icon">
-                          <input type="text" autocomplete="off" name="direcction" id="direcction" placeholder="Nombre Completo" id="form-field-14" class="form-control" value="<?php echo $datos['direcction']?>">
+                          <input type="text" autocomplete="off" name="direcction" id="direcction" placeholder="Dirección" id="form-field-14" class="form-control" value="<?php echo $datos['direcction']?>">
                           <i class="fa fa-map-marker"></i> 
                         </span>
                       </div>
@@ -108,7 +108,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <!--<button class="btn btn-default btn-lg" type="button">Cancel</button>
                            <button class="btn btn-primary" type="reset">Reset</button> -->
-                          <?php if ($_SESSION['id_user']!=7) {?><button type="submit" name="btn_actualizar_perfil" class="btn btn-lg btn-primary">Modificar</button><?php } ?>
+                          <?php if ($_SESSION['id_user']!=7) {?><button type="submit" name="btn_actualizar_perfil" class="btn btn-primary btn-modificar-perfil">Modificar Datos</button><?php } ?>
                         </div>
                       </div>
                   
@@ -371,6 +371,12 @@
 
 <script>
 
+$('.btn-modificar-perfil').on('click',()=>{
+  
+  if ($('#full_name').val()=="") {
+    
+  }
+});
 
 // Add Category
 function addUser () {

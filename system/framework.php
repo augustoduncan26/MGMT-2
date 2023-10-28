@@ -98,7 +98,7 @@ if ( $saco['contrasena'] == $passN ) {
 	$_SESSION['principal'] 	= $saco['principal'];
 	$_SESSION['lastname']	= $saco['apellido'];
 	$_SESSION['email']		= $saco['email'];
-	$_SESSION['id_empresa'] = $saco['id_usuario'];
+	$_SESSION['id_cia'] 	= $saco['id_cia'];
 
 
 	// $selEmp 				=  $ObjMant->BuscarLoQueSea('*' ,'empresas', 'id_usuario = '.$saco['id_usuario'], 'extract', false);
