@@ -34,7 +34,6 @@
 ?>
  
 <link href="assets/css/style_login.css" rel="stylesheet">
-<script type="text/javascript" src="assets/js/login.js"></script>
 
 <?php
 // Change Password
@@ -94,7 +93,7 @@
 			<!-- end: LOGIN BOX -->
 
 
-			<!-- start: FORGOT PASSWORD BOX -->
+			<!-- start: FORGOT PASSWORD / RESET BOX -->
 			<div class="box-forgot" id="forgotpassword" >
 				<h3>Olvidaste tu contraseña?</h3>
 				<p>
@@ -132,28 +131,32 @@
 					Ingrese todos los datos:
 				</p>
 				<label id="msg-claves"></label>
+				<div class="alert alert-info alert-mssg-register"></div>
 				<div class="container">
 				<form class="form-register form-horizontal form-label-left" id="registerUserForm" method="post" action="#SELF">
 					<fieldset>
 						
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+								<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 								<i class="fa fa-envelope"></i> </span>
 						</div>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="text" class="form-control" name="full_nombre" id="full_nombre" placeholder="Nombre Completo"  required>
+								<input type="text" class="form-control" name="full_nombre" id="full_nombre" placeholder="Nombre Completo" >
 								<i class="fa fa-user"></i> </span>
 						</div>
 						<div class="form-group">
+							<label>La contraseña debe tener entre 6 a 10 caracteres.</label>
+						</div>
+						<div class="form-group">
 							<span class="input-icon">
-								<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+								<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
 								<i class="fa fa-lock"></i> </span>
 						</div>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="password" class="form-control" name="password_again" id="password_again" placeholder="Password Again" required>
+								<input type="password" class="form-control" name="password_again" id="password_again" placeholder="Repetir Contraseña">
 								<i class="fa fa-lock"></i> </span>
 						</div>
 						<div class="form-group">
@@ -169,7 +172,7 @@
 								<i class="fa fa-circle-arrow-left"></i> Regresar
 							</button>
 							<span class="input-icon pull-right">
-							<input type="submit" id="register_users" name="register_users" value="Registrarse" onclick="registerUsers()" class="btn btn-bricky" role="button">
+							<input type="submit" id="register_users" name="register_users" value="Registrarse" onclick="/* registerUsers() */" class="btn btn-bricky btn-register" role="button">
 							
 							<i class="fa fa-arrow-circle-right" style="color:#fff"></i></span> 
 
@@ -181,4 +184,6 @@
 			<!-- end: REGISTER BOX -->
 	</body>
 <?php } ?>
+
+<script type="text/javascript" src="assets/js/login.js"></script>
 <?php get_template_part ( 'copyright' ); ?>

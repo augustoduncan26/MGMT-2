@@ -20,6 +20,7 @@ body {
 .errors {
 	color: #F05F40 !important;
 }
+.alert-mssg-register { display: none;}
 a, a:focus, a:hover, a:active {
 	outline: 0 !important;
 }

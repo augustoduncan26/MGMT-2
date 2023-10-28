@@ -5,56 +5,80 @@ function validateEmail($email) {
   return emailReg.test( $email );
 }
 
+/** Register Event */
+$('.btn-register').on('click',(e)=>{
+    //e.preventDefault();
+    let pass = document.getElementById('password'); //$('#password');
 
-function registerUsers () {
-
-    $( "#registerUserForm").validate({
-    errorClass: 'errors',
-    rules: {
-        field: {
-        error: 'Hola',
-        required: true,
-        email: true
-        },
-
-        field: {
-        required: true,
-        full_nombre: true
-        },
-
-        field: {
-        required: true,
-        password: true
-        },
-
-        field: {
-        required: true,
-        password_again: true
-        }
-    },
-
-        messages: {
-        password: "Ingrese una clave",
-        password_again: "Este campo es requerido",
-        full_nombre: "Ingrese un nombre completo",
-        email: {
-        required: "Ingrese un email válido",
-        email: "Ingrese un email con formato nombre@dominio.com"
-        }
-    }
-    });
-
-    if ($('#password').val() === $('#password_again').val()) {
-        $('#register_users').attr('type', 'submit');
-        return true;
-    } else { 
-        $('#text-mssg').html('<font color="red">Las contrasenña no coinciden, inténtalo denuevo porfavor.</font>');
-        $('#register_users').attr('type','button');
-        $('#password').focus();
+    if ($('#email').val()=="" || $('#full_nombre').val()=="" || $('#password').val()=="" || $('#password_again').val()=="") {
+        $('.alert-mssg-register').removeClass('alert-info').addClass('alert-danger').show().html('Todos los campos son requeridos.');
         return false;
-     }
+    }
+    if (validateEmail($('#email').val())==false) {
+        $('.alert-mssg-register').removeClass('alert-info').addClass('alert-danger').show().html('Ingrese un email válido.');
+        return false;
+    }
+    if (pass.value.length < 6) {
+        $('.alert-mssg-register').removeClass('alert-info').addClass('alert-danger').show().html('La contraseña debe tener entre 6 a 10 caracteres.');
+        return false;
+    }
+    if ($('#password').val() !== $('#password_again').val()) {
+        $('.alert-mssg-register').removeClass('alert-info').addClass('alert-danger').show().html('Las contraseñas no coinciden, intentelo nuevamente.');
+        return false;
+    } else {
+        $( "#registerUserForm").submit();
+    }
+});
 
-}
+// function registerUsers () {
+
+//     $( "#registerUserForm").validate({
+//     errorClass: 'errors',
+//     rules: {
+//         field: {
+//         error: 'Hola',
+//         required: true,
+//         email: true
+//         },
+
+//         field: {
+//         required: true,
+//         full_nombre: true
+//         },
+
+//         field: {
+//         required: true,
+//         password: true
+//         },
+
+//         field: {
+//         required: true,
+//         password_again: true
+//         }
+//     },
+
+//         messages: {
+//         password: "Ingrese una clave",
+//         password_again: "Este campo es requerido",
+//         full_nombre: "Ingrese un nombre completo",
+//         email: {
+//         required: "Ingrese un email válido",
+//         email: "Ingrese un email con formato nombre@dominio.com"
+//         }
+//     }
+//     });
+
+//     if ($('#password').val() === $('#password_again').val()) {
+//         $('#register_users').attr('type', 'submit');
+//         return true;
+//     } else { 
+//         $('#text-mssg').html('<font color="red">Las contrasenña no coinciden, inténtalo denuevo porfavor.</font>');
+//         $('#register_users').attr('type','button');
+//         $('#password').focus();
+//         return false;
+//      }
+
+// }
 
 var runLoginButtons = function () {
     $('.forgot').bind('click', function () {
