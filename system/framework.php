@@ -98,9 +98,11 @@ if ( $saco['contrasena'] == $passN ) {
 	$_SESSION['principal'] 	= $saco['principal'];
 	$_SESSION['lastname']	= $saco['apellido'];
 	$_SESSION['email']		= $saco['email'];
+	$_SESSION['id_empresa'] = $saco['id_usuario'];
 
-	$selEmp 				=  $ObjMant->BuscarLoQueSea('*' ,'empresas', 'id_usuario = '.$saco['id_usuario'], 'extract', false);
-	$_SESSION['id_empresa'] = $selEmp['id_empresa'];
+
+	// $selEmp 				=  $ObjMant->BuscarLoQueSea('*' ,'empresas', 'id_usuario = '.$saco['id_usuario'], 'extract', false);
+	// $_SESSION['id_empresa'] = $selEmp['id_usuario'];
 
     // SESSION FOR MODULE FACTURACION
     $_SESSION['user_id'] 			= 	$saco['id_usuario'];
