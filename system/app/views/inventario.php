@@ -1,5 +1,3 @@
-
-
 <?php $objPermOpc 		= 	new permisos(); ?>
 
 <?php if ($objPermOpc->tienePermiso(600)) { ?>

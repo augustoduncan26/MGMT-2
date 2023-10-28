@@ -1,9 +1,10 @@
 <?php
 
-include ('../../config.php'); 
-include ('../../framework.php');
-
-//echo $_SESSION['username']; 
+//include ('../../framework.php');
+include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+//var_dump ($link);
+// echo $_SESSION['username']; 
+// echo PREFIX;
 
 if (session_id() == "") session_start(); // Initialize Session data
 ob_start(); // Turn on output buffering

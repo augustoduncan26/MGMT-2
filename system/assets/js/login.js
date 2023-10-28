@@ -8,52 +8,71 @@ function validateEmail($email) {
 
 function registerUsers () {
 
-$( "#registerUserForm").validate({
- errorClass: 'errors',
-  rules: {
-    field: {
-      error: 'Hola',
-      required: true,
-      email: true
+    $( "#registerUserForm").validate({
+    errorClass: 'errors',
+    rules: {
+        field: {
+        error: 'Hola',
+        required: true,
+        email: true
+        },
+
+        field: {
+        required: true,
+        full_nombre: true
+        },
+
+        field: {
+        required: true,
+        password: true
+        },
+
+        field: {
+        required: true,
+        password_again: true
+        }
     },
 
-    field: {
-      required: true,
-      full_nombre: true
-    },
-
-    field: {
-      required: true,
-      password: true
-    },
-
-    field: {
-      required: true,
-      password_again: true
+        messages: {
+        password: "Ingrese una clave",
+        password_again: "Este campo es requerido",
+        full_nombre: "Ingrese un nombre completo",
+        email: {
+        required: "Ingrese un email válido",
+        email: "Ingrese un email con formato nombre@dominio.com"
+        }
     }
-  },
+    });
 
-    messages: {
-    password: "Ingrese una clave",
-    password_again: "Este campo es requerido",
-    full_nombre: "Ingrese un nombre completo",
-    email: {
-      required: "Ingrese un email válido",
-      email: "Ingrese un email con formato nombre@dominio.com"
-    }
-  }
-});
-
-if ($('#password').val() != $('#password_again').val()) {
-        $('#text-mssg').html('<font color="red">Las claves son diferentes</font>');
+    if ($('#password').val() === $('#password_again').val()) {
+        $('#register_users').attr('type', 'submit');
+        return true;
+    } else { 
+        $('#text-mssg').html('<font color="red">Las contrasenña no coinciden, inténtalo denuevo porfavor.</font>');
         $('#register_users').attr('type','button');
         $('#password').focus();
-
         return false;
-} else { $('#register_users').attr('type', 'submit'); }
+     }
 
 }
 
+var runLoginButtons = function () {
+    $('.forgot').bind('click', function () {
+        $('.box-login').hide();
+        $('.box-forgot').show();
+    });
+    $('.register').bind('click', function () {
+        $('.box-login').hide();
+        $('.box-register').show();
+    });
+    $('.go-back').click(function () {
+        $('.box-login').show();
+        $('.box-forgot').hide();
+        $('.box-register').hide();
+    });
+};
+
+/*
 var Login = function () {
     var runLoginButtons = function () {
         $('.forgot').bind('click', function () {
@@ -210,3 +229,4 @@ var Login = function () {
         }
     };
 }();
+*/

@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+ include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+
 /// Si estas leyendo esto es porque no tienes PHP instalado !!!!!!!!!!!!!!!!!!!!
 
 if ((float) substr(phpversion(), 0, 3) < 5.4) {

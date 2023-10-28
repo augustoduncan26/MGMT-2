@@ -12,17 +12,18 @@ $CARACTERES		=	RandomString($length=10,$uc=TRUE,$n=TRUE,$sc=FALSE);
 $DESPISTAR		=	RandomString($length=20,$uc=TRUE,$n=TRUE,$sc=FALSE);
 $IDFALSE		=	rand(1970,1968);
 
-$sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','usuario = '.$_POST['email'],'array');
+$where 		= 'usuario = "'.$_POST['email'].'"';
+$sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
 
-	if ($sel1["total"]==1){
+	if ($sel1['total'] > 0){
 		
-	$mensaje	=	'Ya existe un usuario con este email.';
+	$mensaje	=	'Ya existe un usuario con este email';
 	$display	=	'block';
-	
+	return false;
+
 	} else {
 		
 	$RUTA	=	'companies/';
-	$Obj		=	new EnviarCorreo();
 	
 	// REGISTER BLOCK USER
 	$PCLAVE		=	"AES_ENCRYPT('".htmlentities($_POST['password'])."','toga')";//CryptPass( $POST_clave );
@@ -40,12 +41,30 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','usuario = '.$_POST['
 					&nbsp;&nbsp;Gracias por su registro.<br><br>
 					&nbsp;&nbsp;Recuerda sus datos de acceso:<br>
 					&nbsp;&nbsp;Nombre de usuario: ".$_POST['email']."<br>			
-					&nbsp;&nbsp;Para confirmar su registro, siga este enlace: <a href='".ENV['URL_NAME']."'/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
+					&nbsp;&nbsp;Para confirmar su registro, siga este enlace: <a href='".ENV['URL_NAME']."/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
 					&nbsp;&nbsp;Esta confirmación estará activa durante 7 días.<br />
 					";
 	
-	$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
-	//echo 0;
+	//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
+	
+	$mail_to_send_to = $_POST['email'];
+	$from_email 	 = $_ENV['MAIL_FROM_ADDRESS']; //"no-reply@cocabo.org";
+	$subject		 = "Confirmar Registro";
+	//$email = $_REQUEST['email'] ;
+	$message		= "\r\n" . "Name: TEST" . "\r\n"; //get recipient name in contact form
+	$headers  = "From: " . strip_tags($from_email) . "\r\n";
+	$headers .= "Reply-To: " . strip_tags('no-reply@cocabo.org') . "\r\n";
+	$headers .= "CC: augustoduncan26@hotmail.com\r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+	//$headers 		= "From: $from_email" . "\r\n" . "Reply-To: $from_email"  ;
+	$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
+	// if ($a) {
+	// 		print("Message was sent, you can send another one");
+	// } else {
+	// 		print("Message wasn't sent, please check that you have changed emails in the bottom");
+	// }
 	$mensaje	=	'Debe confirmar su cuenta. <br />Revise su buzón de (entrada / no deseados) para confirmar.';
 	//$OCULTAR	=	TRUE;
 	}

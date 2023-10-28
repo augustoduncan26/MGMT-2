@@ -177,35 +177,35 @@ $activeOpen		= "class = 'active open'";
 			<ul class="list__show">
 				<li <?php if(GET()[0] == 'mante-direcciones'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?mante-direcciones" class="nav__link nav__link--inside">
-					<i class="clip-settings"></i><span class="title"> Direcciones </span>
+					<!--<i class="clip-settings"></i>--> - <span class="title"> Direcciones </span>
 				</a>
 				</li>
 
 				<li <?php if(GET()[0] == 'mante-departamentos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-departamentos" class="nav__link nav__link--inside">
-						<i class="clip-settings"></i><span class="title"> Departamentos </span>
+						<!--<i class="clip-settings"></i>--> - <span class="title"> Departamentos </span>
 					</a>
 				</li>
 
 				<li <?php if(GET()[0] == 'mante-areas'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?mante-areas" class="nav__link nav__link--inside">
-					<i class="clip-settings"></i><span class="title"> Áreas </span>
+					<!--<i class="clip-settings"></i>--> - <span class="title"> Áreas </span>
 				</a>
 				</li>
 				
 				<li <?php if(GET()[0] == 'mante-zonas'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-zonas" class="nav__link nav__link--inside">
-						<i class="clip-settings"></i><span class="title"> Zonas </span>
+						<!--<i class="clip-settings"></i>--> - <span class="title"> Zonas </span>
 					</a>
 				</li>
 				<li <?php if(GET()[0] == 'mante-formulas'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-formulas" class="nav__link nav__link--inside">
-						<i class="clip-settings"></i><span class="title"> Formulas </span>
+						<!--<i class="clip-settings"></i>--> - <span class="title"> Formulas </span>
 					</a>
 				</li>
 				<li <?php if(GET()[0] == 'mante-horarios'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-horarios" class="nav__link nav__link--inside">
-						<i class="clip-settings"></i><span class="title"> Horarios </span>
+						<!--<i class="clip-settings"></i>--> - <span class="title"> Horarios </span>
 					</a>
 				</li>
 				
@@ -220,6 +220,90 @@ $activeOpen		= "class = 'active open'";
 		</li>
 		<?php } ?>
 		<!-- End Settings -->
+
+
+		<!-- Roles de Turnos -->
+		<?PHP if($objPermOpc->tienePermiso(305)){  ?>
+		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'roles-turnos')!==false) { echo  'class = "active open"'; }?>>
+			<div class="list__button list__button--click">
+			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
+				<span class="title" > Roles de Turnos</span>
+				<i class="fa icon-arrow"></i>
+				<span class="selected"></span>
+			</a>
+			<img src="assets/images/arrow.svg" class="list__arrow arrow_roles_turnos">
+			</div>
+
+			<ul class="list__show">
+				<li <?php if(GET()[0] == 'mante-direcciones'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?mante-direcciones" class="nav__link nav__link--inside">
+					<!-- <i class="clip-settings"></i> --> -<span class="title"> Roles de Turnos </span>
+				</a>
+				</li>
+
+				<li <?php if(GET()[0] == 'mante-departamentos'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-departamentos" class="nav__link nav__link--inside">
+						<!-- <i class="clip-settings"></i> --> -<span class="title"> Cambios de Turnos </span>
+					</a>
+				</li>
+
+				<li <?php if(GET()[0] == 'mante-areas'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?mante-areas" class="nav__link nav__link--inside">
+					<!-- <i class="clip-settings"></i> --> -<span class="title"> Mis Turnos </span>
+				</a>
+				</li>
+				
+				<li <?php if(GET()[0] == 'mante-zonas'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-zonas" class="nav__link nav__link--inside">
+						<!-- <i class="clip-settings"></i> --> -<span class="title"> Buscar Roles de Turnos </span>
+					</a>
+				</li>
+				<li <?php if(GET()[0] == 'mante-formulas'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-formulas" class="nav__link nav__link--inside">
+						<!--<i class="clip-settings"></i>--> - <span class="title"> Mis Notificaciones </span>
+					</a>
+				</li>
+				<li <?php if(GET()[0] == 'mante-horarios'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-horarios" class="nav__link nav__link--inside">
+						<!-- <i class="clip-settings"></i> --> - <span class="title"> Reportes </span>
+					</a>
+
+						<ul class="list__show">
+						<li <?php if(GET()[0] == 'caja-categorias'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?caja-categorias" class="nav__link nav__link--inside">
+								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Listar Roles de Turnos </span>
+							</a>
+						</li>
+						<li <?php if(GET()[0] == 'caja-clientes'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?caja-clientes" class="nav__link nav__link--inside">
+								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Listar Cambios de Turnos </span>
+							</a>
+						</li>
+						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?caja-proveedores" class="nav__link nav__link--inside">
+								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Consultas de Usuarios </span>
+							</a>
+						</li>
+						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?caja-proveedores" class="nav__link nav__link--inside">
+								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Correcciones de Turnos </span>
+							</a>
+						</li>
+						</ul>
+
+				</li>
+				
+
+				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-buscar" class="nav__link nav__link--inside">
+						<i class="clip-settings"></i><span class="title"> Buscar Reservas </span>
+					</a>
+				</li> -->
+			</ul>
+
+		</li>
+		<?php } ?>
+		<!-- End Roles de Turnos -->
 
 
 		<!-- Caja -->

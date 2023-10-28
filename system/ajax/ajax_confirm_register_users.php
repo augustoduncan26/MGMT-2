@@ -12,27 +12,30 @@ $ObjEjec    = new ejecutorSQL();
 
 		$PCod			=	explode('-000-',$_GET['Z']);
 		$exito 			=	false;
-		
-		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','caracteres = "'.$PCod[1].'" and activo=0','extract');
+		echo $PCod[1];
+		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','caracteres = "'.$PCod[1].'" and activo=0');
 		
 		//$DSQ			=	mysqli_query($link,"SELECT * FROM ".PREFIX."users WHERE caracteres = '".$PCod[1]."' and activo = 0");
 		//$Data			=	mysqli_fetch_array($DSQ);
 		//$Son			=	mysqli_num_rows($DSQ);
 		
 		if ( $Data["total"] == 1 ):
-		
-			$P_Valores  = 	"activo = '1', id_cia = '".$Data['id_cia']."', updated_at=NOW()";
+			// Activate user
+			$P_Valores  = 	"activo = '1', id_cia = '".$Data['id_usuario']."', updated_at=NOW()";
 			$P_Tabla 	=   PREFIX."users";
 			$P_condicion= 	"id_usuario='".$Data['id_usuario']."'";
 			$Hecho 		=	$ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, $P_condicion);
 			
-			//$Hecho		=	mysqli_query($link,"UPDATE usuarios set activo = 1, id_empresa='".$Data['id_usuario']."' WHERE id_usuario = '".$Data['id_usuario']."'");
-			//$sql 		=	mysqli_query($link,"Select * From empresas Where id_usuario = '".$Data['id_usuario']."'");
-			$sql 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'admin_cia','caracteres = "'.$PCod[1].'" and activo=0','extract');
+			// $P_Tabla 	=	PREFIX.'admin_cia';
+			// $P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
+			// $P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
+			// $result 	= $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 
-			if (mysqli_num_rows($sql) < 1) {
-				mysqli_query($link,"Insert into empresas (id_usuario,name_empresa) values('".$Data['id_usuario']."','".$Data['name_cia']."')");
-			}
+
+			//$sql 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'admin_cia','caracteres = "'.$PCod[1].'" and activo=0','extract');
+			// if (mysqli_num_rows($sql) < 1) {
+			// 	mysqli_query($link,"Insert into empresas (id_usuario,name_empresa) values('".$Data['id_usuario']."','".$Data['name_cia']."')");
+			// }
 			
 			//$SaveTblCia	=	mysql_query("Insert into admin_empresas (id_empresa,ruc,razon_social,direccion,telefono,fax,email,nombre_local,id_usuario,paginacion,notificar,work_as,idioma,activo) values('".$Data['id_usuario']."','-','".$Data['name_cia']."','-','-','-','".$Data['email']."','".$Data['name_cia']."','".$Data['id_usuario']."','12','0','rooms_bed','es',1)");
 			
@@ -43,10 +46,10 @@ $ObjEjec    = new ejecutorSQL();
 			// ********************************************
 			//$Permisos	=	new permisos();
 			//$Permisos->aplicarPerfil($Data['id_usuario'],3,1);
-			$CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_habitaciones (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_habitaciones_tmp');
-			$CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_beds (id_beds INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id_beds)) AS SELECT * FROM ad_beds_tmp');
-			$CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_reservas (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_reservas_tmp');
-			$CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_reservas_days (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_reservas_days_tmp');
+			// $CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_habitaciones (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_habitaciones_tmp');
+			// $CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_beds (id_beds INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id_beds)) AS SELECT * FROM ad_beds_tmp');
+			// $CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_reservas (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_reservas_tmp');
+			// $CreateTable=	mysqli_query($link,'CREATE TABLE ad_'.$Data['id_usuario'].'_reservas_days (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM ad_reservas_days_tmp');
 			
 			// ********************************************
 			//     Create some example data & rooms	      *

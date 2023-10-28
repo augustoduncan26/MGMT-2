@@ -114,8 +114,12 @@ function get_theView ( $name = false ) {
 	} else {
 
 		//obtainPostValues();
-		include_once dirname(__FILE__).'/app/controllers/'.strtolower($tags[0]).'.php';
-		include_once dirname(__FILE__).'/app/views/'.strtolower($tags[0]).'.php';
+		if (file_exists(dirname(__FILE__).'/app/controllers/'.strtolower($tags[0]).'.php')) {
+			include_once dirname(__FILE__).'/app/controllers/'.strtolower($tags[0]).'.php';
+		}
+		if (file_exists(dirname(__FILE__).'/app/views/'.strtolower($tags[0]).'.php')) {
+			include_once dirname(__FILE__).'/app/views/'.strtolower($tags[0]).'.php';
+		}	
 	}
 }
 

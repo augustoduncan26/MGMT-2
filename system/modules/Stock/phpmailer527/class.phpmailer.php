@@ -34,7 +34,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
  * @copyright 2010 - 2012 Jim Jagielski
  * @copyright 2004 - 2009 Andy Prevost
  */
-class PHPMailer
+class PHPMailer2
 {
     /**
      * The PHPMailer Version number.

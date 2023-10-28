@@ -7,7 +7,7 @@
 	$ObjMante   = new Mantenimientos();
 	$ObjEjec    = new ejecutorSQL();
 	$id_user    = $_SESSION["id_user"];
-	$id_empresa = $_SESSION['id_empresa'];
+	echo $id_empresa = $_SESSION['id_empresa'];
 	$email 		= $_SESSION['email'];
 	$username 	= $_SESSION['username'];
 

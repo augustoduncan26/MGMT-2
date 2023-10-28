@@ -18,14 +18,12 @@
 		$MSG		=	FALSE;
 		$P			=	FALSE;
 		$MSSG		=	FALSE;
-
 		include_once ( dirname(__FILE__) .'/ajax/ajax_register_users.php' );
 
 	}
 
 	// Validate users register
 	if (isset($_GET['Z'])) {
-
 		include_once ( dirname(__FILE__) .'/ajax/ajax_confirm_register_users.php' );
 	}
 
@@ -57,13 +55,13 @@
 					Por favor ingrese su nombre de usuario y contraseña.
 				</p> -->
 				<form class="form-login" action="#SELF" method="post">
-					<div class="errorHandler alert alert-danger <?php if(!isset($mensaje)){?> no-display <?php } ?>">
-						<i class="fa fa-remove-sign"></i> <?=$mensaje?>.
+					<div class="errorHandler alert alert-info <?php if(!isset($mensaje)){?> no-display <?php } ?>">
+						<i class="fa fa-remove-sign"></i><?=$mensaje?>.
 					</div>
 					<fieldset>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="email" required class="form-control" name="nick" placeholder="Email" autocomplete="off" autofocus id="nick">
+								<input type="email" required class="form-control" name="nick" placeholder="Email" autocomplete="off" id="nick">
 								<i class="fa fa-envelope"></i> </span>
 						</div>
 						<div class="form-group form-actions">
@@ -81,11 +79,11 @@
 							</label>
 
 							<label for="remember" class="checkbox-inline" onclick="javascript: $('#registerusers').show(); $('#logo-text').hide();$('#loginform').hide();" style="color:#F05F40">
-								Registrate Gratis
+								Regístrate Gratis
 							</label>
 
 							<span class="input-icon pull-right">
-							<input type="submit" class="btn btn-bricky pull-right" name="entrar" value="Login" id="entrar">
+							<input type="submit" class="btn btn-bricky pull-right btn-login" name="entrar" value="Login" id="entrar">
 							<i class="fa fa-arrow-circle-right" style="color:#fff"></i></span> 
 						</div>
 
@@ -145,7 +143,7 @@
 						</div>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="text" class="form-control" name="full_nombre" id="full_nombre" placeholder="Nombre Completo" autofocus required>
+								<input type="text" class="form-control" name="full_nombre" id="full_nombre" placeholder="Nombre Completo"  required>
 								<i class="fa fa-user"></i> </span>
 						</div>
 						<div class="form-group">

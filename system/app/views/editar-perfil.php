@@ -20,7 +20,6 @@
                   Mi Perfil
                 </div>
                 <div class="panel-body">
-<!--                   <form role="form" class="form-horizontal"> -->
                   <form id="demo-form2" enctype="multipart/form-data" action="" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
                     <div class="form-group">
@@ -52,16 +51,16 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="form-field-7">
                       <?php if ($_SESSION['id_user']!=7) {?>
-                        <a data-toggle="modal" role="button" style="text-decoration: underline" href="#formulario_nuevo" onClick="document.getElementById('nombre').focus();">Cambiar Clave</a>
+                        <a data-toggle="modal" role="button" style="text-decoration: underline" href="#formulario_nuevo" onClick="document.getElementById('nombre').focus();">Cambiar Contraseña</a>
                       <?php } else { echo ' <a href=#>Cambiar Clave</a>'; } ?>
                       </label>
                       <div class="col-sm-7">
                         <span class="input-icon">
-                          <input id="form-field-8" class="form-control tooltips" type="password" data-placement="top" title="" readonly placeholder="Contraseña" data-rel="tooltip" data-original-title="Clave entre 6 a 8 caracteres" value="<?php echo $datos['contrasena']?>">
+                          <input id="form-field-8" class="form-control tooltips" type="password" data-placement="top" title="" readonly placeholder="Contraseña" data-rel="tooltip" data-original-title="La contraseña debe tener entre 6 a 10 caracteres" value="<?php echo $datos['contrasena']?>">
                         <i class="fa fa-key"></i> 
                       </span>
                       </div>
-                      <span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> Contraseña (6-10) </span>
+                      <span class="help-inline col-sm-2 tooltips" data-rel="tooltip" data-original-title="La contraseña debe tener entre 6 a 10 caracteres" data-placement="top"> <i class="fa fa-info-circle"></i> Contraseña (6-10) </span>
                     </div>
 
                     <div class="form-group">

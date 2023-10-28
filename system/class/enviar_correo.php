@@ -1,5 +1,5 @@
 <?php
-include_once('framework.php');
+//include_once('framework.php');
 /**
  * Class enviar correos
  */
@@ -16,17 +16,26 @@ include_once('framework.php');
 		function Enviar($Para , $Asunto , $MenzG , $CC=false , $CCC=false, $CCO = false ,$correo_masivo = false , $adjuntos = false) {
 			$mail = new PHPMailer();
 			$mail->IsSMTP();  // send via SMTP
-			$mail->Host     = 'www.duncancomputer.com';	//	relay-hosting.secureserver.net//'192.168.2.15';// SMTP servers//190.34.151.107//mail.avipacinc.com//190.123.192.118//mail.sume911.pa
+			$mail->Host     = 'webmail.cocabo.org'; //'smtp.host.tld';	//	relay-hosting.secureserver.net//'192.168.2.15';// SMTP servers//190.34.151.107//mail.avipacinc.com//190.123.192.118//mail.sume911.pa
 			$mail->SMTPAuth = true;     			// authenticacion SMTP 
-			$mail->Username = "no-reply@duncancomputer.com";  	// SMTP usuario / rootaugusto.duncan //admin@ideasexpertos.com
-			$mail->Password = "pelaito11"; 			// SMTP clave / avi45pl9 /8-364-936 / pelaito11 / sume911$$
+			$mail->Username = "no-reply@cocabo.org";  	// SMTP usuario / rootaugusto.duncan //admin@ideasexpertos.com
+			$mail->Password = "no-replay2023"; 			// SMTP clave / avi45pl9 /8-364-936 / pelaito11 / sume911$$
+			$mail->Port       = 465;
 			
+			// $mail->Host     = 'webmail.sume911.pa';	//	relay-hosting.secureserver.net//'192.168.2.15';// SMTP servers//190.34.151.107//mail.avipacinc.com//190.123.192.118//mail.sume911.pa
+			// $mail->SMTPAuth = true;     			// authenticacion SMTP 
+			// $mail->Username = "info@sume911.pa";  	// SMTP usuario / rootaugusto.duncan //admin@ideasexpertos.com
+			// $mail->Password = "sume911$$"; 			// SMTP clave / avi45pl9 /8-364-936 / pelaito11 / sume911$$
+			
+			
+			
+			//$mail->SMTPSecure = "ssl";
 			//PARA CORREOS MASIVOS - BOLETINES DE ANUNCIOS DE LA AAEEPP
 			//=========================================================
 			if($correo_masivo == true) {
 
-				$mail->From     = "no-reply@duncancomputer.com";//"info@decoflorespaola.com";
-				$mail->FromName = "Hotel-System";
+				$mail->From     = "no-reply@hhsys.com";//"info@decoflorespaola.com";
+				$mail->FromName = "H&H-System";
 				$mail->AddAddress($Para,""); 
 				if($CCO == true) {
 					$mail->AddCC($CCO);
@@ -69,9 +78,8 @@ include_once('framework.php');
 			{
 			//ENVIO DE CORREOS COMUNES
 			//=========================================
-			
-			$mail->From     = "no-reply@duncancomputer.com";//"info@decoflorespaola.com";
-			$mail->FromName = "Hotel-System";
+			$mail->From     = "no-reply@hhsys.com";//"info@decoflorespaola.com";
+			$mail->FromName = "H&H-System";
 			$mail->AddAddress($Para,""); 
 			//$mail->AddAddress($CC); 
 			if($CCO == true)

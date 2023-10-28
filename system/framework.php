@@ -6,6 +6,10 @@ defined('DIRECTORY_SEPARATOR') or define('DIRECTORY_SEPARATOR', '/');
 
 include ('config.php') ;
 
+// include_once ("class/enviar_correo.php");
+// include_once("class/class.phpmailer.php");
+// include_once("class/class.smtp.php");
+
 // Otras yerbas
 $caja_prefix 		=	'caja_';
 $fcatura_prefix 	=	'fact_';
@@ -90,7 +94,7 @@ if ( $saco['contrasena'] == $passN ) {
 	// SESSION FOR THE APP
 	$_SESSION['username'] 	= $nombredesesion;
 	$_SESSION['id_session'] = session_id();
-	echo $_SESSION['id_user']  	= $saco['id_usuario'];
+	$_SESSION['id_user']  	= $saco['id_usuario'];
 	$_SESSION['principal'] 	= $saco['principal'];
 	$_SESSION['lastname']	= $saco['apellido'];
 	$_SESSION['email']		= $saco['email'];

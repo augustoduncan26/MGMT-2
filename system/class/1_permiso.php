@@ -1,27 +1,20 @@
 <?php 
 /** 
-* Archivo de definición de clase permisos
-/** 
-* Clase que contiene definicion de objetos permisos, 
-* Contiene metodos referente a la permisología que un determinado usuario
-*  tiene en el sistema.
+* Class Definicion permisos
 */
-class permisos{
-	////////////////////////////////////////////////////////////////////
-	// Atributos
-	////////////////////////////////////////////////////////////////////
+class permisos {
 	/**
-	* @var string Nombre de la tabla en la base de datos donde se encuentran las definiciones de permisos
+	* @var string Nombre de la tabla
 	*/
 	var $tablaDefinicionPermisos;
 	
 	/**
-	* @var string Nombre de la tabla en la base de datos donde se encuentra la asociación de las definiciones de permisos y los usuarios
+	* @var string Nombre de la tabla asociacion permisos y usuarios
 	*/
 	var $tablaPermisos;
 	
 	/**
-	* @var array Arreglo donde se carga la tabla de definición de permisos del sistema
+	* @var array
 	*/
 	var $DefinicionPermisos;
 	
@@ -31,7 +24,7 @@ class permisos{
 	var $campoLlaveUsuario;
 	
 	/**
-	* @var integer Llave primaria de la tabla definición de permisos
+	* @var integer Llave primaria de la tabla definicion de permisos
 	*/
 	var $campoLlaveDefinicionPermiso;
 	
@@ -41,22 +34,17 @@ class permisos{
 	var $campoLlaveDefinicionPermisoPadre;
 	
 	/**
-	* @var string Campo que contiene la descripción de la definición del permiso.
+	* @var string
 	*/
 	var $campoDefinicionPermiso;
 	
 	/**
-	 Definicion del idioma seleccionado por le usuario
+	* Definicion del idioma seleccionado por le usuario
 	*/
 	var $cual;
 	
-	////////////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////////////
 	/** 
-	* Constructor de la clase permisos. 
-	* Inicializa los atributos de la clase.
-	* 
+	* Constructor
 	* @access constructor
 	*/
 	function permisos(){
@@ -80,11 +68,8 @@ class permisos{
 		$this->DefinicionPermisos = $this->obtenerListadoPermiso();
 	}
 	
-	////////////////////////////////////////////////////////////////////
-	// Métodos
-	///////////////////////////////////////////////////////////////////
 	/** 
-	* Función que obtiene datos de la tabla de definicion de permisos
+	* Obtiene datos de la tabla de definicion de permisos
 	* 
 	* @return array|boolean FALSE en caso de no existir ningun usuario, y en caso de devolver resultados(Definicion de permisos con sus ids) en un arreglo
 	*/
@@ -103,7 +88,7 @@ class permisos{
 		return $exito;				
 	}
 	/** 
-	* Función que obtiene datos de la tabla de definicion de permisos
+	* Obtiene datos de la tabla de definicion de permisos
 	* 
 	* @return array|boolean FALSE en caso de no existir ningun usuario, y en caso de devolver resultados(Definicion de permisos con sus ids) en un arreglo
 	*/
@@ -131,7 +116,7 @@ class permisos{
 	
 	
 	/**
-		Buscar permisos del usuario en tabla permiso
+	*	Buscar permisos del usuario en tabla permiso
 	*/
 	public function TodosPermisos($P_sel, $P_tabla, $P_OtrosParam = false)
 	{	
@@ -158,9 +143,9 @@ class permisos{
 	}
 	
 	/** 
-	* Funcion que devuelve listado de permisos padres de un permiso determinado
+	* Devuelve listado de permisos padres de un permiso determinado
 	* 
-	* @return array|boolean Devuelve un arreglo con los permisos padre, en caso de no tenerlos devuelve FALSE
+	* @return array|boolean
 	*/
 	function obtenerListadoPermisoPadre(){		
 		$exito = false; 
@@ -178,10 +163,10 @@ class permisos{
 	}
 	
 	/** 
-	* Funcion que devuelve todos los permisos hijos de un permiso
+	* Devuelve todos los permisos hijos de un permiso
 	* 
 	* @param string $P_Padre Id del permiso del cual se quiere obtener los permiso
-	* @return array|boolean Devuelve un arreglo con los permiso hijos, en caso de no tenerlos devuelve FALSE
+	* @return array|boolean
 	*/
 	function obtenerListadoPermisoHijo($P_Padre){		
 		$exito = false; 
@@ -199,10 +184,10 @@ class permisos{
 	}
 	
 	/** 
-	* Funcion que investiga si el usuario autenticado tiene un determinado permiso
+	* Buscar si el usuario autenticado tiene un determinado permiso
 	* 
 	* @param integer $P_permiso Id del permiso a consultar
-	** @return boolean TRUE si tiene permiso, FALSE en caso contrario
+	** @return boolean TRUE / FALSE
 	*/
 	function tienePermiso($P_permiso){
 
@@ -226,11 +211,11 @@ class permisos{
 	}
 	
 	/** 
-	* Funcion que investiga si un usuario tiene un permiso
+	* Buscar si un usuario tiene un permiso
 	* 
 	* @param integer $P_permiso Id del permiso a consultar
 	* @param integer $P_Usuario Id del usuario a consultar
-	* @return boolean TRUE si se realizó la operación, FALSE en caso contrario
+	* @return boolean TRUE / FALSE
 	*/
 	function tienePermisoUsuario($P_permiso, $P_Usuario){
 		$idUs = $P_Usuario;
@@ -254,7 +239,7 @@ class permisos{
 	* 
 	* @param array $P_Permisos Arreglo de permisos a asignar
 	* @param integer $P_idUsuario Id del usuario al que se le van a asignar los permisos
-	* @return boolean TRUE si se realizó la operación, FALSE en caso contrario
+	* @return boolean TRUE / FALSE
 	*/
 	function asignarPermisosGrupo($P_Permisos, $P_idUsuario){
 		$exito = false; 
@@ -283,7 +268,7 @@ class permisos{
 	* Quita todos los permisos a un usuario 
 	* 
 	* @param integer $P_id_usuario Id del usuario al que se le van a quitar todos los permisos
-	* @return boolean TRUE si se realizó la operación, FALSE en caso contrario
+	* @return boolean TRUE / FALSE
 	*/
 	function quitarPermisos_Todos($P_id_usuario){
 		$objEjecutorSQL = new ejecutorSQL();
@@ -298,7 +283,7 @@ class permisos{
 	* 
 	* @param integer $P_id_usuario Id del usuario al que se le va asignar el permiso 
 	* @param integer $P_Permiso Id del permiso que se va a asignar
-	* @return boolean TRUE si se realizó la operación, FALSE en caso contrario
+	* @return boolean TRUE / FALSE
 	*/
 	function asignarPermiso($P_id_usuario, $P_Permiso){
 		$objEjecutorSQL = new ejecutorSQL();
@@ -345,11 +330,11 @@ class permisos{
 	}
 	
 	/** 
-	* Ayuda a la función generarControlPermiso, esta incrusta javascript para que al momento de realizar check en el nodo, automaticamente 
+	* generarControlPermiso, esta incrusta javascript para que al momento de realizar check en el nodo, automaticamente 
 	* se activen todos los nodos padres.
 	* 
 	* @param string $P_IDPerm Id del permiso al cual se le va a generar javascript
-	* @return string Cadena con javascript que realiza la acción descrita
+	* @return string Cadena con javascript
 	*/
 	function checkarHijos ($P_IDPerm){
 		$control = "";
@@ -367,7 +352,7 @@ class permisos{
 	}
 	
 	/** 
-	* Ayuda a la función generarControlPermiso y crea de manera recursivamente cada uno de los checks de los permisos
+	* generarControlPermiso y crea de manera recursivamente cada uno de los checks de los permisos
 	* 
 	* @param integer $IDpermiso Id del permiso del nodo a crear
 	* @param string $descPermiso Descripcion del permiso del nodo a crear
@@ -487,8 +472,7 @@ class permisos{
 	}
 	
 	/** 
-	* Construye control HTML que visualiza los permisos asignados a un usuario, además de que permite la actualización de los mismos
-	* Usado generalmenteen la administración de usuarios
+	* Construye control HTML que visualiza los permisos asignados a un usuario.
 	* 
 	* @param string $P_ancho Ancho del control que se va a generar
 	* @param string $P_Usuario Id del usuario del que se esta creando el control
@@ -541,12 +525,12 @@ class permisos{
 	}
 	
 	/**
-	* Función para aplicar
-	* @param $P_idUsuario int - ID del usuario que está siendo tratado
-	* @param $P_idPerfil int - ID del perfil cuyos permisos están siendo asignados al usuario tratado
-	* @param $bCampoPerfilTblUsr bool - (false) Indica que en la tabla de usuario no hay referencia de perfil asignado
-	* (true) Indica que sí hay campo de perfil asignado en tabla de usuario
-	* @param $bAsocPrflCondic bool - (false) No hay restricción alguna en la asoc de Perfil/Permisos; 
+	* Aplicar perfil
+	* @param $P_idUsuario int - ID del usuario
+	* @param $P_idPerfil int - ID del perfil
+	* @param $bCampoPerfilTblUsr bool - (false)
+	* (true) Dice si hay campo de perfil asignado en tabla de usuario
+	* @param $bAsocPrflCondic bool - (false) No hay restriccion al perfil
 	* (true) Existe condiciones, definir...
 	*/
 	function aplicarPerfil($P_idUsuario, $P_idPerfil, $P_Principal=false,$bCampoPerfilTblUsr=false, $bAsocPrflCondic=false){
@@ -559,8 +543,6 @@ class permisos{
 		}
 		
 		if($bAsocPrflCondic===true){
-			//echo ' a ';
-			// Definir el tipo de condición...
 			
 		}
 		else{
@@ -570,7 +552,7 @@ class permisos{
 		if ($permisosPerfil != false){
 			//Agregar grupo a tabla: usuario_grupo
 			$this->InsertarEnGrupos($P_idUsuario, $P_idPerfil,$P_Principal);
-			/* Registrar asociación de perfil en tabla de usuario en caso que la tabla esté adaptada para llevar este registro */
+			/* Asocia perfil en tabla de usuario */
 			if($bCampoPerfilTblUsr===true){
 				$val = "id_perfil = '".$P_idPerfil."'";
 				$tbl = "ad_usuario";
@@ -620,9 +602,8 @@ class permisos{
 		$sel 			= "id_usuario";
 		$tbl 			= "ad_usuario_grupo";
 		$whr 			= "id_usuario=".$P_idUsuario;
-		//echo $P_idPerfil;
 		$objConsultor->consultar($sel, $tbl, $whr);
-		//echo $P_idGrupo;
+
 		SWITCH($P_idGrupo)
 		{
 			case '1':		//JEFES
@@ -824,9 +805,9 @@ class permisos{
 		//$idUs 	= 	$P_Usuario;
 		$where 	= 	"id_usuario = '".$idUser."' and id_definicion_permiso = '".$P_permiso."'";
 		
-		$SQ		=	mysql_query("SELECT * FROM permiso WHERE ".$where);
+		$SQ		=	mysqli_query("SELECT * FROM permiso WHERE ".$where);
 		
-		if(mysql_num_rows($SQ)>0)
+		if(mysqli_num_rows($SQ)>0)
 		{
 			$exito	=	TRUE;
 		}else
