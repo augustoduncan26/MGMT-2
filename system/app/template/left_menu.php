@@ -586,6 +586,11 @@ $activeOpen		= "class = 'active open'";
 						<i class="clip-user-plus"></i><span class="title"> Usuarios </span>
 					</a>
 				</li>
+				<li <?php if(GET()[0] == 'facturacion-perfiles'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?configurar-perfiles" class="nav__link nav__link--inside">
+						<i class="clip-users-2"></i><span class="title"> Perfiles </span>
+					</a>
+				</li>
 				<li <?php if(GET()[0] == 'configurar-permisos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-permisos" class="nav__link nav__link--inside">
 						<i class="clip-key"></i><span class="title"> Permisos </span>
@@ -596,11 +601,7 @@ $activeOpen		= "class = 'active open'";
 						<i class="clip-list-4"></i><span class="title"> Menú </span>
 					</a>
 				</li>
-				<li <?php if(GET()[0] == 'facturacion-perfiles'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?configurar-perfiles" class="nav__link nav__link--inside">
-						<i class="clip-users-2"></i><span class="title"> Perfiles </span>
-					</a>
-				</li>
+				
 			</ul>
 
 		</li>

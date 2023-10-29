@@ -5,7 +5,6 @@ header("Content-Type: text/html;charset=utf-8");
 include ( dirname(__FILE__).'/load.php' );
 
 // Habitaciones en uso + salas de eventos
-$_SESSION['id_user'] = 6;
 $TblBooking  = 'ad_'.$_SESSION['id_user'].'_reservas';
 
 $date_today =   date('Y-m-d');

@@ -3,7 +3,13 @@
 	global $link;
 	//echo session_id(); exit;
 	 $Objejec 		=  	new ejecutorSQL();
-	 $Objejec->borrarRegistro("session","id_session = '".session_id()."'");
-	//mysqli_query($link,"Delete from session where id_session = '".session_id()."'");
+	 $Objejec->borrarRegistro(PREFIX."session","id_session = '".session_id()."'");
+	 unset($_SESSION["id_user"]) ;
+	 unset($_SESSION["username"]) ;
+	 unset($_SESSION["id_session"]) ;
+	 unset($_SESSION["lastname"]) ;
+	 unset($_SESSION["email"]) ;
+	 unset($_SESSION["id_cia"]) ;
+
 ?>
 <script>location.href='login'</script>

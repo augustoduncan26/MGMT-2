@@ -2,8 +2,8 @@
 
 	include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 	
-	$P_Tabla 		=	"usuarios";
-
+	$P_Tabla 	=	"usuarios";
+	$mssg 		= "";	
 	$ObjMante   = new Mantenimientos();
 	$ObjEjec    = new ejecutorSQL();
 	$id_user    = $_SESSION["id_user"];
@@ -12,14 +12,36 @@
 	$username 	= $_SESSION['username'];
 
 	$ObjMante   = new Mantenimientos();
-	$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_cia'].' and usuario="'.$email.'"','extract');
-
+	
 // Editar Perfil
 if (isset($_POST['btn_actualizar_perfil'])) {
-echo 9;
+	$newfilename =	'';
+
+	if ($_FILES["photo"]) {
+	
+	$rand 		=	rand('1234567890','0987654321');
+	$temp 		= 	explode(".", $_FILES["photo"]["name"]);
+	//$total      =   count($_FILES['photo']['name']);
+	$newfilename=   $id_user.'-foto-'.$rand. '.' . $temp[1];
+
+	// Delete the profile photo
+
+	// Upload the profile photo
+
+	}
+	// Update data
+	$sql 		=	$ObjEjec->ejecutarSQL("Update ".PREFIX."users SET nombre='".$_POST['full_name']."', telephone='".$_POST['telephone']."', direcction='".$_POST['direcction']."', profile_photo='".$newfilename."', updated_at=NOW()  Where id_usuario = '".$id_user."'");
+	if ($sql) {
+		$_SESSION['username'] = $_POST['full_name'];
+		$mssg = "Los datos fueron actualizados con éxito.";
+	}
 }
 
+
+$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_cia'].' and usuario="'.$email.'"','extract');
+
 // Add
+/*
 if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
 	$datosEmpresa 	=	mysql_fetch_array(mysql_query("Select * From usuarios Where id_usuario = '".$id_user."'"));
@@ -42,6 +64,6 @@ if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
 	}
 }
-
+*/
 
 ?>

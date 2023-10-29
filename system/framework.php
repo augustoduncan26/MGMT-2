@@ -92,18 +92,13 @@ if ( $saco['contrasena'] == $passN ) {
 	$nombredesesion =	$saco['nombre'];
 
 	// SESSION FOR THE APP
-	$_SESSION['username'] 	= $nombredesesion;
-	$_SESSION['id_session'] = session_id();
-	$_SESSION['id_user']  	= $saco['id_usuario'];
-	$_SESSION['principal'] 	= $saco['principal'];
-	$_SESSION['lastname']	= $saco['apellido'];
-	$_SESSION['email']		= $saco['email'];
-	$_SESSION['id_cia'] 	= $saco['id_cia'];
-
-
-	// $selEmp 				=  $ObjMant->BuscarLoQueSea('*' ,'empresas', 'id_usuario = '.$saco['id_usuario'], 'extract', false);
-	// $_SESSION['id_empresa'] = $selEmp['id_usuario'];
-
+	$_SESSION['username'] 			= 	$nombredesesion;
+	$_SESSION['id_session'] 		= 	session_id();
+	$_SESSION['id_user']  			= 	$saco['id_usuario'];
+	$_SESSION['principal'] 			= 	$saco['is_principal'];
+	$_SESSION['lastname']			= 	$saco['apellido'];
+	$_SESSION['email']				= 	$saco['email'];
+	$_SESSION['id_cia'] 			= 	$saco['id_cia'];
     // SESSION FOR MODULE FACTURACION
     $_SESSION['user_id'] 			= 	$saco['id_usuario'];
 	$_SESSION['user_name'] 			= 	$nombredesesion;
@@ -115,9 +110,9 @@ if ( $saco['contrasena'] == $passN ) {
     
 	//mysql_query("insert into log (fecha, tipo, clase, detalle, usuario, contra, ip, tipo_usuario) values ('$fechadehoy','Login','Correcto','-','$nickN','','$ip', '$tipo_usuario')");
 	$P_valores  =	"'".$id_session."','".$nickN."',NOW(),1";
-	$P_campos 	=	"id_session,user,date,active";
+	$P_campos 	=	"id_session,user,date,activo";
 
-	$Objejec->insertarRegistro('session', $P_campos , $P_valores);
+	$Objejec->insertarRegistro(PREFIX.'session', $P_campos , $P_valores);
 	
 	$logadmin = true;
 
@@ -137,7 +132,7 @@ if ( $saco['contrasena'] == $passN ) {
 function checkUserLogin ( $id_sess ) {
  	//global $link, $mysqli ;
 	$ObjMant 	=	new Mantenimientos();
-	$query 		=	$ObjMant->BuscarLoQueSea('COUNT(*) as total','session','id_session = "'.$id_sess.'"','extract');
+	$query 		=	$ObjMant->BuscarLoQueSea('COUNT(*) as total',PREFIX.'session','id_session = "'.$id_sess.'"','extract');
 
 		if($query['total'] == 0) {
 			echo '<SCRIPT LANGUAGE="javascript"> location.href = "login"; </SCRIPT>';	

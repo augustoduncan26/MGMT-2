@@ -1,9 +1,11 @@
 <?php
 
-include_once ('../../framework.php');
+include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+$ObjMante   = new Mantenimientos();
+$ObjEjec    = new ejecutorSQL();
 
 $id_user 		=	$_SESSION['id_user'];
-$id_empresa 	=	$_SESSION['id_empresa'];
+$id_cia 		=	$_SESSION['id_cia'];
 
 // Names of tables
 if($_SESSION['id_user']==1 || $_SESSION['id_user'] == 2):
@@ -24,8 +26,8 @@ $tblDefinicion 		=	'zz_permiso_definicion';
 
 	$P_Tabla 		=	$tblDefinicion;
 
-	$P_Campos 		=	'nombre,permiso,permiso_padre,id_empresa,activo';
-	$P_Valores 		=	"'".$_GET['nombre']."','".$_GET['permiso']."', '".$_GET['permiso_padre']."','".$id_empresa."','".$_GET['estado']."'";
+	$P_Campos 		=	'nombre,permiso,permiso_padre,id_cia,activo';
+	$P_Valores 		=	"'".$_GET['nombre']."','".$_GET['permiso']."', '".$_GET['permiso_padre']."','".$id_cia."','".$_GET['estado']."'";
 	
 	$busca 			=	mysql_query("Select * From ".$P_Tabla." Where permiso = '".$_GET['permiso']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
 

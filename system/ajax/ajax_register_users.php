@@ -48,23 +48,15 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
 	//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
 	
 	$mail_to_send_to = $_POST['email'];
-	$from_email 	 = $_ENV['MAIL_FROM_ADDRESS']; //"no-reply@cocabo.org";
+	$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
 	$subject		 = "Confirmar Registro";
-	//$email = $_REQUEST['email'] ;
-	$message		= "\r\n" . "Name: TEST" . "\r\n"; //get recipient name in contact form
+	//$message		= "\r\n" . "Name: TEST" . "\r\n";
 	$headers  = "From: " . strip_tags($from_email) . "\r\n";
-	$headers .= "Reply-To: " . strip_tags('no-reply@cocabo.org') . "\r\n";
-	$headers .= "CC: augustoduncan26@hotmail.com\r\n";
+	$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+	$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-	//$headers 		= "From: $from_email" . "\r\n" . "Reply-To: $from_email"  ;
 	$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
-	// if ($a) {
-	// 		print("Message was sent, you can send another one");
-	// } else {
-	// 		print("Message wasn't sent, please check that you have changed emails in the bottom");
-	// }
 	$mensaje	=	'Debe confirmar su cuenta. <br />Revise su buzón de (entrada / no deseados) para confirmar.';
 	//$OCULTAR	=	TRUE;
 	}

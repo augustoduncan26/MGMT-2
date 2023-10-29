@@ -54,8 +54,8 @@ class permisos {
 		$menu			=	new idioma();
 		$this->cual		=	$menu->Buscaridioma();
 		
-		$this->tablaDefinicionPermisos 				= "zz_permiso_definicion";
-		$this->tablaPermisos 						= "zz_permisos";
+		$this->tablaDefinicionPermisos 				= PREFIX."permiso_definicion";
+		$this->tablaPermisos 						= PREFIX."permisos";
 		$this->campoLlaveUsuario 					= "id_usuario";
 		$this->campoLlaveDefinicionPermiso 			= "id_definicion_permiso";
 		$this->campoLlaveDefinicionPermisoPadre		= "permisoPadre";

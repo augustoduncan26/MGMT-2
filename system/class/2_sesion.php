@@ -94,7 +94,7 @@ class sesion{
         // Fetch session data from the selected database
 		$time = time();
 		
-		$newid = mysql_real_escape_string($id);
+		$newid = mysqli_real_escape_string($id);
 		
 		$sel = "session_data";
 		$frm = "ad_session";
