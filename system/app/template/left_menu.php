@@ -22,7 +22,7 @@ $activeOpen		= "class = 'active open'";
 		<!-- Home -->
 		<li class="list_item">
 			<div class="list__button">
-				<a href="Home" class="nav__link">
+				<a href="home" class="nav__link">
 					<i class="clip-home-3"></i>
 					<span class="title"> Dashboard </span>
 					<span class="selected"></span>
@@ -271,22 +271,22 @@ $activeOpen		= "class = 'active open'";
 						<ul class="list__show">
 						<li <?php if(GET()[0] == 'caja-categorias'){ echo ' class="menu-backg-item"';}?>>
 							<a href="?caja-categorias" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Listar Roles de Turnos </span>
+								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Listar Roles de Turnos </span>
 							</a>
 						</li>
 						<li <?php if(GET()[0] == 'caja-clientes'){ echo ' class="menu-backg-item"';}?>>
 							<a href="?caja-clientes" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Listar Cambios de Turnos </span>
+								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Listar Cambios de Turnos </span>
 							</a>
 						</li>
 						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
 							<a href="?caja-proveedores" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Consultas de Usuarios </span>
+								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Consultas de Usuarios </span>
 							</a>
 						</li>
 						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
 							<a href="?caja-proveedores" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> - <span class="title"> Correcciones de Turnos </span>
+								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Correcciones de Turnos </span>
 							</a>
 						</li>
 						</ul>

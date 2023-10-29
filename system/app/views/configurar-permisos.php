@@ -23,8 +23,6 @@
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
 
-
-
 <body onload="listPermisos()">
 	
 <div class="">
@@ -46,6 +44,7 @@
           <i class="clip-settings"></i>Permisos
           </div>
 	         <div class="panel-body">
+            <br />
            <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
            <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
 			     <div id="list-rooms"></div>
@@ -273,12 +272,12 @@ function editPermiso ( id ) {
 function listPermisos() {   
 
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
 
   var contenido_editor = $('#list-rooms')[0];
   $('#cargando_list').show()
   ajax1   = nuevoAjax();
-  ajax1.open("GET", "ajax/ajax_list_permisos.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
+  ajax1.open("GET", "ajax/ajax_list_permisos.php?id_user="+id_user+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
   ajax1.onreadystatechange=function() {
 
     if (ajax1.readyState==4) {

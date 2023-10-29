@@ -1,7 +1,7 @@
 <?php
 
 $id_user    = $_GET['id_user'];
-$id_empresa = $_GET['id_empresa'];
+$id_cia     = $_GET['id_cia'];
 
 include_once ('../framework.php');
 $ObjMante   = new Mantenimientos();
