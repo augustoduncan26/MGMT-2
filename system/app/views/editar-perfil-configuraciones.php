@@ -13,8 +13,7 @@
     <div class="x_title">
       <h3><i class="clip-settings"></i> Configuraciones</h3>
       <div class="clearfix"></div>
-      <label id="label-mssg"><?=$mssg?></label>
-      
+      <div class="row" id="label-mssg"><?=$mssg?></div>
 
       <div class="item form-group row ">
         <a  data-toggle="modal" role="button" href="#add_usuarios" onClick="">
@@ -172,13 +171,13 @@
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Usuario</h3>
           <label id="mssg-label-edit"></label>
         </div>
-         <form name="add_users" id="add_users" method="post" action="#SELF" enctype="multipart/form-data">
+         <form name="add_users2" id="add_users2" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body" id="contenido_editar">
          Cargando...
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <button type="button" name="btn-agregar-user"  class="btn btn-primary" id="btn-agregar-user" onclick="var id_row = $('#id_row').val(); updateUser(id_row);">Guardar datos</button>      
+          <button type="button" name="btn-agregar-user2"  class="btn btn-primary" id="btn-agregar-user2" onclick="var id_row = $('#id_row').val(); updateUser(id_row);">Guardar datos</button>      
         </div>
         </form>                                  
       </div>
@@ -352,7 +351,7 @@
         </button>
         <h3 class="modal-title">Subir Logo</h3>
       </div>
-      <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
+      <form name="clientes-logo" id="clientes-logo" method="post" action="#SELF" enctype="multipart/form-data">
         <div class="modal-body">
          <div id="list-of-usersssssss">
          <!-- Cargando... -->
@@ -593,6 +592,9 @@ function deleteRow ( id ) {
 
     if (ajax2.readyState==4) {
       $('#label-mssg').html(ajax2.responseText);
+      setTimeout(()=>{
+        $('#label-mssg').html('');
+      },4000);
       listarUsuarios();
     }
   }

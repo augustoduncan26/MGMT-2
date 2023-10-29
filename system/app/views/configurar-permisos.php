@@ -32,7 +32,7 @@
  <label id="label-mssg"><?=$mssg?></label>
 <!--  <div class="ln_solid"></div> -->
 
-<a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Permiso</a>	
+<a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#mssg-label').text('');$('#nombre').focus();">[+] Nuevo Permiso</a>	
 <br />
   <!-- end: PAGE HEADER -->
   <!-- start: PAGE CONTENT -->
@@ -185,7 +185,7 @@ $(function(){
   });
 
 
-// Add Permiso
+// Show Add Modal
 function addPermiso () {
 
   var nombre      =   $('#nombre_permiso').val();
@@ -249,7 +249,7 @@ function updatePermiso ( id ) {
 
 }
 
-// Edit Permiso
+// Show Edit Form
 function editPermiso ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
@@ -305,6 +305,9 @@ function deletePermiso ( id ) {
 
     if (ajax2.readyState==4) {
       $('#label-mssg').html(ajax2.responseText);
+      setTimeout(()=>{
+        $('#label-mssg').html('');
+      },4000);
       listPermisos();
     }
   }

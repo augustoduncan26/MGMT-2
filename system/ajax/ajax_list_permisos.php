@@ -21,14 +21,7 @@ $sql       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,fal
       </thead>
       <tbody>
         <?php 
-        // if ($_SESSION['id_user'] < 7 ) {
-        //   $sel = mysql_query("Select * From zz_permiso_definicion order by permiso ASC");
-        // } else {
-        //   $sel = mysql_query("Select * From zz_permiso_definicion Where permiso < 5000  order by permiso ASC");
-        // }
         foreach ($sql['resultado'] as $key => $datos) {
-        
-        //while ( $datos = mysql_fetch_object($sel)) {
         ?>
              <tr>
              <td <?php if($datos['activo']==0){?> class="row-yellow-transp" <?php } ?>><label><?=$datos['nombre']?></label><input style="width:200px;border:0;background-color:rgba(0,0,0,0);" type="hidden" value="<?=$datos['nombre']?>" /></td>
@@ -41,7 +34,7 @@ $sql       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,fal
                   
                   <a class="btn btn-xs btn-teal tooltips" data-original-title="Detalle" data-toggle="modal" role="button" href="#edit_permiso" onclick="limpiar();editPermiso('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
           
-                  <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deletePermiso('<?php echo $datos->id; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+                  <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deletePermiso('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
     
                 </td>
              </tr>

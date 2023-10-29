@@ -38,7 +38,7 @@ if ( isset($_GET['edit']) &&  $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_G
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permiso_definicion Where id = '".$_GET['id']."'");
 	//mysql_query("Delete from ".$tblDefinicion." Where id = '".$_GET['id']."'") or die(mysql_error());
-	echo $mssg 		=	'Se elimino el registro con éxito.';
+	echo $mssg 		=	'<div class="alert alert-success">Se elimino el registro con éxito.</div>';
 }
 
 
