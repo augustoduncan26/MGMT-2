@@ -37,6 +37,13 @@
                                 <th>Total de Usuarios</th>
                                 <th>Fecha</th>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div class="col-md-1"></div>
