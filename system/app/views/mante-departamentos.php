@@ -141,7 +141,7 @@ runNavigationToggler();
 
 const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   $('.fa-spinner').show();
   var contenido_editor = $('#list-rows')[0];
   let route = "ajax/ajax_list_departamentos.php"; 
@@ -197,7 +197,7 @@ function deleteRow ( id ) {
 // Add Row
 function addRows () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   
   var nombre      = $('#nombre').val();
   var telefono    = $('#telefono').val();
@@ -245,7 +245,7 @@ function addRows () {
 // Edit Row
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
   let route = "ajax/ajax_editar_departamentos.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
@@ -272,7 +272,7 @@ function editRow ( id ) {
 // Update Row
 function updateRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   var nombre      = $('#txt_nombre').val();
   var precio      = $('#txt_precio').val();
   var estado      = $('#txt_estado').val();

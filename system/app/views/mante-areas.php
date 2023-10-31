@@ -181,7 +181,7 @@ runNavigationToggler();
 
 const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   $('.fa-spinner').show();
   var contenido_editor = $('#list-rows')[0];
   let route = "ajax/ajax_list_areas.php"; 
@@ -242,7 +242,7 @@ function deleteRow ( id ) {
 // Add Row
 function addRows () {
   let id_user     = '<?php echo $_SESSION["id_user"]?>';
-  let id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  let id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   
   let nombre      = $('#nombre').val();
   let departamento= $('#departamento').val();
@@ -302,7 +302,7 @@ function addRows () {
 // Edit Row
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
   let route = "ajax/ajax_editar_areas.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
@@ -329,7 +329,7 @@ function editRow ( id ) {
 // Update Row
 function updateRow ( id ) {
   let id_user     = '<?php echo $_SESSION["id_user"]?>';
-  let id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  let id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   let nombre      = $('#txt_nombre').val();
   let departamento= $('#txt_departamento').val();
   let total_usuarios= $('#txt_total_usuarios').val();

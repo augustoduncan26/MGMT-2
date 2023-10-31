@@ -57,7 +57,7 @@
 
 
         <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
-        <!-- <link rel="shortcut icon" href="images/DC-2.png" /> -->
+        <link rel="shortcut icon" href="assets/images/template/DC-2.png" />
 
         <!-- Modal Styles / modal-sm / modal-md / modal-lg -->
 

@@ -4,6 +4,9 @@ $objPermOpc 	= new permisos();
 $active			= "style='background-color: #C8C7CC4D;'";
 $activeOpen		= "class = 'active open'";
 
+$id_user    = $_SESSION['id_user'];
+$id_cia     = $_SESSION['id_cia'];
+
 ?>
 <link href="assets/css/style_leftmenu.css" rel="stylesheet">
 
@@ -31,6 +34,7 @@ $activeOpen		= "class = 'active open'";
 		</li>
 
 		<!-- Events -->
+		<?php if ($objPermOpc->tienePermiso(100)) { ?>
 		<li class="list_item">
 			<div class="list__button">
 				<a href="?eventos" class="nav__link">
@@ -40,7 +44,7 @@ $activeOpen		= "class = 'active open'";
 				</a>
 			</div>
 		</li>
-
+		<?php } ?>
 		<!-- Rooms -->
 		<?PHP if($objPermOpc->tienePermiso(200) || $objPermOpc->tienePermiso(201)){  ?>
 		<li class="list_item list__item--click <?php //if (strpos(GET()[0],'habitacion')!==false) { echo  'active open'; }?>">
@@ -54,12 +58,13 @@ $activeOpen		= "class = 'active open'";
 			</div>
 
 			<ul class="list__show">
+				<?php if ($objPermOpc->tienePermiso(200)) { ?>
 				<li <?php if(GET()[0] == 'habitaciones'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?habitaciones" class="nav__link nav__link--inside">
 						<i class="clip-checkbox-partial"></i><span class="title"> Habitaciones </span>
 					</a>
 				</li>
-
+				<?php } ?>
 				<?php if ($objPermOpc->tienePermiso(201)) { ?>
 				<li <?php if (strpos(GET()[0],'tipo-habitaciones')!==false) { echo  'class="menu-backg-item"'; }?>>
 					<a href="?tipo-habitaciones" class="nav__link nav__link--inside">
@@ -224,69 +229,69 @@ $activeOpen		= "class = 'active open'";
 
 		<!-- Roles de Turnos -->
 		<?PHP if($objPermOpc->tienePermiso(305)){  ?>
-		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'roles-turnos')!==false) { echo  'class = "active open"'; }?>>
+		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'roles')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
 				<span class="title" > Roles de Turnos</span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_roles_turnos">
+			<img src="assets/images/arrow.svg" class="list__arrow arrow_roles">
 			</div>
 
 			<ul class="list__show">
-				<li <?php if(GET()[0] == 'mante-direcciones'){ echo ' class="menu-backg-item"';}?>>
-				<a href="?mante-direcciones" class="nav__link nav__link--inside">
-					<!-- <i class="clip-settings"></i> --> -<span class="title"> Roles de Turnos </span>
+				<li <?php if(GET()[0] == 'roles-turnos'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-turnos" class="nav__link nav__link--inside">
+					-<span class="title"> Roles de Turnos </span>
 				</a>
 				</li>
 
-				<li <?php if(GET()[0] == 'mante-departamentos'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-departamentos" class="nav__link nav__link--inside">
-						<!-- <i class="clip-settings"></i> --> -<span class="title"> Cambios de Turnos </span>
+				<li <?php if(GET()[0] == 'roles-cambios-turnos'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?roles-cambios-turnos" class="nav__link nav__link--inside">
+						-<span class="title"> Cambios de Turnos </span>
 					</a>
 				</li>
 
-				<li <?php if(GET()[0] == 'mante-areas'){ echo ' class="menu-backg-item"';}?>>
-				<a href="?mante-areas" class="nav__link nav__link--inside">
-					<!-- <i class="clip-settings"></i> --> -<span class="title"> Mis Turnos </span>
+				<li <?php if(GET()[0] == 'roles-mis-turnos'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-mis-turnos" class="nav__link nav__link--inside">
+					-<span class="title"> Mis Turnos </span>
 				</a>
 				</li>
 				
-				<li <?php if(GET()[0] == 'mante-zonas'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-zonas" class="nav__link nav__link--inside">
-						<!-- <i class="clip-settings"></i> --> -<span class="title"> Buscar Roles de Turnos </span>
+				<li <?php if(GET()[0] == 'roles-buscar-turnos'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?roles-buscar-turnos" class="nav__link nav__link--inside">
+						-<span class="title"> Buscar Roles de Turnos </span>
 					</a>
 				</li>
-				<li <?php if(GET()[0] == 'mante-formulas'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-formulas" class="nav__link nav__link--inside">
+				<li <?php if(GET()[0] == 'roles-notificaciones'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?roles-notificaciones" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Mis Notificaciones </span>
 					</a>
 				</li>
-				<li <?php if(GET()[0] == 'mante-horarios'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-horarios" class="nav__link nav__link--inside">
-						<!-- <i class="clip-settings"></i> --> - <span class="title"> Reportes </span>
+				<li <?php if(GET()[0] == 'roles-reportes'){ echo ' class="menu-backg-item"';}?>>
+					<a href="#" class="nav__link nav__link--inside">
+						- <span class="title"> Reportes </span>
 					</a>
 
 						<ul class="list__show">
-						<li <?php if(GET()[0] == 'caja-categorias'){ echo ' class="menu-backg-item"';}?>>
-							<a href="?caja-categorias" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Listar Roles de Turnos </span>
+						<li <?php if(GET()[0] == 'roles-listar-roles-turnos'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?roles-listar-roles-turnos" class="nav__link nav__link--inside">
+								|- <span class="title"> Listar Roles de Turnos </span>
 							</a>
 						</li>
-						<li <?php if(GET()[0] == 'caja-clientes'){ echo ' class="menu-backg-item"';}?>>
-							<a href="?caja-clientes" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Listar Cambios de Turnos </span>
+						<li <?php if(GET()[0] == 'roles-listar-cambios-turnos'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?roles-listar-cambios-turnos" class="nav__link nav__link--inside">
+								|- <span class="title"> Listar Cambios de Turnos </span>
 							</a>
 						</li>
-						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
-							<a href="?caja-proveedores" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Consultas de Usuarios </span>
+						<li <?php if(GET()[0] == 'roles-consultas-usuarios'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?roles-consultas-usuarios" class="nav__link nav__link--inside">
+								|- <span class="title"> Consultas de Usuarios </span>
 							</a>
 						</li>
-						<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
-							<a href="?caja-proveedores" class="nav__link nav__link--inside">
-								<!--<i class="fa fa-truck"></i>--> |- <span class="title"> Correcciones de Turnos </span>
+						<li <?php if(GET()[0] == 'roles-correcciones-turnos'){ echo ' class="menu-backg-item"';}?>>
+							<a href="?roles-correcciones-turnos" class="nav__link nav__link--inside">
+								|- <span class="title"> Correcciones de Turnos </span>
 							</a>
 						</li>
 						</ul>
@@ -575,30 +580,37 @@ $activeOpen		= "class = 'active open'";
 			</div>
 
 			<ul class="list__show">
+				<?php if ($objPermOpc->tienePermiso(5001)) { ?>
 				<li <?php if(GET()[0] == 'configurar-datos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-datos" class="nav__link nav__link--inside">
 						<i class="clip-settings"></i><span class="title"> Configuración </span>
 					</a>
 				</li>
-
+				<?php } ?>
+				<?php if ($objPermOpc->tienePermiso(5002)) { ?>
 				<li <?php if(GET()[0] == 'configurar-usuarios'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-usuarios" class="nav__link nav__link--inside">
 						<i class="clip-user-plus"></i><span class="title"> Usuarios </span>
 					</a>
 				</li>
+				<?php } ?>
+				<?php if ($objPermOpc->tienePermiso(5003)) { ?>
 				<li <?php if(GET()[0] == 'facturacion-perfiles'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-perfiles" class="nav__link nav__link--inside">
 						<i class="clip-users-2"></i><span class="title"> Perfiles </span>
 					</a>
 				</li>
+				<?php } ?>
+				<?php if ($objPermOpc->tienePermiso(5004)) { ?>
 				<li <?php if(GET()[0] == 'configurar-permisos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-permisos" class="nav__link nav__link--inside">
 						<i class="clip-key"></i><span class="title"> Permisos </span>
 					</a>
 				</li>
-				<li <?php if(GET()[0] == 'facturacion-menu'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?configurar-menu" class="nav__link nav__link--inside">
-						<i class="clip-list-4"></i><span class="title"> Menú </span>
+				<?php } ?>
+				<li <?php if(GET()[0] == 'configurar-notificaciones'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?configurar-notificaciones" class="nav__link nav__link--inside">
+						<i class="clip-list-4"></i><span class="title"> Notificaciones </span>
 					</a>
 				</li>
 				

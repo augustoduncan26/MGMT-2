@@ -13,12 +13,12 @@
     <div class="x_title">
       <h3></h3>
       <div class="clearfix"></div>
-      <label id="mssg-mssg"><?=$mssg?></label>
+      <label id="mssg-window"><?=$mssg?></label>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nueva Dirección</a>
+        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Horario</a>
         <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[^] Exportar</a>
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="col-sm-12">
        <div class="panel panel-default">
           <div class="panel-heading">
-            <i class="fa fa-group"></i>Administrar Direcciones
+            <i class="fa fa-group"></i>Administrar Horarios
            </div>
              <div class="panel-body">
               <div class="col-sm-12">
@@ -37,7 +37,7 @@
 
                <div class="x_content">
                <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
-               <div id="list-events"></div>
+               <div id="list-rows"></div>
               </div>
             </div>
           </div>
@@ -50,14 +50,14 @@
 
  <div class="clearfix"></div>
 
-<!-- Modal Add Direcctions -->
+<!-- Modal Add Rows -->
 
 <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Dirección</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Departamento.</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
@@ -69,6 +69,10 @@
                  <tr>
                    <td width="30%">Nombre <span class="symbol required"></span></td>
                    <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
+                 </tr>
+                 <tr>
+                   <td width="30%">Telefono <span class="symbol"></span></td>
+                   <td width="70%"><input maxlength="50" autofocus="" name="telefono" type="text" class="form-control" id="telefono" placeholder="Telefono"></td>
                  </tr>
                  <tr>
                    <td>Estado</td>
@@ -84,7 +88,7 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="agregar_habitacion" type="button" class="btn btn-primary" onClick="addDireccion()" value="Guardar datos">
+          <input name="agregar_habitacion" type="button" class="btn btn-primary" onClick="addRows()" value="Guardar datos">
           
         </div>
       </form>
@@ -102,7 +106,7 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Dirección</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Departamento.</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
@@ -139,8 +143,9 @@ const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   $('.fa-spinner').show();
-  var contenido_editor = $('#list-events')[0];
-  let route = "ajax/ajax_list_direcciones.php"; 
+  var contenido_editor = $('#list-rows')[0];
+  let route = "ajax/ajax_list_horarios.php"; 
+  //?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -151,7 +156,6 @@ const listResultTable = () => {
     data: {
       id_user : id_user,
       id_empresa: id_empresa,
-      nocache :<?php echo rand(99999,66666)?>,
     },
     dataType        : 'html',
     success         : function (response) { 
@@ -169,7 +173,7 @@ listResultTable();
 
 // Delete Row
 function deleteRow ( id ) {
-  let route = "app/controllers/mante-direcciones.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-departamentos.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -181,6 +185,7 @@ function deleteRow ( id ) {
     dataType        : 'html',
     success         : function (response) { 
         $('html, body').animate({scrollTop: '0px'},'slow');
+        //$('.mssg-window').show().html("Se ha eliminado el registros con éxito.");
         listResultTable();
     },
     error           : function (error) {
@@ -189,12 +194,13 @@ function deleteRow ( id ) {
   });
 }
 
-// Add Direccion
-function addDireccion () {
+// Add Row
+function addRows () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   
   var nombre      = $('#nombre').val();
+  var telefono    = $('#telefono').val();
   var estado      = $('#estado').val();
 
   if ( nombre == '') {
@@ -203,7 +209,7 @@ function addDireccion () {
     return false
   }
 
-  let route = "app/controllers/mante-direcciones.php?add=1&nombre="+nombre+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-departamentos.php"; //?add=1&nombre="+nombre+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -211,7 +217,12 @@ function addDireccion () {
     },
     url: route,
     type: "GET",
-    data: "",
+    data: {
+        add      : 1,
+        nombre   : nombre,
+        telefono : telefono,
+        estado   : estado,
+    },
     dataType        : 'html',
     success         : function (response) { 
       $("#mssg-alert").html(response);
@@ -231,13 +242,13 @@ function addDireccion () {
   });
 }
 
-// Edit Direccion
+// Edit Row
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
-  let route = "ajax/ajax_editar_direcciones.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "ajax/ajax_editar_departamentos.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -258,15 +269,15 @@ function editRow ( id ) {
 
 }
 
-// Update Direccion
+// Update Row
 function updateRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
+  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   var nombre      = $('#txt_nombre').val();
   var precio      = $('#txt_precio').val();
   var estado      = $('#txt_estado').val();
 
-  let route = "app/controllers/mante-direcciones.php?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-departamentos.php?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -286,18 +297,10 @@ function updateRow ( id ) {
   });
 }
 
-// Clean
-function limpiar () {
-  $("#nombre").val('');
-  ////$("#precio").val('');
-  $("#txt_nombre").val('');
-  $("#txt_precio").val('');
-  $('#mssg-edit-eventos').html('');
-}
 
 // Make some default options
-$("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-$("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
+//$("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
+//$("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 
 //$(document).ajaxStop(function() { 
 let loadDataTable = () => {
@@ -310,7 +313,7 @@ setTimeout(() => {
         // fixedColumns: true,
         "columnDefs": [{
         "orderable": false,
-        "targets": [2]
+        "targets": [3]
         }],
         language: {
         "decimal": "",
