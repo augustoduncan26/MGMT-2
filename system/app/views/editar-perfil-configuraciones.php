@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
-
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
 <body onload = "listarUsuarios()">
 
 <div class="row">
@@ -95,7 +95,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×
           </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Usuario</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Usuariosss</h3>
           <div id="mssg-label"></div>
         </div>
          <form name="add_users" id="add_users" method="post" action="#SELF" enctype="multipart/form-data">
@@ -124,19 +124,36 @@
                  </tr>
 
                  <tr>
+                   <td>Departamento</td>
+                   <td>
+                   <select name="deptoModal" class="" id="departamento">
+                      <option value=''></option>
+                    <?php
+                      foreach ($listaDeptos['resultado'] as $key => $depto) {
+                          echo "<option value='".$depto['id']."'>".$depto['name']."</option>";
+                      }
+                    ?> 
+                    </select> 
+                   <!-- <input name="deptoModal" type="text" maxlength="30" class="form-control" id="depto" placeholder="Departamento"> -->
+                  </td>
+                 </tr>
+
+                 <tr>
+                   <td>Dirección</td>
+                   <td>
+                    <input name="direccion" type="text" maxlength="100" class="form-control" id="direccion" placeholder="Dirección">
+                  </td>
+                 </tr>
+
+                 <tr>
                    <td>Telfono</td>
                    <td><input name="telefono" type="text" maxlength="30" class="form-control" id="telefono" placeholder="Teléfono"></td>
                  </tr>
 
                  <tr>
-                   <td>Dirección</td>
-                   <td><input name="direccion" type="text" maxlength="100" class="form-control" id="direccion" placeholder="Dirección"></td>
-                 </tr>
-
-                 <tr>
                    <td>Estado</td>
                    <td>
-                    <select name="estado" id="estado" class="form-control">
+                    <select name="estado" id="estado" class="">
                       <option value="1">Activo</option>
                       <option value="0" selected>Inactivo</option>
                     </select>
@@ -173,7 +190,63 @@
         </div>
          <form name="add_users2" id="add_users2" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body" id="contenido_editar">
-         Cargando...
+         <!-- Cargando... -->
+
+         <table class="table table-bordered table-hover" id="sample-table-4">
+   <tbody>
+     <tr>
+       <td width="30%">Nombre completo</td>
+       <td width="70%"><input autofocus="" name="txt_nombre" required maxlength="40" type="text" class="form-control" id="txt_nombre" value="<?=$data['nombre']?>" placeholder="Nombre Completo">
+       <input type="hidden" name="id_row" id="id_row" value="<?=$data['id_usuario']?>"></td>
+     </tr>
+     <tr>
+       <td>Email</td>
+       <td><input name="email" type="email" required maxlength="50" class="form-control" id="txt_email" placeholder="Email" value="<?=$data['email']?>">
+       </td>
+     </tr>
+     <tr>
+       <td>Departamento</td>
+       <td>
+        <select name="deptoEditar" class="" id="txt_depto">
+          <option value=''></option>
+        <?php
+          foreach ($listaDeptos['resultado'] as $key => $depto) {
+              echo "<option value='".$depto['id']."'>".$depto['name']."</option>";
+          }
+        ?> 
+        </select>
+       <!-- <input name="depto" type="text" maxlength="30" class="form-control" id="txt_depto" placeholder="Departamento" value="<?=$depto['name']?>"> -->
+      </td>
+     </tr>
+     <tr>
+       <td>Telfono</td>
+       <td><input name="telefono" type="text" maxlength="30" class="form-control" id="txt_telefono" placeholder="Teléfono" value="<?=$data['telephone']?>"></td>
+     </tr>
+
+     <tr>
+       <td>Dirección</td>
+       <td><input name="direccion" type="text" maxlength="100" class="form-control" id="txt_direccion" placeholder="Dirección" value="<?=$data['direcction']?>"></td>
+     </tr>
+
+     <tr>
+       <td>Cambiar contraseña</td>
+       <td><input name="contrasena" type="password" maxlength="100" class="form-control" id="txt_contrasena" placeholder="Contraseña" value="">
+       <label style="color:red; size: 10px">Dejar en blanco, si no desea cambiar la contraseña</label></td>
+     </tr>
+
+     <tr>
+       <td>Estado</td>
+       <td>
+        <select name="estado" id="txt_estado" class="">
+          <option value="1" <?php if($data['activo'] == 1) { echo 'selected';}?>>Activo</option>
+          <option value="0" <?php if($data['activo'] == 0) { echo 'selected';}?>>Inactivo</option>
+        </select>
+       </td>
+     </tr>
+                           
+   </tbody>
+ </table>
+ 
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -395,6 +468,9 @@
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
   
 
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+
+
 </body>
 <script src="assets/js/datatable-config.js"></script>
 <script>
@@ -411,14 +487,21 @@ function addUser () {
   let email       =   $('#email').val();
   let contrasena  =   $('#contrasena').val();
   let telefono    =   $('#telefono').val();
+  let depto       =   $('#departamento').val();
   let direccion   =   $('#direccion').val();
   let estado      =   $('#estado').val();
 
     if (nombre.length < 1  || email.length < 1 || contrasena.length < 1) {
       $('#mssg-label').html('Los campos marcados en rojo son necesarios.');
+      $('#departamento').css({'border-color': 'red'});
       $('#nombre').css({'border-color': 'red'});
       $('#email').css({'border-color': 'red'});
       $('#contrasena').css({'border-color': 'red'});
+      return false;
+    }
+
+    if (depto.length < 1) {
+      $('#mssg-label').html('El campo departamento es necesarios.');
       return false;
     }
 
@@ -439,7 +522,7 @@ function addUser () {
     $('#contrasena').css({'border-color': ''});
 
     ajax2   = nuevoAjax();
-    ajax2.open("GET", "app/controllers/editar-perfil-configuraciones.php?add=1&nombre="+nombre+"&contrasena="+contrasena+"&direccion="+direccion+"&telefono="+telefono+"&email="+email+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
+    ajax2.open("GET", "app/controllers/editar-perfil-configuraciones.php?add=1&nombre="+nombre+"&contrasena="+contrasena+"&depto="+depto+"&direccion="+direccion+"&telefono="+telefono+"&email="+email+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
     ajax2.onreadystatechange=function() {
 
     if (ajax2.readyState==4) {
@@ -454,21 +537,58 @@ function addUser () {
 }
 
 
-// Show dit Event
+// Show dit Event Modal
 function editUser ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
+  $('#mssg-label-edit').hide();
+  // ajax2   = nuevoAjax();
+  // ajax2.open("GET", "ajax/ajax_editar_user_company.php?id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);
+  // ajax2.onreadystatechange=function() {
 
-  ajax2   = nuevoAjax();
-  ajax2.open("GET", "ajax/ajax_editar_user_company.php?id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax2.onreadystatechange=function() {
+  //   if (ajax2.readyState==4) {
+  //     contenido_editor.innerHTML = ajax2.responseText;
+  //   }
+  // }
+  // ajax2.send(null);
 
-    if (ajax2.readyState==4) {
-      contenido_editor.innerHTML = ajax2.responseText;
+  let route = "app/controllers/editar-perfil-configuraciones.php";
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: {
+      showEdit  : 1,
+      id        : id,
+      id_cia    : id_cia,
+      nocache : '<?php echo rand(99999,66666)?>',
+    },
+    dataType        : 'json',
+    success         : function (response) { 
+
+      $('#txt_nombre').val(response['nombre']);
+      $('#txt_email').val(response['email']);
+      $('#txt_depto').select2('val',response['id_depto']);
+      $('#txt_telefono').val(response['telephone']);
+      $('#txt_direccion').val(response['direcction']);
+      $('#txt_estado').select2('val',response['activo']);
+      $('#id_row').val(response['id_usuario']);
+      // console.log(response)
+
+      listarUsuarios();
+      $("#mssg-label-edit").html('<uppercase>Los datos fueron actualizados con éxito.</uppercase>');
+      
+    },
+    error           : function (error) {
+      console.log(error);
     }
-  }
-  ajax2.send(null);
+  });
+
+
 }
 
 // Update Event
@@ -476,18 +596,25 @@ function updateUser ( id ) {
   
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-
   var nombre      = $('#txt_nombre').val();
   var email       = $('#txt_email').val();
   var telefono    = $('#txt_telefono').val();
+  var depto       = $('#txt_depto').val();
   var direccion   = $('#txt_direccion').val();
   var contrasena  = $('#txt_contrasena').val();
   var estado      = $('#txt_estado').val();
+  $('#mssg-label-edit').css({'width':'100%'})
 
   if (nombre.length < 1  || email.length < 1) {
-    $('#mssg-label-edit').html('Los campos con (*) son necesarios.');
+    $('#mssg-label-edit').html('Los campos con (*) son requerido.');
     $('#txt_nombre').css({'border-color': '#007AFF'});
     $('#txt_email').css({'border-color': '#007AFF'});
+    return false;
+  }
+
+  if ($('#txt_depto').val() == "" || $('#txt_depto').val() == null) {
+    $('#mssg-label-edit').show();
+    $('#mssg-label-edit').html('<div class="alert alert-danger">El campo departamento es requerido.</div>');
     return false;
   }
 
@@ -496,22 +623,6 @@ function updateUser ( id ) {
     $('#txt_contrasena').css({'border-color': '#007AFF'});
     return false;
   }
-
-  // ajax3   = nuevoAjax();
-  // ajax3.open("GET", "app/controllers/editar-perfil-configuraciones.php?
-  // edit=1&id="+id+"&email="+email+"&telefono="+telefono+"&direccion="+direccion+"
-  //&nombre="+nombre+"&activo="+estado+"&contrasena="+contrasena+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  // ajax3.onreadystatechange=function() {
-
-  //   if (ajax3.readyState==4) {
-  //     //contenido_editor.innerHTML = ajax2.responseText;
-  //     listarUsuarios();
-  //     $("#mssg-label-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
-      
-  //   }
-  // }
-
-  // ajax3.send(null);
 
   let route = "app/controllers/editar-perfil-configuraciones.php";
   $.ajax({
@@ -527,6 +638,7 @@ function updateUser ( id ) {
       email   : email,
       telefono: telefono,
       direccion:direccion,
+      depto   : depto,
       nombre  : nombre,
       activo  : estado,
       contrasena:contrasena,
@@ -535,8 +647,9 @@ function updateUser ( id ) {
     },
     dataType        : 'html',
     success         : function (response) { 
+      $('#mssg-label-edit').show();
       listarUsuarios();
-      $("#mssg-label-edit").html('<uppercase>Los datos fueron actualizados con éxito.</uppercase>');
+      $("#mssg-label-edit").html('<div class="alert alert-success">Los datos fueron actualizados con éxito.</div>');
       
     },
     error           : function (error) {
@@ -679,8 +792,8 @@ function limpiar () {
   $('#mssg-label-edit-perm').html('');
 }
 
-
+ $("[name='deptoEditar']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+ $("[name='deptoModal']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+ $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>
-
-
 <!-- End PNotify -->

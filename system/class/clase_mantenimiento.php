@@ -228,7 +228,7 @@ class Mantenimientos
 				else
 				{
 					$ObjBitac->registrarBitaUser('Se ha actualizado el registro: ('.$GET_id.') de la tabla: ('.$P_tabla.')', $_SESSION['id_usuario'],false);
-					$exito	=	"Se ha actualizado el registro con éxito"; //"The Information has been saved successfully";
+					$exito	=	"Se ha actualizado el registro con ï¿½xito"; //"The Information has been saved successfully";
 				}
 				
 			break;
@@ -434,7 +434,7 @@ class Mantenimientos
 		$exito 		= 	false;
 		$PageRecord	=	false;
 		$objCons 	= 	new consultor();
-		//echo $P_SeteaOrden;die();
+
 		if($P_SeteaOrden == true){$objCons->setearCamposOrder($P_SeteaOrden);}
 		if($P_orden == true)
 		{
@@ -499,7 +499,7 @@ class Mantenimientos
 	// LISTAR LOS CAMPOS (31) DE LAS FORMULAS
 	//=======================================
 	// Para non tener que estar haciendo un ciclo
-	// repetitivo en varios lugares del código
+	// repetitivo en varios lugares del cï¿½digo
 	public function ListadeCampos()
 	{
 		$start		=	false;

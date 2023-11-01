@@ -5,6 +5,7 @@ $id_cia     = $_GET['id_cia'];
 include_once ('../framework.php');
 $ObjMante   = new Mantenimientos();
 $data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+$deptos     = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$id_cia,'array');
 
 ?>
 
@@ -19,6 +20,24 @@ $data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET[
        <td>Email</td>
        <td><input name="email" type="email" required maxlength="50" class="form-control" id="txt_email" placeholder="Email" value="<?=$data['email']?>">
        </td>
+     </tr>
+     <tr>
+       <td>Departamento</td>
+       <td>
+        <select name="deptoEditar" class="form-control" id="txt_depto">
+          <option value='s'></option>
+        <?php
+          foreach ($deptos['resultado'] as $key => $depto) {
+            if ($depto['id'] == $data['id_depto']) {
+              echo "<option selected value='".$depto['id']."'>".$depto['name']."</option>";
+            } else {
+              echo "<option value='".$depto['id']."'>".$depto['name']."</option>";
+            }
+          }
+        ?> 
+        </select>
+       <!-- <input name="depto" type="text" maxlength="30" class="form-control" id="txt_depto" placeholder="Departamento" value="<?=$depto['name']?>"> -->
+      </td>
      </tr>
      <tr>
        <td>Telfono</td>
@@ -48,3 +67,5 @@ $data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET[
                            
    </tbody>
  </table>
+
+ <script>$("[name='deptoEditar']").select2({ width: '100%', dropdownCssClass: "bigdrop"});</script>

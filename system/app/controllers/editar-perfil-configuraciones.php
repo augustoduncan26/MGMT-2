@@ -4,18 +4,20 @@
 	$ObjEjec    = new ejecutorSQL();
 
 	$id_user 		=	$_SESSION['id_user'];
-	$id_empresa 	=	$_SESSION['id_cia'];
+	$id_cia 		=	$_SESSION['id_cia'];
 	$P_Tabla 		=	"usuarios";
+
+	$listaDeptos    = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
 
 // Add
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
-	$where 			= 	'usuario="'.$_GET['email'].'" and id_cia="'.$id_empresa.'"';
+	$where 			= 	'usuario="'.$_GET['email'].'" and id_cia="'.$id_cia.'"';
 	$busca 			=	$ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
 
     //$PCLAVE			=	"AES_ENCRYPT('".htmlentities('123456')."','toga')";
-	$P_Campos 		=	'usuario,contrasena, email, nombre, id_cia,created_at,is_principal,activo,telephone,direcction,profile_photo';
-	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('".$_GET['contrasena']."','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '".$_SESSION['id_cia']."', NOW() , '0' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."','-'";
+	$P_Campos 		=	'usuario,contrasena, email, nombre, id_cia, id_depto,created_at,is_principal,activo,telephone,direcction,profile_photo';
+	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('".$_GET['contrasena']."','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '".$_SESSION['id_cia']."', '".$_GET['depto']."', NOW() , '0' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."','-'";
 	
 	if ($busca['total'] > 0 ) {
 		echo '<div class="alert alert-danger">Este usuario ya existe.</div>';
@@ -57,10 +59,18 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	// }
 }
 
-// Edit
+// Show Edit info
+if ( isset($_GET['showEdit']) && $_GET['id']) {
+	//nombre,email,id_depto,telephone,direcction,activo
+	$data       = $ObjMante->BuscarLoQueSea('id_usuario,nombre,email,id_depto,telephone,direcction,activo',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+	$deptos     = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
+	echo json_encode($data);
+}
+
+// Edit / Update info
 if ( isset($_GET['edit']) &&  $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_GET['email'] !='') {
 
-	$P_Valores 		= 	" nombre = '".$_GET['nombre']."', email = '".$_GET['email']."', updated_at = NOW(), telephone = '".$_GET['telefono']."', direcction = '".$_GET['direccion']."', activo = '".$_GET['activo']."'";
+	$P_Valores 		= 	" nombre = '".$_GET['nombre']."', id_depto='".$_GET['depto']."', email = '".$_GET['email']."', updated_at = NOW(), telephone = '".$_GET['telefono']."', direcction = '".$_GET['direccion']."', activo = '".$_GET['activo']."'";
     if ($_GET['contrasena']!='') { $P_Valores 	.=	" , contrasena = AES_ENCRYPT(".$_GET['contrasena'].",'toga')"; }
 	$P_condicion 	=	" id_usuario = '".$_GET['id']."'";
 	$upd 			=	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'users', $P_condicion);

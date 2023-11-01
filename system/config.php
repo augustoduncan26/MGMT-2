@@ -27,8 +27,7 @@ define("DB_USER_S"	,	"");
 define("DB_CLAVE_S"	,	"");
 
 $linkServidor 	=	$mysqli; 
-// echo "<pre>";
-// var_dump($link);
+
 // SHOW ERRORS / PHP
 //error_reporting(E_ALL);
 //ini_set('error_reporting', E_ALL);

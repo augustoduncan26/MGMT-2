@@ -13,6 +13,7 @@ $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,
           <th>Nombre</th>
           <th>Email</th>
 		      <th>Telefono</th>
+          <th>Departamento</th>
           <th>Dirección</th>
           <th style="width: 200px">Estado</th>
           <th></th>
@@ -21,12 +22,15 @@ $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,
       <tbody>
       <?php
         foreach ( $datos['resultado'] as $key => $dato) {
+          
+          $depto       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id = "'.$dato['id_depto'].'" and id_cia = '.$id_cia,'extract');
       ?>
         <tr>
           <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['nombre']?></td>
           <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['email']?></td>
 
           <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['telephone']?></td>
+          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$depto['name']?></td>
           <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['direcction']?></td>
           <td width="100px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?php if($dato['activo'] ==1) { echo '<span class="label label-sm label-success">Active</span>'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
           <td width="100px" class="" style="width:15% !important;">

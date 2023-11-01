@@ -1,3 +1,7 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+<link rel="stylesheet" href="<?php echo $_ENV['FLD_ASSETS']?>/css/fontawesome6.4.2-web/css/all.min.css">
+
 <body>
 <div class="row view-container">
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -26,31 +30,72 @@
                 </div>
                 <div class="row">
                     <br />
-                    <div class="col-md-12">
+                    
+                    <div class="col-md-12 text-right"><i class="fa-solid fa-circle-info"></i> Info  &nbsp; </div>
+
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                Seleccionar Área
+                                    <select name="area_rol" id="area_rol" class="">
+                                    <option></option>
+                                    <?php 
+                                        foreach ($sqlAreas["resultado"] as $key => $value) {
+                                            echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                Total de Usuarios<input class="form-control" type="number" min="1" value="1" name="users_rol" id="users_rol" ></div>
+                                <div class="col-md-4">
+                                    Fecha<input class="form-control" type="date" name="date_rol" id="date_rol" ></div>
+                            </div>
+
+                            <div class="clearfix">&nbsp;</div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                <button name="btn-generar-rol" class="btn btn-primary" >Generar Rol de Turno</button>
+                                </div>
+                            </div>
+                        </form>
                         
                     </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
-                        <table class="table table-bordered table-hover" id="">
-                            <thead>
-                                <th>Seleccionar Área</th>
-                                <th>Total de Usuarios</th>
-                                <th>Fecha</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-2"></div>
                 </div>
+                
+                <div class="clearfix">&nbsp;</div>
+
+                <div class="row rol-turno-generated">
+                    <div class="col-md-12">
+                        <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
+                        <br />
+                    </div>
+                </div>
+
             </div>
-            <!-- end: FULL CALENDAR PANEL -->
+           
         </div>
     </div>
 </div>
-</body>
+</div>
+
+<script>
+
+  $('[name="btn-generar-rol"]').on('click',(e)=>{
+    e.preventDefault();
+    console.log(e.target.form[1].value)
+    console.log(e.target.form[2].value)
+    console.log(e.target.form[3].value)
+  });
+
+//   $("[name='area_rol']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+</script>
+
+<?php get_template_part('footer_scripts');?>
