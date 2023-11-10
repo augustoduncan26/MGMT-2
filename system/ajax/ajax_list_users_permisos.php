@@ -8,8 +8,7 @@ $ObjEjec    = new ejecutorSQL();
 
 $nombre       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 $permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,false,'permiso');
-// echo '<pre >';
-// var_dump($permss);
+
 ?>
   <strong style="font-size: 16px;">Usuario: <?php echo $nombre['nombre'];?></strong>
 
@@ -33,7 +32,7 @@ $permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,
       <tr>
         <td><?=$datos['permiso_padre']?></td>
         <td><?=$datos['nombre']?></td>
-        <td class="text-center"><input value="<?=$datos['permiso']?>" id="permisos" name=""  type="checkbox" <?php if($permiso['id_definicion_permiso'] == $datos['permiso']){ echo 'checked';}?>>
+        <td class="text-center"><input value="<?=$datos['permiso']?>" id="permisos" name=""  type="checkbox" <?php if($permiso['permiso'] == $datos['permiso']){ echo 'checked';}?>>
       </tr>
     <?php
           $elpadre  = $datos['permiso_padre'];} ?>

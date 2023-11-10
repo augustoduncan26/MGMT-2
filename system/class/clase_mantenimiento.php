@@ -222,13 +222,13 @@ class Mantenimientos
 				$whr_ 		= 	$P_condicion;
 				$result 	= 	$objejec->actualizarRegistro($cmp_, $P_tabla, $whr_);
 				if ($result == false){
-					$this->err 	= "Ha ocurrido un error. MySql dice: ".mysql_error();
+					$this->err 	= "Ha ocurrido un error. MySql dice: ".mysqli_error();
 					$exito		=	$this->err;
 				}
 				else
 				{
 					$ObjBitac->registrarBitaUser('Se ha actualizado el registro: ('.$GET_id.') de la tabla: ('.$P_tabla.')', $_SESSION['id_usuario'],false);
-					$exito	=	"Se ha actualizado el registro con �xito"; //"The Information has been saved successfully";
+					$exito	=	"Se ha actualizado el registro con éxito"; //"The Information has been saved successfully";
 				}
 				
 			break;

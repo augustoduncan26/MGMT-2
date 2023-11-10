@@ -1,11 +1,10 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
-<!-- 
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<script src="assets/plugins/select2/select2.min.js"></script> -->
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+
 
 <body onload="$('#cargando_add').hide()">
 
@@ -75,7 +74,7 @@
                  <tr>
                    <td>Departamento <span class="symbol required"></td>
                    <td colspan="3">
-                  <select class="form-control" name="departamento" id="departamento">
+                  <select name="departamento" id="departamento">
                       <option value=""> - seleccionar - </option> 
                       <?php
                         foreach ($typeDeptos['resultado'] as $typeData) {
@@ -94,7 +93,7 @@
                 <tr>
                    <td>Estado</td>
                    <td colspan="3">
-                    <select name="estado"  class="form-control" id="estado">
+                    <select name="estado" id="estado">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
                     </select>
@@ -163,9 +162,10 @@ Cargando contenidos...
 <!-- End Edit Rows -->
 
 <?php get_template_part('footer_scripts');?>
-
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-    
+  
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+
 <script>
 
 var runNavigationToggler = function () {
@@ -433,6 +433,9 @@ setTimeout(() => {
     });
 });
 }
+
+$("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>
 

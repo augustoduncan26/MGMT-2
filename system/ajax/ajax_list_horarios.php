@@ -16,6 +16,7 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','id_cia = '.$
           <th>Hora desde</th>
           <th>Hora hasta</th>
           <th>Departamento</th>
+          <th>Área</th>
           <th>Estado</th>
           <th>Fecha creación</th>
           <th></th>
@@ -25,11 +26,16 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','id_cia = '.$
       <?php
         if ($sel1['resultado']){
           foreach ($sel1['resultado'] as $datos) {
+            $deptoName  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id = '.$datos['id_depto'].'','extract');
+            $areaName   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id = '.$datos['id_area'].'','extract');
+            
       ?>
         <tr>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grupo']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['hora_desde']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['hora_hasta']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$deptoName['name']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$areaName['name']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['created_at']?></td>
           <td class="text-center" style="width:10% !important;">

@@ -99,14 +99,14 @@ class consultor extends funcionesDB {
 	}
 	
 	////////////////////////////////////////////////////////////////////
-	// M�todos
+	// Metodos
 	///////////////////////////////////////////////////////////////////
 	/** 
-	* Setea los par�metros LIM para la consulta.
-	* El LIM restringe el n�mero de registros que devuelve la consulta
+	* Setea los parametros LIM para la consulta.
+	* El LIM restringe el numero de registros que devuelve la consulta
 	* 
 	* @param integer $P_inicio Inicio de donde comenzar el recordset (LIM)
-	* @param integer $P_cuantos N�mero de registros a devolver en el LIM
+	* @param integer $P_cuantos Numero de registros a devolver en el LIM
 	* @param boolean $P_FoundR Flag que en caso de ser true activa el SQL_CALC_FOUND_ROWS en la consulta
 	* @return void No tiene valor de retorno
 	*/
@@ -118,7 +118,7 @@ class consultor extends funcionesDB {
 	}	
 	
 	/** 
-	* Setea los par�metros ORDER BY para que sea Ascendente
+	* Setea los parametros ORDER BY para que sea Ascendente
 	* 
 	* @return void No tiene valor de retorno
 	*/
@@ -127,7 +127,7 @@ class consultor extends funcionesDB {
 	}
 	
 	/** 
-	* Setea los par�metros ORDER BY para que sea Descendente
+	* Setea los parametros ORDER BY para que sea Descendente
 	* 
 	* @return void No tiene valor de retorno
 	*/
@@ -148,7 +148,7 @@ class consultor extends funcionesDB {
 	/** 
 	* Setea los campos/columnas de grupo en la consulta (GROUP BY )
 	* 
-	* @param string $P_Group Cadena que contiene los campos de agrupaci�n separados por coma
+	* @param string $P_Group Cadena que contiene los campos de agrupacion separados por coma
 	* @param string|boolean $P_Having Cadena que contiene las condiciones a ubicar en el HAVING, en caso de no haber having ubicar false o no enviar par�metro
 	* @return void No tiene valor de retorno
 	*/	
@@ -162,12 +162,12 @@ class consultor extends funcionesDB {
 	}
 	
 	/** 
-	* Construye cadena SQL de la consulta, con los par�metros especificados.
+	* Construye cadena SQL de la consulta, con los parametros especificados.
 	* 
 	* @param string $P_Campos Cadena que contiene los campos a consultar
 	* @param string $P_Tabla Cadena que contiene tabla a consultar
 	* @param string $P_condicion Cadena que contiene condiciones de la consulta
-	* @param boolean $P_addFR Flag que se�ala la utilizaci�n o no de SQL_CALC_FOUND_ROWS en la consulta
+	* @param boolean $P_addFR Flag que senala la utilizacion o no de SQL_CALC_FOUND_ROWS en la consulta
 	* @param boolean $P_Union Flag que indica si la sentencia a construir es una UNION de sentencias SQL
 	* @param string $P_GenerarEnArchivo Ruta y nombre del archivo donde se va a generar el archivo (en caso de que se quiera que la consulta se genere en un archivo)
 	* @return string Cadena SQL construida

@@ -1,40 +1,42 @@
 <?php
 	
-include_once ('../../framework.php');
+// include_once ('../../framework.php');
+include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+$ObjMante   = new Mantenimientos();
+$ObjEjec    = new ejecutorSQL();
 
 	$id_user 		=	$_SESSION['id_user'];
-	$id_empresa 	=	$_SESSION['id_empresa'];
+	$id_cia 		=	$_SESSION['id_cia'];
 	$P_Tabla 		=	"usuarios";
 
 if ($_SESSION['id_user']) {
 
-// Add
-if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
+	// Add
+	if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
-	$datosEmpresa 	=	mysql_fetch_array(mysql_query("Select * From usuarios Where id_usuario = '".$id_user."'"));
-	//echo $datosEmpresa['name_cia'];
+		$datosEmpresa 	=	mysql_fetch_array(mysql_query("Select * From usuarios Where id_usuario = '".$id_user."'"));
 
-    $PCLAVE			=	"AES_ENCRYPT('".htmlentities('123456')."','toga')";
-	$P_Campos 		=	'usuario,contrasena, email, nombre, apellido, id_empresa,name_cia,fecha_registro,fecha_ult_act,principal,idioma,activo,telephone,direcction,tipo_moneda';
-	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('123456','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '---' ,'".$_SESSION['id_empresa']."', '".$datosEmpresa['name_cia']."' , '".date("Y-m-d H:i:s")."' , '".date("Y-m-d H:i:s")."' , 0 , '".$datosEmpresa['idioma']."' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."', '".$datosEmpresa['tipo_moneda']."'";
-	
-	$busca 			=	mysql_query("Select * From ".$P_Tabla." Where email = '".$_GET['email']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
+		$PCLAVE			=	"AES_ENCRYPT('".htmlentities('123456')."','toga')";
+		$P_Campos 		=	'usuario,contrasena, email, nombre, apellido, id_cia,name_cia,fecha_registro,fecha_ult_act,principal,idioma,activo,telephone,direcction,tipo_moneda';
+		$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('123456','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '---' ,'".$_SESSION['id_cia']."', '".$datosEmpresa['name_cia']."' , '".date("Y-m-d H:i:s")."' , '".date("Y-m-d H:i:s")."' , 0 , '".$datosEmpresa['idioma']."' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."', '".$datosEmpresa['tipo_moneda']."'";
+		
+		$busca 			=	mysql_query("Select * From ".$P_Tabla." Where email = '".$_GET['email']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
 
-	if (mysql_num_rows($busca) >0 ) {
-			echo $mssg	=	'Ya existe este email.';
-	} else {
-		//$sql 	=	$Objsql->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-		$sql 	=	mysql_query("Insert into ".$P_Tabla." (".$P_Campos.") values(".$P_Valores.")") or die(mysql_error());
-		if ($sql) {
-			echo $mssg 	=	'Se ingreso el registro con éxito';
+		if (mysql_num_rows($busca) >0 ) {
+				echo $mssg	=	'Ya existe este email.';
+		} else {
+			//$sql 	=	$Objsql->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
+			$sql 	=	mysql_query("Insert into ".$P_Tabla." (".$P_Campos.") values(".$P_Valores.")") or die(mysql_error());
+			if ($sql) {
+				echo $mssg 	=	'Se ingreso el registro con éxito';
+			}
+
 		}
-
 	}
-}
-	
+		
 	// Permisos
 	//if ($_POST['btn_edit_room']) {
-	if ( $_POST['editperm'] == 1 ) {
+	if ( isset($_POST['editperm']) && $_POST['editperm'] == 1 ) {
 		$val 	=	explode(',',$_POST['valores']);
 
 		mysql_query("Delete from zz_permisos Where id_usuario = '".$_POST['id_']."'");
@@ -49,7 +51,7 @@ if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
 	// Edit
 	//if ($_POST['btn_edit_room']) {
-	if ( $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_GET['email'] !='') {
+	if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_GET['email'] !='') {
 
 		
 
@@ -64,7 +66,7 @@ if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	}
 
 	// Delete 
-	if ( $_GET['delete'] == 1 ) {
+	if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 		mysql_query("Delete from zz_permisos Where id_usuario = '".$_GET['id']."'") or die(mysql_error());
 		mysql_query("Delete from ".$P_Tabla." Where id_usuario = '".$_GET['id']."'") or die(mysql_error());
 		echo $mssg 		=	'Se elimino el registro con éxito';

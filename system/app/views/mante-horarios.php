@@ -1,8 +1,10 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+
 
 <body onload="$('#cargando_add').hide()">
 
@@ -51,13 +53,12 @@
  <div class="clearfix"></div>
 
 <!-- Modal Add Rows -->
-
 <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Departamento.</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Nuevo Horario.</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
@@ -67,17 +68,65 @@
                </thead>
                <tbody>
                  <tr>
-                   <td width="30%">Nombre <span class="symbol required"></span></td>
-                   <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
+                   <td width="20%">Grupo <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="grupo_horario" name="grupo_horario">
+                      <option></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+                   </td>
                  </tr>
                  <tr>
-                   <td width="30%">Telefono <span class="symbol"></span></td>
-                   <td width="70%"><input maxlength="50" autofocus="" name="telefono" type="text" class="form-control" id="telefono" placeholder="Telefono"></td>
+                   <td width="20%">Hora desde <span class="symbol required"></span></td>
+                   <td width="30%">
+                      <input maxlength="50" autofocus="" name="hora_desde" type="time" class="form-control" id="hora_desde" placeholder="Nombre">
+                      <!-- <select id="ampm_horadesde" name="ampm_horadesde">
+                        <option>AM</option>
+                        <option>PM</option>
+                      </select> -->
+                    </td>
+                   <td width="20%">Hora hasta <span class="symbol required"></span></td>
+                   <td width="30%">
+                    <input maxlength="50" autofocus="" name="hora_hasta" type="time" class="form-control" id="hora_hasta" placeholder="Nombre">
+                    <!-- <select id="ampm_horahasta" name="ampm_horahasta">
+                        <option>AM</option>
+                        <option>PM</option>
+                      </select> -->
+                  </td>
                  </tr>
+                 <tr><td colspan="4" style="color:red" class="text-center"><small>Ejemplo: 02:00 , 06:00 , 10:00 , 14:00, 22:00</small></td></tr>
+                 <tr>
+                   <td width="20%">Departamento <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="departamento_horario" name="departamento_horario">
+                    <option value=""> - seleccionar - </option> 
+                      <?php
+                        foreach ($typeDeptos['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
+                    </select>
+                  </td>
+                  <tr>
+                   <td width="20%">Área <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="area_horario" name="area_horario">
+                    <option value=""> - seleccionar - </option> 
+                      <?php
+                        foreach ($typeArea['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
+                    </select>
+                  </td>
+                  </tr>
                  <tr>
                    <td>Estado</td>
-                   <td>
-                    <select name="estado"  class="form-control" id="estado">
+                   <td colspan="3">
+                    <select name="estado_horario"  class="" id="estado_horario">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
                     </select>
@@ -125,7 +174,9 @@ Cargando contenidos...
 <?php get_template_part('footer_scripts');?>
 
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-    
+  
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+  
 <script>
 
 var runNavigationToggler = function () {
@@ -139,6 +190,7 @@ var runNavigationToggler = function () {
 };
 runNavigationToggler();
 
+/** List rows */
 const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
@@ -197,19 +249,21 @@ function deleteRow ( id ) {
 // Add Row
 function addRows () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   
-  var nombre      = $('#nombre').val();
-  var telefono    = $('#telefono').val();
-  var estado      = $('#estado').val();
+  var grupo       = $('#grupo_horario').val();
+  var hora_desde  = $('#hora_desde').val();
+  var hora_hasta  = $('#hora_hasta').val();
+  var depto       = $('#departamento_horario').val();
+  var area        = $('#area_horario').val();
+  var estado      = $('#estado_horario').val();
 
-  if ( nombre == '') {
+  if ( grupo == '' || hora_desde == '' || hora_hasta == '' || depto == '' || area == '') {
     $("#mssg-alert").html('Los campos con (*) son necesarios');
-    $('#nombre').focus();
     return false
   }
 
-  let route = "app/controllers/mante-departamentos.php"; //?add=1&nombre="+nombre+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-horarios.php"; //?add=1&nombre="+nombre+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -218,10 +272,13 @@ function addRows () {
     url: route,
     type: "GET",
     data: {
-        add      : 1,
-        nombre   : nombre,
-        telefono : telefono,
-        estado   : estado,
+        add       : 1,
+        grupo     : grupo,
+        hora_desde: hora_desde,
+        hora_hasta: hora_hasta,
+        depto     : depto,
+        area      : area,
+        estado    : estado
     },
     dataType        : 'html',
     success         : function (response) { 
@@ -233,8 +290,14 @@ function addRows () {
         $(".alert-danger").hide();
       }, 3000);
   
-      $("#nombre").val('');
-      $("#nombre").focus();
+      //$("#grupo_horario").val('');
+      $("#grupo_horario").select2("val", "");
+      $("#hora_desde").val('');
+      $("#hora_hasta").val('');
+      $("#departamento_horario").select2("val", "");
+      $("#area_horario").select2("val", "");
+      //$("#departamento_horario").val('');
+      //$("#area_horario").val('');
     },
     error           : function (error) {
       console.log(error);
@@ -358,4 +421,8 @@ setTimeout(() => {
 });
 }
 
+$("[name='grupo_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='departamento_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='area_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='estado_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>

@@ -5,18 +5,18 @@ $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 
 $id_user    = $_SESSION["id_user"];
-$id_empresa = $_SESSION['id_empresa'];
+$id_cia = $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
 
 $ObjMante   = new Mantenimientos();
-//$typeDirecciones  	= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_direcciones','id_cia = '.$_SESSION['id_empresa'].' and active=1','array');
-$typeDeptos  		= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_empresa'].' and active=1','array');
+
+$typeDeptos  		= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 
 
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 
-	$where 			= 	'name="'.$_GET['nombre'].'" and id_cia="'.$id_empresa.'"';
+	$where 			= 	'name="'.$_GET['nombre'].'" and id_cia="'.$id_cia.'"';
 	$busca 			=	$ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas',$where,'array');
 
 	if ($busca['total'] > 0 ) {
@@ -25,7 +25,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 
 		$P_Tabla 	=	PREFIX.'mant_areas';
 		$P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
-		$P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
+		$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
 		$result 	= $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		if ($result == 1) {
 			echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
@@ -39,7 +39,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	//$P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
-	//$P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
+	//$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
 	$P_Valores = "name = '".$_GET['nombre']."', id_depts = '".$_GET['departamento']."', users = '".$_GET['total_usuarios']."', 
 	turn_a = '".$_GET['turno_a']."', turn_b = '".$_GET['turno_b']."', turn_c = '".$_GET['turno_c']."', turn_d = '".$_GET['turno_d']."', turn_e = '".$_GET['turno_e']."',
 	active = '".$_GET['activo']."', updated_at=NOW()";

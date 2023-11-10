@@ -1,8 +1,10 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
+<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" /> -->
 <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
 
 <body onload="$('#cargando_add').hide()">
 
@@ -77,7 +79,7 @@
                  <tr>
                    <td>Estado</td>
                    <td>
-                    <select name="estado"  class="form-control" id="estado">
+                    <select name="estado"  class="" id="estado">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
                     </select>
@@ -95,9 +97,9 @@
       </div>
     </div>
   </div>
-<!-- End Add Direcctions -->
+<!-- End Add Row -->
 
-<!-- Edit Direcctions -->
+<!-- Edit Row -->
 <?php /////////// Editar algo ?>
 <div class="<?php echo "modal fade"; ?>" id="edit_event" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?>">
@@ -108,9 +110,43 @@
 </button>
 <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Departamento.</h3>
 </div>
+
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
-Cargando contenidos...
+ 
+ <label id="mssg-edit" style="color:red"></label>
+
+ <table class="table table-bordered" id="sample-table-4">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="30%">Nombre: <span class="symbol required"></span></td>
+      <td width="70%"><input autofocus="" name="nombre" type="text" class="form-control" id="txt_nombre" placeholder="Nombre" value="">
+      <input autofocus="" name="id_row" type="hidden" class="form-control" id="id_row" placeholder="Nombre" value="">
+      </td>
+    </tr>
+    <tr>
+    <td width="30%">Teléfono: <span class="symbol"></span></td>
+    <td width="70%"><input autofocus="" name="telefono" type="text" class="form-control" id="txt_telefono" placeholder="Teléfono" value="">
+    </tr>
+    <tr>
+      <td>Estado:</td>
+      <td>
+       <select name="estado" id="txt_estado" class="">
+         <option value="1" <?php if($data['active'] == 1) { echo 'selected'; } ?>>Activo</option>
+         <option value="0" <?php if($data['active'] == 0) { echo 'selected'; } ?>>Inactivo</option>
+       </select>
+      </td>
+    </tr>
+  </tbody>
+<tfoot>
+  <tr><td colspan="2">
+   
+</td></tr>
+</tfoot>
+</table>
+
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -125,20 +161,23 @@ Cargando contenidos...
 <?php get_template_part('footer_scripts');?>
 
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-    
+  
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+
 <script>
 
-var runNavigationToggler = function () {
-    $('.navigation-toggler').bind('click', function () {
-        if (!$('body').hasClass('navigation-small')) {
-            $('body').addClass('navigation-small');
-        } else {
-            $('body').removeClass('navigation-small');
-        };
-    });
-};
-runNavigationToggler();
+// var runNavigationToggler = function () {
+//     $('.navigation-toggler').bind('click', function () {
+//         if (!$('body').hasClass('navigation-small')) {
+//             $('body').addClass('navigation-small');
+//         } else {
+//             $('body').removeClass('navigation-small');
+//         };
+//     });
+// };
+// runNavigationToggler();
 
+/** List Results */
 const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
@@ -242,13 +281,14 @@ function addRows () {
   });
 }
 
-// Edit Row
+// Show Edit Modal
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
+  $("#mssg-edit").html('');
+  let route = "app/controllers/mante-departamentos.php";
 
-  let route = "ajax/ajax_editar_departamentos.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -256,10 +296,19 @@ function editRow ( id ) {
     },
     url: route,
     type: "GET",
-    data: "",
-    dataType        : 'html',
+    data: {
+      showEdit  : 1,
+      id        : id,
+      id_cia    : id_empresa,
+      nocache   : "<?php echo rand(99999,66666)?>",
+    },
+    dataType        : 'json',
     success         : function (response) { 
-      contenido_editor.innerHTML = response;
+      //contenido_editor.innerHTML = response;
+      $('#txt_nombre').val(response['name']);
+      $('#id_row').val(response['id']);
+      $('#txt_telefono').val(response['telephone']);
+      $('#txt_estado').select2('val',response['active']);
       listResultTable();
     },
     error           : function (error) {
@@ -274,10 +323,16 @@ function updateRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   var nombre      = $('#txt_nombre').val();
-  var precio      = $('#txt_precio').val();
+  var telefono    = $('#txt_telefono').val();
   var estado      = $('#txt_estado').val();
+  $('#mssg-edit').css({'width':'100%'})
 
-  let route = "app/controllers/mante-departamentos.php?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  if ( nombre == "") {
+    $("#mssg-edit").html('El campo nombre es requerido.');
+    return false;
+  }
+
+  let route = "app/controllers/mante-departamentos.php?edit=1&id="+id+"&nombre="+nombre+"&telefono="+telefono+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -288,7 +343,12 @@ function updateRow ( id ) {
     data: "",
     dataType        : 'html',
     success         : function (response) { 
-      $("#mssg-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
+      if (response == "ok") {
+        $("#mssg-edit").html('<div class="alert alert-success">Los datos fueron actualizados con éxito</div>');
+      } else {
+        $("#mssg-edit").html('<div class="alert alert-danger">No se ha podido actualizar los datos.</div>');
+      }
+      
       listResultTable();
     },
     error           : function (error) {
@@ -357,5 +417,8 @@ setTimeout(() => {
     });
 });
 }
+
+// $("[name='deptoModal']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>

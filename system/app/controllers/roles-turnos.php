@@ -5,17 +5,11 @@
 	$id_user    	= $_SESSION["id_user"];
 	$id_cia 		= $_SESSION['id_cia'];
 
-	$sqlAreas   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id_cia = '.$id_cia,'array');
-	
-	//$objUsuario 	=  	new Usuarios();
-	$objPermiso		=	new permisos();	
-	//$objWebControl	= 	new WebControl();
-	//$objPaginador 	= 	new paginador();
-	$objPFecha		=	new fecha();
-	//$objRolTurno	=	new RolesTurnos();	
-	$objejec 		=  	new ejecutorSQL();
+	$sqlAreas   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','active = 1 and id_cia = '.$id_cia,'array');
 
-	$Matriz			=	FALSE;
+	$objPermiso		=	new permisos();	
+	$objPFecha		=	new fecha();
+	$objejec 		=  	new ejecutorSQL();
 	
 	$objCMSMenu 	= 	new cms();
 	$objMante		= 	new Mantenimientos();
@@ -78,19 +72,6 @@
 	$POST_users		=	isset($_POST['cuantos'])?$_POST['cuantos']	:	0;				// CUANTOS USUARIOS
 	$POST_generar	=	isset($_POST['buttonGen'])?$_POST['buttonGen']:'';				// EL BOTON GENERAR
 	$POST_anyo		=	isset($_POST['anyo'])	?$_POST['anyo']	:	'';					// EL AÑO
-	
-	//SALIR
-	#========
-	if(isset($_POST['buttonSalir']))
-	{
-		mysqli_query($link,'DROP TABLE '.$_POST['tabla_tmp_area'].'');
-		echo '
-			<script>
-				self.location=("?pag=defaultAdmin");
-			</script>
-		';
-	}
-	
 	
 	$Tot_turnoA		=	0;
 	$Tot_turnoB		=	0;
@@ -174,8 +155,8 @@
 	// FIND CODCARGO DEL USUARIO
 	function CodCargo($IDEMPLEADO)
 	{	
-		global	$objMante;
-		$P_SQL	=	$objMante->BuscarLoQueSea('*','911_empleados','nempleado = "'.$IDEMPLEADO.'"','extract');
+		global	$ObjMante;
+		$P_SQL 	= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','nempleado = "'.$IDEMPLEADO.'"','extract');
 		return $P_SQL['codcargo'];
 		
 	}

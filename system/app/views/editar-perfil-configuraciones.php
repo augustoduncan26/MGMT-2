@@ -1,9 +1,11 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
+<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" /> -->
 <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
+
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+
 <body onload = "listarUsuarios()">
 
 <div class="row">
@@ -193,59 +195,59 @@
          <!-- Cargando... -->
 
          <table class="table table-bordered table-hover" id="sample-table-4">
-   <tbody>
-     <tr>
-       <td width="30%">Nombre completo</td>
-       <td width="70%"><input autofocus="" name="txt_nombre" required maxlength="40" type="text" class="form-control" id="txt_nombre" value="<?=$data['nombre']?>" placeholder="Nombre Completo">
-       <input type="hidden" name="id_row" id="id_row" value="<?=$data['id_usuario']?>"></td>
-     </tr>
-     <tr>
-       <td>Email</td>
-       <td><input name="email" type="email" required maxlength="50" class="form-control" id="txt_email" placeholder="Email" value="<?=$data['email']?>">
-       </td>
-     </tr>
-     <tr>
-       <td>Departamento</td>
-       <td>
-        <select name="deptoEditar" class="" id="txt_depto">
-          <option value=''></option>
-        <?php
-          foreach ($listaDeptos['resultado'] as $key => $depto) {
+            <tbody>
+            <tr>
+            <td width="30%">Nombre completo</td>
+            <td width="70%"><input autofocus="" name="txt_nombre" required maxlength="40" type="text" class="form-control" id="txt_nombre" value="<?=$data['nombre']?>" placeholder="Nombre Completo">
+            <input type="hidden" name="id_row" id="id_row" value="<?=$data['id_usuario']?>"></td>
+            </tr>
+            <tr>
+            <td>Email</td>
+            <td><input name="email" type="email" required maxlength="50" class="form-control" id="txt_email" placeholder="Email" value="<?=$data['email']?>">
+            </td>
+            </tr>
+            <tr>
+            <td>Departamento</td>
+            <td>
+            <select name="deptoEditar" class="" id="txt_depto">
+            <option value=''></option>
+            <?php
+            foreach ($listaDeptos['resultado'] as $key => $depto) {
               echo "<option value='".$depto['id']."'>".$depto['name']."</option>";
-          }
-        ?> 
-        </select>
-       <!-- <input name="depto" type="text" maxlength="30" class="form-control" id="txt_depto" placeholder="Departamento" value="<?=$depto['name']?>"> -->
-      </td>
-     </tr>
-     <tr>
-       <td>Telfono</td>
-       <td><input name="telefono" type="text" maxlength="30" class="form-control" id="txt_telefono" placeholder="Teléfono" value="<?=$data['telephone']?>"></td>
-     </tr>
+            }
+            ?> 
+            </select>
+            <!-- <input name="depto" type="text" maxlength="30" class="form-control" id="txt_depto" placeholder="Departamento" value="<?=$depto['name']?>"> -->
+            </td>
+            </tr>
+            <tr>
+            <td>Telfono</td>
+            <td><input name="telefono" type="text" maxlength="30" class="form-control" id="txt_telefono" placeholder="Teléfono" value="<?=$data['telephone']?>"></td>
+            </tr>
 
-     <tr>
-       <td>Dirección</td>
-       <td><input name="direccion" type="text" maxlength="100" class="form-control" id="txt_direccion" placeholder="Dirección" value="<?=$data['direcction']?>"></td>
-     </tr>
+            <tr>
+            <td>Dirección</td>
+            <td><input name="direccion" type="text" maxlength="100" class="form-control" id="txt_direccion" placeholder="Dirección" value="<?=$data['direcction']?>"></td>
+            </tr>
 
-     <tr>
-       <td>Cambiar contraseña</td>
-       <td><input name="contrasena" type="password" maxlength="100" class="form-control" id="txt_contrasena" placeholder="Contraseña" value="">
-       <label style="color:red; size: 10px">Dejar en blanco, si no desea cambiar la contraseña</label></td>
-     </tr>
+            <tr>
+            <td>Cambiar contraseña</td>
+            <td><input name="contrasena" type="password" maxlength="100" class="form-control" id="txt_contrasena" placeholder="Contraseña" value="">
+            <label style="color:red; size: 10px">Dejar en blanco, si no desea cambiar la contraseña</label></td>
+            </tr>
 
-     <tr>
-       <td>Estado</td>
-       <td>
-        <select name="estado" id="txt_estado" class="">
-          <option value="1" <?php if($data['activo'] == 1) { echo 'selected';}?>>Activo</option>
-          <option value="0" <?php if($data['activo'] == 0) { echo 'selected';}?>>Inactivo</option>
-        </select>
-       </td>
-     </tr>
-                           
-   </tbody>
- </table>
+            <tr>
+            <td>Estado</td>
+            <td>
+            <select name="estado" id="txt_estado" class="">
+            <option value="1" <?php if($data['activo'] == 1) { echo 'selected';}?>>Activo</option>
+            <option value="0" <?php if($data['activo'] == 0) { echo 'selected';}?>>Inactivo</option>
+            </select>
+            </td>
+            </tr>
+                            
+            </tbody>
+          </table>
  
            </div>
         <div class="modal-footer">
@@ -537,22 +539,13 @@ function addUser () {
 }
 
 
-// Show dit Event Modal
+// Show edit Event Modal
 function editUser ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
   $('#mssg-label-edit').hide();
-  // ajax2   = nuevoAjax();
-  // ajax2.open("GET", "ajax/ajax_editar_user_company.php?id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);
-  // ajax2.onreadystatechange=function() {
-
-  //   if (ajax2.readyState==4) {
-  //     contenido_editor.innerHTML = ajax2.responseText;
-  //   }
-  // }
-  // ajax2.send(null);
-
+  
   let route = "app/controllers/editar-perfil-configuraciones.php";
   $.ajax({
     headers: {

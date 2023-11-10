@@ -116,8 +116,8 @@ class ejecutorSQL extends funcionesDB{
 					
 					// If error
 					if (!$exito){
-						$this->err 	= "Ha ocurrido un error. MySql dice ".mysql_error($this->linkBD);
-						$this->err_no = mysql_errno($this->linkBD);
+						$this->err 	= "Ha ocurrido un error. MySql dice ".mysqli_error($this->linkBD);
+						$this->err_no = mysqli_errno($this->linkBD);
 					}
 					else{
 						// AUTO INCREMENT
