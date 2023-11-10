@@ -41,13 +41,13 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	$P_Valores = "name = '".$_GET['nombre']."', telephone = '".$_GET['telefono']."',active = '".$_GET['activo']."', updated_at=NOW()";
-	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_departamentos', 'id = "'.$_GET['id'].'"');
+	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_horarios', 'id = "'.$_GET['id'].'"');
   	echo 'Se ha actualizado el registro con éxito';
 }
 
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
-	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_departamentos Where id = '".$_GET['id']."'");
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_horarios Where id = '".$_GET['id']."'");
 	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
 }
 
