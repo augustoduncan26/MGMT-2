@@ -48,7 +48,7 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_horarios Where id = '".$_GET['id']."'");
-	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
+	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito.</div>';
 }
 
 ?>
