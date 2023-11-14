@@ -155,11 +155,75 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Departamento.</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Horario.</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
-Cargando contenidos...
+ <div id="mssg-edit" style="color:red;"></div>
+             <table class="table table-bordered table-hover" id="sample-table-4">
+               <thead>
+               </thead>
+               <tbody>
+                 <tr>
+                   <td width="20%">Grupo <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="grupo_horario_edit" name="grupo_horario_edit">
+                      <option></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+                    <input type="hidden" name="id_row" id="id_row" />
+                   </td>
+                 </tr>
+                 <tr>
+                   <td width="20%">Hora desde <span class="symbol required"></span></td>
+                   <td width="30%">
+                      <input maxlength="50" autofocus="" name="hora_desde_edit" type="time" class="form-control" id="hora_desde_edit" placeholder="Nombre">
+                    </td>
+                   <td width="20%">Hora hasta <span class="symbol required"></span></td>
+                   <td width="30%">
+                    <input maxlength="50" autofocus="" name="hora_hasta_edit" type="time" class="form-control" id="hora_hasta_edit" placeholder="Nombre">
+                  </td>
+                 </tr>
+                 <tr><td colspan="4" style="color:red" class="text-center"><small>Ejemplo: 02:00 , 06:00 , 10:00 , 14:00, 22:00</small></td></tr>
+                 <tr>
+                   <td width="20%">Departamento <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="departamento_horario_edit" name="departamento_horario_edit">
+                    <option value=""> - seleccionar - </option> 
+                      <?php
+                        foreach ($typeDeptos['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
+                    </select>
+                  </td>
+                  <tr>
+                   <td width="20%">Área <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <select id="area_horario_edit" name="area_horario_edit">
+                    <option value=""> - seleccionar - </option> 
+                      <?php
+                        foreach ($typeArea['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
+                    </select>
+                  </td>
+                  </tr>
+                 <tr>
+                   <td>Estado</td>
+                   <td colspan="3">
+                    <select name="estado_horario_edit"  class="" id="estado_horario_edit">
+                      <option value="1">Activo</option>
+                      <option value="0" selected="">Inactivo</option>
+                    </select>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -305,13 +369,14 @@ function addRows () {
   });
 }
 
-// Edit Row
+// Show Edit Modal
 function editRow ( id ) {
+
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
-  let route = "ajax/ajax_editar_departamentos.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-horarios.php?showEdit=1&id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -320,10 +385,15 @@ function editRow ( id ) {
     url: route,
     type: "GET",
     data: "",
-    dataType        : 'html',
+    dataType        : 'json',
     success         : function (response) { 
-      contenido_editor.innerHTML = response;
-      listResultTable();
+      $('#grupo_horario_edit').select2('val',response['grupo']);
+      $('#hora_desde_edit').val(response['hora_desde']);
+      $('#hora_hasta_edit').val(response['hora_hasta']);
+      $('#id_row').val(response['id']);
+      $('#departamento_horario_edit').select2('val',response['id_depto']);
+      $('#area_horario_edit').select2('val',response['id_area']);
+      $('#estado_horario_edit').val(response['active']);
     },
     error           : function (error) {
       console.log(error);
@@ -334,13 +404,17 @@ function editRow ( id ) {
 
 // Update Row
 function updateRow ( id ) {
+  
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  var nombre      = $('#txt_nombre').val();
-  var precio      = $('#txt_precio').val();
-  var estado      = $('#txt_estado').val();
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+  var grupo       = $('#grupo_horario_edit').val();
+  var hora_desde  = $('#hora_desde_edit').val();
+  var hora_hasta  = $('#hora_hasta_edit').val();
+  var id_depto    = $('#departamento_horario_edit').val();
+  var id_area     = $('#area_horario_edit').val();
+  var estado      = $('#estado_horario_edit').val();
 
-  let route = "app/controllers/mante-departamentos.php?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-horarios.php?edit=1&id="+id+"&grupo="+grupo+"&hora_desde="+hora_desde+"&hora_hasta="+hora_hasta+"&id_depto="+id_depto+"&id_area="+id_area+"&activo="+estado+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -351,8 +425,10 @@ function updateRow ( id ) {
     data: "",
     dataType        : 'html',
     success         : function (response) { 
-      $("#mssg-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
-      listResultTable();
+      if (response == 'OK') {
+        $("#mssg-edit").html('<div class="alert alert-success">Los datos fueron actualizados con éxito.</div>');
+        listResultTable();
+      }
     },
     error           : function (error) {
       console.log(error);
@@ -425,4 +501,8 @@ $("[name='grupo_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"
 $("[name='departamento_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='area_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='grupo_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='departamento_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='area_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='estado_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>

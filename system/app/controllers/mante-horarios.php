@@ -38,17 +38,23 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 	}
 }
 
-// Edit 
-if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".$_GET['nombre']."', telephone = '".$_GET['telefono']."',active = '".$_GET['activo']."', updated_at=NOW()";
+// Show Edit Modal & info
+if (isset($_GET['showEdit']) && $_GET['id'] != "") {
+	$data       = $ObjMante->BuscarLoQueSea('id,grupo,hora_corta,hora_desde,hora_hasta,id_cia,id_depto,id_area,active,created_at',PREFIX.'mant_horarios','id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+	echo json_encode($data);
+}
+
+// Update row 
+if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['grupo'] !='') {
+	$P_Valores = "grupo = '".$_GET['grupo']."', hora_desde = '".$_GET['hora_desde']."', hora_hasta = '".$_GET['hora_hasta']."', id_depto = '".$_GET['id_depto']."', id_area = '".$_GET['id_area']."', active = '".$_GET['activo']."', updated_at=NOW()";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_horarios', 'id = "'.$_GET['id'].'"');
-  	echo 'Se ha actualizado el registro con éxito';
+  	echo 'OK';
 }
 
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_horarios Where id = '".$_GET['id']."'");
-	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito.</div>';
+	echo $mssg 		=	'<div class="alert alert-success">Se elimino el registro con éxito.</div>';
 }
 
 ?>
