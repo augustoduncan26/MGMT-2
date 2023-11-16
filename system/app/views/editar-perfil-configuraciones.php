@@ -320,7 +320,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="btnUpdatePassword" onclick="()">Actualizar contraseña</button>
+        <button type="button" class="btn btn-primary" id="btnUpdatePassword" onclick="">Actualizar contraseña</button>
       </div>
     </div>
   </div>

@@ -37,8 +37,12 @@ $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,
 
             <a class="btn btn-xs btn-teal " data-original-title="Editar" data-toggle="modal" role="button" href="#edit_usuarios" onclick="limpiar();editUser('<?php echo $dato['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>
             <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiar();showUserPermisos('<?php echo $dato['id_usuario']; ?>');"><i class="fa fa-key"></i></a>
+            <?php
+            // El usuario no puede autoborrarse del area de configuraciones
+              if ($dato['id_usuario']!=$id_user) {
+            ?>
             <a class="btn btn-xs btn-bricky " data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $dato['id_usuario']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
-
+            <?php } ?>
             </td>
         </tr>
      <?php

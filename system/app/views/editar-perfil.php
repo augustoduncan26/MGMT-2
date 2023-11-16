@@ -170,7 +170,7 @@
         <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Cambiar Clave</h3>
       </div>
       <div class="modal-body">
-        <label id="lbl-mssg" style="color:red">Todos los datos son necesarios</label>
+        <div id="lbl-mssg" style="color:red">Todos los datos son necesarios</div>
         <p>
 
         <div class="row">
@@ -221,7 +221,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="btnUpdatePassword" onclick="()">Actualizar contraseña</button>
+        <button type="button" class="btn btn-primary" id="btnUpdatePassword" onclick="">Actualizar contraseña</button>
       </div>
     </div>
   </div>
@@ -456,22 +456,47 @@ function verifyActualPasswd () {
 
  function ChangePasswd () {
     
-    var id_user     = '<?php echo $_SESSION["id_user"]?>';
-    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-    var newpasswd   = $('input[name=new-password]').val();
+    let id_user     = '<?php echo $_SESSION["id_user"]?>';
+    let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+    let newpasswd   = $('input[name=new-password]').val();
+    let actualpasswd= $('input[name=actual-password]').val();
 
     var contenido_editor = $('#lbl-mssg')[0];
 
-    ajax1   = nuevoAjax();
-    ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&que=changeP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
-    ajax1.onreadystatechange=function() {
-
-      if (ajax1.readyState==4) {
-        contenido_editor.innerHTML = ajax1.responseText;
+    let route = "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&actualpasswd="+actualpasswd+"&que=changeP&id_empresa="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
+    $.ajax({
+      headers: {
+        Accept        : "application/json; charset=utf-8",
+        "Content-Type": "application/json: charset=utf-8"
+      },
+      url: route,
+      type: "GET",
+      data: "",
+      dataType        : 'html',
+      success         : function (response) { 
+        if (response == 'OK') {
+          $("#lbl-mssg").html('<div class="alert alert-success">Los datos fueron actualizados con éxito.</div>');
+          $('input[name=actual-password]').val('');
+          $('input[name=new-password]').val('');
+          $('input[name=repeat-password]').val('');
+        } else {
+          $("#lbl-mssg").html(response);
+        }
+      },
+      error           : function (error) {
+        console.log(error);
       }
-    }
+    });
+    // ajax1   = nuevoAjax();
+    // ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&que=changeP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
+    // ajax1.onreadystatechange=function() {
 
-    ajax1.send(null);
+    //   if (ajax1.readyState==4) {
+    //     contenido_editor.innerHTML = ajax1.responseText;
+    //   }
+    // }
+
+    // ajax1.send(null);
  }
 
 
@@ -483,18 +508,17 @@ $( document ).ready(function() {
        var repass = $('input[name=repeat-password]').val();
 
       if ( !$('#new-password').val() || !$('#repeat-password').val() || !$('#actual-password').val()) {
-           $('#lbl-mssg').html('<font color="red">Existen campos vacios</font>');
+           $('#lbl-mssg').html('<div class="alert alert-danger">Existen campos vacios</div>');
          } else {
 
         //if (verifyActualPasswd ()) {
 
           if ( pass != repass ) {
-            //$('#new-password').addClass('has-error');
-            //$('#repeat-password').addClass('has-error');
 
-            $('#lbl-mssg').html('<font color="red">LAS CLAVES SON DIFERENTES</font>');
-            //$('#btnUpdatePassword').attr('type','button');
-            //$('#new-password').focus();
+            $('#lbl-mssg').html('<div class="alert alert-danger">Las Contraseñas son diferentes. Intentelo nuevamente.</div>');
+            $('input[name=actual-password]').val('');
+            $('input[name=new-password]').val('');
+            $('input[name=repeat-password]').val('');
 
             return false;
           } else { 
