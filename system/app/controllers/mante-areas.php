@@ -11,7 +11,8 @@ $username 	= $_SESSION['username'];
 
 $ObjMante   = new Mantenimientos();
 
-$typeDeptos  		= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
+$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id = '.$_GET['id'],'extract');
+$typeDeptos = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 
 
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
@@ -24,7 +25,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 	} else {
 
 		$P_Tabla 	=	PREFIX.'mant_areas';
-		$P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
+		$P_Campos 	=	'id_cia,name,id_depto,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
 		$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
 		$result 	= $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		if ($result == 1) {
@@ -36,15 +37,19 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 	}
 }
 
+// Show Edit Modal & info
+if (isset($_GET['showEdit']) && $_GET['id'] != "") {
+	$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+	echo json_encode($data);
+}
+
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	//$P_Campos 	=	'id_cia,name,id_depts,users,turn_a,turn_b,turn_c,turn_d,turn_e,active,created_at,updated_at';
-	//$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".$_GET['departamento']."','".$_GET['total_usuarios']."','".$_GET['turno_a']."','".$_GET['turno_b']."','".$_GET['turno_c']."','".$_GET['turno_d']."','".$_GET['turno_e']."','".$_GET['estado']."',NOW(),NOW()";
-	$P_Valores = "name = '".$_GET['nombre']."', id_depts = '".$_GET['departamento']."', users = '".$_GET['total_usuarios']."', 
+	$P_Valores = "name = '".$_GET['nombre']."', id_depto = '".$_GET['departamento']."', users = '".$_GET['total_usuarios']."', 
 	turn_a = '".$_GET['turno_a']."', turn_b = '".$_GET['turno_b']."', turn_c = '".$_GET['turno_c']."', turn_d = '".$_GET['turno_d']."', turn_e = '".$_GET['turno_e']."',
 	active = '".$_GET['activo']."', updated_at=NOW()";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_areas', 'id = "'.$_GET['id'].'"');
-  	echo 'Se ha actualizado el registro con éxito';
+  	echo '<div class="alert alert-success">Se ha actualizado el registro con éxito</div>';
 }
 
 // Delete 

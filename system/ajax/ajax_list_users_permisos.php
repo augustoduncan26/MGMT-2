@@ -11,11 +11,11 @@ $permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,
 
 ?>
   <strong style="font-size: 16px;">Usuario: <?php echo $nombre['nombre'];?></strong>
-
+  <input type="hidden"  id="id_row_perm" name="id_row_perm" value="<?=$_GET['id']?>">
   <!-- start: DYNAMIC TABLE PANEL -->
   <table width="100%" class="table table-striped table-bordered table-hover table-full-width" id="table_permisos">
     <thead>
-      <tr class="header-list-table"><input type="text" style="width:0px;visibility: hidden;" id="id_row" name="id_row" value="<?=$_GET['id']?>">
+      <tr class="header-list-table">
         <th width="50px">Permiso</th>
         <th width="100px">Nombre <input type="hidden" value="<?=$_GET['id']?>" name=""></th>
         <th width="20px"></th>
@@ -28,11 +28,12 @@ $permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,
     foreach ($permss['resultado'] as $key => $datos) {
       $i++;
       $permiso    = $ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_usuario = "'.$_GET['id'].'" and id_definicion_permiso = "'.$datos['permiso'].'"');
+      //echo $permiso['resultado'][0]['id_definicion_permiso'];
     ?>
       <tr>
         <td><?=$datos['permiso_padre']?></td>
         <td><?=$datos['nombre']?></td>
-        <td class="text-center"><input value="<?=$datos['permiso']?>" id="permisos" name=""  type="checkbox" <?php if($permiso['permiso'] == $datos['permiso']){ echo 'checked';}?>>
+        <td class="text-center"><input value="<?=$datos['permiso']?>" id="permisos" name=""  type="checkbox" <?php if($permiso['resultado'][0]['id_definicion_permiso'] == $datos['permiso']){ echo 'checked';}?>>
       </tr>
     <?php
           $elpadre  = $datos['permiso_padre'];} ?>

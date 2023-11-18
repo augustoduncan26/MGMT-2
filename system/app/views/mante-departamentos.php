@@ -114,7 +114,7 @@
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
  
- <label id="mssg-edit" style="color:red"></label>
+ <div id="mssg-edit" style="color:red"></div>
 
  <table class="table table-bordered" id="sample-table-4">
   <thead>
@@ -243,8 +243,9 @@ function addRows () {
   var estado      = $('#estado').val();
 
   if ( nombre == '') {
-    $("#mssg-alert").html('Los campos con (*) son necesarios');
+    $("#mssg-alert").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
     $('#nombre').focus();
+    setTimeout(()=>{$("#mssg-alert").hide();},3000);
     return false
   }
 
@@ -264,12 +265,13 @@ function addRows () {
     },
     dataType        : 'html',
     success         : function (response) { 
-      $("#mssg-alert").html(response);
+      $("#mssg-alert").show().html(response);
       $('.fa-spinner').hide();
       listResultTable();
       setTimeout(() => {
         $(".alert-exito").hide();
         $(".alert-danger").hide();
+        $("#mssg-alert").hide();
       }, 3000);
   
       $("#nombre").val('');
@@ -328,7 +330,9 @@ function updateRow ( id ) {
   $('#mssg-edit').css({'width':'100%'})
 
   if ( nombre == "") {
+    $("#mssg-edit").show();
     $("#mssg-edit").html('El campo nombre es requerido.');
+    setTimeout(()=>{$("#mssg-edit").hide();},3000);
     return false;
   }
 
@@ -343,12 +347,13 @@ function updateRow ( id ) {
     data: "",
     dataType        : 'html',
     success         : function (response) { 
+      $("#mssg-edit").show();
       if (response == "ok") {
         $("#mssg-edit").html('<div class="alert alert-success">Los datos fueron actualizados con éxito</div>');
       } else {
         $("#mssg-edit").html('<div class="alert alert-danger">No se ha podido actualizar los datos.</div>');
       }
-      
+      setTimeout(()=>{$("#mssg-edit").hide();},3000);
       listResultTable();
     },
     error           : function (error) {

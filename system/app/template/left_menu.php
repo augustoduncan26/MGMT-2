@@ -168,7 +168,7 @@ $id_cia     = $_SESSION['id_cia'];
 
 
 		<!-- Settings / Mantenimientos -->
-		<?PHP if($objPermOpc->tienePermiso(305)){  ?>
+		<?PHP if($objPermOpc->tienePermiso(1000)){  ?>
 		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'mante')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-settings"></i>
@@ -180,40 +180,53 @@ $id_cia     = $_SESSION['id_cia'];
 			</div>
 
 			<ul class="list__show">
+				<?PHP if($objPermOpc->tienePermiso(1100)){  ?>
 				<li <?php if(GET()[0] == 'mante-direcciones'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?mante-direcciones" class="nav__link nav__link--inside">
 					<!--<i class="clip-settings"></i>--> - <span class="title"> Direcciones </span>
 				</a>
 				</li>
+				<?php } ?>
 
+				<?PHP if($objPermOpc->tienePermiso(1150)){  ?>
 				<li <?php if(GET()[0] == 'mante-departamentos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-departamentos" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Departamentos </span>
 					</a>
 				</li>
+				<?php } ?>
 
+				<?PHP if($objPermOpc->tienePermiso(1200)){  ?>
 				<li <?php if(GET()[0] == 'mante-areas'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?mante-areas" class="nav__link nav__link--inside">
 					<!--<i class="clip-settings"></i>--> - <span class="title"> Áreas </span>
 				</a>
 				</li>
-				
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(1250)){  ?>
 				<li <?php if(GET()[0] == 'mante-zonas'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-zonas" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Zonas </span>
 					</a>
 				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(1300)){  ?>
 				<li <?php if(GET()[0] == 'mante-formulas'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-formulas" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Formulas </span>
 					</a>
 				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(1350)){  ?>
 				<li <?php if(GET()[0] == 'mante-horarios'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-horarios" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Horarios </span>
 					</a>
 				</li>
-				
+				<?php } ?>
 
 				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-buscar" class="nav__link nav__link--inside">
@@ -224,11 +237,11 @@ $id_cia     = $_SESSION['id_cia'];
 
 		</li>
 		<?php } ?>
-		<!-- End Settings -->
+		<!-- End Settings / Mantenimientos -->
 
 
 		<!-- Roles de Turnos -->
-		<?PHP if($objPermOpc->tienePermiso(305)){  ?>
+		<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
 		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'roles')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
@@ -240,34 +253,48 @@ $id_cia     = $_SESSION['id_cia'];
 			</div>
 
 			<ul class="list__show">
+
+				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
 				<li <?php if(GET()[0] == 'roles-turnos'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?roles-turnos" class="nav__link nav__link--inside">
 					-<span class="title"> Roles de Turnos </span>
 				</a>
 				</li>
+				<?php } ?>
 
+				<?PHP if($objPermOpc->tienePermiso(2050)){  ?>
 				<li <?php if(GET()[0] == 'roles-cambios-turnos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?roles-cambios-turnos" class="nav__link nav__link--inside">
 						-<span class="title"> Cambios de Turnos </span>
 					</a>
 				</li>
+				<?php } ?>
 
+				<?PHP if($objPermOpc->tienePermiso(2100)){  ?>
 				<li <?php if(GET()[0] == 'roles-mis-turnos'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?roles-mis-turnos" class="nav__link nav__link--inside">
 					-<span class="title"> Mis Turnos </span>
 				</a>
 				</li>
+				<?php } ?>
 				
+				<?PHP if($objPermOpc->tienePermiso(2150)){  ?>
 				<li <?php if(GET()[0] == 'roles-buscar-turnos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?roles-buscar-turnos" class="nav__link nav__link--inside">
 						-<span class="title"> Buscar Roles de Turnos </span>
 					</a>
 				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2200)){  ?>
 				<li <?php if(GET()[0] == 'roles-notificaciones'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?roles-notificaciones" class="nav__link nav__link--inside">
 						<!--<i class="clip-settings"></i>--> - <span class="title"> Mis Notificaciones </span>
 					</a>
 				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2250)){  ?>
 				<li <?php if(GET()[0] == 'roles-reportes'){ echo ' class="menu-backg-item"';}?>>
 					<a href="#" class="nav__link nav__link--inside">
 						- <span class="title"> Reportes </span>
@@ -297,7 +324,7 @@ $id_cia     = $_SESSION['id_cia'];
 						</ul>
 
 				</li>
-				
+				<?php } ?>
 
 				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-buscar" class="nav__link nav__link--inside">

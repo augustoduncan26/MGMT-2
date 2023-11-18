@@ -67,7 +67,7 @@
             ×
           </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Permiso</h3>
-          <label id="mssg-label"></label>
+          <div id="mssg-label"></div>
         </div>
          <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
@@ -123,7 +123,7 @@
     &times;
     </button>
     <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Permiso</h3>
-    <label id="txt_mssg-label"></label>
+    <div id="txt_mssg-label"></div>
     </div>
     <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
      <div class="modal-body" id="contenido_editar">
@@ -194,7 +194,9 @@ function addPermiso () {
   var estado      =   $('#estado').val();
 
   if (nombre.length < 1 || permiso.length < 1 || permiso_padre.length < 1) {
+    $('#mssg-label').show()
     $('#mssg-label').html('Los campos con (*) son necesarios.');
+    setTimeout(()=>{ $('#mssg-label').hide();},4000);
     $('#nombre_permiso').css({'border-color': '#007AFF'});
     $('#permiso').css({'border-color': '#007AFF'});
     return false;
@@ -205,8 +207,9 @@ function addPermiso () {
     ajax2.onreadystatechange=function() {
 
     if (ajax2.readyState==4) {
+      $('#mssg-label').show();
       $('#mssg-label').html(ajax2.responseText);
-      //$('#cargando_add').hide();
+      setTimeout(()=>{ $('#mssg-label').hide();},4000);
       listPermisos();
       $('#nombre_permiso').val('');
       $('#permiso').val('');
@@ -228,7 +231,9 @@ function updatePermiso ( id ) {
   var   id            = $('#id_row').val();
 
   if( nombre=='' || permiso=='' || permiso_padre=='') {
+    $('#txt_mssg-label').show();
     $('#txt_mssg-label').html('Los campos con (*) son necesarios.');
+    setTimeout(()=>{ $('#txt_mssg-label').hide();},4000);
     $('#txt_nombre').css({'border-color': '#007AFF'});
     $('#txt_permiso').css({'border-color': '#007AFF'});
     $('#txt_permiso_padre').css({'border-color': '#007AFF'});
@@ -240,7 +245,9 @@ function updatePermiso ( id ) {
     ajax2.onreadystatechange=function() {
 
     if (ajax2.readyState==4) {
+      $('#txt_mssg-label').show();
       $('#txt_mssg-label').html(ajax2.responseText);
+      setTimeout(()=>{ $('#txt_mssg-label').hide();},4000);
       listPermisos();
     }
   }

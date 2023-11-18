@@ -23,7 +23,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 		$P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".$_GET['estado']."',NOW(),NOW()";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		
-		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
+		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito.</div>';
 	}
 }
 
@@ -31,13 +31,13 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	$P_Valores = "name = '".$_GET['nombre']."', active = '".$_GET['activo']."', updated_at=NOW()";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_direcciones', 'id = "'.$_GET['id'].'"');
-  	echo 'Se ha actualizado el registro con éxito';
+  	echo '<div class="alert alert-success alert-exito">Se ha actualizado el registro con éxito.</div>';
 }
 
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_direcciones Where id = '".$_GET['id']."'");
-	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
+	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito.</div>';
 }
 
 ?>

@@ -21,7 +21,7 @@ if ( isset($_GET['add']) &&  $_GET['add'] == 1 && $_GET['nombre'] != '') {
 		$sql		=	$ObjEjec->insertarRegistro(PREFIX."permiso_definicion", $P_Campos, $P_Valores);
 		
 		if ($sql) {
-			echo $mssg 	=	'Se ingreso el registro con éxito';
+			echo $mssg 	=	'<div class="alert alert-success">Se ingreso el registro con éxito</div>';
 		}
 	}
 }
@@ -31,7 +31,7 @@ if ( isset($_GET['edit']) &&  $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_G
 	$P_Valores 	= 	" nombre = '".$_GET['nombre']."', permiso = '".$_GET['permiso']."', permiso_padre = '".$_GET['permiso_padre']."',  activo = '".$_GET['activo']."'";
 	$P_condicion=	" id = '".$_GET['id']."'";
 	$upd 			=	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'permiso_definicion', $P_condicion);
-	echo $mssg 		=	'Se actualizo el registro con éxito.';
+	echo $mssg 		=	'<div class="alert alert-success">Se actualizo el registro con éxito.</div>';
 }
 
 // Delete 

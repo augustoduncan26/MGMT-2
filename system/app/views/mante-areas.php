@@ -52,7 +52,7 @@
 
 <!-- Modal Add Rows -->
 
-<div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="formulario_nuevo"  role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -138,7 +138,7 @@
 
 <!-- Edit Row -->
 <?php /////////// Editar algo ?>
-<div class="<?php echo "modal fade"; ?>" id="edit_event" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?>">
 <div class="modal-content">
 <div class="modal-header">
@@ -149,7 +149,76 @@
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
-Cargando contenidos...
+
+ <table class="table table-bordered" id="sample-table-4">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="30%">Nombre: <span class="symbol required"></span></td>
+      <td width="70%" colspan="3"><input autofocus="" name="txt_nombre" type="text" class="form-control" id="txt_nombre" placeholder="Nombre" value="<?php echo $data['name']; ?>">
+      <input autofocus="" name="txt_id_row" type="hidden" class="form-control" id="txt_id_row" placeholder="Nombre" value="">
+      </td>
+    </tr>
+
+    <tr>
+      <td width="30%">Departamento <span class="symbol required"></span></td>
+      <td colspan="3">
+        <select name="txt_departamento" id="txt_departamento">
+            <option value=""> - seleccionar - </option> 
+            <?php
+              foreach ($typeDeptos['resultado'] as $typeData) {
+                  echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+              }
+            ?>
+        </select>
+        </td>
+    </tr>
+
+    <tr>
+      <td width="30%">Total Usuarios <span class="symbol required"></span></td>
+      <td width="70%" colspan="3">
+        <input maxlength="50" min="1" value="" autofocus="" name="txt_total_usuarios" type="number" class="form-control" id="txt_total_usuarios" placeholder="Total Usuarios">
+      </td>
+    </tr>
+
+    <tr>
+      <td>Estado:</td>
+      <td colspan="3">
+       <select name="txt_estado" id="txt_estado">
+         <option value="1">Activo</option>
+         <option value="0">Inactivo</option>
+       </select>
+      </td>
+    </tr>
+
+    <tr><td colspan="4">Turnos &nbsp; <small class="color-red">[el valor minimo debe ser 1]</small></td></tr>
+
+      <tr>
+        <td width="20%">A</td>
+        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_a']; ?>" name="turno_a" type="number" class="" id="txt_turno_a" placeholder="Turno A"></td>
+        <td width="20%">B</td>
+        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_b']; ?>" name="turno_a" type="number" class="" id="txt_turno_b" placeholder="Turno B"></td>
+      </tr>
+
+      <tr>
+        <td width="20%">C</td>
+        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_c']; ?>" name="turno_c" type="number" class="" id="txt_turno_c" placeholder="Turno C"></td>
+        <td width="20%">D</td>
+        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_d']; ?>" name="turno_d" type="number" class="" id="txt_turno_d" placeholder="Turno D"></td>
+      </tr>
+
+      <tr>
+        <td width="20%">E</td>
+        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_e']; ?>" name="turno_e" type="number" class="" id="txt_turno_e" placeholder="Turno E"></td>
+      </tr>
+
+  </tbody>
+<tfoot>
+  
+</tfoot>
+</table>
+
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -162,6 +231,7 @@ Cargando contenidos...
 <!-- End Edit Rows -->
 
 <?php get_template_part('footer_scripts');?>
+
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
   
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
@@ -302,10 +372,10 @@ function addRows () {
 // Edit Row
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
 
-  let route = "ajax/ajax_editar_areas.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-areas.php?showEdit=1&id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -314,10 +384,17 @@ function editRow ( id ) {
     url: route,
     type: "GET",
     data: "",
-    dataType        : 'html',
+    dataType        : 'json',
     success         : function (response) { 
-      contenido_editor.innerHTML = response;
-      listResultTable();
+      $('#grupo_horario_edit').select2('val',response['grupo']);
+      $('#txt_total_usuarios').val(response['users']);
+      $('#txt_nombre').val(response['name']);
+      $('#txt_id_row').val(response['id']);
+      $('#txt_departamento').select2('val',response['id_depto']);
+      $('#area_horario_edit').select2('val',response['id_area']);
+      $('#txt_estado').val(response['active']);
+      //contenido_editor.innerHTML = response;
+      //listResultTable();
     },
     error           : function (error) {
       console.log(error);
@@ -363,8 +440,9 @@ function updateRow ( id ) {
       activo    : estado,
     },
     dataType        : 'html',
-    success         : function (response) { 
-      $("#mssg-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
+    success         : function (response) {
+      $("#mssg-edit").show().html(response);
+      setTimeout(()=>{$("#mssg-edit").hide()},3000);
       listResultTable();
     },
     error           : function (error) {
@@ -436,7 +514,6 @@ setTimeout(() => {
 
 $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-
+$("[name='txt_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='txt_departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>
-
-<!-- <script>$("#estado").select2({ width: '100%', dropdownCssClass: "bigdrop"});</script> -->

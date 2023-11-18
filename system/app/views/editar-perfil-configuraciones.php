@@ -376,14 +376,14 @@
             ×
         </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
-          <label id="mssg-label-edit-perm"></label>
+          <div id="mssg-label-edit-perm"></div>
       </div>
     <div class="modal-body" id="show-permisos">
         Cargando...
     </div>
     <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="var id_row = $('#id_row').val(); editUserPermisos(id_row)" value="Modificar datos">
+      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
     </div>
     </div>
   </div>
@@ -734,7 +734,7 @@ function showUserPermisos ( id ) {
 
 // Edit Permisos
 function editUserPermisos ( idParam ) {
-    
+  
     var id_user     = '<?php echo $_SESSION["id_user"]?>';
     var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
     var id_         = idParam; //$('#id_row').val();
@@ -743,14 +743,13 @@ function editUserPermisos ( idParam ) {
 
     // Capturar los valores que seleccionan
     $("input:checkbox:checked").each(function() {
-      // alert($(this).val());
       datas.push($(this).val());
     });
     
-    if ( datas == '') {
-      $('#mssg-label-edit-perm').html('No ha seleccionado ningun permiso.');
-      return false
-    }
+    // if ( datas == '') {
+    //   $('#mssg-label-edit-perm').html('No ha seleccionado ningun permiso.');
+    //   return false
+    // }
 
     var editperm    = 1;
     var form_data   =   new FormData();
@@ -770,6 +769,7 @@ function editUserPermisos ( idParam ) {
         type: 'post',
         success: function (response) {
           $('#mssg-label-edit-perm').html(response);
+          setTimeout(()=>{$('#mssg-label-edit-perm').html('')},3000)
         },
         error: function (response) {
         }

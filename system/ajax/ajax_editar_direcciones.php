@@ -6,7 +6,7 @@ $data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_direcciones','id = '.$_
 
 ?>
 
-<label id="mssg-edit" style="color:red"></label>
+<div id="mssg-edit" style="color:red"></div>
 <table class="table table-bordered" id="sample-table-4">
   <thead>
   </thead>

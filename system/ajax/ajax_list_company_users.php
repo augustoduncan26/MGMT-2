@@ -7,6 +7,7 @@ $ObjMante   = new Mantenimientos();
 $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,'array');
 
 ?>
+<div class="table-responsive">
     <table id="list-table-users" class="table table-striped table-bordered table-hover">
       <thead>
         <tr class="header-list-table">
@@ -55,3 +56,4 @@ $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,
 
       </tbody>
     </table>
+</div>

@@ -92,7 +92,7 @@ function listUsers() {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
 
-  var contenido_editor = $('#list-rooms')[0];
+  var contenido_editor = $('#list-rows')[0];
   $('#cargando_list').show()
   ajax1   = nuevoAjax();
   ajax1.open("GET", "ajax/ajax_list_users.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
@@ -207,8 +207,9 @@ function limpiar () {
               <div style="height:10px;"></div>
 
               <div class="x_content">
-              <img src="images/ajax-loader.gif" id="cargando_list" />
-              <div id="list-rooms"></div>
+              <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
+              <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
+              <div id="list-rows"></div>
               
               </div>
               </div>

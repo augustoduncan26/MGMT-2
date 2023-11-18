@@ -5,7 +5,7 @@
 
 	$id_user 		=	$_SESSION['id_user'];
 	$id_cia 		=	$_SESSION['id_cia'];
-	$P_Tabla 		=	"usuarios";
+	$P_Tabla 		=	"users";
 
 	$listaDeptos    = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
 
@@ -43,20 +43,6 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 		$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
 		echo '<div class="alert alert-success">Se ha creado el registro con éxito. <br />Se envó un email al usuario creado, con sus datos de acceso.</div>';
 	}
-	
-	//$busca 			=	mysql_query("Select * From ".$P_Tabla." Where email = '".$_GET['email']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
-
-
-	// if (mysql_num_rows($busca) >0 ) {
-	// 		echo $mssg	=	'Ya existe este email.';
-	// } else {
-	// 	//$sql 	=	$Objsql->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-	// 	$sql 	=	mysql_query("Insert into ".$P_Tabla." (".$P_Campos.") values(".$P_Valores.")") or die(mysql_error());
-	// 	if ($sql) {
-	// 		echo $mssg 	=	'Se ingreso el registro con éxito';
-	// 	}
-
-	// }
 }
 
 // Show Edit info

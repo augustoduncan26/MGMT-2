@@ -22,7 +22,7 @@ if ( $sel_['total'] < 1 ) {
 	$mensaje = 'Este enlace ya no existe, espere para ser redirigido';
 	$SITE   = ENV['URL_NAME'];
 	echo '<script>
-			setTimeout("location.href=\''.$SITE.'/system/login.php\'", 3000);
+			setTimeout("location.href=\''.$SITE.'/system/login.php\'", 2000);
 		</script>';
 
 } else {
@@ -53,7 +53,7 @@ if ( $sel_['total'] < 1 ) {
 			$mensaje=	'Ha cambiado su clave de acceso con éxito, espere para ser redirigido ';
 			$SITE   = ENV['URL_NAME'];
 			echo '<script>
-					setTimeout("location.href=\'"'.$SITE.'"/system/login.php\'", 3000);
+					setTimeout("location.href="'.$SITE.'"/system/login.php", 2000);
 			</script>';
 		}
 	}

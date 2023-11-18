@@ -29,7 +29,7 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id_cia = '.$id_
       <?php
         if ($sel1['resultado']){
           foreach ($sel1['resultado'] as $datos) {
-            $departamento  		= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_empresa'].' and id='.$datos['id_depts'].' and active=1','extract');
+            $departamento  		= $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_empresa'].' and id='.$datos['id_depto'].' and active=1','extract');
 
       ?>
         <tr>

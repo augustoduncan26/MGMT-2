@@ -7,7 +7,7 @@ $typeDeptos = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia 
 
 ?>
 
-<label id="mssg-edit" style="color:red"></label>
+<div id="mssg-edit" style="color:red"></div>
 <table class="table table-bordered" id="sample-table-4">
   <thead>
   </thead>

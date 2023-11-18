@@ -1,8 +1,9 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
 
 <body onload="$('#cargando_add').hide()">
 
@@ -73,7 +74,7 @@
                  <tr>
                    <td>Estado</td>
                    <td>
-                    <select name="estado"  class="form-control" id="estado">
+                    <select name="estado"  class="" id="estado">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
                     </select>
@@ -121,7 +122,9 @@ Cargando contenidos...
 <?php get_template_part('footer_scripts');?>
 
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-    
+  
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script> 
+
 <script>
 
 var runNavigationToggler = function () {
@@ -198,8 +201,10 @@ function addDireccion () {
   var estado      = $('#estado').val();
 
   if ( nombre == '') {
+    $('#mssg-alert').show();
     $("#mssg-alert").html('Los campos con (*) son necesarios');
     $('#nombre').focus();
+    setTimeout(() => { $("#mssg-alert").hide();}, 3000);
     return false
   }
 
@@ -214,12 +219,14 @@ function addDireccion () {
     data: "",
     dataType        : 'html',
     success         : function (response) { 
+      $("#mssg-alert").show();
       $("#mssg-alert").html(response);
       $('.fa-spinner').hide();
       listResultTable();
       setTimeout(() => {
-        $(".alert-exito").hide();
-        $(".alert-danger").hide();
+        $("#mssg-alert").hide();
+        // $(".alert-exito").hide();
+        // $(".alert-danger").hide();
       }, 3000);
   
       $("#nombre").val('');
@@ -277,7 +284,11 @@ function updateRow ( id ) {
     data: "",
     dataType        : 'html',
     success         : function (response) { 
-      $("#mssg-edit").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
+      $("#mssg-edit").show();
+      $("#mssg-edit").html(response);
+      setTimeout(()=>{
+        $("#mssg-edit").hide();
+      },3000);
       listResultTable();
     },
     error           : function (error) {
@@ -355,4 +366,6 @@ setTimeout(() => {
 });
 }
 
+$("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='txt_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>
