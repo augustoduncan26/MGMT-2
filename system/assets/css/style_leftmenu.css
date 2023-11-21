@@ -92,3 +92,8 @@ ul.main-navigation-menu > li > a {
     height: 0;
 	padding: 0px 0px 0px 10px;
 }
+
+.list__show  > li a:hover {
+	background-color: #cfe4fa;
+	border-radius: 0px
+}

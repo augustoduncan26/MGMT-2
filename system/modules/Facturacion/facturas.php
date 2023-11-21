@@ -3,9 +3,9 @@
 	session_start();
 	// $_SESSION['id_empresa'];
 	if (!isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] != 1) {
-        header("location: login.php");
+		header("location: login.php");
 		exit;
-        }
+	}
 	
 	$active_facturas="active";
 	$active_productos="";

@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" href="assets/css/styles_datatable.css" />
 
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 
 <body onload="$('#cargando_add').hide()">
@@ -29,7 +29,7 @@
       <div class="col-sm-12">
        <div class="panel panel-default">
           <div class="panel-heading">
-            <i class="fa fa-group"></i>Administrar Áreas
+            <i class="clip-settings"></i>Administrar Áreas
            </div>
              <div class="panel-body">
               <div class="col-sm-12">
@@ -57,7 +57,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Área.</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Área</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
@@ -87,7 +87,7 @@
 
                  <tr>
                   <td width="30%">Total Usuarios <span class="symbol required"></span></td>
-                  <td width="70%" colspan="3"><input maxlength="50" min="1" value="1" autofocus="" name="total_usuarios" type="number" class="form-control" id="total_usuarios" placeholder="Total Usuarios"></td>
+                  <td width="70%" colspan="3"><input maxlength="50" min="1" value="0" autofocus="" name="total_usuarios" type="number" class="form-control" id="total_usuarios" placeholder="Total Usuarios"></td>
                 </tr>
 
                 <tr>
@@ -113,12 +113,12 @@
                    <td width="20%">C</td>
                    <td ><input maxlength="50" autofocus="" min="1" value="1" name="turno_c" type="number" class="" id="turno_c" placeholder="Turno C"></td>
                    <td width="20%">D</td>
-                   <td ><input maxlength="50" autofocus="" min="1" value="1" name="turno_d" type="number" class="" id="turno_d" placeholder="Turno D"></td>
+                   <td ><input maxlength="50" autofocus="" min="1" value="0" name="turno_d" type="number" class="" id="turno_d" placeholder="Turno D"></td>
                   </tr>
 
                   <tr>
                    <td width="20%">E</td>
-                   <td ><input maxlength="50" autofocus="" min="1" value="1" name="turno_e" type="number" class="" id="turno_e" placeholder="Turno E"></td>
+                   <td ><input maxlength="50" autofocus="" min="1" value="0" name="turno_e" type="number" class="" id="turno_e" placeholder="Turno E"></td>
                   </tr>
                 
                  
@@ -145,11 +145,11 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Área.</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Área</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
-
+ <div id="mssg-edit" style="color:red"></div>
  <table class="table table-bordered" id="sample-table-4">
   <thead>
   </thead>
@@ -196,21 +196,21 @@
 
       <tr>
         <td width="20%">A</td>
-        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_a']; ?>" name="turno_a" type="number" class="" id="txt_turno_a" placeholder="Turno A"></td>
+        <td ><input maxlength="50" autofocus="" min="1" value="" name="turno_a" type="number" class="" id="txt_turno_a" placeholder="Turno A"></td>
         <td width="20%">B</td>
-        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_b']; ?>" name="turno_a" type="number" class="" id="txt_turno_b" placeholder="Turno B"></td>
+        <td ><input maxlength="50" autofocus="" min="1" value="" name="turno_a" type="number" class="" id="txt_turno_b" placeholder="Turno B"></td>
       </tr>
 
       <tr>
         <td width="20%">C</td>
-        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_c']; ?>" name="turno_c" type="number" class="" id="txt_turno_c" placeholder="Turno C"></td>
+        <td ><input maxlength="50" autofocus="" min="1" value="" name="turno_c" type="number" class="" id="txt_turno_c" placeholder="Turno C"></td>
         <td width="20%">D</td>
-        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_d']; ?>" name="turno_d" type="number" class="" id="txt_turno_d" placeholder="Turno D"></td>
+        <td ><input maxlength="50" autofocus="" min="0" value="" name="turno_d" type="number" class="" id="txt_turno_d" placeholder="Turno D"></td>
       </tr>
 
       <tr>
         <td width="20%">E</td>
-        <td ><input maxlength="50" autofocus="" min="1" value="<?php echo $data['turn_e']; ?>" name="turno_e" type="number" class="" id="txt_turno_e" placeholder="Turno E"></td>
+        <td ><input maxlength="50" autofocus="" min="0" value="" name="turno_e" type="number" class="" id="txt_turno_e" placeholder="Turno E"></td>
       </tr>
 
   </tbody>
@@ -234,7 +234,7 @@
 
 <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
   
-<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
 
@@ -360,6 +360,12 @@ function addRows () {
         $(".alert-danger").hide();
       }, 3000);
   
+      //$('#estado').val(null).trigger('change');
+      $('#departamento').val(null).trigger('change');
+      $("#turno_a").val('1');
+      $("#turno_b").val('1');
+      $("#turno_c").val('1');
+      $("#total_usuarios").val('3');
       $("#nombre").val('');
       $("#nombre").focus();
     },
@@ -369,7 +375,7 @@ function addRows () {
   });
 }
 
-// Edit Row
+// Show Edit Modal
 function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
@@ -390,17 +396,20 @@ function editRow ( id ) {
       $('#txt_total_usuarios').val(response['users']);
       $('#txt_nombre').val(response['name']);
       $('#txt_id_row').val(response['id']);
-      $('#txt_departamento').select2('val',response['id_depto']);
+      //$('#txt_departamento').select2('val',response['id_depto']);
+      $('#txt_departamento').val(response['id_depto']).trigger('change');
       $('#area_horario_edit').select2('val',response['id_area']);
-      $('#txt_estado').val(response['active']);
-      //contenido_editor.innerHTML = response;
-      //listResultTable();
+      $('#txt_estado').val(response['active']).trigger('change');
+      $('#txt_turno_a').val(response['turn_a']);
+      $('#txt_turno_b').val(response['turn_b']);
+      $('#txt_turno_c').val(response['turn_c']);
+      $('#txt_turno_d').val(response['turn_d']);
+      $('#txt_turno_e').val(response['turn_e']);
     },
     error           : function (error) {
       console.log(error);
     }
   });
-
 }
 
 // Update Row
@@ -408,7 +417,7 @@ function updateRow ( id ) {
   let id_user     = '<?php echo $_SESSION["id_user"]?>';
   let id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
   let nombre      = $('#txt_nombre').val();
-  let departamento= $('#txt_departamento').val();
+  let depto       = $('#txt_departamento').val();
   let total_usuarios= $('#txt_total_usuarios').val();
   let turno_a    = $('#txt_turno_a').val();
   let turno_b    = $('#txt_turno_b').val();
@@ -416,7 +425,13 @@ function updateRow ( id ) {
   let turno_d    = $('#txt_turno_d').val();
   let turno_e    = $('#txt_turno_e').val();
   let estado      = $('#txt_estado').val();
+  let id_row      = $('#txt_id_row').val();
 
+  if (depto == "" || depto == null || nombre == "") {
+    $("#mssg-edit").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
+    setTimeout(()=>{$("#mssg-edit").hide();},3000);
+    return false;
+  }
   let route = "app/controllers/mante-areas.php";
   //?edit=1&id="+id+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
@@ -427,10 +442,10 @@ function updateRow ( id ) {
     url: route,
     type: "GET",
     data: {
-      edit    : 1,
-      id        : id,
+      edit      : 1,
+      id_row    : id_row,
       nombre    : nombre,
-      departamento : departamento,
+      depto     : depto,
       total_usuarios : total_usuarios,
       turno_a   : turno_a,
       turno_b   : turno_b,
@@ -467,7 +482,7 @@ setTimeout(() => {
         // fixedColumns: true,
         "columnDefs": [{
         "orderable": false,
-        "targets": [3]
+        "targets": [10]
         }],
         language: {
         "decimal": "",
@@ -516,4 +531,26 @@ $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"}
 $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='txt_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='txt_departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+
+$('#turno_a , #turno_b , #turno_c , #turno_d , #turno_e').on('change', ()=>{
+  sumTurnos();
+});
+$('#txt_turno_a , #txt_turno_b , #txt_turno_c , #txt_turno_d , #txt_turno_e').on('change', ()=>{
+  sumTurnos();
+});
+
+const sumTurnos = (val) => {
+  let resultado = 0;
+  if ($('#turno_a').val()!="") {
+    let sum = (Number($('#turno_a').val()) + Number($('#turno_b').val()) + Number($('#turno_c').val()) + Number($('#turno_d').val()) + Number($('#turno_e').val()));
+    $('#total_usuarios').val(sum);
+  }
+  if ($('#txt_turno_a').val()!="") {
+    let sum2 = (Number($('#txt_turno_a').val()) + Number($('#txt_turno_b').val()) + Number($('#txt_turno_c').val()) + Number($('#txt_turno_d').val()) + Number($('#txt_turno_e').val()));
+    //let total= (Number($('#txt_total_usuarios').val()) + sum2);
+    $('#txt_total_usuarios').val(sum2);
+  }
+}
+
+sumTurnos();
 </script>

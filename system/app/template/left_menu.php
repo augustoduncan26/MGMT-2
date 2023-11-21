@@ -228,6 +228,14 @@ $id_cia     = $_SESSION['id_cia'];
 				</li>
 				<?php } ?>
 
+				<?PHP if($objPermOpc->tienePermiso(1351)){  ?>
+				<li <?php if(GET()[0] == 'mante-tipos-horarios'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-tipos-horarios" class="nav__link nav__link--inside">
+						<!--<i class="clip-settings"></i>--> - <span class="title">Tipos de Horarios </span>
+					</a>
+				</li>
+				<?php } ?>
+
 				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-buscar" class="nav__link nav__link--inside">
 						<i class="clip-settings"></i><span class="title"> Buscar Reservas </span>

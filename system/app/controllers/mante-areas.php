@@ -11,7 +11,7 @@ $username 	= $_SESSION['username'];
 
 $ObjMante   = new Mantenimientos();
 
-$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id = '.$_GET['id'],'extract');
+//$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id = '.$_GET['id'],'extract');
 $typeDeptos = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 
 
@@ -45,10 +45,10 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".$_GET['nombre']."', id_depto = '".$_GET['departamento']."', users = '".$_GET['total_usuarios']."', 
+	$P_Valores = "name = '".$_GET['nombre']."', id_depto = '".$_GET['depto']."', users = '".$_GET['total_usuarios']."', 
 	turn_a = '".$_GET['turno_a']."', turn_b = '".$_GET['turno_b']."', turn_c = '".$_GET['turno_c']."', turn_d = '".$_GET['turno_d']."', turn_e = '".$_GET['turno_e']."',
 	active = '".$_GET['activo']."', updated_at=NOW()";
-	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_areas', 'id = "'.$_GET['id'].'"');
+	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_areas', 'id = "'.$_GET['id_row'].'"');
   	echo '<div class="alert alert-success">Se ha actualizado el registro con éxito</div>';
 }
 

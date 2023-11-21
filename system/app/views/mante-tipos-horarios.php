@@ -20,7 +20,7 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Horario</a>
+        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Tipo de Horario</a>
         <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[^] Exportar</a>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <div class="col-sm-12">
        <div class="panel panel-default">
           <div class="panel-heading">
-            <i class="clip-settings"></i>Administrar Horarios
+            <i class="clip-settings"></i>Administrar Tipos de Horarios
            </div>
              <div class="panel-body">
               <div class="col-sm-12">

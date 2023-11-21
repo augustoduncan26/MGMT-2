@@ -57,4 +57,34 @@ if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 	echo $mssg 		=	'<div class="alert alert-success">Se elimino el registro con éxito.</div>';
 }
 
+/*
+// Definir los horarios de los turnos
+$turnos = ['06:00 - 2:00', '14:00 - 22:00', '22:00 - 06:00'];
+
+// Inicializar el calendario para 30 días
+$calendario = [];
+
+// Rellenar el calendario con días de trabajo y días libres intercalados
+$trabajo = 0;
+$dia_libre = false;
+for ($dia = 1; $dia <= 30; $dia++) {
+    if (!$dia_libre && ($dia % 4 == 0 || $dia % 4 == 1 || $dia % 4 == 2)) {
+        // Días de trabajo (M, T, N)
+        $turno = $turnos[$dia % count($turnos)];
+        $calendario[$dia] = $turno;
+    } else {
+        // Días libres
+        $calendario[$dia] = 'Libre';
+        $dia_libre = true;
+    }
+    if ($dia % 4 == 3) {
+        $dia_libre = false;
+    }
+}
+
+// Mostrar el calendario
+foreach ($calendario as $dia => $turno) {
+    echo "Día $dia: Turno $turno <br>";
+}
+*/
 ?>

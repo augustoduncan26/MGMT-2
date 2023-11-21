@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="assets/plugins/jquery-datepicker/jquery-ui.css">
 <script src="assets/plugins/jquery-datepicker/jquery-1.12.4.js"></script>
 <script src="assets/plugins/jquery-datepicker/jquery-ui.js"></script>
-<link rel="stylesheet" href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css">
+<link rel="stylesheet" href="assets/plugins/FullCalendar/fullcalendar/fullcalendar.css">
 
 <!-- Include Select2 CSS -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css" />
@@ -133,6 +133,7 @@
                         <h5>Totales: (<?=$data_tot?>)</h5>
                         <div id="event-categories">
                          <?php
+                         if ($datosRooms['resultado'] != null) :
                             foreach ($datosRooms['resultado'] as $datoRoom) {
                             //While ( $datos = mysqli_fetch_object($sel) ) {
                               $sel_count  = $ObjMante2->BuscarLoQueSea('COUNT(*) as total_r',$P_TROOMS,'rooms = '.$datoRoom['id'],'extract');
@@ -146,6 +147,7 @@
                           </div>
                           <?php
                             }
+                          endif;
                          ?>
                         </div>
                     </div>
@@ -846,8 +848,9 @@ document.forms["EditDataModal"].submit();
 
       },
       events: [
-      <?php foreach($events as $event): 
-      
+      <?php 
+      if ($event!=null) :
+      foreach($events as $event):
         $start  = explode(" ", $event['fecha_e']);
         $end    = explode(" ", $event['fecha_s']);
         $price  = $event['price'];
@@ -887,7 +890,7 @@ document.forms["EditDataModal"].submit();
           end: '<?php echo $end; ?>',
           color: '<?php echo $event['color']; ?>',
         },
-      <?php endforeach; ?>
+      <?php endforeach; endif; ?>
       ]
     });
     

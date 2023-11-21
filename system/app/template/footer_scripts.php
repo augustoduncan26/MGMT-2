@@ -29,7 +29,7 @@
         <script src="assets/plugins/jquery.sparkline/jquery.sparkline.js"></script>
         <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
         <script src="assets/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-        <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.js"></script>
+        <script src="assets/plugins/FullCalendar/fullcalendar/fullcalendar.js"></script>
         <!-- <script src='../assets/plugins/FullCalendar/js/fullcalendar/fullcalendar.js'></script> -->
         <!-- <script src="assets/js/index.js"></script> -->
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
@@ -38,8 +38,13 @@
          -->
         <script>
             jQuery(document).ready(function() {
-                Main.init();
+                //Main.init();
                 //Index.init();
                 //UITreeview.init();
+
+                // Go to Top page
+                jQuery('.go-top').on('click', ()=> {
+                    jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
+                });
             });
         </script>

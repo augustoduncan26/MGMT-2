@@ -1,11 +1,15 @@
 <?php
-	/*-------------------------
-	Autor: Obed Alvarado
-	Web: obedalvarado.pw
-	Mail: info@obedalvarado.pw
-	---------------------------*/
+	include_once ( dirname(dirname(__DIR__)) . '../../framework.php');
+    $ObjMante   = new Mantenimientos();
+    $ObjEjec    = new ejecutorSQL();
+    
+    $id_user    = $_SESSION["id_user"];
+    $id_cia  	= $_SESSION['id_cia'];
+    $email 		= $_SESSION['email'];
+    $username 	= $_SESSION['username'];
+    
 	# conectare la base de datos #
-    include ('../../../config.php'); 
+    //include ('../../../config.php'); 
     //$con=@mysqli_connect(DB_HOST2, DB_USER2, DB_PASS2, DB_NAME2);
     
     define("DB_HOST_2"  ,   $host_db);      // Host
