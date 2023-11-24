@@ -32,6 +32,8 @@
         <script src="assets/plugins/FullCalendar/fullcalendar/fullcalendar.js"></script>
         <!-- <script src='../assets/plugins/FullCalendar/js/fullcalendar/fullcalendar.js'></script> -->
         <!-- <script src="assets/js/index.js"></script> -->
+
+        
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 
         <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>

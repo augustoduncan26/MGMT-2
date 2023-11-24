@@ -58,7 +58,6 @@
  <div class="clearfix"></div>
 
 <!-- Modal Add Rows -->
-
 <div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -73,25 +72,6 @@
                <thead>
                </thead>
                <tbody>
-                 <!-- <tr>
-                   <td width="30%">Nombre <span class="symbol required"></span></td>
-                   <td width="70%">
-                    <input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" autocomplete="off">
-                  </td>
-                 </tr>
-                 <tr>
-                   <td>Departamento <span class="symbol required"></td>
-                   <td colspan="3">
-                  <select name="departamento" id="departamento">
-                      <option value=""> - seleccionar - </option> 
-                      <?php
-                        foreach ($listaDeptos['resultado'] as $typeData) {
-                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        }
-                      ?>
-                  </select>
-                 </td>
-                 </tr> -->
                  <tr>
                    <td>Áreas <span class="symbol required"></td>
                    <td colspan="3">
@@ -106,24 +86,24 @@
                  </td>
                  </tr>
                  <tr>
-                   <td>Grupo</td>
-                   <td>
-                    <select name="grupo"  class="" id="grupo">
-                      <option value="1">Activo</option>
-                      <option value="0" selected="">Inactivo</option>
+                   <td>Horario <span class="symbol required"></td>
+                   <td colspan="3">
+                    <!-- Seleccionar los horarios -->
+                    <select name="horario[]" id="horario" multiple="multiple">
+                    <?php
+                        foreach ($listaAreas['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
                     </select>
-                   </td>
-                   <td>Tipo Horario</td>
-                   <td>
-                   <select name="tipo_horario"  class="" id="tipo_horario">
-                      <option value="1">Activo</option>
-                      <option value="0" selected="">Inactivo</option>
-                    </select>
+                    <input type="checkbox" class="seleccionar-todas-horario" id="todas-horario-input" > <label for="todas-horario-input" class="cursor">Seleccionar Todas</label>
                    </td>
                  </tr>
                  <tr>
+                  <td>Grupo </td><!--<span class="symbol required">-->
+                   <td><input type="text" class="form-control" name="" id="" /></td>
                    <td>Estado</td>
-                   <td colspan="3">
+                   <td>
                     <select name="estado"  class="" id="estado">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
@@ -132,8 +112,16 @@
                  </tr>
                </tbody>
              </table>
-
-             <table class="table table-bordered table-hover" id="sample-table-4">
+             <p >
+             <div class="row">
+              <div class="col-md-3 mb-2 cursor cursor-underline add-row-table-formulas"><p>[+] Agregar fila</p></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+            </div> 
+            <p >
+             <table class="table table-bordered table-hover" id="table-formulas">
+            <tbody>
              <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
@@ -144,10 +132,11 @@
               <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
-                echo '<td ><input autocomplete="off" style="width:25px;height: 20px;" type="text" width="30" data-orderable="false" name="c'.$i.'" id="c'.$i.'" /></td>';	
+                echo '<td ><input maxlength="5" autocomplete="off" style="width:25px;height: 20px;" type="text" width="30" data-orderable="false" name="f1" id="f1" /></td>';	
               }
               ?>
               </tr>
+            </tbody>
              </table>
            </div>
         <div class="modal-footer">
@@ -265,6 +254,19 @@ $(".seleccionar-todas-areas-2").click(function(){
         $("#txt_areas").val(null).trigger('change');
     }
 });
+
+/** Add row to table */
+var tbody = $('#table-formulas').children('tbody');
+var table = tbody.length ? tbody : $('#table-formulas');
+let r = 1;
+$('.add-row-table-formulas').click(function(){
+    let tdCol = "";
+    let rowCount = $('#table-formulas tr').length;
+    for(i	=	1	;	i	<	32	;	i++) {
+      tdCol += `<td ><input autocomplete="off" style="width:25px;height: 20px;" type="text" width="30" data-orderable="false" name="f`+rowCount+`" id="f`+rowCount+`" /></td>`;
+    }
+    table.append(`<tr>`+tdCol+`</tr>`);
+})
 
 /** List Results */
 const listResultTable = () => {
@@ -539,9 +541,11 @@ setTimeout(() => {
 });
 }
 
-$("[name='estado']").select2({ width: '50%', dropdownCssClass: "bigdrop"});
+$("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+// $("[name='grupo']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#grupo").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#tipo_horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='txt_departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});

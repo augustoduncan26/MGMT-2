@@ -29,9 +29,18 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 		echo $mssg	=	'<div class="alert alert-danger">Ya existe este registro.</div>';
 	} else {
 
+		$P_Data		=	false;
+		$PCuantos	=	 count($_GET['area']);
+		for($i 	= 	0; $i < $PCuantos ; $i++) {	
+			if($P_Data!='') {
+				$P_Data .=  ',';
+			}
+			$P_Data		.=	 $_GET['areas'][$i];
+		}
+
 		$P_Tabla 	=	PREFIX.'mant_horarios';
 		$P_Campos 	=	'id_cia,grupo,hora_corta,hora_desde,hora_hasta,id_depto,id_area,active,created_at';
-		$P_Valores 	=	"'".$id_cia."','".$_GET['grupo']."','".$horacorta."','".$_GET['hora_desde']."','".$_GET['hora_hasta']."','".$_GET['depto']."','".$_GET['area']."','".$_GET['estado']."',NOW()";
+		$P_Valores 	=	"'".$id_cia."','".$_GET['grupo']."','".$horacorta."','".$_GET['hora_desde']."','".$_GET['hora_hasta']."','".$_GET['depto']."','".$P_Data."','".$_GET['estado']."',NOW()";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';

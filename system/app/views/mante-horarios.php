@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <body onload="$('#cargando_add').hide()">
 
@@ -21,7 +23,7 @@
     <div class="row">
       <div class="col-lg-12">
         <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Horario</a>
-        <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[^] Exportar</a>
+        <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();"><i class="clip-download-3"></i> Exportar</a>
       </div>
     </div>
     
@@ -53,8 +55,8 @@
  <div class="clearfix"></div>
 
 <!-- Modal Add Rows -->
-<div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
@@ -67,38 +69,63 @@
                <thead>
                </thead>
                <tbody>
-                 <tr>
-                   <td width="20%">Grupo <span class="symbol required"></span></td>
-                   <td width="30%" colspan="3">
-                    <select id="grupo_horario" name="grupo_horario">
-                      <option></option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
-                      <option value="E">E</option>
-                    </select>
-                   </td>
-                 </tr>
-                 <tr>
+                <tr>
+                  <td>Descripción <span class="symbol required"></span> <i class="clip-info"></i></td>
+                  <td><input type="text" class="form-control" id="descripcion" name="descripcion" autocomplete="off" placeholder="Descripción" /> </td>
+                  <td>Abreviatura <span class="symbol required"></span></td>
+                  <td><input type="text" class="form-control" id="abreviatura" name="abreviatura" autocomplete="off" placeholder="Abreviatura" /></td>
+                </tr>
+                <!-- <tr>
+                  <td width="25%">Formato Horario</td>
+                  <td colspan="3">
+                  <select id="formato_horario" name="formato_horario">
+                    <option value="12">12 horas</option>
+                    <option value="24">24 horas</option>
+                  </select>
+                  </td>
+                </tr> -->
+                <tr class="formato-24">
                    <td width="20%">Hora desde <span class="symbol required"></span></td>
                    <td width="30%">
-                      <input maxlength="50" autofocus="" name="hora_desde" type="time" class="form-control" id="hora_desde" placeholder="Nombre">
-                      <!-- <select id="ampm_horadesde" name="ampm_horadesde">
-                        <option>AM</option>
-                        <option>PM</option>
-                      </select> -->
+                      <input maxlength="50" autofocus="" list="hora_desde_list" name="hora_desde_24" type="time" class="form-control" id="hora_desde_24" placeholder="Inicio" value="06:00">
+                      <datalist id="hora_desde_list">
+                        <option value="08:00">
+                        <option value="09:00">
+                        <option value="13:00">
+                        <option value="14:00">
+                        <option value="22:00">
+                      </datalist>
                     </td>
                    <td width="20%">Hora hasta <span class="symbol required"></span></td>
                    <td width="30%">
-                    <input maxlength="50" autofocus="" name="hora_hasta" type="time" class="form-control" id="hora_hasta" placeholder="Nombre">
-                    <!-- <select id="ampm_horahasta" name="ampm_horahasta">
-                        <option>AM</option>
-                        <option>PM</option>
-                      </select> -->
+                    <input maxlength="50" autofocus="" list="hora_hasta_list" name="hora_hasta_24" type="time" class="form-control" id="hora_hasta_24" placeholder="Nombre" value="14:00">
+                    <datalist id="hora_hasta_list">
+                        <option value="14:00">
+                        <option value="18:00">
+                        <option value="19:00">
+                        <option value="21:00">
+                        <option value="22:00">
+                      </datalist>
                   </td>
                  </tr>
-                 <tr><td colspan="4" style="color:red" class="text-center"><small>Ejemplo: 02:00 , 06:00 , 10:00 , 14:00, 22:00</small></td></tr>
+                 <!-- <tr class="formato-12">
+                   <td width="20%">Hora desde <span class="symbol required"></span></td>
+                   <td width="30%">
+                      <input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:]/g,'');" autocomplete="off" autofocus="" name="hora_desde_12" type="text" class="form-control" id="hora_desde_12" placeholder="Ej: 06:00">
+                    </td>
+                   <td width="20%">Hora hasta <span class="symbol required"></span></td>
+                   <td width="30%">
+                    <input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:]/g,'');" autocomplete="off" autofocus="" name="hora_hasta_12" type="text" class="form-control" id="hora_hasta_12" placeholder="Ej: 2:00">
+                  </td>
+                 </tr>
+                 <tr><td colspan="4" style="color:red" class="text-center"><small><label class="label-formato-12">Ejemplo: [6:00 - 2:00] , [10:00 - 6:00], [8:00 - 8:00]</label> <label class="label-formato-24">Ejemplo: [06:00 - 14:00] , [10:00 - 14:00], [08:00 - 20:00]</label></small></td>
+                </tr> -->
+                 <!-- <tr>
+                   <td width="23%">Grupo <span class="symbol required"></span></td>
+                   <td width="30%" colspan="3">
+                    <input type="text" maxlength="10" id="grupo" class="form-control" name="grupo" autocomplete="off" />
+                   </td>
+                 </tr> -->
                  <tr>
                    <td width="20%">Departamento <span class="symbol required"></span></td>
                    <td width="30%" colspan="3">
@@ -114,7 +141,7 @@
                   <tr>
                    <td>Áreas <span class="symbol required"></td>
                    <td colspan="3">
-                  <select name="areas[]" id="areas" multiple="multiple">
+                  <select name="areas[]" id="areas_horario" multiple="multiple">
                       <?php
                         foreach ($typeArea['resultado'] as $typeData) {
                           echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
@@ -162,7 +189,7 @@
 
 <!-- Edit Direcctions -->
 <?php /////////// Editar algo ?>
-<div class="<?php echo "modal fade"; ?>" id="edit_event" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?>">
 <div class="modal-content">
 <div class="modal-header">
@@ -174,70 +201,70 @@
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
  <div id="mssg-edit" style="color:red;"></div>
-             <table class="table table-bordered table-hover" id="sample-table-4">
-               <thead>
-               </thead>
-               <tbody>
-                 <tr>
-                   <td width="20%">Grupo <span class="symbol required"></span></td>
-                   <td width="30%" colspan="3">
-                    <select id="grupo_horario_edit" name="grupo_horario_edit">
-                      <option></option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
-                    </select>
-                    <input type="hidden" name="id_row" id="id_row" />
-                   </td>
-                 </tr>
-                 <tr>
-                   <td width="20%">Hora desde <span class="symbol required"></span></td>
-                   <td width="30%">
-                      <input maxlength="50" autofocus="" name="hora_desde_edit" type="time" class="form-control" id="hora_desde_edit" placeholder="Nombre">
-                    </td>
-                   <td width="20%">Hora hasta <span class="symbol required"></span></td>
-                   <td width="30%">
-                    <input maxlength="50" autofocus="" name="hora_hasta_edit" type="time" class="form-control" id="hora_hasta_edit" placeholder="Nombre">
-                  </td>
-                 </tr>
-                 <tr><td colspan="4" style="color:red" class="text-center"><small>Ejemplo: 02:00 , 06:00 , 10:00 , 14:00, 22:00</small></td></tr>
-                 <tr>
-                   <td width="20%">Departamento <span class="symbol required"></span></td>
-                   <td width="30%" colspan="3">
-                    <select id="departamento_horario_edit" name="departamento_horario_edit">
-                    <option value=""> - seleccionar - </option> 
-                      <?php
-                        foreach ($typeDeptos['resultado'] as $typeData) {
-                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        }
-                      ?>
-                    </select>
-                  </td>
-                  <tr>
-                   <td width="20%">Área <span class="symbol required"></span></td>
-                   <td width="30%" colspan="3">
-                    <select id="area_horario_edit" name="area_horario_edit">
-                    <option value=""> - seleccionar - </option> 
-                      <?php
-                        foreach ($typeArea['resultado'] as $typeData) {
-                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        }
-                      ?>
-                    </select>
-                  </td>
-                  </tr>
-                 <tr>
-                   <td>Estado</td>
-                   <td colspan="3">
-                    <select name="estado_horario_edit"  class="" id="estado_horario_edit">
-                      <option value="1">Activo</option>
-                      <option value="0" selected="">Inactivo</option>
-                    </select>
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
+    <table class="table table-bordered table-hover" id="sample-table-4">
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="20%">Grupo <span class="symbol required"></span></td>
+          <td width="30%" colspan="3">
+          <select id="grupo_horario_edit" name="grupo_horario_edit">
+            <option></option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+          <input type="hidden" name="id_row" id="id_row" />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Hora desde <span class="symbol required"></span></td>
+          <td width="30%">
+            <input maxlength="50" autofocus="" name="hora_desde_edit" type="time" class="form-control" id="hora_desde_edit" placeholder="Nombre">
+          </td>
+          <td width="20%">Hora hasta <span class="symbol required"></span></td>
+          <td width="30%">
+          <input maxlength="50" autofocus="" name="hora_hasta_edit" type="time" class="form-control" id="hora_hasta_edit" placeholder="Nombre">
+        </td>
+        </tr>
+        <tr><td colspan="4" style="color:red" class="text-center"><small>Ejemplo: 02:00 , 06:00 , 10:00 , 14:00, 22:00</small></td></tr>
+        <tr>
+          <td width="20%">Departamento <span class="symbol required"></span></td>
+          <td width="30%" colspan="3">
+          <select id="departamento_horario_edit" name="departamento_horario_edit">
+          <option value=""> - seleccionar - </option> 
+            <?php
+              foreach ($typeDeptos['resultado'] as $typeData) {
+                echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+              }
+            ?>
+          </select>
+        </td>
+        <tr>
+          <td width="20%">Área <span class="symbol required"></span></td>
+          <td width="30%" colspan="3">
+          <select id="area_horario_edit" name="area_horario_edit">
+          <option value=""> - seleccionar - </option> 
+            <?php
+              foreach ($typeArea['resultado'] as $typeData) {
+                echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+              }
+            ?>
+          </select>
+        </td>
+        </tr>
+        <tr>
+          <td>Estado</td>
+          <td colspan="3">
+          <select name="estado_horario_edit"  class="" id="estado_horario_edit">
+            <option value="1">Activo</option>
+            <option value="0" selected="">Inactivo</option>
+          </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -258,12 +285,30 @@
 <script>
 
 /** Select all areas */
+//$('.formato-24').hide();
+// $('.label-formato-24').hide();
+// $("#formato_horario").on("select2:select", function (e) { 
+//   var select_val = $(e.currentTarget).val();
+//   if($(this).val()=="12"){
+//       $('.formato-12').show();
+//       $('.label-formato-12').show();
+//       $('.formato-24').hide();
+//       $('.label-formato-24').hide();
+//     } else {
+//       $('.formato-12').hide();
+//       $('.label-formato-12').hide();
+//       $('.formato-24').show();
+//       $('.label-formato-24').show();
+//     }
+// });
+
+/** Select all areas */
 $(".seleccionar-todas-areas").click(function(){
     if($(".seleccionar-todas-areas").is(':checked') ){
-        $("#areas > option").prop("selected","selected");
-        $("#areas").trigger("change");
+        $("#areas_horario > option").prop("selected","selected");
+        $("#areas_horario").trigger("change");
     } else {
-        $("#areas").val(null).trigger('change');
+        $("#areas_horario").val(null).trigger('change');
     }
 });
 
@@ -321,7 +366,7 @@ listResultTable();
 
 // Delete Row
 function deleteRow ( id ) {
-  let route = "app/controllers/mante-departamentos.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-horarios.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -347,15 +392,16 @@ function addRows () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   
-  var grupo       = $('#grupo_horario').val();
-  var hora_desde  = $('#hora_desde').val();
-  var hora_hasta  = $('#hora_hasta').val();
-  var depto       = $('#departamento_horario').val();
-  var area        = $('#area_horario').val();
-  var estado      = $('#estado_horario').val();
+  let descripcion = $('#descripcion').val();
+  let abreviatura = $('#abreviatura').val();
+  let hora_desde  = $('#hora_desde_24').val();
+  let hora_hasta  = $('#hora_hasta_24').val();
+  let depto       = $('#departamento_horario').val();
+  let area        = $('#areas_horario').val();
+  let estado      = $('#estado_horario').val();
 
-  if ( grupo == '' || hora_desde == '' || hora_hasta == '' || depto == '' || area == '') {
-    $("#mssg-alert").html('Los campos con (*) son necesarios');
+  if ( descripcion == '' || abreviatura == '' || hora_desde == '' || hora_hasta == '' || depto == '' || area == '') {
+    $("#mssg-alert").html('<div class="alert alert-danger">Los campos con (*) son necesarios</div>');
     return false
   }
 
@@ -369,7 +415,8 @@ function addRows () {
     type: "GET",
     data: {
         add       : 1,
-        grupo     : grupo,
+        descripcion: descripcion,
+        abreviatura: abreviatura,
         hora_desde: hora_desde,
         hora_hasta: hora_hasta,
         depto     : depto,
@@ -423,7 +470,7 @@ function editRow ( id ) {
       $('#hora_desde_edit').val(response['hora_desde']);
       $('#hora_hasta_edit').val(response['hora_hasta']);
       $('#id_row').val(response['id']);
-      $('#departamento_horario_edit').select2('val',response['id_depto']);
+      $('#departamento_horario_edit').val(response['id_depto']).trigger('change');
       $('#area_horario_edit').select2('val',response['id_area']);
       $('#estado_horario_edit').val(response['active']);
     },
@@ -529,12 +576,14 @@ setTimeout(() => {
 });
 }
 
-$("[name='grupo_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='formato_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+// $("[name='grupo_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='area_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("[name='grupo_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+// $("[name='grupo_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='area_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#areas_horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>
