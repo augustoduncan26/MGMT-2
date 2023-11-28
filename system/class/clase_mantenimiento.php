@@ -499,7 +499,7 @@ class Mantenimientos
 	// LISTAR LOS CAMPOS (31) DE LAS FORMULAS
 	//=======================================
 	// Para non tener que estar haciendo un ciclo
-	// repetitivo en varios lugares del c�digo
+	// repetitivo en varios lugares del codigo
 	public function ListadeCampos()
 	{
 		$start		=	false;

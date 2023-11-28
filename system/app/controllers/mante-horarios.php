@@ -13,16 +13,13 @@ $typeDeptos = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia 
 $typeArea   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 
 
-if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
+if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 
 	$am 			= 	false;
 	$pm 			= 	false;
 
-	if ($_GET['hora_desde'] < "12") {
-		$am = "am";
-	} else { $pm = "pm";}
-	$horacorta 		= 	$_GET['hora_desde']."".$_GET['hora_hasta'];
-	$where 			= 	'grupo="'.$_GET['grupo'].'" and hora_desde="'.$_GET['hora_desde'].'" and hora_hasta="'.$_GET['hora_hasta'].'" and id_cia="'.$id_cia.'"';
+	$horacorta 		= 	$_GET['hora_desde']."-".$_GET['hora_hasta'];
+	$where 			= 	'descripcion="'.$_GET['descripcion'].'" and abreviatura="'.$_GET['abreviatura'].'" and hora_desde="'.$_GET['hora_desde'].'" and hora_hasta="'.$_GET['hora_hasta'].'" and id_cia="'.$id_cia.'"';
 	$busca 			=	$ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios',$where,'array');
 
 	if ($busca['total'] > 0 ) {
@@ -30,7 +27,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 	} else {
 
 		$P_Data		=	false;
-		$PCuantos	=	 count($_GET['area']);
+		$PCuantos	=	 count($_GET['areas']);
 		for($i 	= 	0; $i < $PCuantos ; $i++) {	
 			if($P_Data!='') {
 				$P_Data .=  ',';
@@ -39,8 +36,8 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 		}
 
 		$P_Tabla 	=	PREFIX.'mant_horarios';
-		$P_Campos 	=	'id_cia,grupo,hora_corta,hora_desde,hora_hasta,id_depto,id_area,active,created_at';
-		$P_Valores 	=	"'".$id_cia."','".$_GET['grupo']."','".$horacorta."','".$_GET['hora_desde']."','".$_GET['hora_hasta']."','".$_GET['depto']."','".$P_Data."','".$_GET['estado']."',NOW()";
+		$P_Campos 	=	'id_cia,descripcion,abreviatura,hora_corta,hora_desde,hora_hasta,id_depto,id_area,active,created_at';
+		$P_Valores 	=	"'".$id_cia."','".$_GET['descripcion']."','".$_GET['abreviatura']."','".$horacorta."','".$_GET['hora_desde']."','".$_GET['hora_hasta']."','".$_GET['depto']."','".$P_Data."','".$_GET['estado']."',NOW()";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
@@ -49,13 +46,21 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['grupo'] !='') {
 
 // Show Edit Modal & info
 if (isset($_GET['showEdit']) && $_GET['id'] != "") {
-	$data       = $ObjMante->BuscarLoQueSea('id,grupo,hora_corta,hora_desde,hora_hasta,id_cia,id_depto,id_area,active,created_at',PREFIX.'mant_horarios','id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+	$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	echo json_encode($data);
 }
 
 // Update row 
-if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['grupo'] !='') {
-	$P_Valores = "grupo = '".$_GET['grupo']."', hora_desde = '".$_GET['hora_desde']."', hora_hasta = '".$_GET['hora_hasta']."', id_depto = '".$_GET['id_depto']."', id_area = '".$_GET['id_area']."', active = '".$_GET['activo']."', updated_at=NOW()";
+if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
+	$P_Data		=	false;
+	$PCuantos	=	 count($_GET['id_areas']);
+	for($i 	= 	0; $i < $PCuantos ; $i++) {	
+		if($P_Data!='') {
+			$P_Data .=  ',';
+		}
+		$P_Data		.=	 $_GET['id_areas'][$i];
+	}
+	$P_Valores = "descripcion = '".$_GET['descripcion']."', abreviatura = '".$_GET['abreviatura']."', hora_desde = '".$_GET['hora_desde']."', hora_hasta = '".$_GET['hora_hasta']."', id_depto = '".$_GET['id_depto']."', id_area = '".$P_Data."', active = '".$_GET['estado']."', updated_at=NOW()";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_horarios', 'id = "'.$_GET['id'].'"');
   	echo 'OK';
 }

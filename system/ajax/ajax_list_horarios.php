@@ -12,7 +12,8 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','id_cia = '.$
     <table id="list-table-direcciones" class="table table-striped table-bordered table-hover">
       <thead>
         <tr class=""><!-- header-list-table -->
-          <th>Grupo</th>
+          <th>Abreciatura</th>
+          <th>Descripción</th>
           <th>Hora desde</th>
           <th>Hora hasta</th>
           <th>Departamento</th>
@@ -27,15 +28,24 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','id_cia = '.$
         if ($sel1['resultado']){
           foreach ($sel1['resultado'] as $datos) {
             $deptoName  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id = '.$datos['id_depto'].'','extract');
-            $areaName   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id = '.$datos['id_area'].'','extract');
-            
+            $areaName   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas', 'id IN ('.$datos['id_area'].')','array');
+            $P_Data = "";
+            $P_Data		=	false;
+            $PCuantos	=	 count($areaName['resultado']);
+            for($i 	= 	0; $i < $PCuantos ; $i++) {	
+              if($P_Data!='') {
+                $P_Data .=  ', ';
+              }
+              $P_Data		.=	 $areaName['resultado'][$i]['name'];
+            }
       ?>
         <tr>
-          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grupo']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['abreviatura']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['descripcion']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['hora_desde']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['hora_hasta']?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$deptoName['name']?></td>
-          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$areaName['name']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$P_Data?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['created_at']?></td>
           <td class="text-center" style="width:10% !important;">

@@ -23,7 +23,10 @@
     <div class="row">
       <div class="col-lg-12">
         <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Horario</a>
-        <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();"><i class="clip-download-3"></i> Exportar</a>
+        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+        <div class="progress hide">
+          <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
       </div>
     </div>
     
@@ -71,9 +74,9 @@
                <tbody>
                 <tr>
                   <td>Descripción <span class="symbol required"></span> <i class="clip-info"></i></td>
-                  <td><input type="text" class="form-control" id="descripcion" name="descripcion" autocomplete="off" placeholder="Descripción" /> </td>
+                  <td><input type="text" class="form-control" id="descripcion" name="descripcion" autocomplete="off" placeholder="Descripción" maxlength="50" /> </td>
                   <td>Abreviatura <span class="symbol required"></span></td>
-                  <td><input type="text" class="form-control" id="abreviatura" name="abreviatura" autocomplete="off" placeholder="Abreviatura" /></td>
+                  <td><input type="text" class="form-control" id="abreviatura" name="abreviatura" autocomplete="off" placeholder="Abreviatura" maxlength="10" /></td>
                 </tr>
                 <!-- <tr>
                   <td width="25%">Formato Horario</td>
@@ -151,19 +154,6 @@
                  <input type="checkbox" class="seleccionar-todas-areas" id="todas-areas-input" > <label for="todas-areas-input" class="cursor">Seleccionar Todas</label>
                  </td>
                  </tr>
-                  <!-- <tr>
-                   <td width="20%">Área <span class="symbol required"></span></td>
-                   <td width="30%" colspan="3">
-                    <select id="area_horario" name="area_horario">
-                    <option value=""> - seleccionar - </option> 
-                      <?php
-                        // foreach ($typeArea['resultado'] as $typeData) {
-                        //   echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        // }
-                      ?>
-                    </select>
-                  </td>
-                  </tr> -->
                  <tr>
                    <td>Estado</td>
                    <td colspan="3">
@@ -190,7 +180,7 @@
 <!-- Edit Direcctions -->
 <?php /////////// Editar algo ?>
 <div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
-<div class="<?php echo "modal-dialog"; ?>">
+<div class="<?php echo "modal-dialog modal-lg"; ?>">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -206,17 +196,10 @@
       </thead>
       <tbody>
         <tr>
-          <td width="20%">Grupo <span class="symbol required"></span></td>
-          <td width="30%" colspan="3">
-          <select id="grupo_horario_edit" name="grupo_horario_edit">
-            <option></option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </select>
-          <input type="hidden" name="id_row" id="id_row" />
-          </td>
+          <td>Descripción <span class="symbol required"></span> <i class="clip-info"></i></td>
+          <td><input type="text" class="form-control" id="descripcion_horario_edit" name="descripcion" autocomplete="off" placeholder="Descripción" /><input type="hidden" id="id_row" /> </td>
+          <td>Abreviatura <span class="symbol required"></span></td>
+          <td><input type="text" class="form-control" id="abreviatura_horario_edit" name="abreviatura" autocomplete="off" placeholder="Abreviatura" /></td>
         </tr>
         <tr>
           <td width="20%">Hora desde <span class="symbol required"></span></td>
@@ -244,14 +227,14 @@
         <tr>
           <td width="20%">Área <span class="symbol required"></span></td>
           <td width="30%" colspan="3">
-          <select id="area_horario_edit" name="area_horario_edit">
-          <option value=""> - seleccionar - </option> 
+          <select id="area_horario_edit" name="area_horario_edit[]" multiple>
             <?php
               foreach ($typeArea['resultado'] as $typeData) {
                 echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
               }
             ?>
           </select>
+          <input type="checkbox" class="seleccionar-todas-areas-2" id="todas-areas-input-2" > <label for="todas-areas-input-2" class="cursor">Seleccionar Todas</label>
         </td>
         </tr>
         <tr>
@@ -314,10 +297,10 @@ $(".seleccionar-todas-areas").click(function(){
 
 $(".seleccionar-todas-areas-2").click(function(){
     if($(".seleccionar-todas-areas-2").is(':checked') ){
-        $("#txt_areas > option").prop("selected","selected");
-        $("#txt_areas").trigger("change");
+        $("#area_horario_edit > option").prop("selected","selected");
+        $("#area_horario_edit").trigger("change");
     } else {
-        $("#txt_areas").val(null).trigger('change');
+        $("#area_horario_edit").val(null).trigger('change');
     }
 });
 // var runNavigationToggler = function () {
@@ -378,7 +361,6 @@ function deleteRow ( id ) {
     dataType        : 'html',
     success         : function (response) { 
         $('html, body').animate({scrollTop: '0px'},'slow');
-        //$('.mssg-window').show().html("Se ha eliminado el registros con éxito.");
         listResultTable();
     },
     error           : function (error) {
@@ -397,15 +379,15 @@ function addRows () {
   let hora_desde  = $('#hora_desde_24').val();
   let hora_hasta  = $('#hora_hasta_24').val();
   let depto       = $('#departamento_horario').val();
-  let area        = $('#areas_horario').val();
+  let areas       = $('#areas_horario').val();
   let estado      = $('#estado_horario').val();
 
-  if ( descripcion == '' || abreviatura == '' || hora_desde == '' || hora_hasta == '' || depto == '' || area == '') {
+  if ( descripcion == '' || abreviatura == '' || hora_desde == '' || hora_hasta == '' || depto == '' || areas == '') {
     $("#mssg-alert").html('<div class="alert alert-danger">Los campos con (*) son necesarios</div>');
     return false
   }
 
-  let route = "app/controllers/mante-horarios.php"; //?add=1&nombre="+nombre+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-horarios.php";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -420,7 +402,7 @@ function addRows () {
         hora_desde: hora_desde,
         hora_hasta: hora_hasta,
         depto     : depto,
-        area      : area,
+        areas     : areas,
         estado    : estado
     },
     dataType        : 'html',
@@ -433,14 +415,14 @@ function addRows () {
         $(".alert-danger").hide();
       }, 3000);
   
-      //$("#grupo_horario").val('');
-      $("#grupo_horario").select2("val", "");
+      $("#descripcion").val('');
+      $("#abreviatura").val('');
+      //$("#descripcion").select2("val", "");
       $("#hora_desde").val('');
       $("#hora_hasta").val('');
-      $("#departamento_horario").select2("val", "");
-      $("#area_horario").select2("val", "");
-      //$("#departamento_horario").val('');
-      //$("#area_horario").val('');
+      $("#departamento_horario").val(null).trigger("change");
+      $("#areas_horario").val(null).trigger("change");
+      $('#todas-areas-input').prop('checked', false);
     },
     error           : function (error) {
       console.log(error);
@@ -466,12 +448,27 @@ function editRow ( id ) {
     data: "",
     dataType        : 'json',
     success         : function (response) { 
+
+      $('#descripcion_horario_edit').val(response['descripcion']);
+      $('#abreviatura_horario_edit').val(response['abreviatura']);
       $('#grupo_horario_edit').select2('val',response['grupo']);
       $('#hora_desde_edit').val(response['hora_desde']);
       $('#hora_hasta_edit').val(response['hora_hasta']);
       $('#id_row').val(response['id']);
       $('#departamento_horario_edit').val(response['id_depto']).trigger('change');
-      $('#area_horario_edit').select2('val',response['id_area']);
+
+      //let newAreas = response['id_area'].split(',');
+
+      let arr   = response['id_area'].split (",");
+      let keys  = Object.keys(arr).length;
+      let r  = "";
+      arr.forEach((item,key)=>{
+        if (item) {
+          r =  arr + ',';
+          $('#area_horario_edit').val(arr).change();
+        }
+      });
+      $('#estado_horario_edit').select2('val',response['active']);
       $('#estado_horario_edit').val(response['active']);
     },
     error           : function (error) {
@@ -486,14 +483,20 @@ function updateRow ( id ) {
   
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-  var grupo       = $('#grupo_horario_edit').val();
+  var descripcion = $('#descripcion_horario_edit').val();
+  var abreviatura = $('#abreviatura_horario_edit').val();
   var hora_desde  = $('#hora_desde_edit').val();
   var hora_hasta  = $('#hora_hasta_edit').val();
   var id_depto    = $('#departamento_horario_edit').val();
-  var id_area     = $('#area_horario_edit').val();
+  var id_areas    = $('#area_horario_edit').val();
   var estado      = $('#estado_horario_edit').val();
 
-  let route = "app/controllers/mante-horarios.php?edit=1&id="+id+"&grupo="+grupo+"&hora_desde="+hora_desde+"&hora_hasta="+hora_hasta+"&id_depto="+id_depto+"&id_area="+id_area+"&activo="+estado+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
+  if ( descripcion == '' || abreviatura == '' || hora_desde == '' || hora_hasta == '' || id_depto == '' || id_areas == '') {
+    $("#mssg-alert").html('<div class="alert alert-danger">Los campos con (*) son necesarios</div>');
+    return false
+  }
+
+  let route = "app/controllers/mante-horarios.php";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -501,12 +504,27 @@ function updateRow ( id ) {
     },
     url: route,
     type: "GET",
-    data: "",
+    data: {
+      edit  : 1,
+      id    : id ,
+      descripcion : descripcion,
+      abreviatura : abreviatura,
+      hora_desde : hora_desde,
+      hora_hasta : hora_hasta,
+      id_depto : id_depto,
+      id_areas : id_areas,
+      estado : estado
+    },
     dataType        : 'html',
     success         : function (response) { 
       if (response == 'OK') {
-        $("#mssg-edit").html('<div class="alert alert-success">Los datos fueron actualizados con éxito.</div>');
+        $("#mssg-edit").show().html('<div class="alert alert-success">Los datos fueron actualizados con éxito.</div>');
+        setTimeout(()=>{
+          $("#mssg-edit").html('').hide();
+        },4000);
         listResultTable();
+      } else {
+        console.log(response);
       }
     },
     error           : function (error) {
@@ -531,7 +549,7 @@ setTimeout(() => {
         // fixedColumns: true,
         "columnDefs": [{
         "orderable": false,
-        "targets": [7]
+        "targets": [8]
         }],
         language: {
         "decimal": "",
@@ -583,7 +601,8 @@ $("[name='area_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"}
 $("[name='estado_horario']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 // $("[name='grupo_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("[name='area_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+//$("[name='area_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#area_horario_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas_horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_horario_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>

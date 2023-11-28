@@ -12,6 +12,7 @@
    max-width:1350px;
   }
 }
+.table>tbody>tr>td { padding: 1px !important;}
 </style>
 <body onload="$('#cargando_add').hide()">
 
@@ -28,7 +29,8 @@
     <div class="row">
       <div class="col-lg-12">
         <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nueva Formula</a>
-        <!-- <a data-toggle="modal" class="btn btn-info"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[^] Exportar</a> -->
+        <a data-toggle="modal" class="btn btn-default"  role="button" href="#" ><i class="clip-download-3"></i> Importar</a>
+        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
       </div>
     </div>
     
@@ -72,9 +74,14 @@
                <thead>
                </thead>
                <tbody>
+                <tr>
+                  <td style="width:15%">Descripción <span class="symbol required"></td>
+                  <td><input class="form-control" type="text" id="descripcion" name="descripcion" /></td>
+                  <td colspan="2"><small>Nombre que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
+                </tr>
                  <tr>
                    <td>Áreas <span class="symbol required"></td>
-                   <td colspan="3">
+                   <td>
                   <select name="areas[]" id="areas" multiple="multiple">
                       <?php
                         foreach ($listaAreas['resultado'] as $typeData) {
@@ -84,24 +91,9 @@
                   </select>
                  <input type="checkbox" class="seleccionar-todas-areas" id="todas-areas-input" > <label for="todas-areas-input" class="cursor">Seleccionar Todas</label>
                  </td>
+                 <td colspan="2"></td>
                  </tr>
                  <tr>
-                   <td>Horario <span class="symbol required"></td>
-                   <td colspan="3">
-                    <!-- Seleccionar los horarios -->
-                    <select name="horario[]" id="horario" multiple="multiple">
-                    <?php
-                        foreach ($listaAreas['resultado'] as $typeData) {
-                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        }
-                      ?>
-                    </select>
-                    <input type="checkbox" class="seleccionar-todas-horario" id="todas-horario-input" > <label for="todas-horario-input" class="cursor">Seleccionar Todas</label>
-                   </td>
-                 </tr>
-                 <tr>
-                  <td>Grupo </td><!--<span class="symbol required">-->
-                   <td><input type="text" class="form-control" name="" id="" /></td>
                    <td>Estado</td>
                    <td>
                     <select name="estado"  class="" id="estado">
@@ -109,15 +101,18 @@
                       <option value="0" selected="">Inactivo</option>
                     </select>
                    </td>
+                   <td colspan="2" style="width:20%"></td>
                  </tr>
                </tbody>
              </table>
              <p >
              <div class="row">
-              <div class="col-md-3 mb-2 cursor cursor-underline add-row-table-formulas"><p>[+] Agregar fila</p></div>
-              <div class="col-md-3"></div>
-              <div class="col-md-3"></div>
-              <div class="col-md-3"></div>
+              <div class="col-md-2 mb-2 cursor cursor-underline add-row-table-formulas"><p>[+] Agregar fila</p></div>
+              <div class="col-md-2 mb-2 cursor cursor-underline delete-row-table-formulas"><p>[-] Eliminar fila</p></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2 text-right"><!--<strong><?=$monthNameSpanish[$dayOfMonth]. " " .$actualYear?></strong>--></div>
             </div> 
             <p >
              <table class="table table-bordered table-hover" id="table-formulas">
@@ -125,14 +120,14 @@
              <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
-                echo '<td width="30px;height: 20px;" data-orderable="false" label="c'.$i.'">'.$i.'</td>';	
+                echo '<td style="width:40px;height: 20px;" data-orderable="false" label="c'.$i.'" title="Día '.$i.'">D'.$i.'</td>';	
               }
               ?>
               </tr>
               <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
-                echo '<td ><input maxlength="5" autocomplete="off" style="width:25px;height: 20px;" type="text" width="30" data-orderable="false" name="f1" id="f1" /></td>';	
+                echo '<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" type="text" data-orderable="false" name="f1" id="f1-'.$i.'" /></td>';	
               }
               ?>
               </tr>
@@ -256,16 +251,24 @@ $(".seleccionar-todas-areas-2").click(function(){
 });
 
 /** Add row to table */
-var tbody = $('#table-formulas').children('tbody');
-var table = tbody.length ? tbody : $('#table-formulas');
+let daysInMonth = '<?php echo ($daysInMonth + 1);?>';
+let tbody = $('#table-formulas').children('tbody');
+let table = tbody.length ? tbody : $('#table-formulas');
 let r = 1;
 $('.add-row-table-formulas').click(function(){
     let tdCol = "";
     let rowCount = $('#table-formulas tr').length;
     for(i	=	1	;	i	<	32	;	i++) {
-      tdCol += `<td ><input autocomplete="off" style="width:25px;height: 20px;" type="text" width="30" data-orderable="false" name="f`+rowCount+`" id="f`+rowCount+`" /></td>`;
+      tdCol += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="f`+rowCount+`" id="f`+rowCount+`-`+i+`" /></td>`;
     }
     table.append(`<tr>`+tdCol+`</tr>`);
+});
+/** Delete row from table */
+$('.delete-row-table-formulas').click(function(){
+    let rowCount = $('#table-formulas tr').length;
+    if (rowCount > 2 ) {
+      $('#table-formulas tr:last').remove();
+    }
 })
 
 /** List Results */
@@ -285,7 +288,7 @@ const listResultTable = () => {
     type: "GET",
     data: {
       id_user     : id_user,
-      id_empresa  : id_cia,
+      id_cia      : id_cia,
       nocache     : '<?php echo rand(99999,66666)?>',
     },
     dataType        : 'html',
@@ -329,19 +332,57 @@ function addRows () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   
-  var nombre      = $('#nombre').val();
-  var departamento= $('#departamento').val();
-  var areas       = $('#areas').val();
-  var estado      = $('#estado').val();
+  let descripcion = $('#descripcion').val();
+  let areas       = $('#areas').val();
+  let estado      = $('#estado').val();
+  let f1          = $('#f1').val();
+  let f2          = $('#f2').val();
+  let f3          = $('#f3').val();
+  let f4          = $('#f4').val();
+  let f5          = $('#f5').val();
 
-  if ( nombre == '' || departamento == '' || areas == '') {
+  if ( descripcion == '' || areas == '') {
     $("#mssg-alert").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
-    $('#nombre').focus();
-    setTimeout(()=>{$("#mssg-alert").hide();},3000);
-    return false
+    setTimeout(()=>{
+      $("#mssg-alert").hide();
+    },3000);
+      return false
   }
 
-  let route = "app/controllers/mante-zonas.php";
+  if (f1 == '' || f2 == '' || f3 == '' || f4 == '' || f5 == '') {
+    $("#mssg-alert").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
+    setTimeout(()=>{
+      $("#mssg-alert").hide();
+    },3000);
+      return false
+  }
+
+  let filas     = [];
+  let rowCount  = $('#table-formulas tr').length;
+
+  for (i = 0 ; i < 32; i++) {
+    for (y=1;y<rowCount;y++) {
+      if($("#f"+y+"-"+i).val()==""){
+        $("#mssg-alert").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
+        setTimeout(()=>{
+          $("#mssg-alert").hide();
+        },3000);
+        return false
+      }
+    }
+  }
+
+  let f  = [];
+  for (i = 1; i < 32; i++) {
+    for (y=1;y<rowCount;y++) {
+      f[y] = $("#f"+y+"-"+i).val();
+      filas.push(f[y]);
+      console.log(filas)
+    }
+  }
+
+  
+  let route = "app/controllers/mante-formulas.php";
 
   $.ajax({
     headers: {
@@ -351,28 +392,40 @@ function addRows () {
     url: route,
     type: "GET",
     data: {
-        add      : 1,
-        nombre   : nombre,
-        depto    : departamento,
-        areas    : areas,
-        estado   : estado,
+        add           : 1,
+        descripcion   : descripcion,
+        areas         : areas,
+        filas         : filas,
+        estado        : estado,
     },
     dataType        : 'html',
     success         : function (response) { 
-      $("#mssg-alert").show().html(response);
       $('.fa-spinner').hide();
-      listResultTable();
-      setTimeout(() => {
-        $(".alert-exito").hide();
-        $(".alert-danger").hide();
-        $("#mssg-alert").hide();
-      }, 3000);
-  
-      $("#areas").val(null).trigger('change');
-      $("#departamento").val(null).trigger('change');
-      $(".seleccionar-todas-areas").prop('checked',false);
-      $("#nombre").val('');
-      $("#nombre").focus();
+      if (response == "EXISTE") {
+        $("#mssg-alert").show().html('<div class="alert alert-danger">Ya existe un registro con este nombre de descripción.</div>');
+        setTimeout(() => {
+          $(".alert-exito").hide();
+          $(".alert-danger").hide();
+          $("#mssg-alert").hide();
+        }, 3000);
+      } else {
+        $("#mssg-alert").show().html(response);
+        listResultTable();
+        setTimeout(() => {
+          $(".alert-exito").hide();
+          $(".alert-danger").hide();
+          $("#mssg-alert").hide();
+        }, 3000);
+
+        $("input[id^='f']").val('');
+        $("#areas").val(null).trigger('change');
+        $("#departamento").val(null).trigger('change');
+        $(".seleccionar-todas-areas").prop('checked',false);
+        $("#nombre").val('');
+        $("#nombre").focus();
+
+      }
+
     },
     error           : function (error) {
       console.log(error);
@@ -386,7 +439,7 @@ function editRow ( id ) {
   var id_cia  = '<?php echo $_SESSION["id_cia"]?>';
   var contenido_editor = $('#contenido_editar')[0];
   $("#mssg-edit").html('');
-  let route = "app/controllers/mante-zonas.php";
+  let route = "app/controllers/mante-formulas.php";
 
   $.ajax({
     headers: {
@@ -445,7 +498,7 @@ function updateRow ( id ) {
     return false;
   }
 
-  let route = "app/controllers/mante-zonas.php";
+  let route = "app/controllers/mante-formulas.php";
   //?edit=1&id="+id+"&nombre="+nombre+"&areas="+areas+"&depto="+depto+"&activo="+estado+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
@@ -545,7 +598,7 @@ $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 // $("[name='grupo']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#horarios").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#grupo").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#tipo_horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='txt_departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
