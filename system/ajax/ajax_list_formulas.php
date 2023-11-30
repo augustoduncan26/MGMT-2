@@ -6,14 +6,32 @@ $id_cia     = $_GET['id_cia'];
 include_once ('../framework.php');
 $ObjMante   = new Mantenimientos();
 $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_formulas','id_cia = '.$id_cia,'array');
+
+$PCampos = false;
+for ($i = 1; $i < 32 ; $i++) {
+  $PCampos .= "f.c".$i.",";
+}
+
+$list  = mysqli_query($linkServidor,"SELECT ".$PCampos."fd.* FROM ".PREFIX."mant_formulas_detalle fd
+LEFT JOIN ".PREFIX."mant_formulas f ON f.id_detalle = fd.id 
+Where fd.id_cia = ".$id_cia." order by c1 DESC");
+$tot = mysqli_num_rows($list);
+
 $daysInMonth= date('t');
+
 ?>
+<style>
+  th {
+    font-size: 11px;
+    color: #696969;
+  }
+</style>
 <div class="table-responsive">
-    <table id="list-table-direcciones" class=" table-bordered table-hover">
+    <table id="list-table-formulas" class=" table-bordered table-hover" style="width:100%">
       <thead>
         <tr class=""><!-- header-list-table -->
           <th width="8%">Descripcion</th>
-          <th width="8%">Área</th>
+          <th width="9%">Área</th>
           <?PHP 
           for($i	=	1	;	$i	<	32	;	$i++) {
             echo '<th data-orderable="false" title="Día '.$i.'">D'.$i.'</th>';	
@@ -26,10 +44,12 @@ $daysInMonth= date('t');
       </thead>
       <tbody>
       <?php
-        if ($sel1['resultado']){
+        //if ($sel1['resultado']){
+        if ($tot > 0) {
           $i = 0;
 
-          foreach ($sel1['resultado'] as $datos) {
+          //foreach ($sel1['resultado'] as $datos) {
+            while ( $datos = mysqli_fetch_array($list) ) {
             $depto  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id ='.$datos['id_depto'].'');
             $areas  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id IN ('.$datos['id_area'].')','array');
             
@@ -59,7 +79,9 @@ $daysInMonth= date('t');
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <!-- <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$date[0]?></td> -->
           <td class="text-center" style="width:10% !important;">
+          <?php ?>
             <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
+          <?php ?>
             <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
             </td>
         </tr>

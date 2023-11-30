@@ -13,6 +13,7 @@
   }
 }
 .table>tbody>tr>td { padding: 1px !important;}
+.importer-container { display: none;}
 </style>
 <body onload="$('#cargando_add').hide()">
 
@@ -29,8 +30,32 @@
     <div class="row">
       <div class="col-lg-12">
         <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nueva Formula</a>
-        <a data-toggle="modal" class="btn btn-default"  role="button" href="#" ><i class="clip-download-3"></i> Importar</a>
+        <a data-toggle="modal" class="btn btn-default btn-button-importar"  role="button" href="#" ><i class="clip-download-3"></i> Importar</a>
         <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+      </div>
+    </div>
+
+    <!-- Importar CSV -->
+    <div class="row importer-container">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post" action="?mante-formulas" enctype="multipart/form-data">
+            <div class="col-md-12"><h5>Importar formulas</h5></div>
+            <div class="col-md-4">
+              <input type="file" class="form-control" id="" name="" />
+            </div>
+            <div class="col-md-4">
+              <!-- <input type="submit" class="btn btn-primary" value="Importar Archivo CSV" /> -->
+              <button class="btn btn-success">Importar Archivo CSV</button>
+            </div>
+            <div class="col-md-4">
+              dd
+            </div>
+            </form>
+        </div>
+        </div>
+        
       </div>
     </div>
     
@@ -67,7 +92,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Formula</h3>
         </div>
-         <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
+          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
              <div id="mssg-alert" style="color:red;"></div>
              <table class="table table-bordered table-hover" id="sample-table-4">
@@ -76,8 +101,8 @@
                <tbody>
                 <tr>
                   <td style="width:15%">Descripción <span class="symbol required"></td>
-                  <td><input class="form-control" type="text" id="descripcion" name="descripcion" /></td>
-                  <td colspan="2"><small>Nombre que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
+                  <td><input class="form-control" type="text" id="descripcion" name="descripcion" maxlength="12" /></td>
+                  <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
                 </tr>
                  <tr>
                    <td>Áreas <span class="symbol required"></td>
@@ -116,14 +141,17 @@
             </div> 
             <p >
              <table class="table table-bordered table-hover" id="table-formulas">
-            <tbody>
-             <tr>
+              <thead>
+              <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
                 echo '<td style="width:40px;height: 20px;" data-orderable="false" label="c'.$i.'" title="Día '.$i.'">D'.$i.'</td>';	
               }
               ?>
               </tr>
+              </thead>
+            <tbody>
+             
               <tr>
               <?PHP 
               for($i	=	1	;	$i	<	32	;	$i++) {
@@ -139,7 +167,7 @@
           <input name="agregar_habitacion" type="button" class="btn btn-primary" onClick="addRows()" value="Guardar datos">
           
         </div>
-      </form>
+          </form>
       </div>
     </div>
   </div>
@@ -147,76 +175,94 @@
 
 <!-- Edit Row -->
 <?php /////////// Editar algo ?>
-<div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
-<div class="<?php echo "modal-dialog"; ?>">
+<div class="modal fade" id="edit_event" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-xl">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Zona</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Formula</h3>
 </div>
 
-<form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
- <div class="modal-body" id="contenido_editar">
- 
- <div id="mssg-edit" style="color:red"></div>
-
- <table class="table table-bordered" id="sample-table-4">
+<form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
+  <div class="modal-body">
+  <div id="mssg-edit" style="color:red;"></div>
+  <table class="table table-bordered table-hover" id="sample-table-4">
+    <thead>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="width:15%">Descripción <span class="symbol required"></td>
+      <td>
+        <input class="form-control" type="text" id="descripcion_edit" name="descripcion_edit" maxlength="12" /><input type="hidden" id="id_row" />
+        <input type="hidden" id="total_filas" />
+      </td>
+      <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
+    </tr>
+      <tr>
+        <td>Áreas <span class="symbol required"></td>
+        <td>
+      <select name="areas_edit[]" id="areas_edit" multiple="multiple">
+          <?php
+            foreach ($listaAreas['resultado'] as $typeData) {
+              echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+            }
+          ?>
+      </select>
+      <input type="checkbox" class="seleccionar-todas-areas-edit" id="todas-areas-input-edit" > <label for="todas-areas-input-edit" class="cursor">Seleccionar Todas</label>
+      </td>
+      <td colspan="2"></td>
+      </tr>
+      <tr>
+        <td>Estado</td>
+        <td>
+        <select name="estado_edit"  class="" id="estado_edit">
+          <option value="1">Activo</option>
+          <option value="0" selected="">Inactivo</option>
+        </select>
+        </td>
+        <td colspan="2" style="width:20%"></td>
+      </tr>
+    </tbody>
+  </table>
+  <p >
+  <div class="row">
+  <div class="col-md-2 mb-2 cursor cursor-underline add-row-table-formulas-edit"><p>[+] Agregar fila</p></div>
+  <div class="col-md-2 mb-2 cursor cursor-underline delete-row-table-formulas-edit"><p>[-] Eliminar fila</p></div>
+  <div class="col-md-2"></div>
+  <div class="col-md-2"></div>
+  <div class="col-md-2"></div>
+  <div class="col-md-2 text-right"><!--<strong><?=$monthNameSpanish[$dayOfMonth]. " " .$actualYear?></strong>--></div>
+  </div> 
+  <p >
+  <table class="table table-bordered table-hover" id="table-formulas-edit">
   <thead>
+  <tr>
+  <?PHP 
+  for($i	=	1	;	$i	<	32	;	$i++) {
+    echo '<td style="width:40px;height: 20px;" data-orderable="false" label="c'.$i.'" title="Día '.$i.'">D'.$i.'</td>';	
+  }
+  ?>
+  </tr>
   </thead>
   <tbody>
-    <tr>
-      <td width="30%">Nombre: <span class="symbol required"></span></td>
-      <td width="70%"><input autofocus="" name="nombre" type="text" class="form-control" id="txt_nombre" placeholder="Nombre" value="" autocomplete="off">
-      <input autofocus="" name="id_row" type="hidden" class="form-control" id="id_row" placeholder="Nombre" value="">
-      </td>
-    </tr>
-    <tr>
-      <td>Departamento <span class="symbol required"></td>
-      <td colspan="3">
-    <select name="txt_departamento" id="txt_departamento">
-        <option value=""> - seleccionar - </option> 
-        <?php
-          foreach ($listaDeptos['resultado'] as $typeData) {
-            echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-          }
-        ?>
-    </select>
-    </td>
-    </tr>
-    <tr>
-      <td>Áreas <span class="symbol required"></td>
-      <td colspan="3">
-    <select name="areas[]" id="txt_areas" multiple="multiple">
-        <?php
-          foreach ($listaAreas['resultado'] as $typeData) {
-            echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-          }
-        ?>
-    </select>
-    <input type="checkbox" class="seleccionar-todas-areas-2" id="todas-areas-input-2" > <label for="todas-areas-input-2" class="cursor">Seleccionar Todas</label>
-    </td>
-    </tr>
-    <tr>
-      <td>Estado:</td>
-      <td>
-       <select name="estado" id="txt_estado" class="">
-         <option value="1">Activo</option>
-         <option value="0">Inactivo</option>
-       </select>
-      </td>
-    </tr>
+  
+  <tr>
+  <?PHP 
+  for($i	=	1	;	$i	<	32	;	$i++) {
+    echo '<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" type="text" data-orderable="false" name="fe1" id="fe1-'.$i.'" /></td>';	
+  }
+  ?>
+  </tr>
   </tbody>
-<tfoot>
-</tfoot>
-</table>
+  </table>
+  </div>
+  <div class="modal-footer">
+  <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+  <input name="update_formula" type="button" class="btn btn-primary" onclick="var id_row = $('#id_row').val(); updateRow(id_row)" value="Modificar datos">
 
-</div>
- <div class="modal-footer">
-      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="agregar_habitacion" type="button" class="btn btn-primary" onClick="var id_row = $('#id_row').val(); updateRow(id_row)" value="Modificar datos">
-</div>
+  </div>
 </form>
 </div>
 </div>
@@ -230,6 +276,10 @@
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
+/** Trigger Importar Formulas */
+$('.btn-button-importar').on('click', () => {
+  $('.importer-container').toggle();
+});
 
 /** Select all areas */
 $(".seleccionar-todas-areas").click(function(){
@@ -241,20 +291,20 @@ $(".seleccionar-todas-areas").click(function(){
     }
 });
 
-$(".seleccionar-todas-areas-2").click(function(){
-    if($(".seleccionar-todas-areas-2").is(':checked') ){
-        $("#txt_areas > option").prop("selected","selected");
-        $("#txt_areas").trigger("change");
+$(".seleccionar-todas-areas-edit").click(function(){
+    if($(".seleccionar-todas-areas-edit").is(':checked') ){
+        $("#areas_edit > option").prop("selected","selected");
+        $("#areas_edit").trigger("change");
     } else {
-        $("#txt_areas").val(null).trigger('change');
+        $("#areas_edit").val(null).trigger('change');
     }
 });
 
-/** Add row to table */
+/** Add row to table / Modal Add */
 let daysInMonth = '<?php echo ($daysInMonth + 1);?>';
 let tbody = $('#table-formulas').children('tbody');
 let table = tbody.length ? tbody : $('#table-formulas');
-let r = 1;
+let r     = 1;
 $('.add-row-table-formulas').click(function(){
     let tdCol = "";
     let rowCount = $('#table-formulas tr').length;
@@ -263,12 +313,33 @@ $('.add-row-table-formulas').click(function(){
     }
     table.append(`<tr>`+tdCol+`</tr>`);
 });
-/** Delete row from table */
+/** Add row to table / Modal Edit */
+$('.add-row-table-formulas-edit').click(function(){
+  let daysInMonth = '<?php echo ($daysInMonth + 1);?>';
+  let tbody = $('#table-formulas-edit').children('tbody');
+  let table = tbody.length ? tbody : $('#table-formulas-edit');
+  let tdCol = "";
+  let rowCount = $('#table-formulas-edit tr').length;
+  for(i	=	1	;	i	<	32	;	i++) {
+    tdCol += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="f`+rowCount+`" id="f`+rowCount+`-`+i+`" /></td>`;
+  }
+  table.append(`<tr>`+tdCol+`</tr>`);
+});
+
+/** Delete row from table / Modal Add */
 $('.delete-row-table-formulas').click(function(){
     let rowCount = $('#table-formulas tr').length;
     if (rowCount > 2 ) {
       $('#table-formulas tr:last').remove();
     }
+});
+/** Delete row from table / Modal Edit */
+$('.delete-row-table-formulas-edit').click(function(){
+  let totalFilasEdit  = $('#total_filas').val();
+  let rowCountEdit    = $('#table-formulas-edit tr').length;
+  if (totalFilasEdit != (rowCountEdit) ) {
+    $('#table-formulas-edit tr:last').remove();
+  }
 })
 
 /** List Results */
@@ -307,7 +378,7 @@ listResultTable();
 
 // Delete Row
 function deleteRow ( id ) {
-  let route = "app/controllers/mante-zonas.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/mante-formulas.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -372,16 +443,12 @@ function addRows () {
     }
   }
 
-  let f  = [];
   for (i = 1; i < 32; i++) {
     for (y=1;y<rowCount;y++) {
-      f[y] = $("#f"+y+"-"+i).val();
-      filas.push(f[y]);
-      console.log(filas)
+      filas.push($("#f"+y+"-"+i).val());
     }
   }
 
-  
   let route = "app/controllers/mante-formulas.php";
 
   $.ajax({
@@ -396,6 +463,7 @@ function addRows () {
         descripcion   : descripcion,
         areas         : areas,
         filas         : filas,
+        tot_filas     : (rowCount-1),
         estado        : estado,
     },
     dataType        : 'html',
@@ -423,9 +491,7 @@ function addRows () {
         $(".seleccionar-todas-areas").prop('checked',false);
         $("#nombre").val('');
         $("#nombre").focus();
-
       }
-
     },
     error           : function (error) {
       console.log(error);
@@ -456,22 +522,54 @@ function editRow ( id ) {
     },
     dataType        : 'json',
     success         : function (response) { 
-      let arr   = response['id_area'].split (",");
+
+    let numF = 0;
+    let tbody = $('#table-formulas-edit').children('tbody');
+    let table = tbody.length ? tbody : $('#table-formulas-edit');
+    numF = response.data_formulas['total'];
+    
+    $("input[id^='f']").val('');
+    $('#table-formulas-edit tr:last').remove();
+
+    if (numF > 1) {
+      $('#table-formulas-edit tbody tr').remove();
+      for (x = 0 ; x < numF; x++) {
+        
+        let tdCol2 = "";
+        let rowCount = $('#table-formulas-edit tr').length;
+        
+        for(i	=	1	;	i	<	32	;	i++) {
+          tdCol2 += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="fe`+rowCount+`" id="fe`+rowCount+`-`+i+`" value="`+response.data_formulas.resultado[x]['c'+i]+`" /></td>`;
+        }
+
+        table.append(`<tr>`+tdCol2+`</tr>`);
+
+      }
+    } else {
+      $('#table-formulas-edit tbody tr').remove();
+      let tdCol3 = "";
+      let rowCount = $('#table-formulas-edit tr').length;
+      for(i	=	1	;	i	<	32	;	i++) {
+        tdCol3 += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="fe`+rowCount+`" id="fe`+rowCount+`-`+i+`" value="`+response.data_formulas.resultado[0]['c'+i]+`" /></td>`;
+      }
+      table.append(`<tr>`+tdCol3+`</tr>`);
+    }
+
+      let arr   = response.data['id_area'].split (",");
       let keys  = Object.keys(arr).length;
       let r  = "";
       arr.forEach((item,key)=>{
         if (item) {
           r =  arr + ',';
-          $('#txt_areas').val(arr).change();
+          $('#areas_edit').val(arr).change();
         }
       });
       
-      //let vls = r.slice(0, -1);
-
-      $('#txt_nombre').val(response['name']);
-      $('#id_row').val(response['id']);
-      $('#txt_departamento').val(response['id_depto']).change();
-      $('#txt_estado').select2('val',response['active']);
+      numF = 0;
+      $('#total_filas').val(response.data_formulas['total']+1);
+      $('#descripcion_edit').val(response.data['descripcion']);
+      $('#id_row').val(response.data['id']);
+      $('#estado_edit').select2('val',response.data['active']);
      
     },
     error           : function (error) {
@@ -485,21 +583,61 @@ function editRow ( id ) {
 function updateRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-  var nombre      = $('#txt_nombre').val();
-  var depto       = $('#txt_departamento').val();
-  let areas       = $('#txt_areas').val();
-  var estado      = $('#txt_estado').val();
+  var descripcion = $('#descripcion_edit').val();
+  //var depto       = $('#txt_departamento').val();
+  let areas       = $('#areas_edit').val();
+  var estado      = $('#estado_edit').val();
   $('#mssg-edit').css({'width':'100%'})
 
-  if ( nombre == "") {
-    $("#mssg-edit").show();
-    $("#mssg-edit").html('El campo nombre es requerido.');
-    setTimeout(()=>{$("#mssg-edit").hide();},3000);
-    return false;
+  // let f1          = $('#f1').val();
+  // let f2          = $('#f2').val();
+  // let f3          = $('#f3').val();
+  // let f4          = $('#f4').val();
+  // let f5          = $('#f5').val();
+
+  if ( descripcion == '' || areas == '') {
+    $("#mssg-edit").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
+    setTimeout(()=>{
+      $("#mssg-edit").hide();
+    },3000);
+      return false
+  }
+
+  // if (f1 == '' || f2 == '' || f3 == '' || f4 == '' || f5 == '') {
+  //   alert()
+  //   $("#mssg-edit").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
+  //   setTimeout(()=>{
+  //     $("#mssg-edit").hide();
+  //   },3000);
+  //     return false
+  // }
+
+  let filas     = [];
+  let rowCount  = $('#table-formulas-edit tr').length;
+
+  for (i = 1 ; i < 32; i++) {
+    for (y=1;y<rowCount;y++) {
+      console.log($("#fe"+y+"-"+i).val());
+      //console.log(y,i)
+      if($("#fe"+y+"-"+i).val()==""){
+        
+        $("#mssg-edit").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
+        setTimeout(()=>{
+          $("#mssg-edit").hide();
+        },3000);
+        return false
+      }
+    }
+  }
+
+  
+    for (y=1;y<rowCount;y++) {
+      for (i = 1; i < 32; i++) {
+      filas.push($("#fe"+y+"-"+i).val());
+    }
   }
 
   let route = "app/controllers/mante-formulas.php";
-  //?edit=1&id="+id+"&nombre="+nombre+"&areas="+areas+"&depto="+depto+"&activo="+estado+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -509,12 +647,13 @@ function updateRow ( id ) {
     type: "GET",
     data: {
       id  : id,
-      nombre  : nombre,
-      areas   : areas,
-      depto   : depto,
-      activo  : estado,
-      edit    : 1,
-      nocache : '<?php echo rand(99999,66666)?>', 
+      descripcion  : descripcion,
+      areas       : areas,
+      filas       : filas,
+      tot_filas   : (rowCount-1),
+      estado      : estado,
+      edit        : 1,
+      nocache     : '<?php echo rand(99999,66666)?>', 
     },
     dataType        : 'html',
     success         : function (response) { 
@@ -541,8 +680,8 @@ function updateRow ( id ) {
 //$(document).ajaxStop(function() { 
 let loadDataTable = () => {
 setTimeout(() => {
-    $("#list-table-direcciones").dataTable().fnDestroy();
-    $('#list-table-direcciones').DataTable({
+    $("#list-table-formulas").dataTable().fnDestroy();
+    $('#list-table-formulas').DataTable({
         // columnDefs: [
         //     { width: "2%", targets: 0 }
         // ],
@@ -595,9 +734,10 @@ setTimeout(() => {
 }
 
 $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-// $("[name='grupo']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#areas_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#horarios").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#grupo").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#tipo_horario").select2({ width: '100%', dropdownCssClass: "bigdrop"});

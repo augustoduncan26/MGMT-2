@@ -227,8 +227,8 @@ class Mantenimientos
 				}
 				else
 				{
-					$ObjBitac->registrarBitaUser('Se ha actualizado el registro: ('.$GET_id.') de la tabla: ('.$P_tabla.')', $_SESSION['id_usuario'],false);
-					$exito	=	"Se ha actualizado el registro con éxito"; //"The Information has been saved successfully";
+					//$ObjBitac->registrarBitaUser('Se ha actualizado el registro: ('.$GET_id.') de la tabla: ('.$P_tabla.')', $_SESSION['id_usuario'],false);
+					//$exito	=	"Se ha actualizado el registro con éxito"; //"The Information has been saved successfully";
 				}
 				
 			break;
