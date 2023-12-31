@@ -14,7 +14,7 @@ for ($i = 1; $i < 32 ; $i++) {
 
 $list  = mysqli_query($linkServidor,"SELECT ".$PCampos."fd.* FROM ".PREFIX."mant_formulas_detalle fd
 LEFT JOIN ".PREFIX."mant_formulas f ON f.id_detalle = fd.id 
-Where fd.id_cia = ".$id_cia." order by c1 DESC");
+Where fd.id_cia = ".$id_cia." order by fila ASC");
 $tot = mysqli_num_rows($list);
 
 $daysInMonth= date('t');
@@ -26,20 +26,20 @@ $daysInMonth= date('t');
     color: #696969;
   }
 </style>
-<div class="table-responsive">
-    <table id="list-table-formulas" class=" table-bordered table-hover" style="width:100%">
+<div class="table-responsive" style="">
+    <table id="list-table-formulas" class="table table-striped table-bordered table-hover" style='width:100%'>
       <thead>
         <tr class=""><!-- header-list-table -->
-          <th width="8%">Descripcion</th>
-          <th width="9%">Área</th>
+          <th width="20%">Descripción&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th width="20%">Área</th>
           <?PHP 
           for($i	=	1	;	$i	<	32	;	$i++) {
-            echo '<th data-orderable="false" title="Día '.$i.'">D'.$i.'</th>';	
+            echo '<th style="width:50px !important" data-orderable="false" title="Día '.$i.'">D'.$i.'</th>';	
           }
           ?>
-          <th width="5%">Estado</th>
+          <th width="20%">Estado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
           <!-- <th width="10%">Fecha</th> -->
-          <th width="5%"></th>
+          <td style="width:500px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opciones&nbsp;&nbsp;&nbsp;&nbsp; </td>
         </tr>
       </thead>
       <tbody>
@@ -66,19 +66,19 @@ $daysInMonth= date('t');
             }
       ?>
         <tr>
-          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['descripcion']?></td>
-          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$P_Data?></td>
+          <td style="width:400px"  <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['descripcion']?></td>
+          <td style="width:400px" <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$P_Data?>&nbsp;&nbsp;&nbsp;</td>
 
           <?PHP 
           for($i	=	1	;	$i	<	32	;	$i++) {
             if($datos['active']==0) { $class = 'class="row-yellow-transp"'; } else { $class = "class=''"; }
-            echo '<th width="3%" '.$class.' data-orderable="false" style="font-size:11px;color:#696969">'.$datos['c'.$i].'</th>';	
+            echo '<td width="10%" '.$class.' data-orderable="false" style="font-size:11px;color:#696969">&nbsp;'.$datos['c'.$i].'&nbsp;</td>';	
           }
           ?>
 
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <!-- <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$date[0]?></td> -->
-          <td class="text-center" style="width:10% !important;">
+          <td width="20%" class="text-center">
           <?php ?>
             <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
           <?php ?>

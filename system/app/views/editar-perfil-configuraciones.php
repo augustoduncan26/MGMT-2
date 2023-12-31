@@ -36,23 +36,25 @@
           </div>
         </a> -->
 
-          <a data-toggle="modal" role="button" href="#logo-empresa" onClick="">
+          <!-- <a data-toggle="modal" role="button" href="#logo-empresa" onClick="">
           <div class="col-sm-2">
             <button class="btn btn-icon btn-block btn-warning box-shadow">
               <i class="fa fa-picture-o"></i>
               Logo de Empresa
             </button>
           </div>
-          </a>
+          </a> -->
 
-          <a data-toggle="modal" role="button" href="#copia-respaldo" onClick="">
+          <!-- <a data-toggle="modal" role="button" href="#copia-respaldo" onClick="">
           <div class="col-sm-2">
             <button class="btn btn-icon btn-block btn-warning box-shadow">
               <i class="clip-data"></i>
               Copia de Respaldo
             </button>
           </div>
-          </a>
+          </a> -->
+
+
         </div>
 
         <div class="clearfix"></div>
@@ -723,8 +725,6 @@ function showUserPermisos ( id ) {
 
     if (ajax1.readyState==4) {
       contenido_editor.innerHTML = ajax1.responseText;
-     // $('#cargando_list').hide()
-      //$('#table_permisos').dataTable({aaSorting : [[0, 'desc']]});
     }
   }
 
@@ -736,7 +736,7 @@ function showUserPermisos ( id ) {
 function editUserPermisos ( idParam ) {
   
     var id_user     = '<?php echo $_SESSION["id_user"]?>';
-    var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+    var id_empresa  = '<?php echo $_SESSION["id_cia"]?>';
     var id_         = idParam; //$('#id_row').val();
 
     var datas       = new Array();
@@ -745,11 +745,6 @@ function editUserPermisos ( idParam ) {
     $("input:checkbox:checked").each(function() {
       datas.push($(this).val());
     });
-    
-    // if ( datas == '') {
-    //   $('#mssg-label-edit-perm').html('No ha seleccionado ningun permiso.');
-    //   return false
-    // }
 
     var editperm    = 1;
     var form_data   =   new FormData();

@@ -99,12 +99,17 @@ class ejecutorSQL extends funcionesDB{
 	* @param string $P_Tabla String
 	* @return boolean Return TRUE or FALSE
 	*/
-	function vaciarTabla($P_Tabla){
+	function vaciarTabla($P_Tabla, $P_condicion = false){
 		$this->err = "";
 		$exito = false;
 		
 		// SQL a ejecutar
-		$sql = "TRUNCATE TABLE ".$P_Tabla;
+		if ($P_condicion == true) {
+			$sql = "TRUNCATE TABLE ".$P_Tabla." WHERE ".$P_condicion;
+		} else {
+			$sql = "TRUNCATE TABLE ".$P_Tabla;
+		}
+		
 		$this->sql = $sql; 
 		
 		switch ($this->tipoBD){

@@ -1,12 +1,15 @@
-<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" /> -->
-<link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
+<link rel="stylesheet" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/DataTables/media/css/DT_bootstrap.css" />
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="<?php echo $_ENV['FLD_ASSETS']?>/css/fontawesome6.4.2-web/css/all.min.css">
 
-<link rel="stylesheet" href="assets/css/styles_datatable.css" />
+<link rel="stylesheet" href="<?php echo $_ENV['FLD_ASSETS']?>/css/styles_datatable.css" />
 
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
+
+<style>
+    .fa-spinner {display: none;}
+</style>
 
 <body>
 <div class="row view-container">
@@ -41,7 +44,7 @@
 
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <form>
+                        <form action="?roles-turnos" method="post">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert"></div>
@@ -51,29 +54,41 @@
                                 <div class="col-md-4">
                                 Seleccionar Área
                                     <select name="area_rol" id="area_rol" class="">
-                                    <option></option>
+                                    <option value="">seleccionar</option>
                                     <?php 
                                         foreach ($sqlAreas["resultado"] as $key => $value) {
-                                            echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                                            if (isset($_POST['area_rol']) && $_POST['area_rol'] == $value['id']) {
+                                                echo "<option value='".$value['id']."' selected>".$value['name']."</option>";
+                                            } else {
+                                                echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                                            }
+                                            
                                         }
                                     ?>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                Total de Usuarios<input class="form-control" type="number" min="1" value="1" name="users_rol" id="users_rol" ></div>
-                                <div class="col-md-2">
-                                    Fecha desde<input class="form-control" type="month" name="date_from" id="date_from" value="<?=date('Y-m')?>">
+                                Total de Usuarios<input class="form-control" type="number" min="1" value="<?php if (isset($_POST['users_rol'])) { echo $_POST['users_rol']; } else { echo 1; }?>" name="users_rol" id="users_rol" ></div>
+                                <div class="col-md-3">
+                                    Fecha desde<input class="form-control" type="month" name="date_from" id="date_from" min="<?=date('Y-m')?>" value="<?php if (isset($_POST['date_from'])) { echo $_POST['date_from']; } else { date('Y-m'); }?>">
                                 </div>
-                                <div class="col-md-2">
-                                    Fecha hasta<input class="form-control" type="month" name="date_to" id="date_to" min="<?=date('Y-m')?>" value="<?=date('Y-m')?>">
+                                <div class="col-md-1">
+                                    <!-- Fecha hasta<input class="form-control" type="month" name="date_to" id="date_to" min="<?=date('Y-m')?>" value="<?=date('Y-m')?>"> -->
                                 </div>
                                 </div>
 
                             <div class="clearfix">&nbsp;</div>
 
                             <div class="row">
-                                <div class="col-md-12 text-center">
-                                <button name="btn-generar-rol" class="btn btn-primary" >Generar Rol de Turno</button>
+                                <div class="col-md-6 text-center">
+                                <small>Generar Rol de Turno Automáticamente</small>
+                                <br>
+                                <button name="btn-generar-rol-auto" class="btn btn-primary" >Rol de Turno - Automático</button>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                <small>Generar Rol de Turno Manualmente</small>
+                                <br>
+                                <button name="btn-generar-rol-manual" class="btn btn-primary" <?=$disableBtnMan?>>Rol de Turno - Manual</button>
                                 </div>
                             </div>
                         </form>
@@ -84,17 +99,54 @@
                 
                 <div class="clearfix">&nbsp;</div>
 
+                <?php if ($showRolAuto==TRUE) { ?>
                 <div class="row rol-turno-generated">
                     <div class="col-md-12">
                         <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
                         <br />
 
-                        <div class="roles-container">
-                            
+                        <div class="roles-container table-responsive" style="width:100%;overflow:auto;">
+                            <div class='col-md-4 col-sm-4'><button name="btn-guardar-rol-auto" class="btn btn-success btn-guardar-rol" >Guardar</button> &nbsp; <button name="btn-cancel-rol-auto" class="btn btn-default btn-cancelar-rol" onclick="cancelRolAuto()" >Cancelar</button></div>
+                            <div class='col-md-4 col-sm-4'><h4>Área: <?=$areaName['name']?></h4></div>
+                            <div class='col-md-4 col-sm-4'><h4>Fecha: <?=$monthName[$splitDate[1]] . ' '.$splitDate[0]; ?></h4></div>
+                            <table style='width:100%' class='table-bordered table-hover' id='table-rol-turnos'>
+                                <!-- HEADERS -->
+                                <tr>
+                                    <td style="width:500px;">Usuarios</td>
+                                    <?php
+                                        for ($i = 1 ; $i < $daysInMonth+1 ; $i++) {
+                                            echo '<td style="width:500px;height: 20px;" data-orderable="false" label="c'.$i.'" title="Día '.$i.'">D'.$i.'</td>';
+                                        }
+                                    ?>
+                                </tr>
+                                <!-- ROWS -->
+                                <?php
+                                    for ($x = 0; $x < $users; $x++) {
+                                       echo  '<tr class="f-'.($x+1).'">
+                                       <td>
+                                        <select id="select-'.($x+1).'" style="width:100px" class="select selectpicker user-select-"'.($x+1).'">
+                                        <option></option>
+                                        '.$list.'
+                                        </select>';
+                                        for ($i = 1 ; $i < $daysInMonth+1 ; $i++) {
+                                            echo '
+                                            </td><td><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="'.($x+1).'-c'.($i).'" id="'.($x+1).'-c'.($i).'" /></td>';
+                                        }
+                                        echo '</tr>';
+                                    }
+                                ?>
+                            </table>
+
+                            <div class="clearfix">&nbsp;</div>
+                        
                         </div>
                     
                     </div>
                 </div>
+
+                <div class="clearfix">&nbsp;</div>
+
+                <?php } ?>
 
             </div>
            
@@ -102,31 +154,39 @@
     </div>
 </div>
 </div>
+<?php //echo $date;?>
+<?php get_template_part('footer_scripts');?>
+
+<script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
+  
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
-
-  $('[name="btn-generar-rol"]').on('click',(e)=>{
-
-    e.preventDefault();
+/**
+ * Cancel Rol
+ */
+const cancelRolManual = () => {
+    $('.roles-container').empty();
+     $('[name="btn-generar-rol-auto"]').prop('disabled', false);
+    subirTopLista();
+}
+const cancelRolAuto = () => {
     
     let id_user     = '<?php echo $_SESSION["id_user"]?>';
     let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-    let area        = e.target.form['area_rol'].value;
-    let users       = e.target.form['users_rol'].value;
-    let date_from   = e.target.form['date_from'].value;
-    let date_to     = e.target.form['date_to'].value;
+    let area        = $("#area_rol").val();
+    let date_from   = $("#date_from").val();
 
-    if (area == "" || users == "") {
-        $('.alert').show();
-        $('.alert').addClass('alert-danger').html('Todos los campos son requeridos');
-        setTimeout(()=>{
-            $('.alert').hide();
-        },4000);
-        return false;
-    }
+    // $("#area_rol").val(null).trigger('change');
+    // $("#users_rol").val(null);
+    // $("#date_from").val(null);
+    // $('.roles-container').empty();
+    // $('[name="btn-generar-rol-manual"]').prop('disabled', false);
+    // subirTopLista();
 
-    let route       = "ajax/ajax_generate_rolturno.php";
-
+    //location.reload();
+    
+    let route       = "app/controllers/roles-turnos.php";
     $.ajax({
         headers : {
             Accept        : "application/json; charset=utf-8",
@@ -135,26 +195,210 @@
         url : route,
         type: "GET",
         data : {
-            generate: 1,
-            id_user : id_user,
-            id_cia  : id_cia,
-            area    : area,
-            users   : users,
-            date_from: date_from,
-            date_to  : date_to,
-            nocache  : "<?php echo rand(99999,66666); ?>"
+            cancel      : 'rolback',
+            id_user     : id_user,
+            id_cia      : id_cia,
+            area        : area,
+            date_from   : date_from,
+            nocache     : "<?php echo rand(99999,66666); ?>"
         },
-
+        dataType     : 'html',
+        success      : function (response) { 
+            $('html, body').animate({scrollTop: '0px'},'slow');
+            //listResultTable();
+        },
+        error        : function (error) {
+        console.log(error);
+        }
     });
-  });
+}
 
-//   $("[name='area_rol']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+/** Manual Button */
+$('[name="btn-generar-rol-manual"]').on('click',(e)=>{
+    e.preventDefault();
+    
+    // Params
+    let id_user     = '<?php echo $_SESSION["id_user"]?>';
+    let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+    let area        = e.target.form['area_rol'].value;
+    let users       = e.target.form['users_rol'].value;
+    let date_from   = e.target.form['date_from'].value;
+    //let date_to     = e.target.form['date_to'].value;
+    let areaNameSelected    = $('[name="area_rol"]').select2('data');
+    let totalUsers          = users;
+    let splitDate           = date_from.split('-');
+    let monthName           = {'01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre'};
+    let today               = new Date();
+    let month               =  Number(splitDate[1]);//today.getMonth();
+    let totalMonthDays      = daysInMonth(month, splitDate[0]);
+
+    // Validate 
+    if (area == "" || users == "" || date_from == "") {
+        $('.alert').show();
+        $('.alert').addClass('alert-danger').html('Todos los campos son requeridos');
+            setTimeout(()=>{
+                $('.alert').hide();
+            },4000);
+        return false;
+    }
+
+    $('[name="btn-generar-rol-auto"]').prop('disabled', true);
+
+    // Go to div container
+    gotToDownPage($('.roles-container'));
+
+    let trHTML  = false;
+    $('.roles-container').empty();
+    $('.fa-spinner').show();
+
+    let listUsers = '<?=$list?>';
+    //console.log(listUsers)
+
+    trHTML =` 
+    <hr />
+    <br />
+    <div class='col-md-6 col-sm-6'><button name="btn-generar-rol-auto" class="btn btn-success" >Guardar</button> &nbsp; <button name="btn-cancel-rol-manual" class="btn btn-default btn-cancelar-rol" onclick="cancelRolManual()" >Cancelar</button></div>
+    <div class='col-md-3 col-sm-3'><h4>Área: `+areaNameSelected.text+`</h4></div>
+    <div class='col-md-3 col-sm-3'><h4>Fecha: `+monthName[splitDate[1]]+ ` ` +splitDate[0]+`</h4></div>`;
+    trHTML += `<div class="table-responsive" style="width:100% !important;overflow:auto;"><table style='width:100%' class='table-bordered table-hover' id='table-rol-manual'>`;
+    trHTML += `<tr>`;
+    trHTML += `<td width='150px'>Usuarios</td>`;
+    
+    for (i = 1 ; i < totalMonthDays+1 ; i++) {
+        trHTML+= `<td style="width:40px;height: 20px;" data-orderable="false" label="c`+i+`" title="Día `+i+`">D`+i+`</td>`;
+    }
+    trHTML += `</tr>`;
+    let rowCount = $('#table-rol-manual tr').length;
+
+    // Rows: Users selector
+    for (x = 0; x < users; x++) {
+        trHTML +=`<tr class='f-`+(x+1)+`'>`;
+        trHTML +=`
+            <td>
+            <select style='
+            top: 100%;
+            z-index: 1000;
+            min-width: 100%;
+            padding: 0.5rem 0;
+            margin: 0;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 0.25rem;' 
+            data-role="select-dropdown" id='select-`+(x+1)+`' style='width:100%' class='select selectpicker select-users user-select-`+(x+1)+`'>
+            <option></option>
+            `+listUsers+`
+            </select>
+            </td>`;
+        // Columns: Days
+        for (i = 1 ; i < totalMonthDays+1 ; i++) {
+            trHTML+= `<td><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="`+(x+1)+`-c`+(i)+`" id="`+(x+1)+`-c`+(i)+`" /></td>`;
+        }
+        trHTML +=`</tr>`;
+    }
+    
+    trHTML += `</table></div><br /><br />`;
+    $('.roles-container').append(trHTML);
+    $('.fa-spinner').hide();
+});
+
+/** Automatic Button */
+$('[name="btn-generar-rol-auto"]').on('click',(e)=>{
+    //e.preventDefault();
+
+    let id_user     = '<?php echo $_SESSION["id_user"]?>';
+    let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+    let area        = e.target.form['area_rol'].value;
+    let users       = e.target.form['users_rol'].value;
+    let date_from   = e.target.form['date_from'].value;
+    //let date_to     = e.target.form['date_to'].value;
+
+    if (area == "" || users == "" || date_from == "") {
+        $('.alert').show();
+        $('.alert').addClass('alert-danger').html('Todos los campos son requeridos');
+        setTimeout(()=>{
+            $('.alert').hide();
+        },4000);
+        return false;
+    }
+
+    // $('[name="btn-generar-rol-manual"]').prop('disabled', true);
+
+    // let route       = "ajax/ajax_generate_rolturno.php";
+    // $('.fa-spinner').show();
+    
+    // $.ajax({
+    //     headers : {
+    //         Accept        : "application/json; charset=utf-8",
+    //         "Content-Type": "application/json: charset=utf-8"
+    //     },
+    //     url : route,
+    //     type: "GET",
+    //     data : {
+    //         generate: 1,
+    //         id_user : id_user,
+    //         id_cia  : id_cia,
+    //         area    : area,
+    //         users   : users,
+    //         date_from: date_from,
+    //         //date_to  : date_to,
+    //         nocache  : "<?php echo rand(99999,66666); ?>"
+    //     },
+    //     dataType     : 'html',
+    //     success      : function (response) { 
+    //         $('html, body').animate({scrollTop: '0px'},'slow');
+    //         //listResultTable();
+    //     },
+    //     error        : function (error) {
+    //     console.log(error);
+    //     }
+    // });
+});
+
+/** Save Rol de Turnos */
+$('.btn-guardar-rol').on('',()=>{
+ 
+  let filas     = [];
+  let rowCount  = $('#table-formulas tr').length;
+
+  for (i = 0 ; i < 32; i++) {
+    for (y=1;y<rowCount;y++) {
+      if($("#f"+y+"-"+i).val()==""){
+        $("#mssg-alert").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
+        setTimeout(()=>{
+          $("#mssg-alert").hide();
+        },3000);
+        return false
+      }
+    }
+  }
+});
+
+const daysInMonth = (month,year) => {
+  return new Date(year, month, 0).getDate();
+}
+// Go to Top page
+const subirTopLista = () => {
+	jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
+}
+// Go to specific area
+const gotToDownPage = (element) => {
+  $('html, body').animate({
+      scrollTop: element.offset().top
+  }, 'slow');
+}
+
 </script>
 
-<?php get_template_part('footer_scripts');?>
+<!-- <?php //get_template_part('footer_scripts');?>
 
-<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script>
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2.min.js"></script> -->
 
 <script>
+    $('.select-users').select2({ width: '100%', dropdownCssClass: "bigdrop"});
     $("[name='area_rol']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>

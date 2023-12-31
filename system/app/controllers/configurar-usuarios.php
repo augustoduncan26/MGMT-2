@@ -38,13 +38,13 @@ if ($_SESSION['id_user']) {
 		
 	// Permisos
 	if ( isset($_POST['editperm']) && $_POST['editperm'] == 1 ) {
+		
 		if ($_POST['valores']=="") {
 			$ObjEjec->borrarRegistro(PREFIX."permisos", "id_usuario = '".$_POST['id_']."'");
-			//$r = $ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_POST['id_']."'");
 			echo '<div class="alert alert-info">Se ha actualizado los permisos.</div>';
 		} else {
 			$val 		=	explode(',',$_POST['valores']);
-			$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuariio = '".$_POST['id_']."'");
+			$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_POST['id_']."'");
 			//mysql_query("Delete from zz_permisos Where id_usuario = '".$_POST['id_']."'");
 			
 			foreach ($val as $key) {

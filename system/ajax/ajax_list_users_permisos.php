@@ -28,10 +28,9 @@ $permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,
     foreach ($permss['resultado'] as $key => $datos) {
       $i++;
       $permiso    = $ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_usuario = "'.$_GET['id'].'" and id_definicion_permiso = "'.$datos['permiso'].'"');
-      //echo $permiso['resultado'][0]['id_definicion_permiso'];
     ?>
       <tr>
-        <td><?=$datos['permiso_padre']?></td>
+        <td><?=$datos['permiso']?></td>
         <td><?=$datos['nombre']?></td>
         <td class="text-center"><input value="<?=$datos['permiso']?>" id="permisos" name=""  type="checkbox" <?php if($permiso['resultado'][0]['id_definicion_permiso'] == $datos['permiso']){ echo 'checked';}?>>
       </tr>

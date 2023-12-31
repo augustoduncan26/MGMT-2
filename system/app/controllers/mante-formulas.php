@@ -14,6 +14,9 @@ $dayOfMonth	= date("n");
 $actualYear = date("Y");
 // $mesActual 	= date("n");
 
+$P_rand		=	rand(2608197,3004161);
+$r          = 0;
+
 $monthNameSpanish 	= array("1"=>"Enero","2"=>"Febrero","3"=>"Marzo","4"=>"Abril","5"=>"Mayo","6"=>"Junio","7"=>"Julio","8"=>"Agosto","9"=>"Septiembre","10"=>"Octubre","11"=>"Noviembre","12"=>"Diciembre");
 
 $listaDeptos    = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
@@ -49,20 +52,33 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 		$P_Val		=	false;
 		$Total 		= 	(count($_GET['filas'])/$_GET['tot_filas']);
 		$PCuantos2	=	 count($_GET['filas']);
-		$P_Campos2	=   "id_detalle,id_cia,";
+		$P_Campos2	=   "id_detalle,id_cia,fila,ncorto,";
 		$P_Campos2	.=	$ObjMante->ListadeCampos();
 		$P_Campos2	.=   "created_at";
 		
 		for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
-			$P_Valores2	 =	"'".$lastId."','".$id_cia."',";
+			$P_Valores2	 =	"'".$lastId."','".$id_cia."', '".($x+1)."' ,'".($P_rand+$x)."',";
 			for($ix 	= 	0; $ix < $Total ; $ix++) {
-				$P_Valores2	.=	"'".$_GET['filas'][$ix]."',";
+				$P_Valores2	.=	"'".$_GET['filas'][$r]."',";
+				$r++;
 			}
 			$P_Valores2 .= "NOW()";
 			// Aqui ingresar a la table
 			$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
 			$P_Valores2 = false;
 		}
+
+		// for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
+		// 	$P_Valores2	 =	"'".$_GET['id']."','".$id_cia."','".($x+1)."' ,'".($P_rand+$x)."',";
+		// 	for($ix 	= 	0; $ix < $Total ; $ix++) {
+		// 		$P_Valores2	.=	"'".$_GET['filas'][$r]."',";
+		// 		$r++;
+		// 	}
+		// 	$P_Valores2 .= "NOW()";
+		// 	// Aqui ingresar a la table
+		// 	$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
+		// 	$P_Valores2 = false;
+		// }
 
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 	}
@@ -71,7 +87,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 // Show Edit Modal & info
 if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	$data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_formulas_detalle','id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
-	$data2      = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_formulas','id_detalle="'.$_GET['id'].'" and id_cia = '.$id_cia,'array');
+	$data2      = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_formulas','id_detalle="'.$_GET['id'].'" and id_cia = '.$id_cia,'array','fila');
 	$dataResp = ["data"=>$data,"data_formulas"=>$data2];
 	echo json_encode($dataResp);
 }
@@ -91,14 +107,6 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
   	
 
 	$Total 		= 	(count($_GET['filas'])/$_GET['tot_filas']);
-	
-	// for($ix	=	1	;	$ix	<	$Total+1	;	$ix++){	
-	// 	$P_campos			=	'c'.$ix.' ="'.$_GET['filas'][$ix].'"';
-	// 	$P_tabla			=	PREFIX.'mant_formulas';
-	// 	$P_condicion		=	'id_detalle = "'.$_GET['id'].'"';
-	// 	$P_respuesta		=	$ObjMante->FuncionesDML('editar', $P_campos , $P_tabla , $P_condicion);
-	// 	//$msg2				=	strtoupper('<center><font size="2" color="red" face="Verdana">Se ha guardado toda la informacion.</font></center>');
-	// }
 
 	$P_Valores2	=	false;
 	$P_Val		=	false;
@@ -107,7 +115,6 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
 	$P_Campos2	=   "id_detalle,id_cia,";
 	$P_Campos2	.=	$ObjMante->ListadeCampos();
 	$P_Campos2	.=   "created_at";
-	$r          = 0;
 
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_formulas Where id_detalle = '".$_GET['id']."' and id_cia='".$id_cia."'");
 
@@ -115,12 +122,12 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
 	$P_Val		=	false;
 	$Total 		= 	(count($_GET['filas'])/$_GET['tot_filas']);
 	$PCuantos2	=	 count($_GET['filas']);
-	$P_Campos2	=   "id_detalle,id_cia,";
+	$P_Campos2	=   "id_detalle,id_cia,fila,ncorto,";
 	$P_Campos2	.=	$ObjMante->ListadeCampos();
 	$P_Campos2	.=   "created_at";
 	
 	for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
-		$P_Valores2	 =	"'".$_GET['id']."','".$id_cia."',";
+		$P_Valores2	 =	"'".$_GET['id']."','".$id_cia."','".($x+1)."' ,'".($P_rand+$x)."',";
 		for($ix 	= 	0; $ix < $Total ; $ix++) {
 			$P_Valores2	.=	"'".$_GET['filas'][$r]."',";
 			$r++;
@@ -130,43 +137,6 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
 		$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
 		$P_Valores2 = false;
 	}
-
-	// for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
-	// 	$P_Valores2	 =	" id_detalle = '".$_GET['id']."', id_cia='".$id_cia."', ";
-	// 	for($ix 	= 	1; $ix < $Total+1 ; $ix++) {
-	// 		$P_Valores2	.=	" c".$ix." ='".$_GET['filas'][$r]."',";
-	// 		$r++;
-	// 	}
-	// 	$P_Valores2 .= " updated_at=NOW()";
-	// 	// Aqui ingresar a la table
-	// 	$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
-	// 	$l = $ObjEjec->actualizarRegistro($P_Valores2, PREFIX.'mant_formulas', 'id_detalle = "'.$_GET['id'].'"');
-	// 	//echo $P_Valores2;
-	// 	//$P_Valores2 = false;
-	// 	//$r          = 0;
-	// }
-
-	// $P_Valores2	=	false;
-	// $P_Val		=	false;
-	// echo $Total 		= 	(count($_GET['filas'])/$_GET['tot_filas']);
-	// $PCuantos2	=	 count($_GET['filas']);
-	// $P_Campos2	=   "id_detalle,id_cia,";
-	// $P_Campos2	.=	$ObjMante->ListadeCampos();
-	// $P_Campos2	.=   "created_at";
-	// $r          = 0;
-	// for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
-	// 	$P_Valores2	 =	" id_cia = '".$id_cia."',";
-	// 	for($ix 	= 	0; $ix < $Total ; $ix++) {
-	// 		$r++;
-	// 		$P_Valores2	.=	" c".$r." = '".$_GET['filas'][$ix]."',";
-	// 	}
-	// 	$P_Valores2 .= " updated_at=NOW()";
-	// 	echo $P_Valores2;
-	// 	mysqli_query($link,"UPDATE ".PREFIX."mant_formulas
-	// 	SET ".$P_Valores2."
-	// 	WHERE id_detalle = '".$_GET['id']."'") or die(mysqli_error($link));
-	// 	$r          = 0;
-	// }
 	
 	if($l == 1){
 		echo 'ok';
@@ -178,7 +148,7 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
 
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
-	//$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_formulas_detalle Where id = '".$_GET['id']."'");
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."mant_formulas_detalle Where id = '".$_GET['id']."'");
 	mysqli_query($link,"DELETE f, r
     FROM ".PREFIX."mant_formulas_detalle f LEFT JOIN
          ".PREFIX."mant_formulas r

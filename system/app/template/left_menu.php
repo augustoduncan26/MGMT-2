@@ -478,7 +478,7 @@ $id_cia     = $_SESSION['id_cia'];
 
 
 		<!-- Contabilidad -->
-        <?php //if ($objPermOpc->tienePermiso(900)) { ?>
+        <?php if ($objPermOpc->tienePermiso(900)) { ?>
 		<li class="list_item list__item--click <?php if (strpos(GET()[0],'contabilidad')!==false) { echo  'active open'; }?>" >
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-stack-empty"></i>
@@ -496,9 +496,8 @@ $id_cia     = $_SESSION['id_cia'];
 					</a>
 				</li>
 			</ul>
-
 		</li>
-		<?php //} ?>
+		<?php } ?>
 		<!-- End Contabilidad -->
 
 

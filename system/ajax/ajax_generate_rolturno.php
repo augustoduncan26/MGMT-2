@@ -6,12 +6,12 @@ $ObjEjec    = new ejecutorSQL();
 $id_user    = $_GET['id_user'];
 $id_cia     = $_GET['id_cia'];
 $dateFrom   = $_GET['date_from'];
-$dateTo     = $_GET['date_to'];
+//$dateTo     = $_GET['date_to'];
 $AREA       = $_GET['area'];
-$USERS      = $_GET['users'];
+echo $USERS      = $_GET['users'];
 
 $realMonth1 = explode('-', $dateFrom);
-$realMonth2 = explode('-',$dateTo);
+//$realMonth2 = explode('-',$dateTo);
 
 $DIGITOS	=	array('0','1','2','3','4','5','6','7','8','9','10','11','12');	
 $MESES_ASSOC=	array('XXX','01'=>'Enero','02'=>'Febrero','03'=>'Marzo','04'=>'Abril','05'=>'Mayo',

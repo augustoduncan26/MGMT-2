@@ -296,7 +296,7 @@ class Mantenimientos
 				$whr_ 		= 	$P_condicion;
 				$result 	= 	$objejec->actualizarRegistro($cmp_, $P_tabla, $whr_);
 				if ($result == false){
-					$this->err 	= "Ha ocurrido un error. MySql dice: ".mysql_error();
+					$this->err 	= "Ha ocurrido un error. MySql dice: ".mysqli_error();
 					$exito		=	$this->err;
 				}
 				else
@@ -304,25 +304,24 @@ class Mantenimientos
 					$ObjBitac->registrarBitaUser('Se a cambiado el status del registro a inactivo, id: ('.$GET_id.'), de la tabla: ('.$P_tabla.')',$_SESSION['id_usuario'],false);
 					$exito	=	"Action successfully";
 				}
-				
-				
+
 			break;
 			
 			# TRUNCATE
 			#=========
 			case 'truncate':
-				//mysql_query('Truncate table');
+				mysqli_query('Truncate table');
 				
 			break;
 			
 			# TRUNCATE
 			#=========
 			case 'drop':
-					$consult	=	mysql_query('Delete from '.$P_tabla.' Where '.$P_condicion);
+					$consult	=	mysqli_query('Delete from '.$P_tabla.' Where '.$P_condicion);
 					if($consult):
 						$exito	=	"Rows Delete successfully";
 					;else:
-						$exito	=	'Error: '.mysql_error();
+						$exito	=	'Error: '.mysqli_error();
 					endif;
 			break;
 			

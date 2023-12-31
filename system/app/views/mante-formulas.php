@@ -71,7 +71,7 @@
 
                <div class="x_content">
                <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
-               <div id="list-rows"></div>
+               <div id="list-rows" style="width:100%;"></div>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
                 <tr>
                   <td style="width:15%">Descripción <span class="symbol required"></td>
                   <td><input class="form-control" type="text" id="descripcion" name="descripcion" maxlength="12" /></td>
-                  <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
+                  <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área y/o departamento esta dirigido. </small></td>
                 </tr>
                  <tr>
                    <td>Áreas <span class="symbol required"></td>
@@ -198,7 +198,7 @@
         <input class="form-control" type="text" id="descripcion_edit" name="descripcion_edit" maxlength="12" /><input type="hidden" id="id_row" />
         <input type="hidden" id="total_filas" />
       </td>
-      <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área o departamento esta dirigido. </small></td>
+      <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área y/o departamento esta dirigido. </small></td>
     </tr>
       <tr>
         <td>Áreas <span class="symbol required"></td>
@@ -321,7 +321,7 @@ $('.add-row-table-formulas-edit').click(function(){
   let tdCol = "";
   let rowCount = $('#table-formulas-edit tr').length;
   for(i	=	1	;	i	<	32	;	i++) {
-    tdCol += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="f`+rowCount+`" id="f`+rowCount+`-`+i+`" /></td>`;
+    tdCol += `<td ><input maxlength="5" oninput="this.value=this.value.replace(/[^0-9:x]/g,\'\');" autocomplete="off" style="width:38px;height: 20px; font-size:11px; color:black" data-orderable="false" name="fe`+rowCount+`" id="fe`+rowCount+`-`+i+`" /></td>`;
   }
   table.append(`<tr>`+tdCol+`</tr>`);
 });
@@ -589,12 +589,6 @@ function updateRow ( id ) {
   var estado      = $('#estado_edit').val();
   $('#mssg-edit').css({'width':'100%'})
 
-  // let f1          = $('#f1').val();
-  // let f2          = $('#f2').val();
-  // let f3          = $('#f3').val();
-  // let f4          = $('#f4').val();
-  // let f5          = $('#f5').val();
-
   if ( descripcion == '' || areas == '') {
     $("#mssg-edit").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
     setTimeout(()=>{
@@ -603,21 +597,12 @@ function updateRow ( id ) {
       return false
   }
 
-  // if (f1 == '' || f2 == '' || f3 == '' || f4 == '' || f5 == '') {
-  //   alert()
-  //   $("#mssg-edit").show().html('<div class="alert alert-danger">Debe agregar como mínimo una fila para la formula');
-  //   setTimeout(()=>{
-  //     $("#mssg-edit").hide();
-  //   },3000);
-  //     return false
-  // }
-
   let filas     = [];
   let rowCount  = $('#table-formulas-edit tr').length;
 
   for (i = 1 ; i < 32; i++) {
     for (y=1;y<rowCount;y++) {
-      console.log($("#fe"+y+"-"+i).val());
+      //console.log($("#fe"+y+"-"+i).val());
       //console.log(y,i)
       if($("#fe"+y+"-"+i).val()==""){
         
@@ -630,7 +615,6 @@ function updateRow ( id ) {
     }
   }
 
-  
     for (y=1;y<rowCount;y++) {
       for (i = 1; i < 32; i++) {
       filas.push($("#fe"+y+"-"+i).val());
@@ -690,6 +674,8 @@ setTimeout(() => {
         "orderable": false,
         "targets": [34]
         }],
+        "scrollX": true,
+        "scrollY": 400,
         language: {
         "decimal": "",
         "emptyTable": "No hay información",

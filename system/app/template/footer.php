@@ -1,7 +1,7 @@
     <!-- start: FOOTER -->
         <div class="footer clearfix">
-            <div class="footer-inner">
-                <?php echo date('Y')?> H&H System &copy;.
+            <div class="footer-inner" style="color:black">
+                 S&M System &copy; <?php echo date('Y')?>
             </div>
             <div class="footer-items">
                 <span class="go-top"><i class="clip-chevron-up"></i></span>
