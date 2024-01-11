@@ -9,7 +9,7 @@
           <!-- end: RESPONSIVE MENU TOGGLER -->
           <!-- start: LOGO -->
           <a class="navbar-brand" href="home" title="Schedule Manager">
-            <!-- <img border="1" src="images/DC-2.png" class="logo-tight-top"> -->S&M System
+            <!-- <img border="1" src="images/DC-2.png" class="logo-tight-top"> -->DC System
           </a>
           <!-- end: LOGO -->
         </div>

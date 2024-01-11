@@ -15,6 +15,14 @@ define("PREFIX"     ,   $_ENV['DB_PREFIX']);
 define("PREFIX_FACT",   $_ENV['PREFIX_FACT']);
 define("ENV",$dotenv->load());
 
+define("SAD_DIR", getcwd()."//");							//DIRECTORIO RAIZ DE LA APLICACION			-	*
+define("SAD_DIR_TMP", SAD_DIR."tmp\\");						//DIRECTORIO PARA DESCARGAR LOS TEMP		-	*
+define("SAD_URL","http://localhost/hhs/");			        //URL DE LA PALICACION						
+define("SAD_URL_BASE","/hhs/");						        //DIRECTORIO BASE SOBRE EL QUE ESTA LA APLICACION	
+define("SAD_URL_AMIGABLE",false);							//SI SE UTILIZA URL AMIGABLE						-	*
+															//False, PARA DESACTIVAR URL AMIGABLE				-	*
+define("SAD_CARPETA_IMAGENES","assets/images");				//CARPETA EN DONDE ESTAN LAS IMAGENES						-	*
+
 $link       = @mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']) or die("<h1>No existe conección a la Base de Datos</h1>");
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 $mysqli->set_charset("utf8");

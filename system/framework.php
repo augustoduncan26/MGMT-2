@@ -54,6 +54,11 @@ $vacio 	=	"";
 
 setcookie("Call_soportemgw_Nick",$vacio); 
 setcookie("Call_soportemgw_Pass",$vacio);
+#==================================
+#Setear log						  =
+#==================================
+ini_set("log_errors", TRUE);
+ini_set("error_log", 'error_log');
 
 $detalle		=	"Usuario: $user";	
 
@@ -107,8 +112,7 @@ if ( $saco['contrasena'] == $passN ) {
 
     // SESSION FOR MODULE INVENTARIO
     $_SESSION['user_id']			=	$saco['id_usuario'];
-    
-	//mysql_query("insert into log (fecha, tipo, clase, detalle, usuario, contra, ip, tipo_usuario) values ('$fechadehoy','Login','Correcto','-','$nickN','','$ip', '$tipo_usuario')");
+
 	$P_valores  =	"'".$id_session."','".$nickN."',NOW(),1";
 	$P_campos 	=	"id_session,user,date,activo";
 

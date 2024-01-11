@@ -650,9 +650,9 @@ class cms extends sesion{
 	/** 
 	* Devuelve cadena para el link con URL a ARCHIVO o Imagen  
 	* 
-	* @param string $P_codPag C�digo de p�gina 
+	* @param string $P_codPag Codigo de pagina 
 	* @param string $P_extra Parametros extras pasados por el URL
-	* @return string Cadena con el href de la p�gina a direccionar
+	* @return string Cadena con el href de la pagina a direccionar
 	*/
 	function imagenURL($P_nombreArchivo){
 		print (SAD_URL_BASE.SAD_CARPETA_IMAGENES.'/'.$P_nombreArchivo);

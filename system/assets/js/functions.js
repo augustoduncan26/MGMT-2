@@ -16,12 +16,12 @@ const open = (option) => {
 
 }
 
- function selectUseLike ( id ) {
-    if ( $('#' + id).is(":checked") ) {
-      $('#use-sistem-as').val('rooms');
-      $('#use-like').html('Hotel').css('color','red');
-    } else { 
-      $('#use-sistem-as').val('rooms_bed');
-      $('#use-like').html('Hostel').css('color','green');
-    }
+function selectUseLike ( id ) {
+  if ( $('#' + id).is(":checked") ) {
+    $('#use-sistem-as').val('rooms');
+    $('#use-like').html('Hotel').css('color','red');
+  } else { 
+    $('#use-sistem-as').val('rooms_bed');
+    $('#use-like').html('Hostel').css('color','green');
   }
+}
