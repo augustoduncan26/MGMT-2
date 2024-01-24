@@ -38,7 +38,7 @@ $id_cia     = $_SESSION['id_cia'];
 		<li class="list_item">
 			<div class="list__button">
 				<a href="?eventos" class="nav__link">
-				<i class="fa fa-group"></i>
+				<i class="clip-brightness-high"></i>
 				<span class="title"> Eventos </span>
 				<span class="selected"></span>
 				</a>
@@ -235,6 +235,20 @@ $id_cia     = $_SESSION['id_cia'];
 					</a>
 				</li>
 				<?php } ?>
+				<?PHP if($objPermOpc->tienePermiso(1352)){  ?>
+				<li <?php if(GET()[0] == 'mante-otros-despacho'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-otros-despacho" class="nav__link nav__link--inside" title="Otros Mant. Despacho">
+						<!--<i class="clip-settings"></i>--> - <span class="title">Otros Mant. Despacho </span>
+					</a>
+				</li>
+				<?php } ?>
+				<?PHP if($objPermOpc->tienePermiso(1353)){  ?>
+				<li <?php if(GET()[0] == 'mante-otros-prehospitalaria'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-otros-prehospitalaria" class="nav__link nav__link--inside" title="Otros Mant. Pre-Hospitalaria">
+						<!--<i class="clip-settings"></i>--> - <span class="title">Otros Mant. Pre-Hosp. </span>
+					</a>
+				</li>
+				<?php } ?>
 
 				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?mante-buscar" class="nav__link nav__link--inside">
@@ -333,20 +347,68 @@ $id_cia     = $_SESSION['id_cia'];
 
 				</li>
 				<?php } ?>
-
-				<!-- <li <?php if(GET()[0] == 'mante-buscar'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-buscar" class="nav__link nav__link--inside">
-						<i class="clip-settings"></i><span class="title"> Buscar Reservas </span>
-					</a>
-				</li> -->
 			</ul>
-
 		</li>
 		<?php } ?>
 		<!-- End Roles de Turnos -->
 
+		<!-- 
+		/**
+		* Menu Usuarios
+		*/
+		-->
+		<?php if ($objPermOpc->tienePermiso(1400)) { ?>
+			<li class="list_item list__item--click" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
+			<div class="list__button list__button--click">
+			<a href="javascript:void(0)" class="nav__link"><i class="clip-users"></i>
+				<span class="title" > Usuarios</span>
+				<i class="fa icon-arrow"></i>
+				<span class="selected"></span>
+			</a>
+			<img src="assets/images/arrow.svg" class="list__arrow arrow_usuarios">
+			</div>
 
-		<!-- Caja -->
+			<ul class="list__show">
+				<?PHP if($objPermOpc->tienePermiso(1400)){  ?>
+				<li <?php if(GET()[0] == 'usuarios-listar'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?usuarios-listar" class="nav__link nav__link--inside">
+						-<span class="title"> Mant. Usuarios </span>
+					</a>
+				</li>
+				<?php } ?>
+				
+				<?PHP if($objPermOpc->tienePermiso(1450)){  ?>
+				<li <?php if(GET()[0] == 'usuarios-perfiles'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?usuarios-perfiles" class="nav__link nav__link--inside">
+						-<span class="title"> Mant. Perfiles </span>
+					</a>
+				</li>
+				<?php } ?>
+				<?PHP if($objPermOpc->tienePermiso(1460)){  ?>
+				<li <?php if(GET()[0] == 'usuarios-tabla-empleados'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?usuarios-tabla-empleados" class="nav__link nav__link--inside">
+						-<span class="title"> Tabla Empleados </span>
+					</a>
+				</li>
+				<?php } ?>
+				<?PHP if($objPermOpc->tienePermiso(1401)){  ?>
+				<li <?php if(GET()[0] == 'usuarios-cambiar-clave'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?usuarios-cambiar-clave" class="nav__link nav__link--inside">
+						-<span class="title"> Cambiar Contraseña </span>
+					</a>
+				</li>
+				<?php } ?>
+			</ul>
+			</li>
+		<?php } ?>
+		<!-- End: Menun Usuarios -->
+
+
+		<!-- 
+		/**
+		* Caja
+		*/
+		-->
 		<?php if ($objPermOpc->tienePermiso(500)) { ?>
 		<li class="list_item list__item--click <?php if (strpos(GET()[0],'caja')!==false) { echo  'active open'; }?>" >
 			<div class="list__button list__button--click">
@@ -408,9 +470,14 @@ $id_cia     = $_SESSION['id_cia'];
 
 		</li>
 		<?php } ?>
-		<!-- End Caja -->
+		<!-- End: Caja -->
 
-		<!-- Facturación -->
+
+		<!-- 
+		/**
+		* Menu Facturacion
+		*/
+		-->
         <?php if ($objPermOpc->tienePermiso(400)) { ?>
 		<li class="list_item list__item--click <?php if (strpos(GET()[0],'facturacion')!==false) { echo  'active open'; }?>" >
 			<div class="list__button list__button--click">
@@ -438,10 +505,14 @@ $id_cia     = $_SESSION['id_cia'];
 
 		</li>
 		<?php } ?>
-		<!-- End Facturacion -->
+		<!-- End: Facturacion -->
 
 
-		<!-- Inventario -->
+		<!-- 
+		/**
+		* Menu Inventario
+		*/
+		-->
         <?php if ($objPermOpc->tienePermiso(600)) { ?>
 		<li class="list_item list__item--click <?php if (strpos(GET()[0],'inventario')!==false) { echo  'active open'; }?>" >
 			<div class="list__button list__button--click">
@@ -474,10 +545,14 @@ $id_cia     = $_SESSION['id_cia'];
 
 		</li>
 		<?php } ?>
-		<!-- End Inventario -->
+		<!-- End: Inventario -->
 
 
-		<!-- Contabilidad -->
+		<!-- 
+		/**
+		* Menu Contabilidad
+		*/
+		-->
         <?php if ($objPermOpc->tienePermiso(900)) { ?>
 		<li class="list_item list__item--click <?php if (strpos(GET()[0],'contabilidad')!==false) { echo  'active open'; }?>" >
 			<div class="list__button list__button--click">
@@ -629,7 +704,7 @@ $id_cia     = $_SESSION['id_cia'];
 				</li>
 				<?php } ?>
 				<?php if ($objPermOpc->tienePermiso(5003)) { ?>
-				<li <?php if(GET()[0] == 'facturacion-perfiles'){ echo ' class="menu-backg-item"';}?>>
+				<li <?php if(GET()[0] == 'configurar-perfiles'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-perfiles" class="nav__link nav__link--inside">
 						<i class="clip-users-2"></i><span class="title"> Perfiles </span>
 					</a>
@@ -658,10 +733,7 @@ $id_cia     = $_SESSION['id_cia'];
     </nav>
 </div>
 
-<script src=""></script>
 <script>
-
-
 
 const queryString 	= window.location.search.substring(1);
 const urlParams 	= new URLSearchParams(queryString);

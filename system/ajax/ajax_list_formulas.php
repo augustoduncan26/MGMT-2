@@ -31,6 +31,7 @@ $daysInMonth= date('t');
       <thead>
         <tr class=""><!-- header-list-table -->
           <th width="20%">Descripción&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th width="20%">Departamento</th>
           <th width="20%">Área</th>
           <?PHP 
           for($i	=	1	;	$i	<	32	;	$i++) {
@@ -50,7 +51,7 @@ $daysInMonth= date('t');
 
           //foreach ($sel1['resultado'] as $datos) {
             while ( $datos = mysqli_fetch_array($list) ) {
-            $depto  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id ='.$datos['id_depto'].'');
+            $depto  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id ='.$datos['id_depto'].'','extract');
             $areas  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id IN ('.$datos['id_area'].')','array');
             
             $date   = explode(" ",$datos['created_at']);
@@ -67,6 +68,7 @@ $daysInMonth= date('t');
       ?>
         <tr>
           <td style="width:400px"  <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['descripcion']?></td>
+          <td style="width:400px"  <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$depto['name']?></td>
           <td style="width:400px" <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$P_Data?>&nbsp;&nbsp;&nbsp;</td>
 
           <?PHP 

@@ -10,7 +10,7 @@
   width: 30%;
 }
 div.dataTables_wrapper div.dataTables_filter input {
-      width: 100%;
+      width: 98%;
 }
 div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
@@ -29,7 +29,7 @@ div.dataTables_wrapper div.dataTables_filter label {
       <label id="label-mssg"><?=$mssg?></label>
     </div>
 <!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
-  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Usuario</a>
+  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Perfil</a>
   <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
 
     <div class="row">
@@ -44,11 +44,11 @@ div.dataTables_wrapper div.dataTables_filter label {
 
               <div class="x_content">
 
-			        <div id="table-responsive">
+			        <div id="table-responsive" style="overflow:auto">
                 <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
-                      <th>Id</th>
+                      <!-- <th>Id</th> -->
                       <th>Nombre</th>
                       <th>Fecha creación</th>
                       <th>Estado</th>
@@ -61,7 +61,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                         foreach ($listPerfiles['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td>
+                        <!-- <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td> -->
                         <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
                         <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
                         <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
@@ -301,11 +301,11 @@ function listPerfiles() {
           textActivo   = "Activo";
         }
         content += '<tr>';
-        content += '<td '+classSetting+'>' + item.id + '</td>';
-        content += '<td '+classSetting+'>' + item.name + '</td>';
-        content += '<td '+classSetting+'>' + item.created_at + '</td>';
-        content += '<td '+classSetting+'>' + textActivo + '</td>';
-        content += `<td `+classSetting+`>
+        //content += '<td style="width:3%" '+classSetting+'>' + item.id + '</td>';
+        content += '<td style="width:30%" '+classSetting+'>' + item.name + '</td>';
+        content += '<td style="width:10%" '+classSetting+'>' + item.created_at + '</td>';
+        content += '<td style="width:10%" '+classSetting+'>' + textActivo + '</td>';
+        content += `<td style="width:8%;text-align: center;" `+classSetting+`>
         <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('`+item.id+`');"><i class="fa fa-edit"></i></a>
         <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('`+item.id+`'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
         </td>`;
@@ -326,27 +326,26 @@ let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
 let contenido_editor = $('#contenido_editar')[0];
 
 let route = "app/controllers/configurar-perfiles.php?showEdit=1&id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
-$.ajax({
-  headers: {
-    Accept        : "application/json; charset=utf-8",
-    "Content-Type": "application/json: charset=utf-8"
-  },
-  url: route,
-  type: "GET",
-  data: "",
-  dataType        : 'json',
-  success         : function (response) { 
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: "",
+    dataType        : 'json',
+    success         : function (response) { 
 
-    $('#id_row').val(response['id']);
-    $('#nombre_edit').val(response['name']);
-    $('#estado_edit').select2('val',response['active']);
-    //$('#estado_edit').val(response['active']);
-  },
-  error           : function (error) {
-    console.log(error);
-  }
-});
-
+      $('#id_row').val(response['id']);
+      $('#nombre_edit').val(response['name']);
+      $('#estado_edit').select2('val',response['active']);
+      //$('#estado_edit').val(response['active']);
+    },
+    error           : function (error) {
+      console.log(error);
+    }
+  });
 }
 
 // Update Row
@@ -400,17 +399,19 @@ $.ajax({
 
 $(document).ready( function () {
     $('#tabla-list-perfiles').DataTable({
+      pageLength: 25,
       language: {
           url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
           search: '',
           searchPlaceholder: "Buscar",
       },
+      order: [[0, 'asc']],
       columnDefs: 
       [ 
       {
       targets: 3,
       orderable: false
-      },{ width: "8%", targets: 0,},{ width: "15%", targets: 2, } 
+      },{ width: "30%", targets: 0 },{ width: "10%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "20%", targets: 3 }
     ]
     });
 } );

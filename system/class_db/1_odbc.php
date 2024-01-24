@@ -170,9 +170,9 @@ class odbc{
 	} // Metodo ConectarBD
 	
 	/** 
-	* M�todo que verifica si existe conexi�n activa a Base de Datos.
+	* Verifica si existe conexion activa a Base de Datos.
 	* 
-	* @return Boolean Retorna TRUE si existe conexi�n a la BD o FALSE si no existe conexi�n
+	* @return Boolean Retorna TRUE si existe conexion a la BD o FALSE si no existe conexion
 	*/
 	function verificarConeccionBD(){
 		// variable de retorno inicializada en FALSE

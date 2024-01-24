@@ -166,17 +166,6 @@
 
 <script>
 
-// var runNavigationToggler = function () {
-//     $('.navigation-toggler').bind('click', function () {
-//         if (!$('body').hasClass('navigation-small')) {
-//             $('body').addClass('navigation-small');
-//         } else {
-//             $('body').removeClass('navigation-small');
-//         };
-//     });
-// };
-// runNavigationToggler();
-
 /** List Results */
 const listResultTable = () => {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';

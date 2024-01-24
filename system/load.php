@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 /** Define ABSPATH as this file's directory */
 if ( ! defined( 'PATH' ) ) { 
 	define( 'PATH', dirname( __FILE__ ) . '/' );

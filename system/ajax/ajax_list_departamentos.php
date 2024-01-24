@@ -15,8 +15,8 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia 
           <th>Nombre</th>
           <!-- <th>Principal</th> -->
           <th>Telefono</th>
-          <th>Estado</th>
           <th>Fecha creación</th>
+          <th>Estado</th>
           <th></th>
         </tr>
       </thead>
@@ -29,8 +29,8 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia 
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
           <!-- <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['id_ceo']?></td> -->
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['telephone']?></td>
-          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['created_at']?></td>
+          <td <?php if($datos['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
           <td class="text-center" style="width:10% !important;">
             <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
             <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>

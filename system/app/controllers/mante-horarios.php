@@ -12,7 +12,9 @@ $username 	= $_SESSION['username'];
 $typeDeptos = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 $typeArea   = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','id_cia = '.$_SESSION['id_cia'].' and active=1','array');
 
-
+/**
+ * Add 
+ */
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 
 	$am 			= 	false;

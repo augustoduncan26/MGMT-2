@@ -29,6 +29,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 		&nbsp;&nbsp;Nombre de usuario: ".$_GET['email']."<br>			
 		&nbsp;&nbsp;Contraseña: ".$_GET['contrasena']."<br><br />
 		Bienvenido a H&HSystem<br />
+		Copia este enlace en tu navegador para entrar: https://hhs.cocabo.org/system/login<br />
 		Derechos Reservados ".date('Y')."
 		";
 		$ObjEjec->insertarRegistro(PREFIX.'users', $P_Campos, $P_Valores);
@@ -55,23 +56,40 @@ if ( isset($_GET['showEdit']) && $_GET['id']) {
 
 // Edit / Update info
 if ( isset($_GET['edit']) &&  $_GET['edit'] == 1 && $_GET['nombre'] != '' && $_GET['email'] !='') {
-
-	$P_Valores 		= 	" nombre = '".$_GET['nombre']."', id_depto='".$_GET['depto']."', email = '".$_GET['email']."', updated_at = NOW(), telephone = '".$_GET['telefono']."', direcction = '".$_GET['direccion']."', activo = '".$_GET['activo']."'";
-    if ($_GET['contrasena']!='') { $P_Valores 	.=	" , contrasena = AES_ENCRYPT(".$_GET['contrasena'].",'toga')"; }
 	$P_condicion 	=	" id_usuario = '".$_GET['id']."'";
-	$upd 			=	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'users', $P_condicion);
-  	if ($upd) {
+	
+	if ($_GET['contrasena']!='') { 
+		$P_ValoresA	=	"contrasena =AES_ENCRYPT('".$_GET['contrasena']."','toga')"; 
+		$updA 		=	$ObjEjec->actualizarRegistro($P_ValoresA, PREFIX.'users', $P_condicion);
+	}
+
+	$P_Valores 		= 	"nombre = '".$_GET['nombre']."', id_depto='".$_GET['depto']."', email = '".$_GET['email']."', updated_at = NOW(), telephone = '".$_GET['telefono']."', direcction = '".$_GET['direccion']."', activo = '".$_GET['activo']."'";
+	$updB 			=	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'users', $P_condicion);
+  	if ($updB) {
 		echo 'ok';
 	} else {
 		echo 'error';
 	}
 }
 
+// Permisos
+if (isset($_POST['editperm']) && $_POST['editperm']==1) {
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_POST['id_']."'");
+	$exp 		=	explode(",",$_POST['valores']);
+	$cuantos = count($exp);
+	for ($i = 0 ; $i < $cuantos; $i++) {
+		$P_Campos 		=	'id_usuario,id_definicion_permiso';
+		$P_Valores 		=	"'".$_POST['id_']."','".$exp[$i]."'";
+		$ObjEjec->insertarRegistro(PREFIX.'permisos', $P_Campos, $P_Valores);
+	}
+	echo $mssg 		=	'<div class="alert alert-success">Se actualizo el registro con éxito</div>';
+}
+
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
-	mysql_query("Delete from zz_permisos Where id_usuario = '".$_GET['id']."'") or die(mysql_error());
-	mysql_query("Delete from ".$P_Tabla." Where id_usuario = '".$_GET['id']."'") or die(mysql_error());
-	echo $mssg 		=	'Se elimino el registro con éxito';
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users Where id_usuario = '".$_GET['id']."'");
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_GET['id']."'");
+	echo $mssg 		=	'<div class="alert alert-success">Se elimino el registro con éxito</div>';
 }
 
 ?>

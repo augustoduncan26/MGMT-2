@@ -101,6 +101,7 @@ if ( $saco['contrasena'] == $passN ) {
 	$_SESSION['id_session'] 		= 	session_id();
 	$_SESSION['id_user']  			= 	$saco['id_usuario'];
 	$_SESSION['principal'] 			= 	$saco['is_principal'];
+	$_SESSION['superadmin'] 		= 	$saco['is_superadmin'];
 	$_SESSION['lastname']			= 	$saco['apellido'];
 	$_SESSION['email']				= 	$saco['email'];
 	$_SESSION['id_cia'] 			= 	$saco['id_cia'];

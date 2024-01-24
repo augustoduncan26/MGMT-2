@@ -6,15 +6,15 @@ $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
-$P_Tabla 	=	PREFIX.'users';
+$P_Tabla 	=	PREFIX.'perfiles';
 
 $where 			= 	'id_cia="'.$id_cia.'"';
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id,name');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','name');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {
 	$where 			= 	'id_cia="'.$id_cia.'"';
-	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
+	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','name');
 	echo json_encode($listPerfiles['resultado']);
 }
 
@@ -40,7 +40,7 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	echo json_encode($data);
 }
 
-// Edit 
+// Update 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."',active = '".$_GET['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_GET['id'].'"');
@@ -56,5 +56,3 @@ if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 	$ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."'");
 	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
 }
-
-?>

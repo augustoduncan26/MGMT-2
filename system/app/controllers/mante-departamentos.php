@@ -1,6 +1,8 @@
 <?php
 
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+// include_once ( dirname(dirname(__DIR__)) . '/functions.php');
+
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 
@@ -8,9 +10,6 @@ $id_user    = $_SESSION["id_user"];
 $id_cia  	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
-
-//$listaDeptos    = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
-
 
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 
@@ -45,7 +44,6 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	} else {
 		echo 'error';
 	}
-	  
 }
 
 // Delete 

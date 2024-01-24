@@ -4,7 +4,7 @@ header("Content-Type: text/html;charset=utf-8");
 
 include ( dirname(__FILE__).'/load.php' );
 
-// Habitaciones en uso + salas de eventos
+// Rooms en uso + salas de eventos
 $TblBooking  = 'ad_'.$_SESSION['id_user'].'_reservas';
 
 $date_today =   date('Y-m-d');
@@ -18,21 +18,18 @@ $total_event=   $ObjMante->BuscarLoQueSea(' SUM(total_price) as total_price' , $
 $tmoneda    =   $ObjMante->BuscarLoQueSea('*' , 'ad_admin_empresas' ," id_empresa = '".$_SESSION['id_empresa']."'",'extract');
 $moneda     =   $ObjMante->BuscarLoQueSea('*' , 'ad_type_moneda' ," id = '".$tmoneda['tipo_moneda']."'",'extract');
 
-//get_template_part('load') ;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <style>
-  /* .sub-menu {
-		padding: 0px 0px 0px 20px;
-		z-index: 999;
-		background-color: white !important;
-		width: 100%;
-		border-radius: 0px 0px 5px 5px;
-		border-style: groove;
-	} */
+.img-dashboard {
+  opacity: 20%;
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
 </style>
 <?php get_template_part('header');?>
 
@@ -77,6 +74,8 @@ $moneda     =   $ObjMante->BuscarLoQueSea('*' , 'ad_type_moneda' ," id = '".$tmo
 
               if($_GET) { 
                 get_theView();
+              } else {
+                echo '<div class="img-dashboard col-md-12 col-sm-12"><img src="assets/images/template/DC_logo.png" class="circle-img " alt=""></div>';
               }
 
               ?>
@@ -85,8 +84,8 @@ $moneda     =   $ObjMante->BuscarLoQueSea('*' , 'ad_type_moneda' ," id = '".$tmo
       </div>
       <!-- end: PAGE -->
     </div>
+    
     <!-- end: MAIN CONTAINER -->
-  <?php //include ( dirname(__FILE__) .'/footer.php'); ?>
 
    <?php get_template_part('footer');?>
    

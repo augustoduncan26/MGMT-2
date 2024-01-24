@@ -50,7 +50,7 @@
               <button class="btn btn-success">Importar Archivo CSV</button>
             </div>
             <div class="col-md-4">
-              dd
+              &nbsp;
             </div>
             </form>
         </div>
@@ -95,7 +95,7 @@
           <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
              <div id="mssg-alert" style="color:red;"></div>
-             <table class="table table-bordered table-hover" id="sample-table-4">
+             <table class="table table-bordered" id="sample-table-4">
                <thead>
                </thead>
                <tbody>
@@ -104,14 +104,27 @@
                   <td><input class="form-control" type="text" id="descripcion" name="descripcion" maxlength="12" /></td>
                   <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área y/o departamento esta dirigido. </small></td>
                 </tr>
+                <tr>
+                  <td style="padding-top: 20px !important;padding-bottom: 20px !important">Departamento <span class="symbol required"></td>
+                  <td>
+                  <select name="select-departamento" id="select-departamento">
+                    <option>seleccionar</option>
+                      <?php
+                        foreach ($listaDeptos['resultado'] as $typeData) {
+                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        }
+                      ?>
+                  </select>
+                  </td>
+                </tr>
                  <tr>
                    <td>Áreas <span class="symbol required"></td>
                    <td>
                   <select name="areas[]" id="areas" multiple="multiple">
                       <?php
-                        foreach ($listaAreas['resultado'] as $typeData) {
-                          echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
-                        }
+                        //foreach ($listaAreas['resultado'] as $typeData) {
+                        //  echo '<option value="'.$typeData['id'].'">'.$typeData['name'].'</option> ';
+                        //}
                       ?>
                   </select>
                  <input type="checkbox" class="seleccionar-todas-areas" id="todas-areas-input" > <label for="todas-areas-input" class="cursor">Seleccionar Todas</label>
@@ -120,7 +133,7 @@
                  </tr>
                  <tr>
                    <td>Estado</td>
-                   <td>
+                   <td style="padding-top: 20px !important;padding-bottom: 20px !important">
                     <select name="estado"  class="" id="estado">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
@@ -200,6 +213,19 @@
       </td>
       <td colspan="2"><small>Nombre corto que describa el tipo de formula ó para que área y/o departamento esta dirigido. </small></td>
     </tr>
+    <tr>
+      <td style="padding-top: 20px !important;padding-bottom: 20px !important">Departamento <span class="symbol required"></td>
+      <td>
+      <select name="select-departamento-edit" id="select-departamento-edit">
+        <option>seleccionar</option>
+          <?php
+            foreach ($listaDeptos['resultado'] as $typeDepto) {
+              echo '<option value="'.$typeDepto['id'].'">'.$typeDepto['name'].'</option> ';
+            }
+          ?>
+      </select>
+      </td>
+    </tr>
       <tr>
         <td>Áreas <span class="symbol required"></td>
         <td>
@@ -271,8 +297,9 @@
 
 <?php get_template_part('footer_scripts');?>
 
-<script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-  
+<!-- <script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script> -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
@@ -344,10 +371,10 @@ $('.delete-row-table-formulas-edit').click(function(){
 
 /** List Results */
 const listResultTable = () => {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+  let id_user     = '<?php echo $_SESSION["id_user"]?>';
+  let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   $('.fa-spinner').show();
-  var contenido_editor = $('#list-rows')[0];
+  let contenido_editor = $('#list-rows')[0];
   let route = "ajax/ajax_list_formulas.php"; 
 
   $.ajax({
@@ -405,6 +432,7 @@ function addRows () {
   
   let descripcion = $('#descripcion').val();
   let areas       = $('#areas').val();
+  let depto       = $('#select-departamento').val();
   let estado      = $('#estado').val();
   let f1          = $('#f1').val();
   let f2          = $('#f2').val();
@@ -463,6 +491,7 @@ function addRows () {
         descripcion   : descripcion,
         areas         : areas,
         filas         : filas,
+        depto         : depto,
         tot_filas     : (rowCount-1),
         estado        : estado,
     },
@@ -555,6 +584,17 @@ function editRow ( id ) {
       table.append(`<tr>`+tdCol3+`</tr>`);
     }
 
+    //let depto = response.data['id_depto'];
+    // depto.forEach((item,key)=>{
+    //     if (item) {
+    //       //r =  arr + ',';
+    //       $('#select-departamento-edit').val(depto).change();
+    //     }
+    //   });
+    //$('#select-departamento-edit').val(response['id_depto']).trigger('change');
+    //$('#select-departamento-edit').val(response.data['id_depto']).change();
+
+
       let arr   = response.data['id_area'].split (",");
       let keys  = Object.keys(arr).length;
       let r  = "";
@@ -585,11 +625,12 @@ function updateRow ( id ) {
   var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   var descripcion = $('#descripcion_edit').val();
   //var depto       = $('#txt_departamento').val();
-  let areas       = $('#areas_edit').val();
+  let depto       = $('#select-departamento-edit').val();
+  let areas_e      = $('#areas_edit').val();
   var estado      = $('#estado_edit').val();
   $('#mssg-edit').css({'width':'100%'})
-
-  if ( descripcion == '' || areas == '') {
+console.log(areas_e)
+  if ( descripcion == '' || areas_e == '') {
     $("#mssg-edit").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
     setTimeout(()=>{
       $("#mssg-edit").hide();
@@ -632,7 +673,8 @@ function updateRow ( id ) {
     data: {
       id  : id,
       descripcion  : descripcion,
-      areas       : areas,
+      areas       : areas_e,
+      depto       : depto,
       filas       : filas,
       tot_filas   : (rowCount-1),
       estado      : estado,
@@ -655,6 +697,76 @@ function updateRow ( id ) {
     }
   });
 }
+
+
+/** Select departamento */
+$('#select-departamento').on('change',()=>{
+  let idDepto = $('#select-departamento').val();
+  console.log(idDepto);
+  let route = "app/controllers/mante-formulas.php";
+  $.ajax({
+    headers: {
+    Accept        : "application/json; charset=utf-8",
+    "Content-Type": "application/json: charset=utf-8"
+  },
+  url: route,
+  type: "GET",
+  data: {
+      search   : 1,
+      depto    : idDepto,
+  },
+  dataType      : 'json',
+  success       : function (response) { 
+    let arr = response; 
+    $("#areas").empty().trigger('change');
+
+    if (arr) {
+      $("#areas").append('<option>seleccionar</option>');
+      arr.forEach((item,key)=>{
+        $("#areas").append("<option value='"+item.id+"'>"+item.name+"</option>");
+      });
+    }
+    $("#areas").trigger('change');
+  },
+  error         : function (error) { 
+    console.log(error);
+  }
+  });
+});
+
+$('#select-departamento-edit').on('change',()=>{
+  let idDepto = $('#select-departamento-edit').val();
+  console.log(idDepto);
+  let route = "app/controllers/mante-formulas.php";
+  $.ajax({
+    headers: {
+    Accept        : "application/json; charset=utf-8",
+    "Content-Type": "application/json: charset=utf-8"
+  },
+  url: route,
+  type: "GET",
+  data: {
+      search   : 1,
+      depto    : idDepto,
+  },
+  dataType      : 'json',
+  success       : function (response) { 
+    let arr = response; 
+    $("#areas_edit").empty().trigger('change');
+
+    if (arr) {
+      $("#areas_edit").append('<option>seleccionar</option>');
+      arr.forEach((item,key)=>{
+        $("#areas_edit").append("<option value='"+item.id+"'>"+item.name+"</option>");
+      });
+    }
+    $("#areas_edit").trigger('change');
+  },
+  error         : function (error) { 
+    console.log(error);
+  }
+  });
+});
 
 
 // Make some default options
@@ -722,6 +834,8 @@ setTimeout(() => {
 $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='departamento']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#select-departamento").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#select-departamento-edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#areas_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#horarios").select2({ width: '100%', dropdownCssClass: "bigdrop"});

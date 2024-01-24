@@ -6,10 +6,10 @@ $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
-$P_Tabla 	=	PREFIX.'users';
+$P_Tabla 	=	PREFIX.'perfiles';
 
 $where 			= 	'id_cia="'.$id_cia.'"';
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id,name');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {

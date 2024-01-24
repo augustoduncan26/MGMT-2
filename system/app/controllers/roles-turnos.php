@@ -1,13 +1,13 @@
 <?PHP
-include_once ( dirname(dirname(__DIR__)) . '/framework.php');
-$link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
+	include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+	$link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
+	
+	$id_user 		=	$_SESSION['id_user'];
+	$id_cia 		=	$_SESSION['id_cia'];
 
 	$objUsuario 	=  	new Users();
 	$objPermiso		=	new permisos();	
-	//$objWebControl	= 	new WebControl();
-	//$objPaginador 	= 	new paginador();
-	$objPFecha		=	new fecha();
-	//$objRolTurno	=	new RolesTurnos();	
+	$objPFecha		=	new fecha();	
 	$objejec 		=  	new ejecutorSQL();
 
 	$Matriz			=	FALSE;
@@ -17,29 +17,14 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 	$idUs 	      	= 	$objCMSMenu->consultarID();
 	$POST			=	$objMante->ValuePOST('post');
 	
-	$POST_fechade	=	isset($_POST['de'])		?	$_POST['de']	:	'';					// Fecha desde
-	$POST_fechaa	=	isset($_POST['a'])		?	$_POST['a']		:	'';					// Fecha hasta
-	/*
-		$POST[0]		=		value todos		/	areas
-		$POST[1]		=		value Generar (Boton)
-		$POST[2]		=		value usuarios
-		$POST[3]		=		value fecha de
-		$POST[4]		=		value fecha a
-		$POST[5]		=		value año
-	*/
-	//echo $POST[0][0];
-	//
-	$P_TotalMeses		=	FALSE;
+	$POST_fechade	=	isset($_POST['select-fecha-desde'])		?	$_POST['select-fecha-desde']	:	'';					// Fecha desde
+	$POST_fechaa	=	isset($_POST['select-fecha-hasta'])		?	$_POST['select-fecha-hasta']		:	'';					// Fecha hasta
+	$POST_selarea	=	isset($_POST['select-areas'])?$_POST['select-areas']:	0;		// AREAS
+	$POST_users		=	isset($_POST['cuantos'])?$_POST['cuantos']	:	0;				// CUANTOS USUARIOS
+	$POST_generar	=	isset($_POST['buttonGen'])?$_POST['buttonGen']:'';				// EL BOTON GENERAR
+	$POST_anyo		=	isset($_POST['anyo'])	?$_POST['anyo']	:	'';					// EL AÑO
 	
-	// TOTAL DE MESES SELECCIONADOS
-	if (isset($POST_fechade) && isset($mess)) {
-		for($mess = $POST_fechade	;	$mess	<	$POST_fechaa+1 ; $mess++)
-		{
-			$P_TotalMeses	=	$P_TotalMeses+1;
-		}
-	}
-	
-	
+	$P_TotalMeses	=	FALSE;
 	$ToT			=	FALSE;
 	$meses_evaluar	=	FALSE;
 	$P_TDMeses		=	FALSE;
@@ -61,30 +46,16 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 	$NCORTO_		=	FALSE;
 	$DEPARTO_		=	FALSE;
 	$AREA_			=	FALSE;
+	$list 			= 	FALSE;
 	
-	$POST_seis		=	isset($_POST['seis'])	?$_POST['seis']	:	'';
-	$POST_dos		=	isset($_POST['dos'])	?$_POST['dos']	:	'';
-	$POST_diez		=	isset($_POST['diez'])	?$_POST['diez']	:	'';
-	$POST_ngrupo	=	isset($_POST['ngrupo'])	?$_POST['ngrupo']:	'';
-	$PNGRUPO		=	$POST_ngrupo;
-	$POST_GRUPO		=	isset($_POST['ngrupo'])	?$_POST['ngrupo']:	0;					// GRUPO 
-	$POST_horario	=	isset($_POST['horario'])?$_POST['horario']:	0;					// HORARIO
-	$POST_selarea	=	isset($_POST['select_areas'])?$_POST['select_areas']:	0;		// AREAS
-	$POST_users		=	isset($_POST['cuantos'])?$_POST['cuantos']	:	0;				// CUANTOS USUARIOS
-	$POST_generar	=	isset($_POST['buttonGen'])?$_POST['buttonGen']:'';				// EL BOTON GENERAR
-	$POST_anyo		=	isset($_POST['anyo'])	?$_POST['anyo']	:	'';					// EL AÑO
 	
-	//SALIR
-	#========
-	if(isset($_POST['buttonSalir'])) {
-		mysqli_query($link,'DROP TABLE '.$_POST['tabla_tmp_area'].'');
-		echo '
-			<script>
-				self.location=("?pag=defaultAdmin");
-			</script>
-		';
+	// TOTAL DE MESES SELECCIONADOS
+	if (isset($POST_fechade) && isset($mess)) {
+		for($mess = $POST_fechade	;	$mess	<	$POST_fechaa+1 ; $mess++)
+		{
+			$P_TotalMeses	=	$P_TotalMeses+1;
+		}
 	}
-	
 	
 	$Tot_turnoA		=	0;
 	$Tot_turnoB		=	0;
@@ -103,43 +74,65 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 	
 	$color2			=	"#E8FFE8";
 	$color			=	"#FFFFFF";
-	
-	// Segun opciones del Param opt ?
-	switch($GET_opt)
-	{
-		case 'busc':
-			$P_ocultar	=	TRUE;
-		break;
-	}
-	
-	if (isset($_GET['search']) && $_GET['search'] == 1) {
-		$P_Where		=	'id_depto="'.$_GET['depto'].'" and active =1';
-		$ListaAreas		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
-		//echo $ListaAreas['total'];
-		//if ($ListaAreas['total'] > 0) {
-			echo json_encode($ListaAreas['resultado']);
-		//}
-	}
-	
-	// SI QUIERE REGRESAR ENTONCES SE BORRAN TODOS LOS RESULTADOS
+
+	/**
+	 *  DELETE ALL ROWS IN TEMP TABLE IF THEY CLICK - GOBACK - BUTTON
+	*/ 
 	if($GET_opt == 'back') {
-		$objejec->vaciarTabla('911_rolturn_desp_tmp');	
-		//$objejec->vaciarTabla('911_rolturn_preh_tmp_2');	
-		$objejec->vaciarTabla('911_rolturn_desp_tmp_rand');	
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp');	
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp_rand');	
 	}
+	
+	/**
+	 * CANCEL - BORRAN TODOS LOS RESULTADOS
+	 */
+	if(isset($_GET['cancel']) && $_GET['cancel'] == 'rolback') { 
+	// 	$dateSelected	= $_GET['date_from'];
+	// 	$yearSelected	= $_GET['year_from'];
+	// 	$area			= $_GET['area'];
+	// 	$splitDate  	= explode('-', $dateSelected);
+	// 	$daysInMonth	= cal_days_in_month(CAL_GREGORIAN, $monthsSelect[$dateSelected], $yearSelected);
+	// 	//$daysInMonth= cal_days_in_month(CAL_GREGORIAN, $monthsSelect[$dateSelected], $yearSelected);
+	// 	// echo 'area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia;
+	// 	$searchExistRol = $objMante->BuscarLoQueSea('*',PREFIX.'rolturn','area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia);
+	// 	if ($searchExistRol['total'] > 0) {
+	// 		$P_where 	=	'area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia;
+	// 		$objejec->vaciarTabla(PREFIX.'rolturn_desp_tmp',$P_where);		
+	// 		$objejec->vaciarTabla(PREFIX.'rolturn_desp_tmp_rand',$P_where);
+	// 	}
+		
+	// 	echo 1;
+		
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp');	
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp_rand');	
+		echo json_encode(1);
+		return false;
+	}
+
+
+	$listsUsers     = $objMante->BuscarLoQueSea('id_usuario,nombre',PREFIX.'users','id_cia = '.$id_cia,'array');
+		foreach ($listsUsers['resultado'] as $data) {
+		$list .= '<option value="'.$data['id_usuario'].'">'.$data['nombre'].'</option> ';
+	}
+	
+	// Get Areas
+	if (isset($_GET['search']) && $_GET['search'] == 1) {
+		$P_Where		=	'id_depto="'.$_GET['depto'].'" and id_cia = "'.$id_cia.'" and active =1';
+		$ListaAreas		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
+		echo json_encode($ListaAreas['resultado']);
+	}
+	
 
 	// Informacion del usuario logueado
 	$P_InfoUser		=	$objUsuario->consultarUsuario($idUs);
 	
 	// Buscar algunas infos
 	//===============================
-	$sqlDeptos   	= 	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1','array');
-	$P_idDepto		=	$objMante->BuscarLoQueSea('*' ,'911_mant_depto', 'seccion like "%desp%"','extract');
-	$PIDDEPTO		=	$P_idDepto['id_seccion'];
-	$P_Where		=	'id_depto="'.$P_idDepto['id_seccion'].'" and activo =1';			
-	//$ListaAreas		=	$objMante->Listar('911_mant_areas', $P_Where,false,'nombre',false,false,'array');		//	Litar las secciones ó areas segun dpto.DESPACHO
+	$sqlDeptos   	= 	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = "'.$id_cia.'" and active = 1','array');
+	$P_idDepto		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos', 'id ='.$_GET['depto'],'extract');
+	$PIDDEPTO		=	$_GET['depto'];
+	$P_Where		=	'id_depto="'.$_GET['depto'].'" and activo =1';			
 	$ListaAreas		=	$objMante->Listar(PREFIX.'mant_areas', $P_Where,false,'nombre',false,false,'array');
-	$ListaHrs		=	$objMante->Listar('911_otros_param', 'activo = 1 and id_depto = "'.$P_idDepto['id_seccion'].'" AND n_corto="tipo_hrs"',false,'name',false,false,'array');		//	Litar los tipos de horarios para este dpto
 	
 	//PARAMETROS DE USO INTERNO
 	/*
@@ -150,45 +143,16 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 		 - Buscar grupo
 		 - Buscar tipo de horario
 	*/
+
 	//=========================
+	$monthsSelect	=	array('Enero'=>1,'Febrero'=>2,'Marzo'=>3,'Abril'=>4,'Mayo'=>5,'Junio'=>6,'Julio'=>7,'Agosto'=>8,'Septiembre'=>9,'Octubre'=>10,'Noviembre'=>11,'Diciembre'=>12);
 	$DIGITOS		=	array('0','1','2','3','4','5','6','7','8','9','10','11','12');			
 	$MESES			=	array('XXX','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 	$DIGITOS2		=	array('0','01','02','03','04','05','06','07','08','09','10','11','12');
-	
-	// EXPLODE DE LAS AREAS
-	function NombredeArea($Data = false) {
-		global	$objMante;
-		//echo $Data[0];
-		$P_Val	=	explode('-',$Data);
-		$P_Son	=	count($P_Val);
-		for($xy = 0 ; $xy < $P_Son ; $xy++)
-		{	//echo $P_Val[$xy];
-			$Nombre		=	$objMante->BuscarLoQueSea('*' ,'911_mant_areas', 'id="'.$P_Val[$xy].'" and activo = 1','extract');
-			if($P_Data!='')
-			{
-				$P_Data .=  '-';
-			}
-			$P_Data		.=	 strtoupper(substr($Nombre['nombre'],0,15)).'...';	
-		}
-		return ($P_Data);
-	}
-	
-	// FIND CODCARGO DEL USUARIO
-	function CodCargo($IDEMPLEADO)
-	{	
-		global	$objMante;
-		$P_SQL	=	$objMante->BuscarLoQueSea('*','911_empleados','nempleado = "'.$IDEMPLEADO.'"','extract');
-		return $P_SQL['codcargo'];
-		
-	}
-	// CONTAR CANTIDAD DE CRITERIOS, SEGUN CRITERIO
-	/*
-	
-	*/
 
 	//Conocer total de usuario promedio segun grupo ó área
 	//*****************************************************
-	$P_TotUser		=	$objMante->PromUsers('911_mant_areas','usuarios','id_depto = "'.$PIDDEPTO.'" '); 	
+	//$P_TotUser		=	$objMante->PromUsers('911_mant_areas','users','id_depto = "'.$PIDDEPTO.'" '); 	
 	$IDSUP			=	FALSE;
 	$MANTIDSUP		=	FALSE;
 	$PASSASUP		=	FALSE;
@@ -196,115 +160,29 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 	// USUARIO DE ESTE DPTO.
 	//Conocer usuarios que son de este DPTO y que a la vez son supervisores
 	$Wer_userSuperv	=	'id_depto = "'.$PIDDEPTO.'" and id_perfil = "2" AND activo = "1" ORDER BY id_area,nombre ASC';
-	$P_UserDptoSup	=	$objMante->Listar('usuario', $Wer_userSuperv,false,false,false,false,'array');
-	
-	//SUPERVISORES PARA CUALQUIER AREA
-	if ($P_UserDptoSup['resultado']) {
-		foreach($P_UserDptoSup['resultado'] as $LabelsSuperv) {
-			$IDSUPERV	 =	$LabelsSuperv['id_usuario'];
-			$NOMBSUPERV	 =	$LabelsSuperv['nombre'].'&nbsp;'.$LabelsSuperv['apellido'];
-			
-			//SETEAR EL NOMBRE DE LOS GRUPOS (AREAS)
-			$P_NArea	=	$objMante->BuscarLoQueSea('*' ,'perfil', 'id_perfil = "'.$LabelsSuperv['id_perfil'].'"','extract');
-			
-			if($LabelsSuperv['id_perfil']!=$MANTIDSUP):
-				$MANTIDSUP	=	$LabelsSuperv['id_perfil'];
-				$OPTION		.=	'<optgroup label="--- '.strtoupper($P_NArea['perfil']).' ---PRE-HOSP." style="background-color:yellow"></optgroup>';
-			endif;
-			
-			//ESTO PARA QUE LOS LABELS EMPIEZEN SEGUN AREA SELECCIONADA
-				//asi evitar que se tenga que buscar en todo el scroll del list menu
-				if($LabelsSuperv['id_area']==$POST[0][0] && $PASSASUP==FALSE):
-					$FILA_N			=	0;
-					$PASSASUP		=	TRUE;
-					//$ID			=	$Labels['id_usuario'];
-					$OPTION		.=	'<option value="" selected>Users:SUPERVISORES</option>';
-				endif;
-				
-			//PONER LOS NOMBRES DE LOS INDIVIDUOS, AGRUPADOS POR: (id_area,nombre)
-			//Y EL CARGO SEGUN SU CODCARGO
-			if($LabelsSuperv['id_usuario']!=$IDSUP):
-				$FILA_N++;
-				$IDSUP			=	$LabelsSuperv['id_usuario'];
-				if(CodCargo($LabelsSuperv['nempleado']) == $P_TUM1){ $LBL_CARGO = ' - TUM1';}
-				elseif(CodCargo($LabelsSuperv['nempleado']) == $P_TUM2){ $LBL_CARGO = ' - TUM2';}
-				elseif(CodCargo(@$Labels['nempleado']) == $P_OVE){$LBL_CARGO = ' - OVE';}
-				else{$LBL_CARGO='';}
-				$OPTION		.=	'<option value="'.$LabelsSuperv['id_usuario'].'" title="'.$NOMBSUPERV.' - SUPERVISORES'.$LBL_CARGO.'">'.$FILA_N.'-&nbsp; '.$NOMBSUPERV.$LBL_CARGO.'</option>';
-			endif;
-		}
-	}
-
+	$P_UserDptoSup	=	$objMante->Listar(PREFIX.'users', $Wer_userSuperv,false,false,false,false,'array');
 	
 	//CONOCER LOS USUARIOS QUE SON DE ESTE DEPTO.
 	$Wer_user		=	'id_depto = "'.$PIDDEPTO.'" and id_perfil <> 2 AND activo = "1" ORDER BY id_area,nombre ASC';
-	$P_UserDpto		=	$objMante->Listar('usuario', $Wer_user,false,false,false,false,'array');
+	$P_UserDpto		=	$objMante->Listar(PREFIX.'users', $Wer_user,false,false,false,false,'array');
 	
+	//var_dump($P_UserDpto);
 	$ID				=	FALSE;
 	$MANTID			=	FALSE;
 	$PASSA			=	FALSE;
-	if(isset($P_UserDpto['resultado'])) {
-			//$LABEL	=	'<option value="" selected>-Escoja-</option>';
-		foreach($P_UserDpto['resultado'] as $Labels)
-		{
-			$IDLABEL	=	$Labels['id_usuario'];//'<option id="'.$Labels['id_usuario'].'">'.$Labels['nombre'].'&nbsp;'.$Labels['apellido'].'</option>';	
-			$NOMBLABEL	=	$Labels['nombre'].'&nbsp;'.$Labels['apellido'];
-			
-			//SETEAR EL NOMBRE DE LOS GRUPOS (AREAS)
-			$P_NArea	=	$objMante->BuscarLoQueSea('*' ,'911_mant_areas', 'id = "'.$Labels['id_area'].'"','extract');
-					
-			if($Labels['id_area']!=$MANTID):
-				$FILA_N			=	0;
-				//<optgroup label="Lenguajes del lado servidor">
-				$OPTION		.=	'<optgroup label="--- '.strtoupper($P_NArea['nombre']).' ---" style="background-color:yellow"></optgroup>';
-				$MANTID		=	$Labels['id_area'];
-			endif;
-			//ESTO PARA QUE LOS LABELS EMPIEZEN SEGUN AREA SELECCIONADA
-			//asi evitar que se tenga que buscar en todo el scroll del list menu
-			if($Labels['id_area']==$POST[0][0] && $PASSA==FALSE):
-				$PASSA		=	TRUE;
-				//$ID			=	$Labels['id_usuario'];
-				$OPTION		.=	'<option value="" selected>Users: '.$P_NArea['nombre'].'</option>';
-			endif;
-			
-			//PONER LOS NOMBRES DE LOS INDIVIDUOS, AGRUPADOS POR: (id_area,nombre)
-			if($Labels['id_usuario']!=$ID):
-				$FILA_N++;
-				$ID			=	$Labels['id_usuario'];
-				if(CodCargo($Labels['nempleado']) == $P_TUM1){ $LBL_CARGO = ' - TUM1';}
-				elseif(CodCargo($Labels['nempleado']) == $P_TUM2){ $LBL_CARGO = ' - TUM2';}
-				elseif(CodCargo($Labels['nempleado']) == $P_OVE){$LBL_CARGO = ' - OVE';}
-				else{$LBL_CARGO='';}
-				$OPTION		.=	'<option value="'.$Labels['id_usuario'].'" title="'.$NOMBLABEL.' - '.$P_NArea['nombre'].$LBL_CARGO.'">'.$FILA_N.'-&nbsp; '.$NOMBLABEL.$LBL_CARGO.'</option>';
-			endif;
-				
-		}
-	}
-
-	//
-	// HERE START EVERYTHING
-	//
-	// ***********************************************
-	// AL PRESIONAR EL BOTON DE GENERAR
-	//  - TODO EMPIEZA AQUI
-	// (Primero hago un par de consultas necesarias)
-	// ***********************************************
 	
-	
-	// Primero verificar que no esten utilizando esta parte
-	if($POST[1] == 'Generar' || $POST_generar == 'Generar'){
-		// Crear la tabla temporal
-		// echo 1;
-		//mysql_query('CREATE TABLE 911_'.$_POST['select_areas'].' AS SELECT * FROM 911_rolturn_preh_tmp');
+	/**
+	 * GENERAR ROL TURNO AUTOMATICO
+	 */
+	if (isset($_POST['btn-generar-rol-auto'])){ // or isset($_POST['btn-generar-rol-manual'])) {
 		
-	}
-	
-	if($POST[1] == 'Generar' || $POST_generar == 'Generar') {
+		$disableBtnMan  =	'disabled';
+		$showRolAuto 	=	TRUE;
 		/*
 			1. Buscar la formula de acuerdo al area seleccionada
 			2. Saber el tipo de horario que solicitan
 			3. Saber el grupo
-			4. Contar para cuantos usuarios se requiere tirar el turno
+			4. Para cuantos usuarios se requiere tirar el turno
 			5. Saber para cuantos meses		
 		*/	
 		//1. Cuantas formulas debo buscar?
@@ -315,55 +193,22 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 		$Letra			=	false;
 		$clave			=	false;
 		$P_ParaCuantos	=	false;							//  Saber para cuantos usuarios es toda esta vaina
-		$P_Tot			=	count($POST_selarea);			//	Saber el total de las areas
-		//$P_Tot			=	count($POST[0]);
 		
+		/**
+		 * HERE IS WHERE EVERYTHING START
+		 */
 		$error			=	0;	
-		$date			=	date('Y-m-d');
-		// PARA TODAS LAS AREAS
-		// EN EL FUTURO BIEN LEJANO (No quiero romper mi cabeza :D)
-		if($POST_selarea	==	'todos'):
-			$P_Cuantos		=	$objMante->BuscarLoQueSea('*','911_mant_areas','id_depto="'.$PIDDEPTO.'" and activo = 1','array');
-			$P_Cuantos['total'];
-			
-			//Arreglar la data para poder comparar
-			foreach($P_Cuantos['resultado'] as $P_Depto)
-			{	
-				if($P_Data!='')
-				{
-					$P_Data .=  '-';
-				}
-					$P_Data		.=	 $P_Depto['id'];
-					$P_NombreArea_tmp=$P_Depto['nombre'];
-					
-			}
-			
-		// UNA SOLA AREA
-		;else:
-			
-			//$P_Data		=	NombredeArea($POST[0]);
-			
-			for($x	=	0	;	$x		<	$P_Tot	;	$x++)
-			{
-				if($P_Data!='')
-				{
-					$P_Data .=  '-';
-				}
-					//$P_Data		.=	 $POST[0][$x];	
-					$P_Data			.=	$_POST['select_areas'][$x];
-			}
-		endif;
 		
-		//echo $P_Data;//	
 		// CREAR LA TABLA TEMPORAL
 		// ***********************
-		$NAREASQL_	=	mysqli_query($link,'SELECT * FROM 911_mant_areas WHERE id = "'.$P_Data.'"');
+		$NAREASQL_	=	mysqli_query($link,'SELECT * FROM '.PREFIX.'mant_areas WHERE id = "'.$_POST['select-areas'].'"');
 		//$NombArea  =   $objMante->BuscarLoQueSea("*","911_mant_areas","id='".$P_Data."'","array");
 		$NombArea	=	mysqli_fetch_array($NAREASQL_);
-		$NAMETBLTMP	=	'911_rolturno_desp_'.strtolower($NombArea['id']);
+		//$NAMETBLTMP	=	'911_rolturno_desp_'.strtolower($NombArea['id']);
+		$NAMETBLTMP	=	PREFIX.'rolturn_'.$id_cia.'_'.$id_user.'_area_'.strtolower($NombArea['id']);
 		$objejec->vaciarTabla($NAMETBLTMP);	
 		//mysql_query('CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY);');
-		mysqli_query($link,'CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM 911_rolturn_desp_tmp');
+		mysqli_query($link,'CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM '.PREFIX.'rolturn_tmp');
 		
 		
 		//echo $P_Data.'<br>';
@@ -428,7 +273,7 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 		
 		// AQUI EMPIEZA LA CONSULTADERA
 		// 1. EVITAR EL REFRESH DE LOS USUARIOS
-		
+		//echo $NAMETBLTMP;
 		$Wer		=	'dpto = "'.$PIDDEPTO.'" and area = "'.$P_Data.'" and fecha = "'.$date.'" and id_usuario = "'.$idUs.'"';
 		$BuscaFind	=	$objMante->BuscarLoQueSea('*' , $NAMETBLTMP,$Wer);
 		$objejec->vaciarTabla('911_rolturn_desp_tmp');
@@ -451,10 +296,47 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 // ||														 ||
 // VV													     VV	
 //
+
+	$P_Depto		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos', 'id ='.$_POST['select-departamento'],'extract');
+	$P_Area			=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', 'id ='.$_POST['select-areas'],'extract');
+	$P_Where		=	'id_depto="'.$_POST['select-departamento'].'" and id_cia = "'.$id_cia.'" and active =1';
+	$listaAreasPost	=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
+	$row = 0;
+	$tabActive = false;
+	$inActive = false;
+	
+	for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){ 
+		
+		if ($row==0) {
+			$tabActive = "class='active'";
+			$inActive = 'in active';
+		} else {
+			$tabActive = false;
+			$inActive = false;	
+		}
+
+		// MONTHS
+		$tabs_li		.=	'
+			<li '.$tabActive.'><a data-toggle="tab" href="#'.strtolower($MESES[$r]).'">'.$MESES[$r].'</a></li>';
+		
+		// HORARIO
+		$horario 		.= '
+			<div id="'.strtolower($MESES[$r]).'" class="tab-pane fade '.$inActive.'">
+				<he>Aqui Roles de Turno para '.$MESES[$r].'</he>
+			</div>
+		';
+		
+		$row++;
+	}
+		
+	//<li style="font-size:10px;width:60px; font-family:Verdana, Geneva, sans-serif;" class="TabbedPanelsTab comun_titulos_2" onmouseover="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'0\')" id="Tab'.$P_OtroMes.'" tabindex="'.$P_OtroMes.'" onclick="javascript: document.getElementById(\'Tab'.$P_OtroMes.'\').style.backgroundColor=\'#000\'">'.$MESES[$r].'</li>';
+	//echo $P_Spry;
+	return false;
+
 		//for($rrh = $POST[3]	;	$rrh	<	$POST[4]+1 ; $rrh++){
 		for($rrh = $POST_fechade	;	$rrh	<	$POST_fechaa+1 ; $rrh++){
 			//echo $rrh.'<br>';
-			$SONMESES=$SONMESES+1;
+			echo $SONMESES 		=	$SONMESES+1;
 			$clave			=	mt_rand(-2147483647,2147483647); //$id=2147483648+mt_rand(-2147483647,2147483647); //mt_rand(26081970,19700826);	//	Evitar el refresh del navegador por el usuario
 			//Buscar datos de acuerdo a los seleccionado
 			$P_Were 		= 	'dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area = "'.$P_Data.'"';
@@ -483,11 +365,11 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 //echo $POST_users;
 			if($POST_GRUPO==0):
 				//$SQL_1			=	mysql_query('SELECT * FROM 911_mant_formulas WHERE c1 = '.$P_Horarios[0].' AND dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%" ORDER BY RAND() LIMIT '.$N_Area['turno_a'].'') or die('Error 504 inesperado en mysql: '.mysql_error());
-				$SQL_1			=	mysqli_query($link,'SELECT * FROM 911_mant_formulas WHERE dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%"') or die('Error 504 inesperado en mysql: '.mysqli_error($link));
+				$SQL_1			=	mysqli_query($link,'SELECT * FROM '.PREFIX.'mant_formulas WHERE dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%"') or die('Error 504 inesperado en mysql: '.mysqli_error($link));
 				$ENCONTRE		=	mysqli_num_rows($SQL_1);
 			;else:
 				//$SQL_1			=	mysql_query('SELECT * FROM 911_mant_formulas WHERE c1 = '.$P_Horarios[0].' AND dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%" AND grupo like "%'.$POST_GRUPO.'%" ORDER BY RAND() LIMIT '.$N_Area['turno_a'].'') or die('Error 504 inesperado en mysql: '.mysql_error());
-				$SQL_1			=	mysqli_query($link,'SELECT * FROM 911_mant_formulas WHERE dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%"') or die('Error 504 inesperado en mysql: '.mysqli_error($link));
+				$SQL_1			=	mysqli_query($link,'SELECT * FROM '.PREFIX.'mant_formulas WHERE dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%"') or die('Error 504 inesperado en mysql: '.mysqli_error($link));
 				$ENCONTRE		=	mysqli_num_rows($SQL_1);
 			endif;
 
@@ -912,11 +794,11 @@ $link	   =	mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
 					$P_HorLabel			=	array('06:00am-2:00pm','2:00pm - 10:00pm','10:00pm - 06:00am');
 					$ToArr				=	count($P_HorLabel);
 					
-// MOSTRAR HORARIOS Y TOTALES
-// Totales segun los horarios
-// Buesca en la tabla ya creada como quedo el resultado 
-// segun los horarios definidos
-// Ejem. (6 a 2)   = 4 ; (2 a 10) = 4 ; (10 a 6) = 3
+	// MOSTRAR HORARIOS Y TOTALES
+	// Totales segun los horarios
+	// Buesca en la tabla ya creada como quedo el resultado 
+	// segun los horarios definidos
+	// Ejem. (6 a 2)   = 4 ; (2 a 10) = 4 ; (10 a 6) = 3
 
 						for($m	=	0	;	$m < $ToTArra ; $m++):			// TOTAL DE HORARIOS
 							$P_Conten	.=	'<tr>';

@@ -354,7 +354,7 @@
                 
                 <?php
                   // Si es usuario principal de la Cia
-                  if ($_SESSION['principal']==1) {
+                  if ($_SESSION['superadmin']==1) {
                 ?>
 
                 <li>

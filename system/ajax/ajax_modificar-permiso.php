@@ -7,11 +7,6 @@ $ObjEjec    = new ejecutorSQL();
 //$nombre       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 $data       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion','id = "'.$_GET['id'].'"','extract',false);
 
-// $TblName      = 'zz_permiso_definicion';
-
-// $sql_hab      = mysql_query("Select * From ".$TblName." Where id = '".$_GET['id']."'")or die(mysql_error());
-// $data         = mysql_fetch_object($sql_hab);
-
 ?>
 <form method="post">
    <table class="table table-bordered" id="sample-table-4">

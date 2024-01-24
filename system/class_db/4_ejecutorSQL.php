@@ -301,6 +301,7 @@ class ejecutorSQL extends funcionesDB{
 
 					if (!$exito){
 						$this->err 	= "Ha ocurrido un error. MySql dice ".mysqli_error($this->linkBD);
+						$exito = $this->err;
 					}
 					else{
 						$this->numRegAfectados = mysqli_affected_rows($this->linkBD);

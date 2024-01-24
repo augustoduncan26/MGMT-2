@@ -23,6 +23,13 @@ $listaDeptos    = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','act
 $listaAreas     = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas','active = 1 and id_cia = '.$id_cia,'array');
 $listaHorarios  = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_horarios','active = 1 and id_cia = '.$id_cia,'array');
 
+// Get Areas
+if (isset($_GET['search']) && $_GET['search'] == 1) {
+	$P_Where		=	'id_depto="'.$_GET['depto'].'" and active =1';
+	$ListaAreas		=	$ObjMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
+	echo json_encode($ListaAreas['resultado']);
+}
+
 // Add rows
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 
@@ -44,7 +51,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 		}
 		$P_Tabla 	=	PREFIX.'mant_formulas_detalle';
 		$P_Campos	=	'id_cia,descripcion,id_depto,id_area,created_at,active';
-		$P_Valores	=	"'".$id_cia."','".$_GET['descripcion']."','0','".$P_Data."',NOW(),'".$_GET['estado']."'";
+		$P_Valores	=	"'".$id_cia."','".$_GET['descripcion']."','".$_GET['depto']."','".$P_Data."',NOW(),'".$_GET['estado']."'";
 		$insert 	= 	mysqli_query($link, "INSERT INTO ".$P_Tabla." (".$P_Campos.") values (".$P_Valores.")");
 		$lastId 	= 	mysqli_insert_id($link);
 
@@ -67,19 +74,6 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['descripcion'] !='') {
 			$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
 			$P_Valores2 = false;
 		}
-
-		// for ($x = 0; $x < $_GET['tot_filas'] ; $x++) {
-		// 	$P_Valores2	 =	"'".$_GET['id']."','".$id_cia."','".($x+1)."' ,'".($P_rand+$x)."',";
-		// 	for($ix 	= 	0; $ix < $Total ; $ix++) {
-		// 		$P_Valores2	.=	"'".$_GET['filas'][$r]."',";
-		// 		$r++;
-		// 	}
-		// 	$P_Valores2 .= "NOW()";
-		// 	// Aqui ingresar a la table
-		// 	$ObjEjec->insertarRegistro(PREFIX.'mant_formulas', $P_Campos2, $P_Valores2);
-		// 	$P_Valores2 = false;
-		// }
-
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 	}
 }
@@ -102,7 +96,7 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['descripcion'] !='') {
 		}
 		$P_Data		.=	 $_GET['areas'][$i];
 	}
-	$P_Valores = "descripcion = '".$_GET['descripcion']."', id_depto = '0', id_area = '".$P_Data."', active = '".$_GET['estado']."', updated_at=NOW()";
+	$P_Valores = "descripcion = '".$_GET['descripcion']."', id_depto = '".$_GET['depto']."', id_area = '".$P_Data."', active = '".$_GET['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, PREFIX.'mant_formulas_detalle', 'id = "'.$_GET['id'].'"');
   	
 

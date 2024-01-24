@@ -682,7 +682,7 @@ const listarUsuarios = () => {
       setting['ordering'] = 0;
       setting['notorder'] = [5];
       setting['totalpages'] = [20, 30, 50, 100, 250];
-      loadDataTable('list-table-users',setting);
+      //loadDataTable('list-table-users',setting);
     },
     error           : function (error) {
       console.log(error);
@@ -755,7 +755,7 @@ function editUserPermisos ( idParam ) {
     form_data.append('id_', id_);
 
   $.ajax({
-        url: 'app/controllers/configurar-usuarios.php', // point to server-side PHP script 
+        url: 'app/controllers/editar-perfil-configuraciones.php', // point to server-side PHP script 
         dataType: 'text', // what to expect back from the PHP script
         cache: false,
         contentType: false,
@@ -763,6 +763,7 @@ function editUserPermisos ( idParam ) {
         data: form_data,
         type: 'post',
         success: function (response) {
+          console.log(response)
           $('#mssg-label-edit-perm').html(response);
           setTimeout(()=>{$('#mssg-label-edit-perm').html('')},3000)
         },
