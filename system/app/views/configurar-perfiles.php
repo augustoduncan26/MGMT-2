@@ -6,14 +6,18 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
-.dataTables_filter {
+@media (min-width: 768px) {
+  .dataTables_filter {
   width: 30%;
-}
-div.dataTables_wrapper div.dataTables_filter input {
-      width: 98%;
-}
-div.dataTables_wrapper div.dataTables_filter label {
+  /* text-align:justify !important; */
+  /* margin-right: -20px !important; */
+  }
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: 98%;
+  }
+  div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
+  }
 }
 </style>
 
@@ -44,7 +48,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 
               <div class="x_content">
 
-			        <div id="table-responsive" style="overflow:auto">
+			        <div id="table-responsive overflow">
                 <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>

@@ -6,15 +6,25 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
-.dataTables_filter {
+@media (min-width: 768px) {
+  .dataTables_filter {
   width: 30%;
-}
-div.dataTables_wrapper div.dataTables_filter input {
-      width: 100%;
-}
-div.dataTables_wrapper div.dataTables_filter label {
+  /* text-align:justify !important; */
+  /* margin-right: -20px !important; */
+  }
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: 98%;
+  }
+  div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
+  }
+  .modal-xl {
+    width: 90%;
+   max-width:1350px;
+  }
 }
+
+
 </style>
 
 <body>
@@ -29,14 +39,14 @@ div.dataTables_wrapper div.dataTables_filter label {
       <label id="label-mssg"><?=$mssg?></label>
     </div>
 <!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
-  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Usuario</a>
+  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Empleado</a>
   <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
 
     <div class="row">
       <div class="col-sm-12">
        <div class="panel panel-default">
           <div class="panel-heading">
-            <i class="clip-settings"></i> Perfiles
+            <i class="clip-settings"></i> Empleados
           </div>
           <div class="panel-body">
               <div class="col-sm-12">
@@ -44,30 +54,33 @@ div.dataTables_wrapper div.dataTables_filter label {
 
               <div class="x_content">
 
-			        <div id="table-responsive">
-                <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover table-responsive">
+			        <div id="table-responsive" class="overflow">
+                <table id="tabla-list-empleados" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
-                      <th>Id</th>
+                      <th title="Número de Empleado">#</th>
                       <th>Nombre</th>
-                      <th>Fecha creación</th>
-                      <th>Estado</th>
+                      <th>Apellido</th>
+                      <th>Email</th>
+                      <th>Email-Sume</th>
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody id="tbody-table-perfiles">
+                  <tbody id="tbody-table-empleados">
                     <?php
-                      if (isset($listPerfiles['resultado'])) {
-                        foreach ($listPerfiles['resultado'] as $key => $value) {
+                      if (isset($listEmpleados['resultado'])) {
+                        foreach ($listEmpleados['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+                        <td ><?=$value['nempleado']?></td>
+                        <td ><?=$value['nombre']?></td>
+                        <td ><?=$value['apaterno']?></td>
+                        <td ><?=$value['email1']?></td>
+                        <td ><?=$value['email2']?></td>
                         <td class="text-center" style="width:10% !important;">
-                          <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
-                          <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+                          <a class="btn btn-xs btn-teal tooltips" title="Editar" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
+                          <!-- <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a> -->
+                          <a class="btn btn-xs btn-green tooltips"><img name="iconoInfoGen" id="iconoInfoGen" src="assets/image/email_go.png" border="0" title="Agregar correo al usuario"></a>
                         </td>
                       </tr>
                     <?php
@@ -93,8 +106,8 @@ div.dataTables_wrapper div.dataTables_filter label {
 
  <!-- Edit Row -->
 <?php /////////// Editar algo ?>
-<div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
-<div class="<?php echo "modal-dialog"; ?>">
+<div class="modal fade" id="edit_event" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-xl">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -147,13 +160,9 @@ div.dataTables_wrapper div.dataTables_filter label {
 <!-- End Edit Events -->
 
 
-<!-- Modal Add Room -->
-<?php //get_view_part ( 'modificar-habitacion' )?>
-<!-- En Add Room -->
-
-<!-- Add Perfil -->
+<!-- Add Empleado -->
   <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -399,7 +408,8 @@ $.ajax({
 }
 
 $(document).ready( function () {
-    $('#tabla-list-perfiles').DataTable({
+    $('#tabla-list-empleados').DataTable({
+      pageLength: 25,
       language: {
           url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
           search: '',
@@ -408,9 +418,9 @@ $(document).ready( function () {
       columnDefs: 
       [ 
       {
-      targets: 3,
+      targets: 5,
       orderable: false
-      },{ width: "8%", targets: 0,},{ width: "15%", targets: 2, } 
+      },{ width: "3%", targets: 0,},{ width: "15%", targets: [1,2,3,4], } ,{ width: "30%", targets: 5, }
     ]
     });
 } );

@@ -1,15 +1,13 @@
 <?php
-
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
-include_once ( dirname(dirname(__DIR__)) . '/functions.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
-$P_Tabla 	=	PREFIX.'users';
+$P_Tabla 	=	PREFIX.'empleados';
 
-$where 			= 	'id_cia="'.$id_cia.'"';
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id,name');
+$where 			= 	'';//'id_cia="'.$id_cia.'"';
+$listEmpleados 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id,nempleado');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {

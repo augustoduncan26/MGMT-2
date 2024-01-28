@@ -414,16 +414,16 @@ class cms extends sesion{
 		$objEjecSQL 		= 	new ejecutorSQL();
 		$ObjetoBitacora->registrar('El usuario cerro el acceso a la aplicacion');
 		//bitacora::registrar('El usuario cerr� el acceso a la aplicaci�n');
-		mysql_query('DELETE FROM ad_session WHERE session_id="'.$this->consultarIdSesion().'"',CONEXIONBD);
-		mysql_query('UPDATE ad_session set session_id="", expires="" WHERE session_id="'.$this->consultarIdSesion().'"',CONEXIONBD);
+		mysql_query('DELETE FROM ad_session WHERE id_session="'.$this->consultarIdSesion().'"',CONEXIONBD);
+		mysql_query('UPDATE ad_session set id_session="", expires="" WHERE id_session="'.$this->consultarIdSesion().'"',CONEXIONBD);
 		
 		$tbl = 'ad_session';
 		$cmp = "expires = ''"; 
-		$whr = "session_id ='".$this->consultarIdSesion()."'";
+		$whr = "id_session ='".$this->consultarIdSesion()."'";
 				
 		$result = $objEjecSQL->actualizarRegistro($cmp, $tbl, $whr);
 		
-		$objEjecSQL->borrarRegistro('ad_session','session_id="'.$this->consultarIdSesion().'"');
+		$objEjecSQL->borrarRegistro('ad_session','id_session="'.$this->consultarIdSesion().'"');
 		//exit();
 		$this->destruirVariableSesion('autorizado');  
 		$this->destruirVariableSesion('idUsuario'); 

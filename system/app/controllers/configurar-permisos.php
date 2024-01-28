@@ -7,11 +7,11 @@ $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 
 /** Listar Permisos */
-$listPermisos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion','id_cia='.$id_cia,'array','nombre,permiso');
-
+$listPermisos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,'array','nombre,permiso');
+//'id_cia='.$id_cia
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {
-	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion','id_cia='.$id_cia,'array','permiso');
+	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',false,'array','permiso');
 	echo json_encode($listPerfiles['resultado']);
 }
 

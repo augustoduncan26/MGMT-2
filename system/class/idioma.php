@@ -13,7 +13,7 @@
 		$dta		=	$sess->consultarIdSesion();
 		$objCons 	=  	new consultor;
 		
-		$wr		=	"session_id = '".$dta."'";
+		$wr		=	"id_session = '".$dta."'";
 		$objCons->consultar("*", 'ad_session',$wr);
 		
 		if($objCons->totalFilas > 0)
@@ -44,7 +44,7 @@
 		
 		if(isset($_GET['idioma'])):
 			
-			$wr		=	"session_id = '".$dta."'";
+			$wr		=	"id_session = '".$dta."'";
 			$objCons->consultar("*", 'ad_session',$wr);
 			
 			if($objCons->totalFilas > 0)
@@ -54,7 +54,7 @@
 
 				$cmp = "idioma = '$_GET[idioma]'";
 				
-				$whr = "session_id ='".$dta."'";
+				$whr = "id_session ='".$dta."'";
 				$whr2 = "id_empresa ='".$InfoUserIndex['id_empresa']."'";
 
 				$result = $objEjec->actualizarRegistro($cmp, $tbl, $whr);
@@ -63,7 +63,7 @@
 			}
 		endif;
 		
-			$wr		=	"session_id = '".$dta."'";
+			$wr		=	"id_session = '".$dta."'";
 			$objCons->consultar("*", 'ad_session',$wr);
 			
 			if($objCons->totalFilas > 0)

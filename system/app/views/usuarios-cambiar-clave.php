@@ -10,16 +10,22 @@
    max-width:1350px;
   }
 }
-
+#new_clave {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12px;
+  color: rgb(255, 0, 0);
+  display: block;
+  text-align: left;
+}
 </style>
 <!-- form input mask -->
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_title">
-      <h3>Cambiar Contraseña</h3>
+      <h3><i class="clip-users"></i> Cambiar Contraseña</h3>
       <div class="clearfix"></div>
       <!-- <label id="label-mssg"></label> -->
-      <div class="alert alert-danger"><?=$mssg?></div>
+      <div class="alert alert-danger"></div>
     </div>
     <div class="x_content">
       <br />
@@ -29,46 +35,33 @@
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Contraseña actual <span class='symbol required'></span>
           </label>
           <div class="col-md-4 col-sm-6 col-xs-12">
-            <input id="name_cia" class="form-control col-md-7 col-xs-12" data-validate-length-range="10" data-validate-words="2" name="clave_actual" placeholder="Contraseña actual" required="required" type="password" value="">
-            <!-- onkeyup="javascript:
-            if(muestra_seguridad_clave(this.value, this.form)>75) {
-                document.getElementById('btn-modificar-clave').disabled=false;
-                document.getElementById('ejemplo_input').style.display	=	'block';
-                document.getElementById('ejemplo_input').innerHTML		=	'<font size=2><img width=20px height=20px src=image/ok.jpg border=0 /> Es una contrase&ntilde;a segura.</font>';
-            } else {
-                document.getElementById('btn-modificar-clave').disabled='disabled';
-                document.getElementById('ejemplo_input').style.display	=	'block';
-                document.getElementById('ejemplo_input').innerHTML		=	'La clave debe tener: letras, numeros y/o un caracter <br /> Debe tener de 8 a 10 caracteres.';
-            }
-            " -->
+            <input id="name_cia" class="form-control col-md-7 col-xs-12" data-validate-length-range="10" data-validate-words="2" name="clave_actual" placeholder="Contraseña actual" title="Contraseña actual" required="required" type="password" value="">
           </div>
         </div>
 
         <div class="item form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Nueva contraseña <span class='symbol required'></span></label>
           <div class="col-md-4 col-sm-4 col-xs-12">
-            <input id="clave_nueva" class="form-control col-md-7 col-xs-12" name="clave_nueva" placeholder="Nueva contraseña" required="required" type="password" value=""
+            <input id="clave_nueva" class="form-control col-md-7 col-xs-12" name="clave_nueva" placeholder="Nueva contraseña" required="required" type="password" title="Nueva contraseña" value=""
             onkeyup="javascript:
             if(muestra_seguridad_clave(this.value, this.form) > 75) {
-                // document.getElementById('Accion_CambiarClave').disabled=false;
-                 document.getElementById('new_clave').style.display	=	'block';
-                  document.getElementById('new_clave').innerHTML		=	'<font size=2><img width=20px height=20px src=assets/image/ok.jpg border=0 /> Es una contrase&ntilde;a segura.</font>';
+                document.getElementById('new_clave').style.display	=	'block';
+                document.getElementById('new_clave').innerHTML		  =	'<img width=15px height=15px src=assets/image/ok.jpg border=0 />';
               } else {
-                  // document.getElementById('Accion_CambiarClave').disabled='disabled';
-                  document.getElementById('new_clave').style.display	=	'block';
-                  document.getElementById('new_clave').innerHTML		=	'Debe tener: Mínimo una letra mayúscula, numeros. Y entre 6 a 10 caracteres.';
+                document.getElementById('new_clave').style.display	=	'block';
+                document.getElementById('new_clave').innerHTML		  =	'Debe tener: Mínimo una letra mayúscula, numeros. Y entre 8 a 12 caracteres.';
                 }
               "
             >
           </div>
-          <div class="col-md-4"><div id="new_clave" class="bordered" style="font-family:Verdana, Geneva, sans-serif; font-size:12px;color:#F00; display:none;" align="center"></div></div>
+          <div class="col-md-4"><div id="new_clave" class="bordered" ></div></div>
         </div>
 
         <div class="item form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Repetir contraseña <span class='symbol required'></span>
           </label>
           <div class="col-md-4 col-sm-4 col-xs-12">
-            <input id="repetir_clave" class="form-control col-md-7 col-xs-12" name="repetir_clave" placeholder="Repetir contraseña" required="required" type="password" value="">
+            <input id="repetir_clave" class="form-control col-md-7 col-xs-12" name="repetir_clave" placeholder="Repetir contraseña" required="required" type="password" value="" title="Repetir contraseña">
           </div>
           <div class="col-md-4"><div id="new_repetir_clave" class="bordered" style="font-family:Verdana, Geneva, sans-serif; font-size:12px;color:#F00; display:none;" align="center"></div></div>
         </div>
@@ -87,7 +80,7 @@
         <div class="col-md-12">&nbsp;</div>
         <div class="col-md-4"><i class="clip-info"></i> <a data-toggle="modal" href="#add_usuarios" role="button">Como crear contraseñas seguras.</a></div>
         <div class="col-md-4">&nbsp;</div>
-        <div class="col-md-4">La constraseña debe tener entre 6 a 10 caracteres. Debe tener por lo menos 1 letra mayúscula, letras y números.</div>
+        <div class="col-md-4">La constraseña debe tener entre 8 a 12 caracteres. Debe tener por lo menos 1 letra mayúscula, letras y números.</div>
       </div>
      </form>
         
@@ -114,9 +107,6 @@
             <embed src="repositorio/contrasena.pdf" frameborder="0" width="100%" height="100%">
             <!-- <iframe src="repositorio/contrasena.pdf" width="100%" height="100%" frameBorder="0"></iframe> -->
            </div>
-        <!-- <div class="modal-footer">
-          <button aria-hidden="true" data-dismiss="modal" class="btn btn-default">Cerrar</button>          
-        </div>-->
       </div>
     </div>
   </div>
@@ -126,21 +116,35 @@
 $(".alert").hide();
 $("[name='btn-modificar-clave']").on('click',()=>{
     if ($("[name='clave_actual']").val()=="" || $("[name='clave_nueva']").val()=="" || $("[name='repetir_clave']").val()=="") {
-        $(".alert").removeClass('alert-success').html('Los campos con * son requeridos.').show();
-        setTimeout(()=>{ $(".alert").hide();},4000);
+        $(".alert").removeClass('alert-success').addClass('alert-danger').html('Los campos con * son requeridos.').show();
+        setTimeout(()=>{ $(".alert").hide();},5000);
         return false;
     }
     if ($("[name='clave_nueva']").val()!=$("[name='repetir_clave']").val()) {
-        $(".alert").removeClass('alert-success').html('No cohincide la constraseña.').show();
-        setTimeout(()=>{ $(".alert").hide();},4000);
+        $(".alert").removeClass('alert-success').addClass('alert-danger').html('No cohincide la constraseña.').show();
+        setTimeout(()=>{ $(".alert").hide();},5000);
         return false;
     }
-    if ($("[name='clave_nueva']").val().length < 6 || $("[name='repetir_clave']").val().length < 6) {
-        $(".alert").removeClass('alert-success').html('La constraseñas deben tener entre 6 a 10 caracteres.').show();
-        setTimeout(()=>{ $(".alert").hide();},4000);
+    if ($("[name='clave_nueva']").val().length < 8 || $("[name='repetir_clave']").val().length < 8) {
+        $(".alert").removeClass('alert-success').addClass('alert-danger').html('La constraseñas deben tener entre 8 a 12 caracteres.').show();
+        setTimeout(()=>{ $(".alert").hide();},5000);
         return false;
     }
 });
+
+let mssg    = "<?=$mssg?>";
+if (mssg == 'ok') {
+  $(".alert").removeClass('alert-danger').addClass('alert-success').html('Se ha cambiado la contraseña con éxito.').show();
+  setTimeout(()=>{ $(".alert").hide();},5000);
+}
+if (mssg == 'no') {
+  $(".alert").removeClass('alert-success').addClass('alert-danger').html('Error: La contraseña actual no cohincide.').show();
+  setTimeout(()=>{ $(".alert").hide();},5000);
+}
+if (mssg == 'error') {
+  $(".alert").removeClass('alert-success').addClass('alert-danger').html('Hubo un error al tratar de cambiar la contraseña.').show();
+  setTimeout(()=>{ $(".alert").hide();},5000);
+}
 
 let numeros = "0123456789";
 let letras  = "abcdefghyjklmnñopqrstuvwxyz";
@@ -160,7 +164,7 @@ function seguridad_clave(clave){
 		if (clave.length >= 4 && clave.length <= 5){
 			seguridad += 10;
 		}else{
-			if (clave.length >= 6 && clave.length <= 8){
+			if (clave.length >= 8 && clave.length <= 12){
 				seguridad += 30;
 			}else{
 				if (clave.length > 8){
@@ -211,9 +215,7 @@ const tiene_mayusculas = (texto) => {
 } 
 
 const muestra_seguridad_clave = (clave,formulario) => {
-  
 	seguridad=seguridad_clave(clave);
-  console.log(seguridad)
 	//formulario.seguridad.value=seguridad;
 	return seguridad;
 }

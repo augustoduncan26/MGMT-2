@@ -236,15 +236,15 @@ $id_cia     = $_SESSION['id_cia'];
 				</li>
 				<?php } ?>
 				<?PHP if($objPermOpc->tienePermiso(1352)){  ?>
-				<li <?php if(GET()[0] == 'mante-otros-despacho'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-otros-despacho" class="nav__link nav__link--inside" title="Otros Mant. Despacho">
+				<li <?php if(GET()[0] == 'mante-rolesturnos-otros-param-despacho'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-rolesturnos-otros-param-despacho" class="nav__link nav__link--inside" title="Otros Mant. Despacho">
 						<!--<i class="clip-settings"></i>--> - <span class="title">Otros Mant. Despacho </span>
 					</a>
 				</li>
 				<?php } ?>
 				<?PHP if($objPermOpc->tienePermiso(1353)){  ?>
-				<li <?php if(GET()[0] == 'mante-otros-prehospitalaria'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?mante-otros-prehospitalaria" class="nav__link nav__link--inside" title="Otros Mant. Pre-Hospitalaria">
+				<li <?php if(GET()[0] == 'mante-rolesturnos-otros-param-preh'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?mante-rolesturnos-otros-param-preh" class="nav__link nav__link--inside" title="Otros Mant. Pre-Hospitalaria">
 						<!--<i class="clip-settings"></i>--> - <span class="title">Otros Mant. Pre-Hosp. </span>
 					</a>
 				</li>
@@ -279,7 +279,39 @@ $id_cia     = $_SESSION['id_cia'];
 				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
 				<li <?php if(GET()[0] == 'roles-turnos'){ echo ' class="menu-backg-item"';}?>>
 				<a href="?roles-turnos" class="nav__link nav__link--inside">
-					-<span class="title"> Roles de Turnos </span>
+					-<span class="title"> Roles de Turnos</span>
+				</a>
+				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
+				<li <?php if(GET()[0] == 'roles-turnos-despacho'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-turnos-despacho" class="nav__link nav__link--inside">
+					-<span class="title">Roles Turnos Despacho</span>
+				</a>
+				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
+				<li <?php if(GET()[0] == 'roles-turnos-preh'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-turnos-preh" class="nav__link nav__link--inside">
+					-<span class="title">Roles Turnos Pre-Hosp.</span>
+				</a>
+				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
+				<li <?php if(GET()[0] == 'roles-turnos-medicos'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-turnos-medicos" class="nav__link nav__link--inside">
+					-<span class="title">Roles Turnos Médicos</span>
+				</a>
+				</li>
+				<?php } ?>
+
+				<?PHP if($objPermOpc->tienePermiso(2000)){  ?>
+				<li <?php if(GET()[0] == 'roles-turnos-mecanicos'){ echo ' class="menu-backg-item"';}?>>
+				<a href="?roles-turnos-mecanicos" class="nav__link nav__link--inside">
+					-<span class="title">Roles Turnos Mecánicos</span>
 				</a>
 				</li>
 				<?php } ?>

@@ -96,9 +96,9 @@ class sesion{
 		
 		$newid = mysqli_real_escape_string($id);
 		
-		$sel = "session_data";
+		$sel = "*";
 		$frm = "ad_session";
-		$whr = "session_id = '".$newid."' AND `expires` > ".$time;
+		$whr = "id_session = '".$newid."' AND `expires` > ".$time;
 		
 		$objConsultor->consultar($sel, $frm, $whr);
 		
@@ -146,7 +146,7 @@ class sesion{
 		$whr		=	'(id_us = "'.$idUs.'" and date < "'.date('Y-m-d').'") or (id_us="" and date = "")';
 		$objEjecSQL->borrarRegistro('ad_session', $whr);
 		
-		$wr		=	"session_id = '".$dta."'";
+		$wr		=	"id_session = '".$dta."'";
 		$objCons->consultar("*", 'ad_session',$wr);
 		
 		if($objCons->totalFilas > 0)
@@ -162,7 +162,7 @@ class sesion{
 		//FIN CONSULTAR IDIOMA
 	
 		$tbl = "ad_session";
-		$cmp = "session_id, session_data, expires,idioma, date, id_us";
+		$cmp = "id_session, session_data, expires,idioma, date, id_us";
 		$val = "'".$newid."','".$newdata."', '".$time."','".$sel."', '".date('Y-m-d')."', '".$idUs."'";
 		
 		$objEjecSQL->remplazarRegistro($tbl, $cmp, $val);
@@ -182,7 +182,7 @@ class sesion{
 		$newid = mysql_real_escape_string($id);
 		
 		$tbl = "ad_session";
-		$whr = "session_id='".$newid."'";		
+		$whr = "id_session='".$newid."'";		
 
 		$objEjecSQL->borrarRegistro($tbl, $whr);
 		return true;

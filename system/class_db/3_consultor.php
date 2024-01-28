@@ -278,9 +278,9 @@ class consultor extends funcionesDB {
 					
 					// En caso de haber un error
 					if ($exito == false){
-						$this->err 	= "Ha ocurrido un error. MySql dice ";//.mysqli_connect_errno()();
-					} 
-					else{ // En caso de ser exitosa 
+						$this->err 	= "Ha ocurrido un error. MySql dice: ".mysqli_error($this->linkBD);
+					}  else { 
+						// En caso de ser exitosa 
 						// Graba apuntador a resource
 						$this->resource=$exito;										
 						// Se cargar total de filas

@@ -67,3 +67,4 @@
 /** CURSORS */
 .cursor { cursor: pointer;}
 .cursor-underline:hover { text-decoration: underline; color: red;}
+.overflow { overflow: auto !important;}

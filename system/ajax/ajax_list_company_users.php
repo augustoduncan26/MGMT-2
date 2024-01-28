@@ -4,8 +4,8 @@ $id_cia     = $_GET['id_cia'];
 
 include_once ('../framework.php');
 $ObjMante   = new Mantenimientos();
-$datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$id_cia,'array');
-
+$datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',false,'array');
+//'id_cia = '.$id_cia
 ?>
 <div class="table-responsive">
     <table id="list-table-users" class="table table-striped table-bordered table-hover">

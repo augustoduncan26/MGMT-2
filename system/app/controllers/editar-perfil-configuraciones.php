@@ -24,7 +24,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	} else {
 		$mensaG			=	"<font face=verdana size=1.5 />Hola ".$_GET['nombre']."&nbsp;<br /><br />
 					
-		&nbsp;&nbsp;Sus datos de acceso para utilizar H&HSystem fueron creados.<br><br>
+		&nbsp;&nbsp;Sus datos de acceso para utilizar ".$_ENV["APP_NAME"]." fueron creados.<br><br>
 		&nbsp;&nbsp;Esto son tus datos de acceso:<br>
 		&nbsp;&nbsp;Nombre de usuario: ".$_GET['email']."<br>			
 		&nbsp;&nbsp;Contraseña: ".$_GET['contrasena']."<br><br />
@@ -91,5 +91,3 @@ if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_GET['id']."'");
 	echo $mssg 		=	'<div class="alert alert-success">Se elimino el registro con éxito</div>';
 }
-
-?>

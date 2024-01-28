@@ -625,9 +625,8 @@ class fecha{
 	}
 
 
-	// Obtener el nombre de un d�a seg�n 
-	// el mes y el a�o
-	// ================================
+	// Obtener nombre del dia segun mes y año
+	// =======================================
 	public function NombreDelDia($P_mes , $P_dia , $P_anyo)
 	{
 		$arrDias 	= 	array('','Lunes','Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado','Domingo');

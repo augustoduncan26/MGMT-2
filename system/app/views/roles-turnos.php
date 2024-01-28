@@ -20,7 +20,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h3>Roles de Turnos</h3>
+      <h3><i class="clip-calendar"></i> Roles de Turnos</h3>
         <!-- <div class="clearfix"></div>
         <label id="mssg-window"><?=$mssg?></label> -->
       </div>
@@ -171,8 +171,11 @@
 
 <?php } ?>
 
-
-<!--- TAB PANNEL -->
+<!-- 
+  /** 
+  * TAB PANNEL
+  */ 
+-->
 <?php if ($showRolAuto==TRUE) { ?>
   <hr />
 <div class="row" style="width:100%;overflow:auto;">
@@ -199,6 +202,9 @@
 
   <div class="tab-content">
     <?=$horario?>
+    <!-- <div class="TabbedPanelsContentGroup">
+        <?PHP //echo $P_Conten;?>
+    </div> -->
     <!-- <div id="home" class="tab-pane fade in active">
       <h3>HOME</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>

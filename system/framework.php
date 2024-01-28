@@ -15,6 +15,25 @@ $caja_prefix 		=	'caja_';
 $fcatura_prefix 	=	'fact_';
 
 #=============================================
+#   Envio de Emails                          =
+#=============================================
+function sendAnEmail ($messg,$sendToEmail,$fromEmail=false,$subject) {
+	$mail_to_send_to = $sendToEmail;
+	if ($fromEmail!=false) {
+		$from_email 	 = $fromEmail;
+	} else {
+		$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
+	}
+	//$subject		 = "Contraseña actualizada.";
+	$headers  = "From: " . strip_tags($from_email) . "\r\n";
+	$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+	$headers .= "BCC: ".strip_tags($_ENV["MAIL_BBC"])."\r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+	mail( $mail_to_send_to, $subject, $messg, $headers );
+}
+
+#=============================================
 #   Process class_db                         =
 #=============================================
 $nombCarp = "class_db";

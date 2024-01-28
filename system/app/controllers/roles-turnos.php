@@ -22,8 +22,26 @@
 	$POST_selarea	=	isset($_POST['select-areas'])?$_POST['select-areas']:	0;		// AREAS
 	$POST_users		=	isset($_POST['cuantos'])?$_POST['cuantos']	:	0;				// CUANTOS USUARIOS
 	$POST_generar	=	isset($_POST['buttonGen'])?$_POST['buttonGen']:'';				// EL BOTON GENERAR
-	$POST_anyo		=	isset($_POST['anyo'])	?$_POST['anyo']	:	'';					// EL AÑO
+	$POST_anyo		=	isset($_POST['select-year'])	?$_POST['select-year']	:	'';					// EL AÑO
 	
+	/*
+		$POST[0]		=		value todos		/	areas
+		$POST[1]		=		value Generar (Boton)
+		$POST[2]		=		value usuarios
+		$POST[3]		=		value fecha de
+		$POST[4]		=		value fecha a
+		$POST[5]		=		value año
+	*/
+	$POST[0]		=	""; 			// value todos		/	areas
+	$POST[1]		=	$POST_generar;	// value Generar (Boton)
+	$POST[2]		=	$POST_users;	// value usuarios
+	$POST[3]		=	$POST_fechade;	// value fecha de
+	$POST[4]		=	$POST_fechaa;	// value fecha a
+	$POST[5]		=	$POST_anyo;		// value año
+
+	// Informacion del usuario logueado
+	$P_InfoUser		=	$objUsuario->consultarUsuario($idUs);
+
 	$P_TotalMeses	=	FALSE;
 	$ToT			=	FALSE;
 	$meses_evaluar	=	FALSE;
@@ -87,35 +105,23 @@
 	 * CANCEL - BORRAN TODOS LOS RESULTADOS
 	 */
 	if(isset($_GET['cancel']) && $_GET['cancel'] == 'rolback') { 
-	// 	$dateSelected	= $_GET['date_from'];
-	// 	$yearSelected	= $_GET['year_from'];
-	// 	$area			= $_GET['area'];
-	// 	$splitDate  	= explode('-', $dateSelected);
-	// 	$daysInMonth	= cal_days_in_month(CAL_GREGORIAN, $monthsSelect[$dateSelected], $yearSelected);
-	// 	//$daysInMonth= cal_days_in_month(CAL_GREGORIAN, $monthsSelect[$dateSelected], $yearSelected);
-	// 	// echo 'area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia;
-	// 	$searchExistRol = $objMante->BuscarLoQueSea('*',PREFIX.'rolturn','area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia);
-	// 	if ($searchExistRol['total'] > 0) {
-	// 		$P_where 	=	'area = '.$area.' and meses = '.$monthsSelect[$dateSelected].' and active = 1 and id_cia = '.$id_cia;
-	// 		$objejec->vaciarTabla(PREFIX.'rolturn_desp_tmp',$P_where);		
-	// 		$objejec->vaciarTabla(PREFIX.'rolturn_desp_tmp_rand',$P_where);
-	// 	}
-		
-	// 	echo 1;
-		
 		$objejec->vaciarTabla(PREFIX.'rolturn_tmp');	
 		$objejec->vaciarTabla(PREFIX.'rolturn_tmp_rand');	
 		echo json_encode(1);
 		return false;
 	}
 
-
+	/**
+	 * Lista de Usuarios
+	 */
 	$listsUsers     = $objMante->BuscarLoQueSea('id_usuario,nombre',PREFIX.'users','id_cia = '.$id_cia,'array');
 		foreach ($listsUsers['resultado'] as $data) {
 		$list .= '<option value="'.$data['id_usuario'].'">'.$data['nombre'].'</option> ';
 	}
 	
-	// Get Areas
+	/**
+	 * Search Areas Asynchronic
+	 */
 	if (isset($_GET['search']) && $_GET['search'] == 1) {
 		$P_Where		=	'id_depto="'.$_GET['depto'].'" and id_cia = "'.$id_cia.'" and active =1';
 		$ListaAreas		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
@@ -123,32 +129,30 @@
 	}
 	
 
-	// Informacion del usuario logueado
-	$P_InfoUser		=	$objUsuario->consultarUsuario($idUs);
-	
 	// Buscar algunas infos
 	//===============================
 	$sqlDeptos   	= 	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id_cia = "'.$id_cia.'" and active = 1','array');
-	$P_idDepto		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos', 'id ='.$_GET['depto'],'extract');
-	$PIDDEPTO		=	$_GET['depto'];
+	$P_idDepto		=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos', 'id ='.$_POST['select-departamento'],'extract');
+	$PIDDEPTO		=	$_POST['select-departamento']; //$_GET['depto'];
 	$P_Where		=	'id_depto="'.$_GET['depto'].'" and activo =1';			
 	$ListaAreas		=	$objMante->Listar(PREFIX.'mant_areas', $P_Where,false,'nombre',false,false,'array');
-	
-	//PARAMETROS DE USO INTERNO
-	/*
-		 - Para generar fecha_de, fecha_a,
-		 - Label (Etiqueta) para los list de los meses
-		 - Para saber total de usuarios promedio dependiendo del depto.
-		 - Buscar max y min de las areas
-		 - Buscar grupo
-		 - Buscar tipo de horario
-	*/
 
+	
 	//=========================
 	$monthsSelect	=	array('Enero'=>1,'Febrero'=>2,'Marzo'=>3,'Abril'=>4,'Mayo'=>5,'Junio'=>6,'Julio'=>7,'Agosto'=>8,'Septiembre'=>9,'Octubre'=>10,'Noviembre'=>11,'Diciembre'=>12);
 	$DIGITOS		=	array('0','1','2','3','4','5','6','7','8','9','10','11','12');			
 	$MESES			=	array('XXX','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 	$DIGITOS2		=	array('0','01','02','03','04','05','06','07','08','09','10','11','12');
+
+	/*
+	PARAMETROS DE USO INTERNO
+		- Para generar fecha_de, fecha_a,
+		- Label (Etiqueta) para los list de los meses
+		- Para saber total de usuarios promedio dependiendo del depto.
+		- Buscar max y min de las areas
+		- Buscar grupo
+		- Buscar tipo de horario
+	*/
 
 	//Conocer total de usuario promedio segun grupo ó área
 	//*****************************************************
@@ -167,6 +171,7 @@
 	$P_UserDpto		=	$objMante->Listar(PREFIX.'users', $Wer_user,false,false,false,false,'array');
 	
 	//var_dump($P_UserDpto);
+	
 	$ID				=	FALSE;
 	$MANTID			=	FALSE;
 	$PASSA			=	FALSE;
@@ -187,7 +192,6 @@
 		*/	
 		//1. Cuantas formulas debo buscar?
 		// ===============================
-		//in_array
 		$P_Sale			=	'';
 		$P_Data			=	false;
 		$Letra			=	false;
@@ -202,53 +206,18 @@
 		// CREAR LA TABLA TEMPORAL
 		// ***********************
 		$NAREASQL_	=	mysqli_query($link,'SELECT * FROM '.PREFIX.'mant_areas WHERE id = "'.$_POST['select-areas'].'"');
-		//$NombArea  =   $objMante->BuscarLoQueSea("*","911_mant_areas","id='".$P_Data."'","array");
 		$NombArea	=	mysqli_fetch_array($NAREASQL_);
-		//$NAMETBLTMP	=	'911_rolturno_desp_'.strtolower($NombArea['id']);
 		$NAMETBLTMP	=	PREFIX.'rolturn_'.$id_cia.'_'.$id_user.'_area_'.strtolower($NombArea['id']);
 		$objejec->vaciarTabla($NAMETBLTMP);	
-		//mysql_query('CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY);');
 		mysqli_query($link,'CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM '.PREFIX.'rolturn_tmp');
 		
-		
-		//echo $P_Data.'<br>';
-// ESTO ES PARA SI VAN A TIRAR ROL DE TURNO PARA VARIAS 
-// AREAS. POR AHORA NO LO ESTOY UTILIZANDO, ASI QUE SE VA POR,,, ELSE
-// Buscar las areas
-		if(!is_numeric($P_Data)){ 
-			//echo $P_Data;
-			//echo strtoupper('Todas');
-			//in_array
-			$P_Val	=	explode('-',$P_Data);
-			$P_Son	=	count($P_Val);
-			$P_Label=	false;
-			//echo $P_Val[2];
-			for($xy = 0 ; $xy < $P_Son ; $xy++)
-			{	//echo $P_Val[$xy];
-				$Nombre		=	$objMante->BuscarLoQueSea('*' ,'911_mant_areas', 'id="'.$P_Val[$xy].'" and activo = 1','extract');
-				if($P_Label!='')
-				{
-					$P_Label .=  '-';
-				}
-				$P_Label		.=	 strtoupper(substr($Nombre['nombre'],0,15)).'...';	
-			}
-			
-			$N_Area['turno_a']	=	$Nombre['turno_a'];
-			$N_Area['turno_b']	=	$Nombre['turno_b'];
-			$N_Area['turno_c']	=	$Nombre['turno_c'];
-			
-			$P_Areas	=	'Para: '.$POST[2].' usuarios; - areas: '.$P_Label;
-			
-		} else  {
-// SI TOMAN LA OPCION: OTROS PARAMETROS
-// ====================================
-			//echo $P_Data;
-			//$POST[2]		=> saber cuantos usuarios se selecciono
-			if(isset($_POST['especial'])): $Tott_esp		=	count($_POST['especial']); $TOTAL_CAMPOS = ($POST_users+$Tott_esp); ;else: $TOTAL_CAMPOS = $POST_users;endif;			
-			$N_Area		=	$objMante->BuscarLoQueSea('*' ,'911_mant_areas', 'id="'.$P_Data.'" and activo = 1','extract');
-			if($POST_ngrupo!=''): $POST_ngrupo = ' , - GRUPO : '.$POST_ngrupo; endif;
-			$P_Areas	=  strtoupper('Para: '.$TOTAL_CAMPOS.' usuarios, - area: '.substr($N_Area['nombre'],0,20)).$POST_ngrupo;
-		}
+		/**
+		 * SI SELECCIONAN: OTROS PARAMETROS
+		 */
+		if(isset($_POST['especial'])): $Tott_esp		=	count($_POST['especial']); $TOTAL_CAMPOS = ($POST_users+$Tott_esp); ;else: $TOTAL_CAMPOS = $POST_users;endif;			
+		$N_Area		=	$objMante->BuscarLoQueSea('*' ,'911_mant_areas', 'id="'.$P_Data.'" and activo = 1','extract');
+		if($POST_ngrupo!=''): $POST_ngrupo = ' , - GRUPO : '.$POST_ngrupo; endif;
+		$P_Areas	=  strtoupper('Para: '.$TOTAL_CAMPOS.' usuarios, - area: '.substr($N_Area['nombre'],0,20)).$POST_ngrupo;
 		
 // MAXIMO Y MINIMO SEGUN 
 // EL AREA Y EL HORARIO
@@ -276,17 +245,15 @@
 		//echo $NAMETBLTMP;
 		$Wer		=	'dpto = "'.$PIDDEPTO.'" and area = "'.$P_Data.'" and fecha = "'.$date.'" and id_usuario = "'.$idUs.'"';
 		$BuscaFind	=	$objMante->BuscarLoQueSea('*' , $NAMETBLTMP,$Wer);
-		$objejec->vaciarTabla('911_rolturn_desp_tmp');
-		$objejec->vaciarTabla('911_rolturn_desp_tmp_rand');
+		//$objejec->vaciarTabla('911_rolturn_desp_tmp');
+		//$objejec->vaciarTabla('911_rolturn_desp_tmp_rand');
 
 			// Ocultar el menu principal
 			// =========================
-			$P_ocultar		=	true;
+			$P_ocultar		=	TRUE;
 			$P_VerSalida	=	TRUE;
 			$SONMESES		=	0;
 
-//$msg			=	'Existen datos para esta misma seleccion que no ha guardado aun.<br /> Para verlos click <a href=?pag=rolturno&area='.$P_Data.'&dpto='.$PIDDEPTO.'&fecha='.$date.'>Aqui.</a>';	
-//}else{
 //\\//														\\//		
 // ||********************************************************||			
 // ||				AQUI EMPIEZO A GUARDAR					*||
@@ -302,14 +269,21 @@
 	$P_Where		=	'id_depto="'.$_POST['select-departamento'].'" and id_cia = "'.$id_cia.'" and active =1';
 	$listaAreasPost	=	$objMante->BuscarLoQueSea('*',PREFIX.'mant_areas', $P_Where,'array');
 	$row = 0;
-	$tabActive = false;
-	$inActive = false;
+	$tabActive 		= false;
+	$inActive 		= false;
 	
+	$P_TDMeses		= '<table><tr>';
+
+	//for($rrh = $POST_fechade	;	$rrh	<	$POST_fechaa+1 ; $rrh++){
 	for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){ 
-		
+
+		$SONMESES=$SONMESES+1;
+		$clave			=	mt_rand(-2147483647,2147483647);
+		$P_Were 		= 	'dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area = "'.$_POST['select-areas'].'"';
+
 		if ($row==0) {
-			$tabActive = "class='active'";
-			$inActive = 'in active';
+			$tabActive 	= "class='active'";
+			$inActive 	= 'in active';
 		} else {
 			$tabActive = false;
 			$inActive = false;	
@@ -320,11 +294,53 @@
 			<li '.$tabActive.'><a data-toggle="tab" href="#'.strtolower($MESES[$r]).'">'.$MESES[$r].'</a></li>';
 		
 		// HORARIO
-		$horario 		.= '
-			<div id="'.strtolower($MESES[$r]).'" class="tab-pane fade '.$inActive.'">
-				<he>Aqui Roles de Turno para '.$MESES[$r].'</he>
-			</div>
-		';
+		$horario 		.=  '<div id="'.strtolower($MESES[$r]).'" class="tab-pane fade '.$inActive.'">';
+		//$P_Conten		.=	'<div class="TabbedPanelsContent" style="width:100%;background-color:#FFF"><font face="Verdana"><strong>'.strtoupper('turnos del mes de '.$MESES[$r]).'</strong></font>';
+		$P_Res			.=	$objPFecha->UltimoDia(date('Y'),$DIGITOS2[$r]);
+		$P_Conten		.=	'<table border=0 width="100%" class="bordeTodalaTabla_2">';
+		// Dibujar el total de filas
+		/* =========================
+			Representan el total de usuarios
+			que se necesitan por mes.
+		*/
+		$P_Conten	.=	'<tr>';
+		//$P_Conten	.=	'<td style="width:100px; font-size:12px; color:RED" ><marquee direction="left">Hay ('.$TOTALESTOTALES.') formulas.</marquee></td>'; 
+		/*	==========================================
+			Dibujar los nombres de las columnas
+			para cada dia.
+			De igual buscar el nombre del dia segun
+			la fecha del dia, del mes.
+			==========================================
+			Letras del dia
+		*/
+		for($d	=	1	;	$d	<	$P_Res+1	;	$d++){
+			// Buscar el dia segun mes y año
+			$Letra		=	$objPFecha->NombreDelDia($DIGITOS2[$r], $d , $POST_anyo);
+			$Letra2		=	substr($Letra,0,1);
+			if($Letra2 == 'S' || $Letra2 == 'D'){ $BGCOLOR =	'bgcolor="#E8FFE8" ';}else{$BGCOLOR =	'';}
+			$P_Conten	.= '<td width="20px" '.$BGCOLOR.' class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$Letra.'&nbsp;'.$d.'">'.$Letra2.'</td>';
+		}
+		$P_Conten	.=	'<td style="width:50px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" colspan=3>&nbsp;T</td>';	
+		$P_Conten	.=	'</tr>';
+		
+		$P_Conten	.=	'<tr>';
+		$P_Conten	.=	'<td colspan=>&nbsp;</td>';
+		
+		// Dias en numeros
+			for($dd	=	1	;	$dd	<	$P_Res+1	;	$dd++):
+				$P_Conten	.= '<td width="20px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$dd.'">'.$dd.'</td>';
+			endfor;
+		$P_Conten	.=	'</tr>';
+		
+		$P_Conten	.= '</tr></table>';
+		$horario  	.='<he>Mes de: '.strtoupper($MESES[$r]).'</he>
+		<table border=0 width="100%" class="bordeTodalaTabla_2">
+		<tr>
+		<td>'.$P_Conten.'</td>
+		</tr>
+		</table>
+		</div>';
+
 		
 		$row++;
 	}
@@ -332,6 +348,16 @@
 	//<li style="font-size:10px;width:60px; font-family:Verdana, Geneva, sans-serif;" class="TabbedPanelsTab comun_titulos_2" onmouseover="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'0\')" id="Tab'.$P_OtroMes.'" tabindex="'.$P_OtroMes.'" onclick="javascript: document.getElementById(\'Tab'.$P_OtroMes.'\').style.backgroundColor=\'#000\'">'.$MESES[$r].'</li>';
 	//echo $P_Spry;
 	return false;
+
+
+
+
+
+
+
+
+
+
 
 		//for($rrh = $POST[3]	;	$rrh	<	$POST[4]+1 ; $rrh++){
 		for($rrh = $POST_fechade	;	$rrh	<	$POST_fechaa+1 ; $rrh++){
@@ -607,7 +633,7 @@
 				$P_TDMeses	.=	'style="font-size:10px; font-family:Verdana, Geneva, sans-serif;"">';
 				// $PCaracter	=	$P_TDMeses;
 				// Crear el Spry
-				$P_Spry		.=	'<li style="font-size:10px;width:60px; font-family:Verdana, Geneva, sans-serif;" class="TabbedPanelsTab comun_titulos_2" onmouseover="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'0\')" id="Tab'.$P_OtroMes.'" tabindex="'.$P_OtroMes.'" onclick="javascript: document.getElementById(\'Tab'.$P_OtroMes.'\').style.backgroundColor=\'#000\'">'.$MESES[$r].'</li>';
+				//	$P_Spry		.=	'<li style="font-size:10px;width:60px; font-family:Verdana, Geneva, sans-serif;" class="TabbedPanelsTab comun_titulos_2" onmouseover="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'0\')" id="Tab'.$P_OtroMes.'" tabindex="'.$P_OtroMes.'" onclick="javascript: document.getElementById(\'Tab'.$P_OtroMes.'\').style.backgroundColor=\'#000\'">'.$MESES[$r].'</li>';
 				//onclick="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'Tab\',6)" 
 				
 				$P_Conten	.=	'<div class="TabbedPanelsContent" style="width:100%;background-color:#FFF"><font face="Verdana" color="red"><strong>'.strtoupper('turnos del mes de '.$MESES[$r]).'</strong></font>';
@@ -828,7 +854,7 @@
 				$Tot_turnoA	=	0;
 		}// END FOR
 			
-		$P_TDMeses		.=	'</tr></table>';
+		//$P_TDMeses		.=	'</tr></table>';
 		
 	}
 	

@@ -15,7 +15,7 @@
 .table>tbody>tr>td { padding: 1px !important;}
 .importer-container { display: none;}
 </style>
-<body onload="$('#cargando_add').hide()">
+<body>
 
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
