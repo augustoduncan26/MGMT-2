@@ -47,7 +47,9 @@
 	$P_TotUser		=	FALSE;
 	$P_OtroMes		=	FALSE;
 	$P_Spry			=	FALSE;
+	$P_Spry2			=	FALSE;
 	$P_Conten		=	FALSE;
+	$P_Conten2		=	FALSE;
 	$P_Res			=	FALSE;
 	$IDLABEL		=	FALSE;
 	$NOMBLABEL		=	FALSE;
@@ -726,9 +728,14 @@
 // 			CANTIDAD DE MESES SELECCIONADAS						*
 /* **************************************************************
 */
+$row 			= 0;
+$tabActive 		= false;
+$inActive 		= false;
 
 for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){ 
+
 	$meses_evaluar=$meses_evaluar+1;
+
 	if($PCaracter!='') {
 		$PCaracter	.=	' | ';			
 	}		
@@ -736,14 +743,25 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 	$P_TDMeses	.=	'<td id="opt'.$r.'" ';
 	//$P_TDMeses	.=	'<td id="opt'.$r.'" onmouseover="SombreadoCampos(\'opt\''.$r.'\',\'1\'); " onmouseout="SombreadoCampos(\'opt\''.$r.'\',\'0\')"';
 	$P_TDMeses	.=	'style="font-size:10px; font-family:Verdana, Geneva, sans-serif;"">';
-	// $PCaracter	=	$P_TDMeses;
+	
+	if ($row==0) {
+		$tabActive 	= "class='active'";
+		$inActive 	= 'in active';
+	} else {
+		$tabActive = false;
+		$inActive = false;	
+	}
+	$row++;
 	// Crear el Spry
 	$P_Spry		.=	'<li style="font-size:10px;width:60px; font-family:Verdana, Geneva, sans-serif;" class="TabbedPanelsTab comun_titulos_2" onmouseover="this.style.Cursor=\'pointer\'"  id="Tab'.$P_OtroMes.'" tabindex="'.$P_OtroMes.'" onclick="javascript: document.getElementById(\'Tab'.$P_OtroMes.'\').style.backgroundColor=\'#000\'">'.$MESES[$r].'</li>';
 	//onclick="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'Tab\',6)" 
-	
+	$P_Spry2	.= '<li '.$tabActive.'><a data-toggle="tab" href="#'.strtolower($MESES[$r]).'">'.$MESES[$r].'</a></li>';
+
+	$P_Conten2	.=	'<div id="'.strtolower($MESES[$r]).'" class="tab-pane fade '.$inActive.'"><font face="Verdana" color="red">'.strtoupper('turnos del mes de '.$MESES[$r]).'</font>';
 	$P_Conten	.=	'<div class="TabbedPanelsContent" style="width:100%;background-color:#FFF"><font face="Verdana" color="red">'.strtoupper('turnos del mes de '.$MESES[$r]).'</font>';
 	$P_Res		.=	$objPFecha->UltimoDia(date('Y'),$DIGITOS2[$r]);
 	$P_Conten	.=	'<p /><table border=0 width="100%" class="bordeTodalaTabla_2">';
+	$P_Conten2	.=	'<p /><table border=0 width="100%" class="bordeTodalaTabla_2">';
 	$n			 =	0;
 	$x			 =	0;
 		// Dibujar el total de filas
@@ -753,6 +771,9 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 		*/
 		$P_Conten	.=	'<tr>';
 		$P_Conten	.=	'<td>&nbsp;</td>';
+
+		$P_Conten2	.=	'<tr>';
+		$P_Conten2	.=	'<td>&nbsp;</td>';
 		
 		/*	==========================================
 			Dibujar los nombres de las columnas
@@ -770,17 +791,24 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			$Letra2		=	substr($Letra,0,1);
 			if($Letra2 == 'S' || $Letra2 == 'D'){ $BGCOLOR =	'bgcolor="#E8FFE8" ';}else{$BGCOLOR =	'';}
 			$P_Conten	.= '<td width="25px" '.$BGCOLOR.' class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$Letra.'&nbsp;'.$d.'">'.$Letra2.'</td>';
+			$P_Conten2	.= '<td width="25px" '.$BGCOLOR.' class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$Letra.'&nbsp;'.$d.'">'.$Letra2.'</td>';
 		}
 		$P_Conten	.=	'<td style="width:50px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" colspan=3>&nbsp;T</td>';	
 		$P_Conten	.=	'</tr>';
+		$P_Conten2	.=	'<td style="width:50px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" colspan=3>&nbsp;T</td>';	
+		$P_Conten2	.=	'</tr>';
 		
 		$P_Conten	.=	'<tr>';
 		$P_Conten	.=	'<td colspan=>&nbsp;</td>';
+		$P_Conten2	.=	'<tr>';
+		$P_Conten2	.=	'<td colspan=>&nbsp;</td>';
 		// Dias en numeros
 			for($dd	=	1	;	$dd	<	$P_Res+1	;	$dd++){
 				$P_Conten	.= '<td width="25px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$dd.'">'.$dd.'</td>';
+				$P_Conten2	.= '<td width="25px" class="linea_abajo linea_arriba linea_deresa linea_izq" align="center" title="'.$dd.'">'.$dd.'</td>';
 			}
 		$P_Conten	.=	'</tr>';
+		$P_Conten2	.=	'</tr>';
 					
 		// AL PARECER PODRE BORRAR ESTO DESDE AQUI
 
@@ -801,9 +829,7 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 
 			$P_Weretmp	=	'fecha = "'.$date.'" and id_usuario = "'.$idUs.'" and  meses = '.$DIGITOS2[$r];
 			$P_Camps	=	$objMante->ListadeCampos();
-			$P_Camps	.=	'dpto,area,user,id_usuario,meses,fecha,id, ncorto,clave';
-			
-					
+			$P_Camps	.=	'dpto,area,user,id_usuario,meses,fecha,id, ncorto,clave';			
 		}
 					
 
@@ -841,15 +867,19 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 	// DESDE AQUI LAS FILAS SEGUN TOTAL DE USUARIOS
 	// por id, Ejem. fila 1, fila 2, fila 3, etc...
 		$P_Conten	.=	'<tr id="fila_'.$n.'" onMouseOver="this.style.backgroundColor=\'#FFFF00\';" onMouseOut="this.style.backgroundColor=\'\';"';
+		$P_Conten2	.=	'<tr id="fila_'.$n.'" onMouseOver="this.style.backgroundColor=\'#FFFF00\';" onMouseOut="this.style.backgroundColor=\'\';"';
 
 		if($x==0):
 			$P_Conten	.=	'bgcolor="'.$color.'"';
+			$P_Conten2	.=	'bgcolor="'.$color.'"';
 			$x = 1;
 			;else:
 			$P_Conten	.=	'bgcolor="'.$color2.'"';
+			$P_Conten2	.=	'bgcolor="'.$color2.'"';
 			$x=0; 
 		endif;
 		$P_Conten	.=	'>';
+		$P_Conten2	.=	'>';
 		$Tota	=	false;
 		
 	// DESDE AQUI LAS COLUMNAS DE LAS FILAS
@@ -857,8 +887,10 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 		for($w	=	0	;	$w	<	$P_Res	;	$w++):
 		//@$NCampo		=	 mysql_field_name($SQL_, $w-1);			// Buscar el nombre del campo       ///     #becfc4
 		$P_Conten	.=	'<td width="25px" onMouseOver="this.style.backgroundColor=\'#FF0000\';" onMouseOut="this.style.backgroundColor=\'\';"';
-			//$P_Conten	.=	'<td width="20px" id="'.$NCampo.'" onmouseover="SombreadoCampos(\''.$NCampo.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\''.$NCampo.'\',\'0\')"';
+		$P_Conten2	.=	'<td width="25px" onMouseOver="this.style.backgroundColor=\'#FF0000\';" onMouseOut="this.style.backgroundColor=\'\';"';
+		//$P_Conten	.=	'<td width="20px" id="'.$NCampo.'" onmouseover="SombreadoCampos(\''.$NCampo.'\',\'1\'); this.style.Cursor=\'pointer\'" onmouseout="SombreadoCampos(\''.$NCampo.'\',\'0\')"';
 			$P_Conten	.=	'>';
+			$P_Conten2	.=	'>';
 			$NCampo		=	mysqli_fetch_field_direct($SQL_, $w); // mysql_field_name($SQL_, $w);			// Buscar el nombre del campo
 
 			//echo $NCampo
@@ -880,22 +912,39 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 					
 					//$P_Conten	.=	'<div title="'.$P_Exito2['id'].'-'.$NCampo.'" onkeypress="return permite(event,\'pform\')" class="alrededorRojo" id="'.$P_Exito2['id'].'-'.$NCampo.'" onclick="javascript: creaInput(\''.$P_Exito2['id'].'-'.$NCampo.'\',\''.$P_Exito2[$w].'\',\'911_rolturn_preh_tmp_2\',\'id-'.$NCampo.'\',\''.$P_Exito2[$w].'\',\'24\',\'911_RolesTurnoDespa.php\'); " style="width:24px; text-align:center">'.$P_Exito2[$w].'</div></td>';
 					$P_Conten   .=  '</td>';
+
+					/** Nuevo Tab Panel Days */
+					$P_Conten2   .=  '<select id="user-'.$P_Exito2['id'].'" name="user-'.$P_Exito2['id'].'" style="width:130px;font-size: 12px !important;" onchange="javascript: OtroGuardadoRapido(\'user-'.$P_Exito2['id'].'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\'); NoDuplicar(\''.$POST_users.'\',\'user-'.$P_Exito2['id'].'\')" title="user-'.$P_Exito2['id'].'">';
+					$P_Conten2   .=	'<option value="">Escoja</option>';
+					$P_Conten2   .=	$OPTION;//'<option id="'.$IDLABEL.'">'.$NOMBLABEL.'<option>';
+					$P_Conten2   .=	'</select>';
+					//'<input style="width:70px" type=text id="c'.$w.'" name="c'.$w.'" value="c'.$w.'" />ssd';return TotalXs(\'id\',\''.$NCampo.'\',\''.$P_Res.'\')
+					$P_Conten2   .=  '<td>';
+					//EvaluarXs(\'Libre_'.$P_Exito2['id'].'\',\''.$P_Res.'\',\''.$P_Exito2['id'].'\',\'c\',\''.$P_Exito2['id'].'-'.$NCampo.'\');EvaluarHaciaAbajo(\''.$P_Exito2['id'].'-'.$NCampo.'\',\''.$POST[2].'\',\''.$P_Exito2['id'].'\',\''.$DIGITOS[$r].'\');
+					//$P_Conten	.= '<input type="text" title="'.$P_Exito2["id"].'-'.$NCampo->name.'" />';
+					$P_Conten2	.=	'<input type="text" title="'.$P_Exito2['id'].'-'.$NCampo->name.'" onblur="return BlocCampo(this.id)" onkeypress="return permite(event,\'pform\');" onkeyup="EvaluarHaciaAbajo(\''.$P_Exito2['id'].'-'.$NCampo->name.'\',\''.$TOTAL_CAMPOS.'\',\''.$P_Exito2['id'].'\',\''.$meses_evaluar.'\');EvaluarXs(\'Libre_'.$P_Exito2['id'].'\',\''.$P_Res.'\',\''.$P_Exito2['id'].'\',\'c\',\''.$P_Exito2['id'].'-'.$NCampo->name.'\');GuardadoRapido(\''.$NCampo->name.'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\');" onclick="FunOnclicK(this.id)" name="'.$P_Exito2['id'].'-'.$NCampo->name.'" id="'.$P_Exito2['id'].'-'.$NCampo->name.'" style="width:28px;font-size: 12px;" value="'.$P_Exito2[$w].'" />';
+					
+					//$P_Conten	.=	'<div title="'.$P_Exito2['id'].'-'.$NCampo.'" onkeypress="return permite(event,\'pform\')" class="alrededorRojo" id="'.$P_Exito2['id'].'-'.$NCampo.'" onclick="javascript: creaInput(\''.$P_Exito2['id'].'-'.$NCampo.'\',\''.$P_Exito2[$w].'\',\'911_rolturn_preh_tmp_2\',\'id-'.$NCampo.'\',\''.$P_Exito2[$w].'\',\'24\',\'911_RolesTurnoDespa.php\'); " style="width:24px; text-align:center">'.$P_Exito2[$w].'</div></td>';
+					$P_Conten2   .=  '</td>';
 				;else:
 					//EvaluarXs(\'Libre_'.$P_Exito2['id'].'\',\''.$P_Res.'\',\''.$P_Exito2['id'].'\',\'c\',\''.$P_Exito2['id'].'-'.$NCampo.'\');EvaluarHaciaAbajo(\''.$P_Exito2['id'].'-'.$NCampo.'\',\''.$POST[2].'\',\''.$P_Exito2['id'].'\',\''.$DIGITOS[$r].'\');
 					//$P_Conten	.= '<input type="text" />';
 					$P_Conten	.=	'<input type="text" title="'.$P_Exito2['id'].'-'.$NCampo->name.'" onblur="return BlocCampo(this.id)" onkeypress="return permite(event,\'pform\');" onkeyup="EvaluarHaciaAbajo(\''.$P_Exito2['id'].'-'.$NCampo->name.'\',\''.$TOTAL_CAMPOS.'\',\''.$P_Exito2['id'].'\',\''.$meses_evaluar.'\');EvaluarXs(\'Libre_'.$P_Exito2['id'].'\',\''.$P_Res.'\',\''.$P_Exito2['id'].'\',\'c\',\''.$P_Exito2['id'].'-'.$NCampo->name.'\');GuardadoRapido(\''.$NCampo->name.'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\');" onclick="FunOnclicK(this.id)" name="'.$P_Exito2['id'].'-'.$NCampo->name.'" id="'.$P_Exito2['id'].'-'.$NCampo->name.'" style="width:28px;font-size: 12px;" value="'.$P_Exito2[$w].'" />';
 					
+					$P_Conten2	.=	'<input type="text" title="'.$P_Exito2['id'].'-'.$NCampo->name.'" onblur="return BlocCampo(this.id)" onkeypress="return permite(event,\'pform\');" onkeyup="EvaluarHaciaAbajo(\''.$P_Exito2['id'].'-'.$NCampo->name.'\',\''.$TOTAL_CAMPOS.'\',\''.$P_Exito2['id'].'\',\''.$meses_evaluar.'\');EvaluarXs(\'Libre_'.$P_Exito2['id'].'\',\''.$P_Res.'\',\''.$P_Exito2['id'].'\',\'c\',\''.$P_Exito2['id'].'-'.$NCampo->name.'\');GuardadoRapido(\''.$NCampo->name.'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\');" onclick="FunOnclicK(this.id)" name="'.$P_Exito2['id'].'-'.$NCampo->name.'" id="'.$P_Exito2['id'].'-'.$NCampo->name.'" style="width:28px;font-size: 12px;" value="'.$P_Exito2[$w].'" />';
+					
 					//creaInput(\''.$P_Exito2['id'].'-'.$NCampo.'\',\''.$P_Exito2['id'].'\',\'911_rolturn_preh_tmp_2\',\'id-'.$NCampo.'\',\''.$P_Exito2[$w].'\',\'24\',\'911_RolesTurnoDespa.php\'); 
 				endif;
 				
 			$P_Conten	.=	'</td>';
+			$P_Conten2	.=	'</td>';
 		
 		endfor;
 	// AQUI LOS CAMPOS DE DIAS LIBRES
 	// ===============================	
 	// El Total de dias libres X
 		$P_Conten   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
-		
+		$P_Conten2   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
 		$Rs		=	0;	
 		
 	} 
@@ -947,7 +996,9 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 					
 		//unset($TurnoA);
 		$P_Conten	.=	'</table>';
+		$P_Conten2	.=	'</table>';
 		$P_Conten	.=	'</div>';
+		$P_Conten2	.=	'</div>';
 		// ==============================
 		$P_OtroMes	 =	$DIGITOS[$r] + 1;
 
@@ -957,8 +1008,11 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 		}// END FOR
 
 		$P_TDMeses		.=	'</tr></table>';
-		
-	}
+
+		//$P_Conten2 ='';
+		$row++;
+}
+// End: CANTIDAD DE MESES SELECCIONADAS
 	
 	
 	// VERIFICAR QUE NO EXISTA UN ROL DE TURNO PARA ESTE

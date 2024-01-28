@@ -38,7 +38,7 @@
                     
                   <!-- Row 1 -->
                   
-                  <div class="col-md-6 col-sm-6">Área:
+                  <div class="col-md-6 col-sm-6"><label>Área</label>
                   <select class="select_areas" id="select_areas[]" name="select_areas[]" ><!-- multiple -->
                     <option value="">seleccionar</option>
                     <?php 
@@ -59,7 +59,7 @@
 
                   <!-- Row 2 -->
                   <div class="col-md-3 col-sm-3">
-                  Total de usuario:
+                  <label>Total de usuario</label>
                   <!-- <select name="cuantos_usuarios" id="cuantos_usuarios">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -68,7 +68,7 @@
                   </select> -->
                   <input class="form-control" min="1" name="cuantos_usuarios" id="cuantos_usuarios" value="<?php if (isset($_POST['cuantos'])) { echo $_POST['cuantos']; } else { echo 1; }?>" type="number" />
                   </div>
-                  <div class="col-md-3 col-sm-3">Fecha desde
+                  <div class="col-md-3 col-sm-3"><label>Fecha desde</label>
                   <select class="form-control select-fecha-desde" name="select-fecha-desde" id="select-fecha-desde" >
                     <option value="">seleccionar</option>
                     <?php
@@ -82,7 +82,7 @@
                     ?>
                   </select>
                   </div>
-                  <div class="col-md-3 col-sm-3">Fecha hasta
+                  <div class="col-md-3 col-sm-3"><label>Fecha hasta</label>
                   <select class="form-control select-fecha-hasta" name="select-fecha-hasta" id="select-fecha-hasta" >
                   <option value="">seleccionar</option>
                   <?php
@@ -96,7 +96,7 @@
                     ?>
                   </select>
                   </div>
-                  <div class="col-md-3 col-sm-3">Año
+                  <div class="col-md-3 col-sm-3"><label>Año</label>
                   <select class="form-control select-year" name="select-year" id="select-year">
                   <option value="">seleccionar</option>
                   <?php
@@ -119,49 +119,35 @@
                 </div>
 
                 <!-- Otros parametros -->
-                <div class="container otros-params">
-                  <hr />
-                  <div class="col-md-3">&nbsp;</div>
-                  <div class="col-md-6">
-                  <select class="select-otros-params" name="especial[]" size="7" multiple="multiple" id="especial[]" ><!-- style="width:250px; font-size:10px" -->
-                    <option value="">...</option>
-                    <?php
-                      
-                    ?>
-                    <option value="ADM" title="Horario Administrativo">HRS.ADMINISTRATIVO</option>
-                    <option value="AC" title="Asignaci&oacute;n Cobertura">ASIG.COBERTURA</option>
-                    <option value="CA" title="Capacitacion">CAPACITACI&Oacute;N</option>
-                    <option value="C" title="Compensatorio">COMPENSATORIO</option>
-                    <option value="EM" title="Embarazada">EMBARAZADA</option>
-                    <option value="F" title="Feriado">FERIADO</option>
-                    <option value="CF" title="Compensatorio x Feriado">COMP.FERIADO</option>
-                    <option value="MF" title="Mision Oficial">MISI&Oacute;N OFICIAL</option>
-                    <option value="LI" title="Licencia">LICENCIA</option>
-                    <option value="OP" title="Operativo">OPERATIVO</option>
-                    <option value="SU" title="Suspendido">SUSPENDIDO</option>
-                    <option value="TT" title="Tutoria">TUTORIA</option>
-                    <option value="V" title="Vacaciones">VACACIONES</option>
-                    <option value="OT" title="Otros">OTROS</option>
-                  </select>
-                  </div>
-                  <div class="col-md-3">1</div>
-                </div>
-
-                <!-- Buttons -->
-                  <!-- <div class="row"> -->
                     <div class="container">
-                    <div class="col-md-3"><a class="cursor otros-parametros">Otros Parámetros</a></div>
-                    <div class="col-md-6 text-center">
+                    <div class="col-md-6">
+                      <label>Otros Parámetros</label>
+                      <select class="select-otros-params" name="especial[]" size="7" multiple="multiple" id="especial[]" ><!-- style="width:250px; font-size:10px" -->
+                        <option value="ADM" title="Horario Administrativo">HRS.ADMINISTRATIVO</option>
+                        <option value="AC" title="Asignaci&oacute;n Cobertura">ASIG.COBERTURA</option>
+                        <option value="CA" title="Capacitacion">CAPACITACI&Oacute;N</option>
+                        <option value="C" title="Compensatorio">COMPENSATORIO</option>
+                        <option value="EM" title="Embarazada">EMBARAZADA</option>
+                        <option value="F" title="Feriado">FERIADO</option>
+                        <option value="CF" title="Compensatorio x Feriado">COMP.FERIADO</option>
+                        <option value="MF" title="Mision Oficial">MISI&Oacute;N OFICIAL</option>
+                        <option value="LI" title="Licencia">LICENCIA</option>
+                        <option value="OP" title="Operativo">OPERATIVO</option>
+                        <option value="SU" title="Suspendido">SUSPENDIDO</option>
+                        <option value="TT" title="Tutoria">TUTORIA</option>
+                        <option value="V" title="Vacaciones">VACACIONES</option>
+                        <option value="OT" title="Otros">OTROS</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 25px"><input type="checkbox" id="checkbox" > Seleccionar Todos</div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="col-md-12 text-center">
                       <small>Generar Rol de Turno Automáticamente</small>
                       <br>
                       <input type="submit" name="buttonGen" id="buttonGen" class="btn btn-primary" value="Generar Rol de Turno" />
                       <!-- <button name="btn-generar-rol-auto" class="btn btn-primary" >Rol de Turno - Automático</button> -->
                     </div>
-                    <!-- <div class="col-md-3">
-                    <small>Generar Rol de Turno Manualmente</small>
-                    <br>
-                    <button name="btn-generar-rol-manual" class="btn btn-primary" <?=$disableBtnMan?>>Rol de Turno - Manual</button>
-                    </div> -->
                     <div class="col-md-3"></div>
                   </div>
 
@@ -710,14 +696,16 @@ Total en Administrativo</td>
   <div class="container">
   
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+  <?PHP echo $P_Spry2;?>
+    <!-- <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
     <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
     <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li> -->
   </ul>
 
   <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
+  <?PHP echo $P_Conten2;?>
+    <!-- <div id="home" class="tab-pane fade in active">
       <h3>HOME</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     </div>
@@ -732,8 +720,9 @@ Total en Administrativo</td>
     <div id="menu3" class="tab-pane fade">
       <h3>Menu 3</h3>
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
+    </div> -->
   </div>
+
 </div>
   
 
@@ -938,9 +927,18 @@ Total en Administrativo</td>
 <script type="text/javascript">
 
 /** Toggle Otros Parametros */
-  $('.otros-parametros').on('click',()=>{
-    $('.otros-params').toggle("show");
-  });
+  // $('.otros-parametros').on('click',()=>{
+  //   $('.otros-params').toggle("show");
+  // });
+$("#checkbox").click(function(){
+  if($("#checkbox").is(':checked') ){
+      $(".select-otros-params > option").prop("selected","selected");
+      $(".select-otros-params").trigger("change");
+  }else{
+      $(".select-otros-params > option").removeAttr("selected");
+        $(".select-otros-params").trigger("change");
+  }
+});
 
   $(".select_areas").select2({ width: '100%', dropdownCssClass: "bigdrop"});
   $('.select-fecha-desde').select2({ width: '100%', dropdownCssClass: "bigdrop"});
