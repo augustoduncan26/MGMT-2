@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="<?php echo $_ENV['FLD_ASSETS']?>/css/styles_datatable.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
-<script src="<?php echo $_ENV['FLD_ASSETS']?>/SpryAssets/SpryTabbedPanels_RolTurnoDespa.js" type="text/javascript"></script>
-<link href="<?php echo $_ENV['FLD_ASSETS']?>/SpryAssets/SpryTabbedPanels_RolTurnoDespa.css" rel="stylesheet" type="text/css" />
+<!-- <script src="<?php echo $_ENV['FLD_ASSETS']?>/SpryAssets/SpryTabbedPanels_RolTurnoDespa.js" type="text/javascript"></script>
+<link href="<?php echo $_ENV['FLD_ASSETS']?>/SpryAssets/SpryTabbedPanels_RolTurnoDespa.css" rel="stylesheet" type="text/css" /> -->
 
 <style>
     .fa-spinner {display: none;}
@@ -693,35 +693,46 @@ Total en Administrativo</td>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+  <div class="clearfix">&nbsp;</div>
+  <div class="clearfix">&nbsp;</div>
+
+  <div class="overflow">
+
+  <div class="container">
+  <div class="col-md-4">Para: <?php echo $TOTAL_CAMPOS . ' USUARIOS';?><br />Area: <?php echo substr($N_Area['name'],0,20);?><br />Año: <?php echo $POST_anyo ?></div>
+  <div class="col-md-4"></div>
+    <div class="col-md-4 text-align:right">
+    <input type=submit value="Guardar Datos " name="BtnGuardarTodo" class="btn btn-primary" style="margin-top: 10px" onclick="javascript: 
+        if(!confirm('Esta seguro?')){ 
+        	return false;
+           }else
+           {
+           	var TOT = '<?PHP echo $POST[2]?>';
+            for(i = 1 ; i < TOT+1 ; i++)
+            {
+            	if(document.getElementById('user-'+i).value == '')
+                {
+                	Sexyy.alert('Debe seleccionar los usuarios');
+                    return false
+                }
+            }
+           }
+           document.getElementById('DivMensaje').style.display	= 'block';
+           " />
+    </div>
+  </div>
+
   <div class="container">
   
   <ul class="nav nav-tabs">
   <?PHP echo $P_Spry2;?>
-    <!-- <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li> -->
   </ul>
 
-  <div class="tab-content">
+  <div class="tab-content table-responsive">
   <?PHP echo $P_Conten2;?>
-    <!-- <div id="home" class="tab-pane fade in active">
-      <h3>HOME</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-      <h3>Menu 1</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3>Menu 2</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-    </div>
-    <div id="menu3" class="tab-pane fade">
-      <h3>Menu 3</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div> -->
   </div>
+
+</div>
 
 </div>
   
@@ -926,6 +937,10 @@ Total en Administrativo</td>
 
 <script type="text/javascript">
 
+$(document).ready(function() {
+  $('.js-example-basic-multiple').select2();
+});
+
 /** Toggle Otros Parametros */
   // $('.otros-parametros').on('click',()=>{
   //   $('.otros-params').toggle("show");
@@ -945,6 +960,7 @@ $("#checkbox").click(function(){
   $('.select-fecha-hasta').select2({ width: '100%', dropdownCssClass: "bigdrop"});
   $('.select-year').select2({ width: '100%', dropdownCssClass: "bigdrop"});
   $('.select-otros-params').select2({ width: '100%', dropdownCssClass: "bigdrop"});
+  
 </script>
 <script type="text/javascript">
   var elems = document.getElementById("TabbedPanels1");

@@ -726,6 +726,7 @@
 // **************************************************************		
 // 			AQUI DIVIDIR LA INFORMACION POR LA 					*
 // 			CANTIDAD DE MESES SELECCIONADAS						*
+// 				  HERE IS THE TRICKS  							*
 /* **************************************************************
 */
 $row 			= 0;
@@ -741,7 +742,6 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 	}		
 		
 	$P_TDMeses	.=	'<td id="opt'.$r.'" ';
-	//$P_TDMeses	.=	'<td id="opt'.$r.'" onmouseover="SombreadoCampos(\'opt\''.$r.'\',\'1\'); " onmouseout="SombreadoCampos(\'opt\''.$r.'\',\'0\')"';
 	$P_TDMeses	.=	'style="font-size:10px; font-family:Verdana, Geneva, sans-serif;"">';
 	
 	if ($row==0) {
@@ -757,13 +757,14 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 	//onclick="SombreadoCampos(\'Tab'.$P_OtroMes.'\',\'Tab\',6)" 
 	$P_Spry2	.= '<li '.$tabActive.'><a data-toggle="tab" href="#'.strtolower($MESES[$r]).'">'.$MESES[$r].'</a></li>';
 
-	$P_Conten2	.=	'<div id="'.strtolower($MESES[$r]).'" class="tab-pane fade '.$inActive.'"><font face="Verdana" color="red">'.strtoupper('turnos del mes de '.$MESES[$r]).'</font>';
+	$P_Conten2	.=	'<div id="'.strtolower($MESES[$r]).'" class="cursor tab-pane fade '.$inActive.'"><font face="Verdana" color="red">'.strtoupper('turnos del mes de '.$MESES[$r]).'</font>';
 	$P_Conten	.=	'<div class="TabbedPanelsContent" style="width:100%;background-color:#FFF"><font face="Verdana" color="red">'.strtoupper('turnos del mes de '.$MESES[$r]).'</font>';
 	$P_Res		.=	$objPFecha->UltimoDia(date('Y'),$DIGITOS2[$r]);
 	$P_Conten	.=	'<p /><table border=0 width="100%" class="bordeTodalaTabla_2">';
 	$P_Conten2	.=	'<p /><table border=0 width="100%" class="bordeTodalaTabla_2">';
 	$n			 =	0;
 	$x			 =	0;
+
 		// Dibujar el total de filas
 		/* =========================
 			Representan el total de usuarios
@@ -900,7 +901,7 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 	// ===============================
 				if($w==0):
 					//var_dump($NCampo);
-					$P_Conten   .=  '<select id="user-'.$P_Exito2['id'].'" name="user-'.$P_Exito2['id'].'" style="width:130px;font-size: 12px !important;" onchange="javascript: OtroGuardadoRapido(\'user-'.$P_Exito2['id'].'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\'); NoDuplicar(\''.$POST_users.'\',\'user-'.$P_Exito2['id'].'\')" title="user-'.$P_Exito2['id'].'">';
+					$P_Conten   .=  '<select class="js-example-basic-multiple" id="user-'.$P_Exito2['id'].'" name="user-'.$P_Exito2['id'].'" style="width:130px;font-size: 12px !important;" onchange="javascript: OtroGuardadoRapido(\'user-'.$P_Exito2['id'].'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\'); NoDuplicar(\''.$POST_users.'\',\'user-'.$P_Exito2['id'].'\')" title="user-'.$P_Exito2['id'].'">';
 					$P_Conten   .=	'<option value="">Escoja</option>';
 					$P_Conten   .=	$OPTION;//'<option id="'.$IDLABEL.'">'.$NOMBLABEL.'<option>';
 					$P_Conten   .=	'</select>';
@@ -914,7 +915,7 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 					$P_Conten   .=  '</td>';
 
 					/** Nuevo Tab Panel Days */
-					$P_Conten2   .=  '<select id="user-'.$P_Exito2['id'].'" name="user-'.$P_Exito2['id'].'" style="width:130px;font-size: 12px !important;" onchange="javascript: OtroGuardadoRapido(\'user-'.$P_Exito2['id'].'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\'); NoDuplicar(\''.$POST_users.'\',\'user-'.$P_Exito2['id'].'\')" title="user-'.$P_Exito2['id'].'">';
+					$P_Conten2   .=  '<select class="js-example-basic-multiple" id="user-'.$P_Exito2['id'].'" name="user-'.$P_Exito2['id'].'" style="width:130px;font-size: 12px !important;" onchange="javascript: OtroGuardadoRapido(\'user-'.$P_Exito2['id'].'\' ,\'DESP\', \''.$P_Exito2['id'].'\', \'id\'); NoDuplicar(\''.$POST_users.'\',\'user-'.$P_Exito2['id'].'\')" title="user-'.$P_Exito2['id'].'">';
 					$P_Conten2   .=	'<option value="">Escoja</option>';
 					$P_Conten2   .=	$OPTION;//'<option id="'.$IDLABEL.'">'.$NOMBLABEL.'<option>';
 					$P_Conten2   .=	'</select>';
@@ -940,11 +941,12 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			$P_Conten2	.=	'</td>';
 		
 		endfor;
-	// AQUI LOS CAMPOS DE DIAS LIBRES
-	// ===============================	
+	/** 
+	 * AQUI LOS DIAS LIBRES
+	 */
 	// El Total de dias libres X
-		$P_Conten   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
-		$P_Conten2   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
+		$P_Conten   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
+		$P_Conten2   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
 		$Rs		=	0;	
 		
 	} 
@@ -981,6 +983,15 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 		$P_Conten	.=	'<tr>';
 		$P_Conten   .=	'<td align="center" bgcolor="#E8FFE8" style="font-family:Verdana;width:120px">'.$P_MostrarHora[$m].'</td>';
 		
+		/**
+		 * Aqui la descripcion de los Horarios
+		 */
+		$P_Conten2	.=	'<tr>';
+		$P_Conten2   .=	'<td align="center" bgcolor="#E8FFE8" style="font-family:Verdana;width:120px">'.$P_MostrarHora[$m].'</td>';
+
+		/**
+		 * Aqui el total de hora segun el dia
+		 */
 		for($y = 1 ; $y < $P_Res+1 ; $y++):				// TOTAL DE COLUMNAS ò DIAS EN EL MES
 											
 			$S		=	mysqli_query($link,'SELECT id,SUM(IF(c'.$y.'='.$P_Horarios[$m].',1,0)) as valorA FROM '.$NAMETBLTMP.' WHERE meses="'.$DIGITOS[$r].'" AND id_usuario = "'.$idUs.'" AND dpto = "'.$PIDDEPTO.'" AND area = "'.$P_Data.'" AND fecha = "'.$date.'"');// AND id > 0 AND id <= '.$POST[2]//ORDER BY id ASC LIMIT 0, '.$POST[2]);
@@ -990,8 +1001,11 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			$W		=	mysqli_fetch_array($S); 
 			
 			$P_Conten	.=	'<td><input type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center"></td>';
+			$P_Conten2	.=	'<td><input type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center"></td>';
+
 		endfor;
 		$P_Conten	.=	'</tr>';
+		$P_Conten2	.=	'</tr>';
 	}
 					
 		//unset($TurnoA);
