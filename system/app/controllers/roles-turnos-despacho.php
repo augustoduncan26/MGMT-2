@@ -104,6 +104,16 @@
 		';
 	}
 	
+	/**
+	 * CANCEL - BORRAN TODOS LOS RESULTADOS
+	 */
+	if(isset($_POST['BtnCanclarTodo']) && $_POST['BtnCanclarTodo']=="Cancelar") { 
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp');	
+		$objejec->vaciarTabla(PREFIX.'rolturn_tmp_rand');
+		$objejec->vaciarTabla(PREFIX.'rolturn_desp');
+		//echo json_encode(1);
+		//return false;
+	}
 	
 	$Tot_turnoA		=	0;
 	$Tot_turnoB		=	0;
@@ -167,8 +177,7 @@
 	$DIGITOS2		=	array('0','01','02','03','04','05','06','07','08','09','10','11','12');
 	
 	// EXPLODE DE LAS AREAS
-	function NombredeArea($Data = false)
-	{
+	function NombredeArea($Data = false) {
 		global	$objMante;
 		//echo $Data[0];
 		$P_Val	=	explode('-',$Data);
@@ -306,12 +315,12 @@
 	
 	
 	// Primero verificar que no esten utilizando esta parte
-	if($POST[1] == 'Generar Rol de Turno' || $POST_generar == 'Generar Rol de Turno'):
-		// Crear la tabla temporal
-		// echo 1;
-		//mysql_query('CREATE TABLE 911_'.$_POST['select_areas'].' AS SELECT * FROM 911_rolturn_preh_tmp');
+	// if($POST[1] == 'Generar Rol de Turno' || $POST_generar == 'Generar Rol de Turno'):
+	// 	// Crear la tabla temporal
+	// 	// echo 1;
+	// 	//mysql_query('CREATE TABLE 911_'.$_POST['select_areas'].' AS SELECT * FROM 911_rolturn_preh_tmp');
 		
-	endif;
+	// endif;
 	
 	if($POST[1] == 'Generar Rol de Turno' || $POST_generar == 'Generar Rol de Turno') {
 		/*
@@ -367,23 +376,22 @@
 					$P_Data			.=	$_POST['select_areas'][$x];
 			}
 		endif;
-		
+
 		//echo $P_Data;//	
 		// CREAR LA TABLA TEMPORAL
 		// ***********************
-		$NAREASQL_	=	mysqli_query($link,'SELECT * FROM 911_mant_areas WHERE id = "'.$P_Data.'"');
-		//$NombArea  =   $objMante->BuscarLoQueSea("*","911_mant_areas","id='".$P_Data."'","array");
-		$NombArea	=	mysqli_fetch_array($NAREASQL_);
-		$NAMETBLTMP	=	'911_rolturno_desp_'.strtolower($NombArea['id']);
+		//$NAREASQL_	=	mysqli_query($link,'SELECT * FROM 911_mant_areas WHERE id = "'.$P_Data.'"');
+		$NAREASQL_  =   $objMante->BuscarLoQueSea("*","911_mant_areas","id='".$P_Data."'","extract");
+		//echo $NAREASQL_['id'];
+		//$NombArea	=	mysqli_fetch_array($NAREASQL_);
+		$NAMETBLTMP	=	'911_rolturno_desp_'.strtolower($NAREASQL_['id']);
 		$objejec->vaciarTabla($NAMETBLTMP);	
-		//mysql_query('CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY);');
 		mysqli_query($link,'CREATE TABLE '.$NAMETBLTMP.' (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id)) AS SELECT * FROM 911_rolturn_desp_tmp');
 		
-		
-		//echo $P_Data.'<br>';
-// ESTO ES PARA SI VAN A TIRAR ROL DE TURNO PARA VARIAS 
-// AREAS. POR AHORA NO LO ESTOY UTILIZANDO, ASI QUE SE VA POR,,, ELSE
-// Buscar las areas
+
+		// ESTO ES PARA SI VAN A TIRAR ROL DE TURNO PARA VARIAS 
+		// AREAS. POR AHORA NO LO ESTOY UTILIZANDO, ASI QUE SE VA POR,,, ELSE
+		// Buscar las areas
 		if(!is_numeric($P_Data)){ 
 			//echo $P_Data;
 			//echo strtoupper('Todas');
@@ -407,11 +415,10 @@
 			
 			$P_Areas	=	'Para: '.$POST[2].' usuarios; - areas: '.$P_Label;
 			
-		}
-		else 
-		{
-// SI TOMAN LA OPCION: OTROS PARAMETROS
-// ====================================
+		} else  {
+
+		// SI TOMAN LA OPCION: OTROS PARAMETROS
+		// ====================================
 			//echo $P_Data;
 			//$POST[2]		=> saber cuantos usuarios se selecciono
 			if(isset($_POST['especial'])): $Tott_esp		=	count($_POST['especial']); $TOTAL_CAMPOS = ($POST_users+$Tott_esp); ;else: $TOTAL_CAMPOS = $POST_users;endif;			
@@ -420,9 +427,9 @@
 			$P_Areas	=  strtoupper('Para: '.$TOTAL_CAMPOS.' usuarios - Año: '.$POST_anyo.' - area: '.substr($N_Area['name'],0,20)).$POST_ngrupo;
 		}
 		
-// MAXIMO Y MINIMO SEGUN 
-// EL AREA Y EL HORARIO
-//-------------------------
+		// MAXIMO Y MINIMO SEGUN 
+		// EL AREA Y EL HORARIO
+		//-------------------------
 
 		if($POST_seis	!=''): 	$N_Area['turno_a'] 	= 	$POST_seis+2	;	endif;
 		if($POST_dos	!=''):	$N_Area['turno_b']	=	$POST_dos+2	;	endif;
@@ -430,12 +437,9 @@
 		
 		$Tot_SegArea	=	($N_Area['turno_a'] + $N_Area['turno_b'] + $N_Area['turno_c']);
 		$Tot_SegArea;
-		if($Tot_SegArea == $POST_users)
-		{	
+		if($Tot_SegArea == $POST_users) {	
 			$Tot_x			=	$Tot_SegArea;
-		}
-		else
-		{
+		} else {
 			$Tot_x			=	$POST_users;//$POST[2];//($POST[2]-$Tot_SegArea);//($Tot_SegArea-$POST[2]);//
 
 		}
@@ -468,7 +472,7 @@
 // VV													     VV	
 //
 		//for($rrh = $POST[3]	;	$rrh	<	$POST[4]+1 ; $rrh++){
-		for($rrh = $POST_fechade	;	$rrh	<	$POST_fechaa+1 ; $rrh++){
+		for($rrh = $POST_fechade	;	$rrh	<	$POST_fechaa+1 ; $rrh++) {
 			//echo $rrh.'<br>';
 			$SONMESES=$SONMESES+1;
 			$clave			=	mt_rand(-2147483647,2147483647); //$id=2147483648+mt_rand(-2147483647,2147483647); //mt_rand(26081970,19700826);	//	Evitar el refresh del navegador por el usuario
@@ -479,17 +483,13 @@
 			
 			$P_Campos_tmp	=	'(user,id_usuario,ncorto,fecha,';
 		
-			for($rh	=	1	; $rh	< 32 ; $rh++)
-			{
+			for($rh	=	1	; $rh	< 32 ; $rh++) {
 				$P_Campos_tmp	.=	 'c'.$rh.',';	
 			}
 			$P_Campos_tmp	.= 	'dpto,area,meses,anyo,clave,grupo,publicar,horario';
 			$P_Campos_tmp	.=	')';
 			
 			$P_ParaCuantos	=	$POST[2];
-			//$P_Roles1		=	$objRolTurno->GuardarData('*', '911_mant_formulas' , $P_Were, '911_rolturn_preh_tmp', $P_Campos_tmp, $idUs , $P_ParaCuantos, $clave, $DIGITOS[$rrh]);
-			//$P_Roles2		=	$objRolTurno->GuardarData('*', '911_mant_formulas' , $P_Were2, '911_rolturn_preh_tmp', $P_Campos_tmp, $idUs , $P_ParaCuantos, $clave, $DIGITOS[$rrh]);
-			//$P_Roles3		=	$objRolTurno->GuardarData('*', '911_mant_formulas' , $P_Were3, '911_rolturn_preh_tmp', $P_Campos_tmp, $idUs , $P_ParaCuantos, $clave, $DIGITOS[$rrh]);
 			
 // GUARDAR DE OTRA MANERA
 // ======================
@@ -520,13 +520,10 @@
 			$TotForm_1		=	$P_FindSQL1;
 			$TotUsers_		=	$P_ParaCuantos;
 			$T				=	0;
-			if(mysqli_num_rows($SQL_1) > 0)
-			{
+			if(mysqli_num_rows($SQL_1) > 0) {
 				$P_ValoresColum1		=	false;
-				While($Data	=	mysqli_fetch_array($SQL_1))
-				{	//echo $Data['ncorto'];
-					for($rh	=	1	; $rh	< 32 ; $rh++)
-					{
+				While($Data	=	mysqli_fetch_array($SQL_1)) {	//echo $Data['ncorto'];
+					for($rh	=	1	; $rh	< 32 ; $rh++) {
 						//if($Data['c'.$rh] == 31)
 						//{
 							if($P_ValoresColum1	!=	'')
@@ -547,8 +544,7 @@
 // SI EL PARAMETRO ($DIFER) ES MAYOR A CERO (0), ENTONCES HAGO OTRA CONSULTA
 // PARA BUSCAR LA CANTIDAD QUE FALTA : JE JE JE JE,,,, SENCILLO ESTA VEZ
 // ==========================================================================
-			if($DIFER > 0)
-			{
+			if($DIFER > 0) {
 				//echo $DIFER;
 				if($POST_GRUPO==0):
 					//$SQL_1			=	mysql_query('SELECT * FROM 911_mant_formulas WHERE c1 = '.$P_Horarios[0].' AND dpto = "'.$PIDDEPTO.'" AND activo = 1 AND area like "%'.$P_Data.'%" ORDER BY RAND() LIMIT '.$N_Area['turno_a'].'') or die('Error 504 inesperado en mysql: '.mysql_error());
@@ -563,17 +559,13 @@
 				$TotForm_2		=	$P_FindSQL2;
 				$TotUsers_		=	$P_ParaCuantos;
 				$T				=	0;
-				if(mysqli_num_rows($SQL_2) > 0)
-				{
+				if(mysqli_num_rows($SQL_2) > 0) {
 					$P_ValoresColum2		=	false;
-					While($Data	=	mysqli_fetch_array($SQL_2))
-					{	//echo $Data['ncorto'];
-						for($rh	=	1	; $rh	< 32 ; $rh++)
-						{
+					While($Data	=	mysqli_fetch_array($SQL_2)) {	//echo $Data['ncorto'];
+						for($rh	=	1	; $rh	< 32 ; $rh++) {
 							//if($Data['c'.$rh] == 31)
 							//{
-								if($P_ValoresColum2	!=	'')
-								{
+								if($P_ValoresColum2	!=	'') {
 									$P_ValoresColum2 .=  ',';
 								}	
 								$P_ValoresColum2		.=	 "'".$Data['c'.$rh]."'";	
@@ -587,9 +579,7 @@
 					}
 				}
 			
-			}
-			else
-			{
+			} else {
 				$TotForm_2	=	0;	
 			}
 //		
@@ -614,8 +604,7 @@
 			//$POST[2];
 			// LLENO EL ARRAY CON LOS VALORES
 
-			for ($i=0; $i<$TOTALESTOTALES; $i++)  
-            {  
+			for ($i=0; $i<$TOTALESTOTALES; $i++) {  
 				$aleatorios[$i]	=	$i;
 			}
 			//echo $SONMESES;
@@ -640,10 +629,8 @@
 			$TTTT 			=	0;
 			
 			$P_ValoresColum5		=	false;
-				While($Data	=	mysqli_fetch_array($SQL__))
-				{	//echo $Data['ncorto'];
-					for($rh	=	1	; $rh	< 32 ; $rh++)
-					{
+				While($Data	=	mysqli_fetch_array($SQL__)) {	//echo $Data['ncorto'];
+					for($rh	=	1	; $rh	< 32 ; $rh++) {
 							if($P_ValoresColum5	!=	'')
 							{
 								$P_ValoresColum5 .=  ',';
@@ -691,8 +678,7 @@
 
 // FIN DEL PASO A LA TABLA RAND
 // VACIAR LA TABLA TMP
-				if($VACIAR == 1)
-				{
+				if($VACIAR == 1) {
 					$objejec->vaciarTabla('911_rolturn_desp_tmp');
 					$VACIAR++;
 				}
@@ -897,6 +883,7 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			//echo $NCampo
 			include('911_criterios_de_calculos.php');
 			// echo $w."<br />";
+
 	// AQUI LOS CAMPOS CON LOS VALORES
 	// ===============================
 				if($w==0):
@@ -941,12 +928,13 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			$P_Conten2	.=	'</td>';
 		
 		endfor;
+
 	/** 
 	 * AQUI LOS DIAS LIBRES
 	 */
 	// El Total de dias libres X
-		$P_Conten   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
-		$P_Conten2   .= '<td style="width:50px" align="center">&nbsp;<input title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center" align="middle" ></td>'; //readonly
+		$P_Conten   .= '<td style="width:50px" align="center">&nbsp;<input readonly title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center;font-size: 12px;" align="middle" ></td>'; //readonly
+		$P_Conten2   .= '<td style="width:50px" align="center">&nbsp;<input readonly title="L_'.$P_Exito2['id'].'" type="text" id="Libre_'.$P_Exito2['id'].'" name="Libre_'.$P_Exito2['id'].'" value="'.$Rs.'" style="width:30px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center;font-size: 12px;" align="middle" ></td>'; //readonly
 		$Rs		=	0;	
 		
 	} 
@@ -1000,8 +988,8 @@ for($r = $POST_fechade	;	$r	<	$POST_fechaa+1 ;$r++){
 			$R	 	=	mysqli_num_rows($S);
 			$W		=	mysqli_fetch_array($S); 
 			
-			$P_Conten	.=	'<td><input type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center"></td>';
-			$P_Conten2	.=	'<td><input type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center"></td>';
+			$P_Conten	.=	'<td><input disabled type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center;font-size: 12px;"></td>';
+			$P_Conten2	.=	'<td><input disabled type="text" value="'.$W['valorA'].'" id="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" name="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" title="'.$P_Horarios[$m].'-'.$meses_evaluar.'-'.$y.'" style="width:20px;background-color:#EAEAEA;border:1px solid #BDB737;text-align:center;font-size: 12px;"></td>';
 
 		endfor;
 		$P_Conten	.=	'</tr>';

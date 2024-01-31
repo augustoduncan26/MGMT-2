@@ -120,7 +120,30 @@
  <div class="modal-body" id="contenido_editar">
  
  <div id="mssg-edit" style="color:red"></div>
-                    
+                
+ <!-- TAB PANEL -->
+ <ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Datos de acceso</a></li>
+  <li><a data-toggle="tab" href="#menu1">Información General</a></li>
+  <li><a data-toggle="tab" href="#menu2">Información Laboral</a></li>
+</ul>
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3>HOME</h3>
+    <p>Some content.</p>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Menu 1</h3>
+    <p>Some content in menu 1.</p>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+    <h3>Menu 2</h3>
+    <p>Some content in menu 2.</p>
+  </div>
+</div>
+<!-- End: TAB PANEL -->
+
+
  <table class="table table-bordered" id="sample-table-4">
   <thead>
   </thead>
@@ -168,12 +191,35 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×
           </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Perfil</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar</h3>
           <label id="mssg-label"></label>
         </div>
          <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
             <div id="mssg-alert" style="color:red;"></div>
+
+            <!-- TAB PANEL -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#home">Datos de acceso</a></li>
+              <li><a data-toggle="tab" href="#menu1">Información General</a></li>
+              <li><a data-toggle="tab" href="#menu2">Información Laboral</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="home" class="tab-pane fade in active">
+                <h3>HOME</h3>
+                <p>Some content.</p>
+              </div>
+              <div id="menu1" class="tab-pane fade">
+                <h3>Menu 1</h3>
+                <p>Some content in menu 1.</p>
+              </div>
+              <div id="menu2" class="tab-pane fade">
+                <h3>Menu 2</h3>
+                <p>Some content in menu 2.</p>
+              </div>
+            </div>
+            <!-- End: TAB PANEL -->
+
              <table class="table table-bordered table-hover" id="sample-table-4">
                <thead>
                </thead>

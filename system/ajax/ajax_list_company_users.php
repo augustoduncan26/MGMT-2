@@ -27,13 +27,13 @@ $datos       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',false,'array');
           $depto       = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','id = "'.$dato['id_depto'].'" and id_cia = '.$id_cia,'extract');
       ?>
         <tr>
-          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['nombre']?></td>
-          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['email']?></td>
+          <td width="150px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['nombre']?></td>
+          <td width="150px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['email']?></td>
 
-          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['telephone']?></td>
-          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$depto['name']?></td>
-          <td width="150px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['direcction']?></td>
-          <td width="100px" <?php if($dato['activo']==0){?> class="row-yellow-transp" <?php } ?>><?php if($dato['activo'] ==1) { echo '<span class="label label-sm label-success">Active</span>'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
+          <td width="150px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['telephone']?></td>
+          <td width="150px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?=$depto['name']?></td>
+          <td width="150px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?=$dato['direcction']?></td>
+          <td width="100px" <?php if($dato['active']==0){?> class="row-yellow-transp" <?php } ?>><?php if($dato['active'] ==1) { echo '<span class="label label-sm label-success">Active</span>'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
           <td width="100px" class="" style="width:15% !important;">
 
             <a class="btn btn-xs btn-teal " data-original-title="Editar" data-toggle="modal" role="button" href="#edit_usuarios" onclick="limpiar();editUser('<?php echo $dato['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>

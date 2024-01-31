@@ -38,7 +38,7 @@
                     
                   <!-- Row 1 -->
                   
-                  <div class="col-md-6 col-sm-6"><label>Área</label>
+                  <div class="col-md-6 col-sm-6"><label>Área <span class="symbol required"></span></label>
                   <select class="select_areas" id="select_areas[]" name="select_areas[]" ><!-- multiple -->
                     <option value="">seleccionar</option>
                     <?php 
@@ -59,7 +59,7 @@
 
                   <!-- Row 2 -->
                   <div class="col-md-3 col-sm-3">
-                  <label>Total de usuario</label>
+                  <label>Total de usuario <span class="symbol required"></span></label>
                   <!-- <select name="cuantos_usuarios" id="cuantos_usuarios">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -68,7 +68,7 @@
                   </select> -->
                   <input class="form-control" min="1" name="cuantos_usuarios" id="cuantos_usuarios" value="<?php if (isset($_POST['cuantos'])) { echo $_POST['cuantos']; } else { echo 1; }?>" type="number" />
                   </div>
-                  <div class="col-md-3 col-sm-3"><label>Fecha desde</label>
+                  <div class="col-md-3 col-sm-3"><label>Fecha desde <span class="symbol required"></span></label>
                   <select class="form-control select-fecha-desde" name="select-fecha-desde" id="select-fecha-desde" >
                     <option value="">seleccionar</option>
                     <?php
@@ -82,7 +82,7 @@
                     ?>
                   </select>
                   </div>
-                  <div class="col-md-3 col-sm-3"><label>Fecha hasta</label>
+                  <div class="col-md-3 col-sm-3"><label>Fecha hasta <span class="symbol required"></span></label>
                   <select class="form-control select-fecha-hasta" name="select-fecha-hasta" id="select-fecha-hasta" >
                   <option value="">seleccionar</option>
                   <?php
@@ -96,9 +96,9 @@
                     ?>
                   </select>
                   </div>
-                  <div class="col-md-3 col-sm-3"><label>Año</label>
+                  <div class="col-md-3 col-sm-3"><label>Año <span class="symbol required"></span></label>
                   <select class="form-control select-year" name="select-year" id="select-year">
-                  <option value="">seleccionar</option>
+                  <!-- <option value="">seleccionar</option> -->
                   <?php
                     for ($i=date('Y'); $i < date('Y')+6; $i++) { 
                       if (date('Y')==$i || (isset($_POST['select-year']) &&  $_POST['select-year']==$i)) {
@@ -143,14 +143,16 @@
                     <div class="clearfix">&nbsp;</div>
                     <div class="clearfix">&nbsp;</div>
                     <div class="col-md-12 text-center">
-                      <small>Generar Rol de Turno Automáticamente</small>
-                      <br>
+                      <!-- <small>Generar Rol de Turno Automáticamente</small>
+                      <br> -->
                       <input type="submit" name="buttonGen" id="buttonGen" class="btn btn-primary" value="Generar Rol de Turno" />
                       <!-- <button name="btn-generar-rol-auto" class="btn btn-primary" >Rol de Turno - Automático</button> -->
                     </div>
                     <div class="col-md-3"></div>
                   </div>
 
+                  <div class="clearfix">&nbsp;</div>
+                  
                   <div class="container">
                     <div class="col-md-12 col-sm-12">
                       <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
@@ -549,31 +551,30 @@ Total en Administrativo</td>
     <td height="50" align="right">&nbsp;Por:&nbsp;</td>
     <td>&nbsp;
     <select name="criterio_busq" id="criterio_busq" onchange="
- var opcion	=	document.getElementById('criterio_busq').value;
-		switch(opcion)
-        {
-        	case '1':
-            	document.getElementById('bAreas').style.display 	= 'block';
-                document.getElementById('bFecha').style.display 	= 'none';
-                document.getElementById('bMes').style.display 		= 'none';
-                document.getElementById('bSeleccione').style.display= 'none';
-            break;
-            
-            case '2':
-            	document.getElementById('bFecha').style.display		= 'block';
-                document.getElementById('bAreas').style.display 	= 'none';
-                document.getElementById('bMes').style.display 		= 'none';
-                document.getElementById('bSeleccione').style.display= 'none';
-            break;
-            
-             case '3':
-            	document.getElementById('bFecha').style.display		= 'none';
-                document.getElementById('bAreas').style.display 	= 'none';
-                document.getElementById('bMes').style.display 		= 'block';
-                document.getElementById('bSeleccione').style.display= 'none';
-            break;
-        }
-">
+    var opcion	=	document.getElementById('criterio_busq').value;
+    switch(opcion) {
+      case '1':
+          document.getElementById('bAreas').style.display 	= 'block';
+            document.getElementById('bFecha').style.display 	= 'none';
+            document.getElementById('bMes').style.display 		= 'none';
+            document.getElementById('bSeleccione').style.display= 'none';
+        break;
+        
+        case '2':
+          document.getElementById('bFecha').style.display		= 'block';
+            document.getElementById('bAreas').style.display 	= 'none';
+            document.getElementById('bMes').style.display 		= 'none';
+            document.getElementById('bSeleccione').style.display= 'none';
+        break;
+        
+          case '3':
+          document.getElementById('bFecha').style.display		= 'none';
+            document.getElementById('bAreas').style.display 	= 'none';
+            document.getElementById('bMes').style.display 		= 'block';
+            document.getElementById('bSeleccione').style.display= 'none';
+        break;
+    }
+  ">
     <option value="">- escoja -</option>
     <option value="1">Por area</option>
     <option value="2">Por fecha</option>
@@ -633,28 +634,21 @@ Total en Administrativo</td>
      <?PHP
      	$MESES		=	array('XXX','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 		
-		for($M	=	1	;	$M	< count($MESES) ; $M++)
-		{
-			if(isset($_POST) && $POST[1] == $M)
-			{
-				echo '<option value="'.$M.'" selected>'.$MESES[$M].'</option>';	
-			}else
-			{
-				echo '<option value="'.$M.'">'.$MESES[$M].'</option>';
-			}
-		}
-	 ?>
+      for($M	=	1	;	$M	< count($MESES) ; $M++) {
+        if(isset($_POST) && $POST[1] == $M) {
+          echo '<option value="'.$M.'" selected>'.$MESES[$M].'</option>';	
+        } else {
+          echo '<option value="'.$M.'">'.$MESES[$M].'</option>';
+        }
+      }
+	  ?>
     </select>
     <select id="anyo" name="anyo">
       <?PHP
-                for($q = 2010 ; $q < date("Y")+20 ; $q++)
-				{
-					if($q == date('Y'))
-					{
+         for($q = 2010 ; $q < date("Y")+20 ; $q++) {
+					if($q == date('Y')) {
 						echo '<option value="'.$q.'" selected>'.$q.'</option>';
-					}
-					else
-					{
+					} else {
 						echo '<option value="'.$q.'">'.$q.'</option>';		
 					}
 				}	
@@ -663,8 +657,7 @@ Total en Administrativo</td>
     </label>
       </td>
     <td width="15%"><input type="submit" name="buttonSearch" id="buttonSearch" value="Consultar" onclick="javascript:
-    if(document.getElementById('criterio_busq').value == '')
-    {
+    if(document.getElementById('criterio_busq').value == '') {
     	Sexyy.alert('Debe seleccionar alguna opcion para poder consultar');
         return false
     }
@@ -700,7 +693,17 @@ Total en Administrativo</td>
 
   <div class="container">
   <div class="col-md-4">Para: <?php echo $TOTAL_CAMPOS . ' USUARIOS';?><br />Area: <?php echo substr($N_Area['name'],0,20);?><br />Año: <?php echo $POST_anyo ?></div>
-  <div class="col-md-4"></div>
+  <div class="col-md-4">
+  <input type="hidden" id="mantenerArea" name="mantenerArea" value="<?PHP echo $P_Areas?>" />
+		  <input type="hidden" name="PDATA" id="PDATA" value="<?PHP echo $P_Data?>" />
+		  <input type="hidden" name="PIDDEPTO" id="PIDDEPTO" value="<?PHP echo $PIDDEPTO;?>" />
+		  <input type="hidden" name="date" id="date" value="<?PHP echo $date?>"/>
+		  <input type="hidden" name="de" id="de" value="<?PHP echo $POST[3]?>"/>
+		  <input type="hidden" name="a" id="a" value="<?PHP echo $POST[4]?>"/>
+		  <input type="hidden" name="cuantosuser" id="cuantosuser" value="<?PHP echo $POST[2]?>"/>
+      <input type="hidden" name="tabla_tmp_area" id="tabla_tmp_area" value="<?PHP echo isset($NAMETBLTMP)?$NAMETBLTMP:''?>" />
+		  <input type="hidden" name="tipo_horario" id="tipo_horario" value="<?PHP echo isset($POST_horario)?$POST_horario:''?>" />
+  </div>
     <div class="col-md-4 text-align:right">
     <input type=submit value="Guardar Datos " name="BtnGuardarTodo" class="btn btn-primary" style="margin-top: 10px" onclick="javascript: 
         if(!confirm('Esta seguro?')){ 
@@ -719,6 +722,7 @@ Total en Administrativo</td>
            }
            document.getElementById('DivMensaje').style.display	= 'block';
            " />
+    <input type="submit" value="Cancelar" name="BtnCanclarTodo" style="margin-top: 10px" class="btn btn-secondary" />
     </div>
   </div>
 
@@ -739,7 +743,7 @@ Total en Administrativo</td>
 
 
     
-<div class="overflow">
+<div class="overflow" style="display:none">
 <table id="VerAyuda" width="98%" border="0" class="bordeTodalaTabla_2" cellpadding="0" cellspacing="0" align="center" style="display:none;">
       <tr bgcolor="#EBEBEB">
         <td>&nbsp;</td>
@@ -815,15 +819,7 @@ Total en Administrativo</td>
 	<tr>
       <td width="180" colspan="2" id="OptOpcion1" style="width:180px" onmouseover=" this.style.Cursor='pointer'" >Para: <?php echo $TOTAL_CAMPOS.' usuarios';?><br />Área: <?php echo substr($N_Area['name'],0,20);?><br />Año: <?=$POST_anyo?></td>
 		  <td width="494"  id="OptOpcion4" onmouseover="this.style.Cursor='pointer'" style="text-align:right">
-      <input type="hidden" id="mantenerArea" name="mantenerArea" value="<?PHP echo $P_Areas?>" />
-		  <input type="hidden" name="PDATA" id="PDATA" value="<?PHP echo $P_Data?>" />
-		  <input type="hidden" name="PIDDEPTO" id="PIDDEPTO" value="<?PHP echo $PIDDEPTO;?>" />
-		  <input type="hidden" name="date" id="date" value="<?PHP echo $date?>"/>
-		  <input type="hidden" name="de" id="de" value="<?PHP echo $POST[3]?>"/>
-		  <input type="hidden" name="a" id="a" value="<?PHP echo $POST[4]?>"/>
-		  <input type="hidden" name="cuantosuser" id="cuantosuser" value="<?PHP echo $POST[2]?>"/>
-          <input type="hidden" name="tabla_tmp_area" id="tabla_tmp_area" value="<?PHP echo isset($NAMETBLTMP)?$NAMETBLTMP:''?>" />
-		  <input type="hidden" name="tipo_horario" id="tipo_horario" value="<?PHP echo isset($POST_horario)?$POST_horario:''?>" />
+      
           </td>
 		<td width="236" colspan="2" align="center"  id="OptOpcion5" onmouseover="this.style.Cursor='pointer'"  >
     <?PHP if(isset($P_Err) && $P_Err < 1):?>
@@ -904,6 +900,7 @@ Total en Administrativo</td>
    <script src="<?php echo $_ENV['FLD_ASSETS']?>/js/ingreso_sin_recargar.js"></script>
    <script src="<?php echo $_ENV['FLD_ASSETS']?>/js/operaciones_en_campos.js"></script>
    <script src="<?php echo $_ENV['FLD_ASSETS']?>/js/funciones_de_aritmetica.js"></script>
+
 	<tr class="fondoAbajoGris">  
 	<td style="font-size:10px;font-family:Verdana" align="right">SUME 9-1-1</td>	
 	</tr>
@@ -945,6 +942,26 @@ $(document).ready(function() {
   // $('.otros-parametros').on('click',()=>{
   //   $('.otros-params').toggle("show");
   // });
+/**
+ * Check when button buttonGen click
+ */
+$('[name="buttonGen"]').on('click',()=>{
+  if ($('.select_areas').val()=="" || $('[name="cuantos_usuarios"]').val()=="" || $('[name="select-fecha-desde"]').val() == "" || $('[name="select-fecha-hasta"]').val() == "" ) {
+    $('.alert').show().removeClass('alert-info').addClass('alert-danger').html('Todos los campos con (*) son requeridos.');
+    setTimeout(()=>{
+        $('.alert').hide();
+    },4000);
+    return false;
+  }
+  if ($('[name="select-fecha-desde"]').val() > $('[name="select-fecha-hasta"]').val()) {
+    $('.alert').show().removeClass('alert-info').addClass('alert-danger').html('Seleccione una fecha correcta.');
+    setTimeout(()=>{
+        $('.alert').hide();
+    },4000);
+    return false;
+  }
+});
+
 $("#checkbox").click(function(){
   if($("#checkbox").is(':checked') ){
       $(".select-otros-params > option").prop("selected","selected");
@@ -963,8 +980,8 @@ $("#checkbox").click(function(){
   
 </script>
 <script type="text/javascript">
-  var elems = document.getElementById("TabbedPanels1");
-<!--
-var TabbedPanels1 = new Spry.Widget.TabbedPanels('TabbedPanels1',false,0);
+  // var elems = document.getElementById("TabbedPanels1");
+// <!--
+// var TabbedPanels1 = new Spry.Widget.TabbedPanels('TabbedPanels1',false,0);
 //-->
 </script>

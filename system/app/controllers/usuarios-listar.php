@@ -2,14 +2,16 @@
 
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 include_once ( dirname(dirname(__DIR__)) . '/functions.php');
-$ObjMante   = new Mantenimientos();
-$ObjEjec    = new ejecutorSQL();
+$ObjMante   = 	new Mantenimientos();
+$ObjEjec    = 	new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'users';
 
-$where 			= 	'id_cia="'.$id_cia.'"';
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id,name');
+$where 			= 	"";//'id_cia="'.$id_cia.'"';
+$listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
+$listEmpleados 	=	$ObjMante->BuscarLoQueSea('email',PREFIX.'empleados',false,'array','id,nempleado');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','active=1','array');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {

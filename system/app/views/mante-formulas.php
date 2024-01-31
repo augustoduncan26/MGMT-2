@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
   .modal-xl {
     width: 90%;
    max-width:1350px;
