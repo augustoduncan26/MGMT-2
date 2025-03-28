@@ -56,11 +56,11 @@
                       </label>
                       <div class="col-sm-7">
                         <span class="input-icon">
-                          <input id="form-field-8" class="form-control tooltips" type="password" data-placement="top" title="" readonly placeholder="Contraseña" data-rel="tooltip" data-original-title="La contraseña debe tener entre 6 a 10 caracteres" value="<?php echo $datos['contrasena']?>">
+                          <input id="form-field-8" class="form-control tooltips" type="password" data-placement="top" title="" readonly placeholder="Contraseña" data-rel="tooltip" data-original-title="La contraseña debe tener entre 8 a 16 caracteres" value="<?php echo $datos['contrasena']?>">
                         <i class="fa fa-key"></i> 
                       </span>
                       </div>
-                      <span class="help-inline col-sm-2 tooltips" data-rel="tooltip" data-original-title="La contraseña debe tener entre 6 a 10 caracteres" data-placement="top"> <i class="fa fa-info-circle"></i> Contraseña (6-10) </span>
+                      <span class="help-inline col-sm-2 tooltips" data-rel="tooltip" data-original-title="La contraseña debe tener entre 8 a 16 caracteres" data-placement="top"> <i class="fa fa-info-circle"></i> Contraseña (8-16) </span>
                     </div>
 
                     <div class="form-group">
@@ -167,7 +167,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Cambiar Clave</h3>
+        <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Cambiar Contraseña</h3>
       </div>
       <div class="modal-body">
         <div id="lbl-mssg" style="color:red">Todos los datos son necesarios</div>
@@ -181,7 +181,7 @@
             </label>
             <div class="col-sm-8">
               <span class="input-icon">
-                <input class="form-control tooltips" type="password" id="actual-password" name="actual-password" data-placement="top" title="" placeholder="Contraseña actual" data-rel="tooltip" data-original-title="Clave entre 6 a 15 caracteres" value="">
+                <input class="form-control tooltips" type="password" id="actual-password" name="actual-password" data-placement="top" title="" placeholder="Contraseña actual" data-rel="tooltip" data-original-title="Clave entre 8 a 16 caracteres" value="">
               
             </span>
             </div>
@@ -196,7 +196,7 @@
             </label>
             <div class="col-sm-8">
               <span class="input-icon">
-                <input class="form-control tooltips" type="password" id="new-password" name="new-password" data-placement="top" title="" placeholder="Nueva Contraseña" data-rel="tooltip" data-original-title="Clave entre 6 a 15 caracteres" value="">
+                <input class="form-control tooltips" type="password" id="new-password" name="new-password" data-placement="top" title="" placeholder="Nueva Contraseña" data-rel="tooltip" data-original-title="Clave entre 8 a 16 caracteres" value="">
               
             </span>
             </div>
@@ -487,16 +487,6 @@ function verifyActualPasswd () {
         console.log(error);
       }
     });
-    // ajax1   = nuevoAjax();
-    // ajax1.open("GET", "ajax/ajax_change_passwd.php?id_user="+id_user+"&newpassword="+ newpasswd +"&que=changeP&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);    
-    // ajax1.onreadystatechange=function() {
-
-    //   if (ajax1.readyState==4) {
-    //     contenido_editor.innerHTML = ajax1.responseText;
-    //   }
-    // }
-
-    // ajax1.send(null);
  }
 
 

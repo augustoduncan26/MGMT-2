@@ -33,8 +33,8 @@ div.dataTables_wrapper div.dataTables_filter label {
   <!-- start: PAGE CONTENT -->
   <div class="row">
     <div class="col-sm-12">
-      <!-- start: FULL CALENDAR PANEL -->
-      <div class="panel panel-default">
+      <!-- start: CONFIGURAR PERMISOS -->
+      <div class=""><!-- panel panel-default -->
         <div class="panel-heading">
           <i class="clip-settings"></i>Permisos
           </div>
@@ -60,10 +60,10 @@ div.dataTables_wrapper div.dataTables_filter label {
                         foreach ($listPermisos['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['nombre']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['permiso']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['permiso_padre']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['nombre']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['permiso']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['permiso_padre']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
                         <td class="text-center" style="width:10% !important;">
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_permiso" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deletePermiso('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
@@ -82,7 +82,7 @@ div.dataTables_wrapper div.dataTables_filter label {
               </div>
 		      </div>
       </div>
-      <!-- end: FULL CALENDAR PANEL -->
+      <!-- end: CONFIGURAR PERMISOS -->
     </div>
   </div>
   <!-- end: PAGE CONTENT-->
@@ -270,7 +270,7 @@ let route = "app/controllers/configurar-permisos.php?showEdit=1&id="+id+"&dml=ed
       $('#nombre_permiso_editar').val(response['nombre']);
       $('#permiso_padre_editar').val(response['permiso_padre']);
       $('#permiso_editar').val(response['permiso']);
-      $('#estado_editar').select2('val',response['active']);
+      $('#estado_editar').select2('val',response['activo']);
     },
     error           : function (error) {
       console.log(error);
@@ -343,7 +343,7 @@ function listPermisos() {
       let content = '';
       let classSetting   = '';
       arr.forEach((item,key)=>{
-        if (item.active == 0) {
+        if (item.activo == 0) {
           classSetting = "class='row-yellow-transp'";
           textActivo   = "Inactivo";
         } else {
@@ -397,10 +397,10 @@ $(document).ready( function () {
           search: '',
           searchPlaceholder: "Buscar",
       },
-      order: [[1, 'asc']],
+      order: [[2, 'asc']],
       columnDefs: 
       [{
-      targets: 1,
+      targets: 4,
       orderable: false
       },{ width: "30%", targets: 0,},{ width: "10%", targets: 1}, {width: "10%", targets: 2, }, {width: "10%", targets: 3, }, {width: "15%", targets: 4, }]
     });

@@ -61,10 +61,10 @@ class Users {
 	// Constructor
 	function __construct ( $tablaUsuarios = false) {
 
-		$this->tablaUsuarios 		= "ad_users";
+		$this->tablaUsuarios 		= $_ENV['DB_PREFIX'] . "usuarios";
 		//$this->tablaUsuarios_otros 	= "usuario_otros";
-		$this->tablaEmpresa 		= "ad_admin_empresas";
-		$this->tablaUserEmpresa		= "ad_admin_empresas_users";
+		$this->tablaEmpresa 		= $_ENV['DB_PREFIX'] ."admin_empresas";
+		$this->tablaUserEmpresa		= $_ENV['DB_PREFIX'] ."admin_empresas_users";
 		$this->campoLlave 			= "id_usuario";
 		$this->campoUser 			= "usuario";
 		$this->campoClave 			= "contra";
@@ -103,14 +103,14 @@ class Users {
 
 		} elseif ($P_modo == "Usuario") {
 
-			$where = $this->campoUser." LIKE BINARY '".$P_ParamUsuario."'";
+			$where = $this->campoEmail." LIKE BINARY '".$P_ParamUsuario."'";
 		
 		}
 		
 		// Realizando consulta a tabla usuario
-		$objCons->consultar("*, AES_DECRYPT(contrasena,'toga') as contrasena", $this->tablaUsuarios, $where);
+		$objCons->consultar("*", $this->tablaUsuarios, $where);
 
-	    //echo $objCons->sql;
+	    	$objCons->sql;
 	    
 		if ($objCons->totalFilas > 0){ 
 
@@ -183,11 +183,13 @@ class Users {
 			$tbl = $this->tablaUsuarios; 	
 		}
 
-		$whr			=	'usuario = "'.$usuario.'" AND activo = 1';
-		$objCons->consultar ("AES_DECRYPT(contrasena,'toga') as clave, usuario", $tbl, $whr);
+		$whr			=	'email = "'.$usuario.'" AND activo = 1';
+		$objCons->consultar ("contrasena, usuario", $tbl, $whr);
+		
 		$extract 		= $objCons->extraerRegistro();
 
-		if($extract['clave'] == $contrasena) {
+		//md5($contrasena)
+		if($extract['contrasena']) {
 			$exito = 1;
 		} else {
 			$exito = 0;	

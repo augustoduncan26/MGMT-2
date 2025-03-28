@@ -6,6 +6,13 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 70%;
+   max-width:1350px;
+  }
+}
 .dataTables_filter {
   width: 30%;
 }
@@ -36,9 +43,9 @@ div.dataTables_wrapper div.dataTables_filter label {
       <div class="col-sm-12">
        <div class="panel panel-default">
           <div class="panel-heading">
-            <i class="clip-settings"></i> Perfiles
+            <i class="clip-settings"></i> Usuarios
           </div>
-          <div class="panel-body">
+          <div class="panel-body  table-responsive">
               <div class="col-sm-12">
               <div style="height:10px;"></div>
 
@@ -48,8 +55,9 @@ div.dataTables_wrapper div.dataTables_filter label {
                 <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
-                      <th>Id</th>
+                      <th>#</th>
                       <th>Nombre</th>
+                      <th>Email</th>
                       <th>Fecha creación</th>
                       <th>Estado</th>
                       <th></th>
@@ -57,17 +65,21 @@ div.dataTables_wrapper div.dataTables_filter label {
                   </thead>
                   <tbody id="tbody-table-perfiles">
                     <?php
-                      if (isset($listPerfiles['resultado'])) {
-                        foreach ($listPerfiles['resultado'] as $key => $value) {
+                      if (isset($listUsers['resultado'])) {
+                        foreach ($listUsers['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
-                        <td class="text-center" style="width:10% !important;">
-                          <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
-                          <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id_usuario']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['nombre'].' '.$value['apellido']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['email']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
+                        <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td> -->
+                        <!--'<span class="label label-sm label-success">Activo</span>'-->
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+                        <td class="text-center">
+                          <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>
+                          <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiarCampos();showUserPermisos('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-key"></i></a>
+                          <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id_usuario']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                         </td>
                       </tr>
                     <?php
@@ -103,7 +115,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Perfil.</h3>
 </div>
 
-<form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
+<form name="edit_usuarios" id="edit_usuarios" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
  
  <div id="mssg-edit" style="color:red"></div>
@@ -151,40 +163,87 @@ div.dataTables_wrapper div.dataTables_filter label {
 <?php //get_view_part ( 'modificar-habitacion' )?>
 <!-- En Add Room -->
 
-<!-- Add Perfil -->
-  <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+
+<!-- Add -->
+<div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×
           </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Perfil</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Usuario</h3>
           <label id="mssg-label"></label>
         </div>
-         <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
+         <form name="add_usuarios" id="add_usuarios" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
             <div id="mssg-alert" style="color:red;"></div>
-             <table class="table table-bordered table-hover" id="sample-table-4">
-               <thead>
-               </thead>
-               <tbody>
-                 <tr>
-                   <td width="30%">Nombre <span class="symbol required"></td>
-                   <td width="70%"><input autofocus="" name="nombre_perfil" required="" type="text" class="form-control" id="nombre_perfil" placeholder="Nombre de perfil"></td>
-                 </tr>
-                 <tr>
-                   <td>Estado:</td>
-                   <td>
-                    <select name="estado" id="estado" class="form-control">
-                      <option value="1">Activo</option>
-                      <option value="0">Inactivo</option>
-                    </select>
-                   </td>
-                 </tr>
-                                       
-               </tbody>
-             </table>
+            
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Usuario de acceso <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_acceso" required="" type="text" class="form-control" id="usuario_acceso" placeholder="Usuario de acceso"></div>
+              <div class="col-md-2 col-sm-3">Contraseña <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <input autofocus="" name="usuario_clave" required="" type="password" maxlength="12" class="form-control" id="usuario_clave" placeholder="Contraseña">
+                <small><input type="checkbox" /> Generación de contraseña automática</small>
+              </div>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Nombre <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_nombre" required="" type="text" class="form-control" id="usuario_nombre" placeholder="Nombre"></div>
+              <div class="col-md-2 col-sm-3">Apellido <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_apellido" required="" type="text" maxlength="12" class="form-control" id="usuario_apellido" placeholder="Apellido"></div>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Correo <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <select name="" id="usuario_email"></select>
+                &nbsp;<small class="agregar-emal cursor">Agregar Email</small>
+              </div>
+              <div class="col-md-2 col-sm-3">Departamento <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <select name="" id="usuario_depto"></select>
+              </div>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Área <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <select name="" id="usuario_area"></select>
+              </div>
+              <div class="col-md-2 col-sm-3">Perfil <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <select name="" id="usuario_perfil">
+                <?php
+                    if (isset($listUsers['resultado'])) {
+                      foreach ($listUsers['resultado'] as $key => $value) {
+                        echo "<option></option>";
+                      }
+                    }
+                ?>
+                </select>
+              </div>
+            </div>
+            <div class="clearfix ">&nbsp;</div>
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Cargo <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_cargoe" required="" type="text" class="form-control" id="usuario_cargo" placeholder="Nombre"></div>
+              <div class="col-md-2 col-sm-3">Estado <span class="symbol required"></div>
+              <div class="col-md-4 col-sm-3">
+                <select name="usuario_estado" id="usuario_estado" class="form-control">
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12 col-sm-12"><input type="checkbox" /> <i class="clip-user-4"></i> Usuario principal? <small>(usuario principal de la sección o depto.)</small></div>
+              <div class="col-md-12 col-sm-12"><input type="checkbox" /> <i class="clip-user-5"></i> Es el director de la dirección?</div>
+              <div class="col-md-12 col-sm-12"><input type="checkbox" checked /> <i class="clip-bubble-4"></i> Enviar notificación? <small>(Enviar notificación de creación de cuenta por correo.)</small></div>
+            </div>
            </div>
         <div class="modal-footer">
         <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -194,9 +253,32 @@ div.dataTables_wrapper div.dataTables_filter label {
       </div>
     </div>
   </div>
-<!-- End Perfil -->
+<!-- End Add -->
 
 
+
+<!-- Show Permisos -->
+<div class="modal fade" id="user-permission" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
+          <div id="mssg-label-edit-perm"></div>
+      </div>
+    <div class="modal-body" id="show-permisos">
+        Cargando...
+    </div>
+    <div class="modal-footer">
+      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
+    </div>
+    </div>
+  </div>
+</div>
+<!-- End Show Permisos -->
 <?php get_template_part('footer_scripts');?>
 
 
@@ -398,8 +480,33 @@ $.ajax({
 });
 }
 
+// Show Permisos
+function showUserPermisos ( id ) {
+
+var id_user     = '<?php echo $_SESSION["id_user"]?>';
+var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+var contenido_editor = $('#show-permisos')[0];
+
+//$('#cargando_list').show()
+ajax1   = nuevoAjax();
+ajax1.open("GET", "ajax/ajax_list_users_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
+ajax1.onreadystatechange=function() {
+
+if (ajax1.readyState==4) {
+  contenido_editor.innerHTML = ajax1.responseText;
+}
+}
+
+ajax1.send(null);
+
+}
+
+/** 
+ * Datatable
+*/
 $(document).ready( function () {
     $('#tabla-list-perfiles').DataTable({
+      pageLength:25,
       language: {
           url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
           search: '',
@@ -408,9 +515,9 @@ $(document).ready( function () {
       columnDefs: 
       [ 
       {
-      targets: 3,
+      targets: 5,
       orderable: false
-      },{ width: "8%", targets: 0,},{ width: "15%", targets: 2, } 
+    },{ width: "3%", targets: 0, }, { width: "15%", targets: 1 } , { width: "15%", targets: 2 } , { width: "15%", targets: 3 } , { width: "8%", targets: 4 } , { width: "10%", targets: 5 } 
     ]
     });
 } );

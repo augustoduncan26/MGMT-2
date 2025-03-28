@@ -459,13 +459,13 @@
 @media (min-width: 768px) {
 	.main-navigation {
 		position: absolute;
-		width: 225px;
+		width: 210px;
 	}
 	.navbar-collapse.in {
 		overflow-y: visible;
 	}
 	.main-content {
-		margin-left: 225px;
+		margin-left: 210px;
 	}
 	.page-full-width .main-content {
     	margin-left: 0 !important;

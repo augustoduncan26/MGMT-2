@@ -101,9 +101,24 @@ $passN 	 = 	$_POST["password"];
 
 $busco 	 =	$ObjUser->verificarUsuario ($nickN, $passN);
 
+// $plain_txt = "pelaito11";
+// echo "Plain Text =" .$plain_txt. "\n <br>";
+
+// $encrypted_txt = encrypt_decrypt('encrypt', $plain_txt);
+// echo "Encrypted Text = " .$encrypted_txt. "<br>";
+
+// $decrypted_txt = encrypt_decrypt('decrypt', $encrypted_txt);
+// echo "Decrypted Text =" .$decrypted_txt. "\n";
+
+// if ( $plain_txt === $decrypted_txt ) echo "SUCCESS";
+// else echo "FAILED";
+
+// echo "\n";
+
+// exit;
 if ( $busco == 1 ) { 
 	$saco 			=	$ObjUser->getUser( $nickN, "Usuario" );
-if ( $saco['contrasena'] == $passN ) {
+if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
 
 	$ObjMant 		=	new Mantenimientos();
 	$Objejec 		=  	new ejecutorSQL();
@@ -119,8 +134,8 @@ if ( $saco['contrasena'] == $passN ) {
 	$_SESSION['username'] 			= 	$nombredesesion;
 	$_SESSION['id_session'] 		= 	session_id();
 	$_SESSION['id_user']  			= 	$saco['id_usuario'];
-	$_SESSION['principal'] 			= 	$saco['is_principal'];
-	$_SESSION['superadmin'] 		= 	$saco['is_superadmin'];
+	$_SESSION['principal'] 			= 	$saco['principal'];
+	$_SESSION['superadmin'] 		= 	$saco['superadmin'];
 	$_SESSION['lastname']			= 	$saco['apellido'];
 	$_SESSION['email']				= 	$saco['email'];
 	$_SESSION['id_cia'] 			= 	$saco['id_cia'];
@@ -141,7 +156,7 @@ if ( $saco['contrasena'] == $passN ) {
 	$logadmin = true;
 
 ?>
-	<SCRIPT LANGUAGE="javascript"> location.href = 'home.php'; </SCRIPT>
+	<SCRIPT LANGUAGE="javascript"> location.href = 'Home'; </SCRIPT>
 
 <?php 
 

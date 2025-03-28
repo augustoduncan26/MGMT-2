@@ -217,7 +217,7 @@
 	$FILA_N			=	0;
 	// USUARIO DE ESTE DPTO.
 	//Conocer usuarios que son de este DPTO y que a la vez son supervisores
-	$Wer_userSuperv	=	'id_depto = "'.$PIDDEPTO.'" and id_perfil = "2" AND activo = "1" ORDER BY id_area,nombre ASC';
+	$Wer_userSuperv	=	'id_depto = "'.$PIDDEPTO.'" and id_perfil = "2" AND active = "1" ORDER BY id_area,nombre ASC';
 	$P_UserDptoSup	=	$objMante->Listar(PREFIX.'users', $Wer_userSuperv,false,false,false,false,'array');
 	
 	//var_dump($P_UserDptoSup['resultado']);

@@ -6,9 +6,9 @@ $ObjMante   = 	new Mantenimientos();
 $ObjEjec    = 	new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
-$P_Tabla 	=	PREFIX.'users';
+$P_Tabla 	=	PREFIX.'usuarios';
 
-$where 			= 	"";//'id_cia="'.$id_cia.'"';
+$where 			= 	'id_cia="'.$id_cia.'" and id_usuario <> 1';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
 $listEmpleados 	=	$ObjMante->BuscarLoQueSea('email',PREFIX.'empleados',false,'array','id,nempleado');
 $listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','active=1','array');
@@ -16,41 +16,65 @@ $listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','active=1','arr
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {
 	$where 			= 	'id_cia="'.$id_cia.'"';
-	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
+	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'mant_perfiles',$where,'array','id,name');
 	echo json_encode($listPerfiles['resultado']);
 }
 
 // Add
-if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
-	$P_Campos 		=	'name,id_cia,active,created_at,updated_at';
-	$P_Valores 		=	"'".sanear_string($_GET['nombre'])."','".$_SESSION['id_cia']."','".$_GET['estado']."',NOW(),NOW()";
-	
-	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'name="'.$_GET['nombre'].'"','array');
+if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['user_acceso'] != '') {
+	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email="'.$_GET['user_acceso'].'"','array');
 
 	if ($sql['total'] > 0 ) {
 		echo $mssg	=	'Ya existe este registro.';
 	} else {
-		$P_Valores = "'".$_GET['nombre']."','".$_GET['id_cia']."','".$_GET['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'name,id_cia,active', $P_Valores);
-		echo $mssg 	=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
+		$clave 		=	encrypt_decrypt('encrypt', $_GET['clave']);
+		//echo $_GET['perfil'];
+		$P_Valores 	= 	"'".$_GET['user_acceso']."','".$_GET['user_acceso']."','".$_GET['nombre']."','".$_GET['apellido']."','".$id_cia."','".$_GET['director']."','".$_GET['principal']."','".$_GET['perfil']."','".$clave."',NOW(),NOW(),'0','".$_GET['estado']."'";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
+		//echo $mssg 	=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
+		echo $mssg 	=	'Se ingreso el registro con éxito';
 	}
 }
 
 // Show Edit Modal & info
 if (isset($_GET['showEdit']) && $_GET['id'] != "") {
-	$data       = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+	$data       = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	echo json_encode($data);
 }
 
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."',active = '".$_GET['estado']."', updated_at=NOW()";
-	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_GET['id'].'"');
-  	if($l == 1){
+
+	$P_Valores 	= "nombre='".$_GET['nombre']."', apellido = '".$_GET['apellido']."', id_perfil='".$_GET['perfil']."',  activo = '".$_GET['estado']."', updated_at=NOW()";
+	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_GET['id'].'"');
+  	
+	$clave = "";
+	if (isset($_GET['clave']) && $_GET['clave']!="") {
+		$clave 		=	encrypt_decrypt('encrypt', $_GET['clave']);
+		$clave 		= 	"contrasena='".$clave."'";
+		$l = $ObjEjec->actualizarRegistro($clave, $P_Tabla, 'id_usuario = "'.$_GET['id'].'"');
+	}
+	
+	if($l == 1){
 		echo 'ok';
 	} else {
 		echo 'error';
 	}
+}
+
+// Permisos
+if (isset($_POST['editperm']) && $_POST['editperm']==1) {
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_usuario = '".$_POST['id_']."'");
+	$exp 		=	explode(",",$_POST['valores']);
+	$cuantos 	= 	count($exp);
+	for ($i = 0 ; $i < $cuantos; $i++) {
+		if (is_numeric($exp[$i])) {
+			$P_Campos 		=	'id_usuario,id_definicion_permiso';
+			$P_Valores 		=	"'".$_POST['id_']."','".$exp[$i]."'";
+			$ObjEjec->insertarRegistro(PREFIX.'permisos', $P_Campos, $P_Valores);
+		}
+	}
+	echo $mssg 		=	1;
 }
 
 // Delete 
@@ -58,5 +82,6 @@ if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
 	$ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."'");
 	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
 }
+
 
 ?>

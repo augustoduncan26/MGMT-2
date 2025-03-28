@@ -5,11 +5,17 @@ $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 
 $id_user    = $_SESSION["id_user"];
-$id_empresa = $_SESSION['id_empresa'];
+$id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
 //$lastname 	= $_SESSION['apellido'];
 
+// All
+$selectAll  = $ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_cia = '.$id_cia,'array');
+
+/**
+ * Add
+ */
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 
 	$busca 			=	$ObjMante->BuscarLoQueSea('*',PREFIX.'events','nombre = '.$_GET['nombre']);
@@ -19,22 +25,26 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 	} else {
 
 		$P_Tabla 	=	PREFIX.'events';
-		$P_Campos 	=	'id_empresa,nombre,precio,fechainicio,fechafin,activo';
-		$P_Valores 	=	"'".$id_empresa."','".$_GET['nombre']."','".number_format($_GET['precio'],2)."',NOW(),NOW(),'".$_GET['estado']."'";
+		$P_Campos 	=	'id_cia,nombre,precio,fechainicio,fechafin,activo';
+		$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".number_format($_GET['precio'],2)."',NOW(),NOW(),'".$_GET['estado']."'";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 	}
 }
 
-// Edit 
+/**
+ * Edit
+ */
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	$P_Valores = "nombre = '".$_GET['nombre']."', activo = '".$_GET['activo']."', precio = '".$_GET['precio']."'";
 	$ObjEjec->actualizarRegistro($P_Valores, PREFIX.'events', 'id = "'.$_GET['id'].'"');
   	echo 'Se ha actualizado el registro con éxito';
 }
 
-// Delete 
+/**
+ * Delete
+ */
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
 	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."events Where id = '".$_GET['id']."'");
 	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';

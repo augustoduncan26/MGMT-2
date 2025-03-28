@@ -54,7 +54,7 @@
 					Por favor ingrese su nombre de usuario y contraseña.
 				</p> -->
 				<form class="form-login" action="#SELF" method="post">
-					<div class="errorHandler alert alert-info <?php if(!isset($mensaje)){?> no-display <?php } ?>">
+					<div class="errorHandler alert <?php if(!isset($mensaje)){?>  no-display alert-info <?php } else { ?> alert-danger <?php } ?>">
 						<i class="fa fa-remove-sign"></i><?=$mensaje?>.
 					</div>
 					<fieldset>

@@ -28,8 +28,8 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	if ($sql['total'] > 0 ) {
 		echo $mssg	=	'Ya existe este registro.';
 	} else {
-		$P_Valores = "'".$_GET['nombre']."','".$_GET['id_cia']."','".$_GET['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'name,id_cia,active', $P_Valores);
+		$P_Valores = "'".$_GET['nombre']."','".$_GET['id_cia']."','".$_GET['estado']."',NOW(),NOW()";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'name,id_cia,active,created_at,updated_at', $P_Valores);
 		echo $mssg 	=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 	}
 }

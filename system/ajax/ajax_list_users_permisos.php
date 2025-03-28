@@ -6,8 +6,8 @@ include_once ('../framework.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 
-$nombre       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
-$permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion','active=1',false,'permiso');
+$nombre       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
+$permss       = $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion','activo=1',false,'permiso');
 
 ?>
   <strong style="font-size: 16px;">Usuario: <?php echo $nombre['nombre'];?></strong>

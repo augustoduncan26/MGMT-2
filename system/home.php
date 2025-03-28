@@ -1,7 +1,5 @@
 <?php 
-
 header("Content-Type: text/html;charset=utf-8");
-
 include ( dirname(__FILE__).'/load.php' );
 
 // Rooms en uso + salas de eventos
@@ -19,14 +17,19 @@ include ( dirname(__FILE__).'/load.php' );
 //$moneda     =   $ObjMante->BuscarLoQueSea('*' , 'ad_type_moneda' ," id = '".$tmoneda['tipo_moneda']."'",'extract');
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <style>
 .img-dashboard {
   opacity: 20%;
-  margin-top: 10%;
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+.welcome-title {
+  opacity: 50%;
+  margin-top: 0%;
   display: flex;
   justify-content: center;
 }
@@ -66,7 +69,12 @@ include ( dirname(__FILE__).'/load.php' );
 
         <!-- end: SPANEL CONFIGURATION MODAL FORM -->
         <div class="container" style="background-color: #fff !important">
-          <!-- start: PAGE HEADER -->
+          
+        <!-- start: PAGE HEADER -->
+        
+        <div class="row">&nbsp;</div>
+
+        <!-- Logo Message -->
           <div class="row">
             <div class="col-sm-12">
 
@@ -75,12 +83,22 @@ include ( dirname(__FILE__).'/load.php' );
               if($_GET) { 
                 get_theView();
               } else {
-                echo '<div class="img-dashboard col-md-12 col-sm-12"><img src="assets/images/template/DC_logo.png" class="circle-img " alt=""></div>';
+
+                get_template_part('home_statistic_data');
+                
+                // echo '<div class="row">
+                //         <div class="img-dashboard col-md-12 col-sm-12"><img src="assets/images/template/DC_logo.png" class="circle-img " alt=""></div>
+                //         <div class="welcome-title col-md-6 col-md-offset-3"><h4>Bienvenido/a: '.$_SESSION['username'].'</h4></div>
+                //       </div>';
+
+                get_template_part('home_charts');
               }
 
               ?>
               
         </div>
+        
+
       </div>
       <!-- end: PAGE -->
     </div>

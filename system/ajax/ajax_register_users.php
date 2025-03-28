@@ -41,7 +41,7 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
 					&nbsp;&nbsp;Gracias por su registro.<br><br>
 					&nbsp;&nbsp;Recuerda sus datos de acceso:<br>
 					&nbsp;&nbsp;Nombre de usuario: ".$_POST['email']."<br>			
-					&nbsp;&nbsp;Para confirmar su registro, siga este enlace: <a href='".ENV['URL_NAME']."/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
+					&nbsp;&nbsp;Para confirmar su registro, siga este enlace: <a h	ref='".ENV['URL_NAME']."/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
 					&nbsp;&nbsp;Esta confirmación estará activa durante 7 días.<br />
 					";
 	

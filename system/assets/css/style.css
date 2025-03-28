@@ -63,6 +63,8 @@
 
 /** COLORS */
 .color-red { color: red;}
+.color-gray { color: rgba(28, 27, 27, 0.657);}
+.color-green { color: rgba(93, 160, 85, 0.834);}
 
 /** CURSORS */
 .cursor { cursor: pointer;}

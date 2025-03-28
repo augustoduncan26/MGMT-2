@@ -30,7 +30,7 @@ if (isset($_POST['btn_actualizar_perfil'])) {
 
 	}
 	// Update data
-	$sql 		=	$ObjEjec->ejecutarSQL("Update ".PREFIX."users SET nombre='".$_POST['full_name']."', telephone='".$_POST['telephone']."', direcction='".$_POST['direcction']."', profile_photo='".$newfilename."', updated_at=NOW()  Where id_usuario = '".$id_user."'");
+	$sql 		=	$ObjEjec->ejecutarSQL("Update ".PREFIX.$P_Tabla." SET nombre='".$_POST['full_name']."', telephone='".$_POST['telephone']."', direcction='".$_POST['direcction']."', profile_photo='".$newfilename."', updated_at=NOW()  Where id_usuario = '".$id_user."'");
 	if ($sql) {
 		$_SESSION['username'] = $_POST['full_name'];
 		$mssg = "Los datos fueron actualizados con éxito.";
@@ -38,32 +38,7 @@ if (isset($_POST['btn_actualizar_perfil'])) {
 }
 
 
-$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','id_cia = '.$_SESSION['id_cia'].' and usuario="'.$email.'"','extract');
+$datos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.$P_Tabla,' id_cia = '.$id_cia.' and email="'.$email.'"','extract');
 
-// Add
-/*
-if ( $_GET['add'] == 1 && $_GET['nombre'] != '') {
-
-	$datosEmpresa 	=	mysql_fetch_array(mysql_query("Select * From usuarios Where id_usuario = '".$id_user."'"));
-	//echo $datosEmpresa['name_cia'];
-
-    $PCLAVE			=	"AES_ENCRYPT('".htmlentities('123456')."','toga')";
-	$P_Campos 		=	'usuario,contrasena, email, nombre, apellido, id_cia,name_cia,fecha_registro,fecha_ult_act,principal,idioma,activo,telephone,direcction,tipo_moneda';
-	$P_Valores 		=	"'".$_GET['email']."', AES_ENCRYPT('123456','toga') , '".$_GET['email']."', '".$_GET['nombre']."', '---' ,'".$_SESSION['id_cia']."', '".$datosEmpresa['name_cia']."' , '".date("Y-m-d H:i:s")."' , '".date("Y-m-d H:i:s")."' , 0 , '".$datosEmpresa['idioma']."' , '".$_GET['estado']."', '".$_GET['telefono']."', '".$_GET['direccion']."', '".$datosEmpresa['tipo_moneda']."'";
-	
-	$busca 			=	mysql_query("Select * From ".$P_Tabla." Where email = '".$_GET['email']."'"); // $ObjMante->BuscarLoQueSea('*' , $P_Tabla, ' codigo ='.$_POST['nombre'], 'extract', false);
-
-	if (mysql_num_rows($busca) >0 ) {
-			echo $mssg	=	'Ya existe este email.';
-	} else {
-		//$sql 	=	$Objsql->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-		$sql 	=	mysql_query("Insert into ".$P_Tabla." (".$P_Campos.") values(".$P_Valores.")") or die(mysql_error());
-		if ($sql) {
-			echo $mssg 	=	'Se ingreso el registro con éxito';
-		}
-
-	}
-}
-*/
 
 ?>

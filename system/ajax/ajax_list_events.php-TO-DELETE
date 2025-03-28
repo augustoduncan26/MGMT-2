@@ -14,7 +14,10 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_empresa = '.$id_
         <tr class=""><!-- header-list-table -->
           <!-- <th style="width:10px"><input type="checkbox" /></th> -->
           <th>Nombre</th>
-          <th>Precio</th> 
+          <th>Clase</th> 
+          <th>Fecha</th>
+          <th>Hora Inicio</th> 
+          <th>Hora Fin</th>
           <th>Estado</th>
           <th></th>
         </tr>

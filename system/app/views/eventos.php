@@ -1,10 +1,30 @@
 <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
-<link rel="stylesheet" href="assets/css/styles_datatable.css" />
 
-<body onload="$('#cargando_add').hide()">
+
+<style>
+@media (min-width: 768px) {
+  .dataTables_filter {
+  width: 30%;
+  /* text-align:justify !important; */
+  /* margin-right: -20px !important; */
+  }
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: 98%;
+  }
+  div.dataTables_wrapper div.dataTables_filter label {
+  width: 300px !important;
+  }
+  /* .modal-xl {
+    width: 70%;
+   max-width:1350px;
+  } */
+}
+</style>
+
+<body>
 
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -16,39 +36,76 @@
       <label id="label-mssg"><?=$mssg?></label>
     </div>
 
-<!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
     <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Evento</a>
+    <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+    <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+<div class="row">
+  <div class="col-sm-12">
+    <div class=""><!-- panel panel-default -->
+      <div class="panel-heading">
+        <i class="clip-calendar"></i>Administrar Eventos
+      </div>
+      <div class="panel-body">
+        <div class="col-sm-12">
+          <div style="height:10px;"></div>
 
-   <div class="row">
-      <div class="col-sm-12">
-       <div class="panel panel-default">
-          <div class="panel-heading">
-            <i class="fa fa-group"></i>Administrar Eventos
-           </div>
-             <div class="panel-body">
-              <div class="col-sm-12">
-              <div style="height:10px;"></div>
-
-               <div class="x_content">
-               <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
-               <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i>
-               <div id="list-events"></div>
-              </div>
+        <div class="x_content">
+        <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
+        <!-- <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i> -->
+            <div class="table-responsive">
+              <table id="list-table-events" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr class=""><!-- header-list-table -->
+              <!-- <th style="width:10px"><input type="checkbox" /></th> -->
+              <th>Nombre</th>
+              <th>Clase</th> 
+              <th>Fecha</th>
+              <th>Hora Inicio</th> 
+              <th>Hora Fin</th>
+              <th>Estado</th>
+              <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <?php
+              if ($sel1['resultado']){
+              foreach ($sel1['resultado'] as $datos) {
+              ?>
+              <tr>
+              <!-- <td><input type="checkbox" /></td> -->
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['start_time']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['end_time']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+              <td class="text-center" style="width:10% !important;">
+              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editEvent('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+              </td>
+              </tr>
+              <?php
+              }
+              }
+              ?>
+              <tfoot>
+              <tr></tr>
+              </tfoot>
+              </tbody>
+              </table>
             </div>
           </div>
-       </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
 
  <div class="clearfix"></div>
 
-<!-- Modal Add Room -->
-<?php //get_view_part ( 'agregar-eventos' )?>
+<!-- Modal Add -->
 <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
@@ -62,20 +119,40 @@
                <thead>
                </thead>
                <tbody>
+                <div class="alert alert-danger">Todos los campos son necesarios</div>
                  <tr>
-                   <td width="30%">Nombre <span class="symbol required"></span></td>
+                   <td width="30%">Nombre <!--<span class="symbol required"></span>--></td>
                    <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Precio <span class="symbol required"></span></td>
-                   <td width="70%"><input autofocus="" name="precio" type="number" class="form-control" id="precio" placeholder="Precio" min="1" step="0.01" value="1"></td>
+                   <td width="30%">Clase <span class="symbol required"></span></td>
+                   <td width="70%">
+                    <select name="event_class_add">
+
+                    </select>
+                   </td>
+                 </tr>
+
+                 <tr>
+                   <td width="30%">Fecha [mes/dia/año] <!--<span class="symbol required"></span>--></td> 
+                   <td width="70%"><input autofocus="" name="event_add_date" onchange="" type="date" class="form-control" id="event_add_date" placeholder="Fecha"  min="03/06/2025"></td>
+                 </tr>
+
+                 <tr>
+                   <td width="30%">Hora Inicio <!--<span class="symbol required"></span>--></td>
+                   <td width="70%"><input autofocus="" name="event_add_date_ini"  type="time" class="form-control" id="event_add_date_ini" placeholder="Hora de Inicio" ></td>
+                 </tr>
+
+                 <tr>
+                   <td width="30%">Hora Fin <!--<span class="symbol required"></span>--></td>
+                   <td width="70%"><input autofocus="" name="event_add_date_fin" type="time" class="form-control" id="event_add_date_fin" placeholder="Hora Final"></td>
                  </tr>
 
                  <tr>
                    <td>Estado</td>
                    <td>
-                    <select name="estado"  class="form-control" id="estado">
+                    <select name="event_estado_add"  class="form-control" id="event_estado_add">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
                     </select>
@@ -95,9 +172,6 @@
   </div>
 <!-- En Add Event -->
 
-<!-- Modal Add Events -->
-<?php //get_view_part ( 'modificar-habitacion' )?>
-<!-- En Add Events -->
 
 <!-- Edit Events -->
 <?php /////////// Editar algo ?>
@@ -126,10 +200,16 @@ Cargando contenidos...
 
 <?php get_template_part('footer_scripts');?>
 
-<script src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
-    
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
+
 <script>
 
+var today = new Date().toISOString().slice(0, 10);
+document.getElementsByName("event_add_date")[0].min = today;
+
+// Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
     $('.navigation-toggler').bind('click', function () {
         if (!$('body').hasClass('navigation-small')) {
@@ -141,33 +221,33 @@ var runNavigationToggler = function () {
 };
 runNavigationToggler();
 
-const listEventsResult = () => {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  $('.fa-spinner').show();
-  var contenido_editor = $('#list-events')[0];
-  let route = "ajax/ajax_list_events.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
-  $.ajax({
-    headers: {
-      Accept        : "application/json; charset=utf-8",
-      "Content-Type": "application/json: charset=utf-8"
-    },
-    url: route,
-    type: "GET",
-    data: "",
-    dataType        : 'html',
-    success         : function (response) { 
-      contenido_editor.innerHTML = response;
-      $('.fa-spinner').hide();
-      loadDataTable()
-    },
-    error           : function (error) {
-      console.log(error);
-    }
-  });
-}
+// const listEventsResult = () => {
+//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
+//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+//   $('.fa-spinner').show();
+//   var contenido_editor = $('#list-events')[0];
+//   let route = "ajax/ajax_list_events.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
+//   $.ajax({
+//     headers: {
+//       Accept        : "application/json; charset=utf-8",
+//       "Content-Type": "application/json: charset=utf-8"
+//     },
+//     url: route,
+//     type: "GET",
+//     data: "",
+//     dataType        : 'html',
+//     success         : function (response) { 
+//       contenido_editor.innerHTML = response;
+//       $('.fa-spinner').hide();
+//       //loadDataTable()
+//     },
+//     error           : function (error) {
+//       console.log(error);
+//     }
+//   });
+// }
 
-listEventsResult();
+//listEventsResult();
 
 // Delete Event
 function deleteRow ( id ) {
@@ -232,29 +312,6 @@ function addEvent () {
       console.log(error);
     }
   });
-
-
-  // ajax2   = nuevoAjax();
-  // ajax2.open("GET", "app/controllers/eventos.php?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
-  // ajax2.onreadystatechange=function() {
-
-  //   if (ajax2.readyState==4) {
-  //     $("#mssg-add-eventos").html(ajax2.responseText);
-  //     listEvents();
-  //     setTimeout(() => {
-  //       $(".alert-exito").hide();
-  //       $(".alert-danger").hide();
-  //     }, 3000);
-      
-  //     $("#nombre").val('');
-  //     $("#precio").val('');
-  //     $("#nombre").focus();
-  //   }
-  // }
-  // ajax2.send(null);
-
-
-
 }
 
 // Edit Event
@@ -310,7 +367,7 @@ function listEvents() {
     if (ajax1.readyState==4) {
       contenido_editor.innerHTML = ajax1.responseText;
       $('#cargando_list').hide();
-      loadDataTable();
+      //loadDataTable();
     }
   }
 
@@ -330,61 +387,29 @@ function limpiar () {
 $("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 
-//$(document).ajaxStop(function() { 
-let loadDataTable = () => {
-setTimeout(() => {
-    $("#list-table-events").dataTable().fnDestroy();
+
+
+$(document).ready( function () {
     $('#list-table-events').DataTable({
-        // columnDefs: [
-        //     { width: "2%", targets: 0 }
-        // ],
-        // fixedColumns: true,
-        "columnDefs": [{
-        "orderable": false,
-        "targets": [3]
-        }],
-        language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
-        "infoFiltered": "(Filtrado de _MAX_ total registros)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ registros",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "",
-        "searchPlaceholder": "Buscar",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-    },
-        order: [0, 'desc'],
-        dom: "<'row'<'col-sm-12 col-md-6'f>" +
-        "<'col-sm-12 col-md-6'<'row m-0 float-right'<'col-md-auto'l>>>>" +
-        "<'row'<'col-sm-12'tr>>" +
-        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-        lengthMenu: [20, 30, 50, 100, 500],
-        processing: "Procesando...",
-        "zeroRecords": "No se encontraron resultados",
-        "emptyTable": "Ningún dato disponible en esta tabla",
-        "search": "Buscar:",
-        "infoThousands": ",",
-        "loadingRecords": "Cargando...",
-        "paginate": {
-            "first": "Primero",
-            "last": "Último",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        },
+      pageLength: 25,
+      language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
+          search: '',
+          searchPlaceholder: "Buscar",
+      },
+      order: [[0, 'asc']],
+      columnDefs: 
+      [ 
+      {
+      targets: 6,
+      orderable: false
+      },{ width: "20%", targets: 0 },{ width: "20%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "10%", targets: 3 }
+    ]
     });
-});
-}
+} );
+
+
+$("[name='event_class_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>
-<!--<script id='name-table' src="assets/js/datatable-design.js?name=events"></script>-->

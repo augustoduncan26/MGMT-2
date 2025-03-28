@@ -291,6 +291,9 @@ function listPerfiles() {
     success         : function (response) { 
 
       let arr     = response;
+      if (!arr || arr == null) {
+        return false;
+      }
       let keys    = Object.keys(arr).length;
       let r       = "";
       let content = '';
@@ -399,6 +402,40 @@ $.ajax({
     console.log(error);
   }
 });
+}
+
+// Delete Event
+function deleteRow ( id ) {
+  let id_cia    = '<?php echo $_SESSION["id_cia"]?>';
+  let route     = "app/controllers/configurar-perfiles.php";
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: {
+      delete    : 1,
+      id        : id,
+      id_cia    : id_cia,
+      nocache   : '<?php echo rand(99999,66666)?>',
+    },
+    dataType        : 'html',
+    success         : function (response) { 
+      window.location.reload();
+      //$("#mssg-alert").html(response);
+      //limpiarCampos ();
+      //listPerfiles();
+      // setTimeout(() => {
+      //   $(".alert-exito").hide();
+      //   $(".alert-danger").hide();
+      // }, 3000);
+    },
+    error           : function (error) {
+      console.log(error);
+    }
+  });
 }
 
 $(document).ready( function () {

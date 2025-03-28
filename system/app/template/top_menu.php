@@ -9,7 +9,8 @@
           <!-- end: RESPONSIVE MENU TOGGLER -->
           <!-- start: LOGO -->
           <a class="navbar-brand" href="home" title="Schedule Manager">
-            <!-- <img border="1" src="images/DC-2.png" class="logo-tight-top"> -->DC System
+            <!-- <img border="1" src="images/DC-2.png" class="logo-tight-top"> -->
+             <?php echo $_ENV['APP_NAME']; ?>
           </a>
           <!-- end: LOGO -->
         </div>
@@ -123,7 +124,7 @@
             </li>  -->
             <!-- end: TO-DO DROPDOWN-->
 
-            <?php /* ?>
+            <?php /* */ ?>
             <!-- start: NOTIFICATION DROPDOWN -->
              <li class="dropdown">
               <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
@@ -334,7 +335,7 @@
               </ul>
             </li> 
             <!-- end: MESSAGE DROPDOWN -->
-            <?php */ ?>
+            <?php /**/ ?>
 
             <!-- start: USER DROPDOWN -->
 
