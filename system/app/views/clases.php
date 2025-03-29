@@ -38,10 +38,10 @@
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-calendar"></i> Lista de Eventos</h4>
+      <h4><i class="clip-list-2"></i> Lista de Clases</h4>
       </div>
       <div class="col-md-5 text-right">
-      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Evento</a>
+      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nueva Clase</a>
       <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
       <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     </div>

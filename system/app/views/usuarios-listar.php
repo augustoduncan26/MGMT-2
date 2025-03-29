@@ -407,10 +407,10 @@ $("[name='agregar_usuario']").on('click', ()=>{
         } else {
           $('#mssg-alert').html('<div class="alert alert-danger">'+response+'</div>');
         }
-        // setTimeout(() => {
-        //   $("#mssg-alert").hide();
-        //   window.location.reload();
-        // }, 4000);
+        setTimeout(() => {
+          $("#mssg-alert").hide();
+          window.location.reload();
+        }, 4000);
       },
       error           : function (error) {
         console.log(error);
@@ -446,9 +446,6 @@ $.ajax({
     //$('#usuario_clave_edit').val('11111111');
     $('#usuario_nombre_edit').val(response['nombre']);
     $('#usuario_apellido_edit').val(response['apellido']);
-    //$('#usuario_email_edit').val(response['email']); //.change();
-    //$('#txt_departamento').val(response['id_depto']).change();
-    //$('#usuario_depto_edit').select2('val',response['id_depto']);
       
     $('#usuario_perfil_edit').val(response['id_perfil']).change();
     $('#usuario_estado_edit').select2('val',response['activo']);
@@ -475,15 +472,12 @@ $.ajax({
 
 // Update Row
 function updateRow ( id ) {
-
   let user_acceso =   $('#usuario_acceso_edit').val();
   let estado      =   $('#usuario_estado_edit').val();
   let clave       =   $('#usuario_clave_edit').val();
   let nombre      =   $('#usuario_nombre_edit').val();
   let apellido    =   $('#usuario_apellido_edit').val();
-  // let email       =   $('#usuario_email_edit').val();
-  // let depto       =   $('#usuario_depto_edit').val();
-  // let area        =   $('#usuario_area_edit').val();
+
   let perfil      =   $('#usuario_perfil_edit').val();
   //let cargo       =   $('#usuario_cargo').val();
   let principal   =   "";

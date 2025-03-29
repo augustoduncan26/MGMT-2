@@ -38,10 +38,10 @@
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-calendar"></i> Lista de Eventos</h4>
+      <h4><i class="fa fa-group"></i> Lista de Padres</h4>
       </div>
       <div class="col-md-5 text-right">
-      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Evento</a>
+      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Padre</a>
       <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
       <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     </div>
@@ -117,7 +117,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Evento</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Profesor</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
@@ -190,7 +190,7 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Evento</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Profesor</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">

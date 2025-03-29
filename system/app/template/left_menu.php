@@ -75,7 +75,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Padres" class="nav__link">
 				<i class="fa fa-group"></i>
 				<span class="title">&nbsp;Padres </span>
 				<!-- <span class="selected"></span> -->
@@ -88,7 +88,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Asignaturas" class="nav__link">
 				<i class="fa fa-indent"></i>
 				<span class="title">&nbsp;Asignaturas </span>
 				<!-- <span class="selected"></span> -->
@@ -101,7 +101,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Clases" class="nav__link">
 				<i class="clip-list-2"></i>
 				<span class="title">&nbsp;Clases </span>
 				<!-- <span class="selected"></span> -->
@@ -114,7 +114,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Lecciones" class="nav__link">
 				<i class="clip-list-2"></i>
 				<span class="title">&nbsp;Lecciones </span>
 				<!-- <span class="selected"></span> -->
@@ -127,7 +127,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Examenes" class="nav__link">
 				<i class="clip-calendar-3"></i>
 				<span class="title">&nbsp;Examenes </span>
 				<!-- <span class="selected"></span> -->
@@ -140,7 +140,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Tareas" class="nav__link">
 				<i class="fa fa-tasks"></i>
 				<span class="title">&nbsp;Tareas </span>
 				<!-- <span class="selected"></span> -->
@@ -153,7 +153,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Resultados" class="nav__link">
 				<i class="clip-list-2"></i>
 				<span class="title">&nbsp;Resultados </span>
 				<!-- <span class="selected"></span> -->
@@ -166,7 +166,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Asistencias" class="nav__link">
 				<i class="clip-checkbox"></i>
 				<span class="title">&nbsp;Asistencias </span>
 				<!-- <span class="selected"></span> -->
@@ -179,7 +179,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Mensajes" class="nav__link">
 				<i class="clip-bubble-dots-2"></i>
 				<span class="title">&nbsp;Mensajes </span>
 				<!-- <span class="selected"></span> -->
@@ -192,7 +192,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
+				<a href="?Anuncios" class="nav__link">
 				<i class="fa fa-bell"></i>
 				<span class="title">&nbsp;Anuncios </span>
 				<!-- <span class="selected"></span> -->
