@@ -33,7 +33,7 @@ const validate = (resultInput, emailInput) => {
 
   if(validateEmail(email)){
     $result.text(email + ' es válido.');
-    $result.css('color', 'green');
+    //$result.css('color', 'green');
     $result.hide();
   } else{
     $result.show();

@@ -117,10 +117,10 @@ if ( $sel_['total'] < 1 ) {
 	<script>
 //let ENV = "<?php echo ENV["URL_NAME"]; ?>";
 
-function validateEmail($email) {
-  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailReg.test( $email );
-}
+// function validateEmail($email) {
+//   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+//   return emailReg.test( $email );
+// }
 
 function registerUsers () {
 	//let ENV3 = "<?php echo ENV["URL_NAME"]; ?>";

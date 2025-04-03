@@ -479,10 +479,10 @@
 <script src="assets/js/datatable-config.js"></script>
 <script>
 
-function validateEmail($email) {
-  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailReg.test( $email );
-}
+// function validateEmail($email) {
+//   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+//   return emailReg.test( $email );
+// }
 
 // Add
 function addUser () {

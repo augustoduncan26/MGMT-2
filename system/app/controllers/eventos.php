@@ -25,8 +25,8 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] !='') {
 	} else {
 
 		$P_Tabla 	=	PREFIX.'events';
-		$P_Campos 	=	'id_cia,nombre,precio,fechainicio,fechafin,activo';
-		$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".number_format($_GET['precio'],2)."',NOW(),NOW(),'".$_GET['estado']."'";
+		$P_Campos 	=	'id_cia,name,class,date_start,time_start,date_end,time_end,activo';
+		$P_Valores 	=	"'".$id_cia."','".$_GET['nombre']."','".$_GET['clase']."','".$_GET['dateI']."','".$_GET['horaI']."','".$_GET['dateF']."','".$_GET['horaF']."','".$_GET['estado']."'";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		
 		echo $mssg 		=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';

@@ -47,6 +47,9 @@ ul.main-navigation-menu > li > a {
 .list_item a {
     text-decoration: none;
 }
+.list_item:hover {
+	background-color: #3e96cd15;
+}
 .list__item{
     list-style: none;
     width: 100%;

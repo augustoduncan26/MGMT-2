@@ -24,180 +24,181 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Home -->
 		<li class="list_item">
+		<a href="Home" class="nav__link">
 			<div class="list__button">
-				<a href="Home" class="nav__link">
-					<i class="clip-home-3"></i>
-					<span class="title">&nbsp;Home </span>
-					<!-- <span class="selected"></span> -->
-				</a>
+				<i class="clip-home-3"></i>
+				<span class="title">Home</span>
+				<!-- <span class="selected"></span> -->
 			</div>
+		</a>
 		</li>
 
 		<!-- Events -->
 		<?php if ($objPermOpc->tienePermiso(50)) { ?>
 		<li class="list_item">
+			<a href="?Eventos" class="nav__link">
 			<div class="list__button">
-				<a href="?Eventos" class="nav__link">
 				<i class="clip-calendar"></i>
-				<span class="title">&nbsp;Eventos </span>
+				<span class="title">Eventos</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
+
 		<!-- Teachers -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Profesores" class="nav__link">
 			<div class="list__button">
-				<a href="?Profesores" class="nav__link">
 				<i class="clip-user-5"></i>
-				<span class="title">&nbsp;Profesores </span>
+				<span class="title">Profesores</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Students -->
 		<?PHP //if($objPermOpc->tienePermiso(150)){  ?>
 			<li class="list_item">
+			<a href="?Estudiantes" class="nav__link">
 			<div class="list__button">
-				<a href="?Estudiantes" class="nav__link">
 				<i class="clip-users-2"></i>
-				<span class="title">&nbsp;Estudiantes </span>
+				<span class="title">Estudiantes</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php //} ?>
 
 		<!-- Parents -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Padres" class="nav__link">
 			<div class="list__button">
-				<a href="?Padres" class="nav__link">
 				<i class="fa fa-group"></i>
-				<span class="title">&nbsp;Padres </span>
+				<span class="title">Padres</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Subjects -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Asignaturas" class="nav__link">
 			<div class="list__button">
-				<a href="?Asignaturas" class="nav__link">
 				<i class="fa fa-indent"></i>
-				<span class="title">&nbsp;Asignaturas </span>
+				<span class="title">Asignaturas</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Classes -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Clases" class="nav__link">
 			<div class="list__button">
-				<a href="?Clases" class="nav__link">
 				<i class="clip-list-2"></i>
-				<span class="title">&nbsp;Clases </span>
+				<span class="title">Clases</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Lessons -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Lecciones" class="nav__link">
 			<div class="list__button">
-				<a href="?Lecciones" class="nav__link">
 				<i class="clip-list-2"></i>
-				<span class="title">&nbsp;Lecciones </span>
+				<span class="title">Lecciones</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Exams -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Examenes" class="nav__link">
 			<div class="list__button">
-				<a href="?Examenes" class="nav__link">
 				<i class="clip-calendar-3"></i>
-				<span class="title">&nbsp;Examenes </span>
+				<span class="title">Examenes</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Assignments -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Tareas" class="nav__link">
 			<div class="list__button">
-				<a href="?Tareas" class="nav__link">
 				<i class="fa fa-tasks"></i>
-				<span class="title">&nbsp;Tareas </span>
+				<span class="title">Tareas</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Results -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Resultados" class="nav__link">
 			<div class="list__button">
-				<a href="?Resultados" class="nav__link">
 				<i class="clip-list-2"></i>
-				<span class="title">&nbsp;Resultados </span>
+				<span class="title">Resultados</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Attendance -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Asistencias" class="nav__link">
 			<div class="list__button">
-				<a href="?Asistencias" class="nav__link">
 				<i class="clip-checkbox"></i>
-				<span class="title">&nbsp;Asistencias </span>
+				<span class="title">Asistencias</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Messages -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Mensajes" class="nav__link">
 			<div class="list__button">
-				<a href="?Mensajes" class="nav__link">
 				<i class="clip-bubble-dots-2"></i>
-				<span class="title">&nbsp;Mensajes </span>
+				<span class="title">Mensajes</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Announcements -->
 		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
+			<a href="?Anuncios" class="nav__link">
 			<div class="list__button">
-				<a href="?Anuncios" class="nav__link">
 				<i class="fa fa-bell"></i>
-				<span class="title">&nbsp;Anuncios </span>
+				<span class="title">Anuncios</span>
 				<!-- <span class="selected"></span> -->
-				</a>
 			</div>
+			</a>
 		</li>
 		<?php } ?>
 
@@ -240,8 +241,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'planning')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
-				<span class="title" >&nbsp;Planning </span>
-				
+				<span class="title" >&nbsp;&nbsp;Planning</span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>
@@ -548,7 +548,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			<li class="list_item list__item--click" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-users"></i>
-				<span class="title" >&nbsp;Usuarios</span>
+				<span class="title" >Usuarios</span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>
@@ -559,7 +559,7 @@ $id_cia     	= $_SESSION['id_cia'];
 				<?PHP if($objPermOpc->tienePermiso(800)){  ?>
 				<li <?php if(GET()[0] == 'usuarios-listar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-listar" class="nav__link nav__link--inside">
-						-<span class="title"> Mant. Usuarios </span>
+						-<span class="title">Mant. Usuarios</span>
 					</a>
 				</li>
 				<?php } ?>

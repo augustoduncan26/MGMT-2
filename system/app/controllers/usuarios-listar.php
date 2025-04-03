@@ -33,6 +33,30 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['user_acceso'] != '') {
 		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
 		//echo $mssg 	=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 		echo $mssg 	=	'Se ingreso el registro con éxito';
+
+		if ($_GET['enviar_email']) {
+			$Obj		=	new EnviarCorreo();
+			$mensaG		=	"<font face=verdana size=1.5 />Hola ".$_POST['nombre']."&nbsp;<br /><br />
+							&nbsp;&nbsp;Se ha creado su usuario con éxito.<br><br>
+							&nbsp;&nbsp;Sus datos de acceso son:<br>
+							&nbsp;&nbsp;Nombre de usuario: ".$_POST['email']."<br>			
+							&nbsp;&nbsp;Clave de acceso: ".$clave."<br>
+							";
+			
+			//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
+			
+			$mail_to_send_to = $_POST['email'];
+			$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
+			$subject		 = "Usuario creado";
+			//$message		= "\r\n" . "Name: TEST" . "\r\n";
+			$headers  = "From: " . strip_tags($from_email) . "\r\n";
+			$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+			$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
+			$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+			$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
+			$mensaje	=	'Usuario creado con éxito. <br />';
+		}
 	}
 }
 

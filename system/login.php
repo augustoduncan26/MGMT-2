@@ -8,11 +8,12 @@
 	// Register User
 	if ( isset($_POST['register_users']) ) {
 		
-		$email 		= 	isset($_POST['usuario'])?$_POST['usuario']:'';
-		$clave 		= 	isset($_POST['clave'])?$_POST['clave']:'';
-		$cia 		= 	isset($_POST['cia'])?$_POST['cia']:'';
-		$tipo		= 	isset($_POST['select_tipo'])?$_POST['select_tipo']:'';
-		$flagEjec 	= 	isset($_POST['acceso'])?$_POST['acceso']:'';
+		$email 		= 	isset($_POST['email'])?$_POST['email']:'';//isset($_POST['usuario'])?$_POST['usuario']:'';
+		$clave 		= 	isset($_POST['password'])?$_POST['password']:'';
+		$full_name 	= 	isset($_POST['full_nombre'])?$_POST['full_nombre']:'';
+		//$cia 		= 	isset($_POST['cia'])?$_POST['cia']:'';
+		//$tipo		= 	isset($_POST['select_tipo'])?$_POST['select_tipo']:'';
+		//$flagEjec 	= 	isset($_POST['acceso'])?$_POST['acceso']:'';
 		
 		$error		=	FALSE;
 		$MSG		=	FALSE;
@@ -77,9 +78,9 @@
 								Recordarme 
 							</label>
 
-							<label for="remember" class="checkbox-inline" onclick="javascript: $('#registerusers').show(); $('#logo-text').hide();$('#loginform').hide();" style="color:#F05F40">
+							<!-- <label for="remember" class="checkbox-inline" onclick="javascript: $('#registerusers').show(); $('#logo-text').hide();$('#loginform').hide();" style="color:#F05F40">
 								Regístrate Gratis
-							</label>
+							</label> -->
 
 							<span class="input-icon pull-right">
 							<input type="submit" class="btn btn-bricky pull-right btn-login" name="entrar" value="Login" id="entrar">
@@ -131,7 +132,7 @@
 					Ingrese todos los datos:
 				</p>
 				<label id="msg-claves"></label>
-				<div class="alert alert-info alert-mssg-register"></div>
+				<div class="alert alert-info alert-mssg-register" id="alert-mssg-register"></div>
 				<div class="container">
 				<form class="form-register form-horizontal form-label-left" id="registerUserForm" method="post" action="#SELF">
 					<fieldset>
@@ -147,16 +148,16 @@
 								<i class="fa fa-user"></i> </span>
 						</div>
 						<div class="form-group">
-							<label>La contraseña debe tener entre 6 a 10 caracteres.</label>
+							<label>La contraseña debe tener entre 8 a 16 caracteres.</label>
 						</div>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+								<input type="password" maxlength="16" class="form-control" id="password" name="password" placeholder="Contraseña">
 								<i class="fa fa-lock"></i> </span>
 						</div>
 						<div class="form-group">
 							<span class="input-icon">
-								<input type="password" class="form-control" name="password_again" id="password_again" placeholder="Repetir Contraseña">
+								<input type="password" maxlength="16" class="form-control" name="password_again" id="password_again" placeholder="Repetir Contraseña">
 								<i class="fa fa-lock"></i> </span>
 						</div>
 						<div class="form-group">

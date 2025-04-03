@@ -117,44 +117,42 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Evento</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Clase</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <div id="mssg-add-eventos" style="color:red;"></div>
+             <!-- <div id="mssg-add-eventos" style="color:red;"></div> -->
              <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
              <table class="table table-bordered table-hover" id="sample-table-4">
                <thead>
                </thead>
                <tbody>
-                <div class="alert alert-danger">Todos los campos son necesarios</div>
+                <div class="alert alert-danger mssg-add-eventos">Todos los campos son necesarios</div>
                  <tr>
-                   <td width="30%">Nombre <!--<span class="symbol required"></span>--></td>
+                   <td width="30%">Nombre <span class="symbol required"></span></td>
                    <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
                  </tr>
 
                  <tr>
                    <td width="30%">Clase <span class="symbol required"></span></td>
                    <td width="70%">
-                    <select name="event_class_add">
-
-                    </select>
+                   <input autofocus="" name="event_add_capacity" onchange="" type="number" class="form-control" id="event_add_capacity" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Capacidad" step="1"  min="1" max="100" value="1">
                    </td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Fecha [mes/dia/año] <!--<span class="symbol required"></span>--></td> 
-                   <td width="70%"><input autofocus="" name="event_add_date" onchange="" type="date" class="form-control" id="event_add_date" placeholder="Fecha"  min="03/06/2025"></td>
+                   <td width="30%">Grado <span class="symbol required"></span></td> 
+                   <td width="70%"><input autofocus="" name="event_add_grade" onchange="" type="number" class="form-control" id="event_add_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1"></td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Hora Inicio <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_ini"  type="time" class="form-control" id="event_add_date_ini" placeholder="Hora de Inicio" ></td>
-                 </tr>
+                   <td width="30%">Supervisor / Profesor <span class="symbol required"></span></td>
+                   <td width="70%">
+                   <select name="event_add_supervisor" id="event_add_supervisor">
 
-                 <tr>
-                   <td width="30%">Hora Fin <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_fin" type="time" class="form-control" id="event_add_date_fin" placeholder="Hora Final"></td>
+                   </select>
+                   <!-- <input autofocus="" name="event_add_supervisor"  type="text" class="form-control" id="event_add_supervisor" placeholder="Supervisor" maxlength="50" >-->
+                  </td> 
                  </tr>
 
                  <tr>
@@ -171,17 +169,17 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="agregar_habitacion" type="button" class="btn btn-primary" id="agregar_evento" onClick="addEvent()" value="Guardar datos">
+          <input type="button" class="btn btn-primary btn-add-class" id="agregar_clase" value="Guardar datos">
           
         </div>
       </form>
       </div>
     </div>
   </div>
-<!-- En Add Event -->
+<!-- End Modal Add -->
 
 
-<!-- Edit Events -->
+<!-- Edit Modal -->
 <?php /////////// Editar algo ?>
 <div class="<?php echo "modal fade"; ?>" id="edit_event" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?>">
@@ -204,7 +202,7 @@ Cargando contenidos...
 </div>
 </div>
 </div>  <?php //////  Fin de editor ?>
-<!-- End Edit Events -->
+<!-- End Edit Modal -->
 
 <?php get_template_part('footer_scripts');?>
 
@@ -214,8 +212,8 @@ Cargando contenidos...
 
 <script>
 
-var today = new Date().toISOString().slice(0, 10);
-document.getElementsByName("event_add_date")[0].min = today;
+// var today = new Date().toISOString().slice(0, 10);
+// document.getElementsByName("event_add_date")[0].min = today;
 
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
@@ -277,22 +275,26 @@ function deleteRow ( id ) {
   ajax2.send(null);
 }
 
-// Add Event
-function addEvent () {
+// Add
+$('.btn-add-class').on('click', ()=>{
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   
   var nombre      = $('#nombre').val();
-  var precio      = $('#precio').val();
+  var supervisor  = $('#event_add_supervisor').val();
   var estado      = $('#estado').val();
 
-  if ( nombre == '' || precio.length < 1 ) {
-    $("#mssg-add-eventos").html('Los campos con (*) son necesarios');
+  if ( nombre == '' || supervisor == '') {
+    $(".mssg-add-eventos").removeClass('alert-success').show().html('Los campos con (*) son necesarios.');
     $('#nombre').focus();
+    setTimeout(()=>{
+      $(".mssg-add-eventos").hide();
+    },4000)
     return false
   }
 
-  let route = "app/controllers/eventos.php?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/eventos.php"; 
+  //?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -300,7 +302,9 @@ function addEvent () {
     },
     url: route,
     type: "GET",
-    data: "",
+    data: {
+
+    },
     dataType        : 'html',
     success         : function (response) { 
       //contenido_editor.innerHTML = response;
@@ -320,7 +324,50 @@ function addEvent () {
       console.log(error);
     }
   });
-}
+});
+// function addEvent () {
+//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
+//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  
+//   var nombre      = $('#nombre').val();
+//   var precio      = $('#precio').val();
+//   var estado      = $('#estado').val();
+
+//   if ( nombre == '' || precio.length < 1 ) {
+//     $("#mssg-add-eventos").html('Los campos con (*) son necesarios');
+//     $('#nombre').focus();
+//     return false
+//   }
+
+//   let route = "app/controllers/eventos.php?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+//   $.ajax({
+//     headers: {
+//       Accept        : "application/json; charset=utf-8",
+//       "Content-Type": "application/json: charset=utf-8"
+//     },
+//     url: route,
+//     type: "GET",
+//     data: "",
+//     dataType        : 'html',
+//     success         : function (response) { 
+//       //contenido_editor.innerHTML = response;
+//       $("#mssg-add-eventos").html(response);
+//       $('.fa-spinner').hide();
+//       listEvents();
+//       setTimeout(() => {
+//         $(".alert-exito").hide();
+//         $(".alert-danger").hide();
+//       }, 3000);
+  
+//       $("#nombre").val('');
+//       $("#precio").val('');
+//       $("#nombre").focus();
+//     },
+//     error           : function (error) {
+//       console.log(error);
+//     }
+//   });
+// }
 
 // Edit Event
 function editEvent ( id ) {
@@ -419,5 +466,6 @@ $(document).ready( function () {
 
 $("[name='event_class_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='event_add_supervisor']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>

@@ -13,7 +13,7 @@ $DESPISTAR		=	RandomString($length=20,$uc=TRUE,$n=TRUE,$sc=FALSE);
 $IDFALSE		=	rand(1970,1968);
 
 $where 		= 'usuario = "'.$_POST['email'].'"';
-$sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
+$sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios',$where);
 
 	if ($sel1['total'] > 0){
 		
@@ -26,12 +26,13 @@ $sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'users',$where);
 	$RUTA	=	'companies/';
 	
 	// REGISTER BLOCK USER
-	$PCLAVE		=	"AES_ENCRYPT('".htmlentities($_POST['password'])."','toga')";//CryptPass( $POST_clave );
+	$clave 		=	encrypt_decrypt('encrypt', $_POST['password']);
+	//$PCLAVE		=	"AES_ENCRYPT('".htmlentities($_POST['password'])."','toga')";//CryptPass( $POST_clave );
 	$REALNAME	=	'Usuario_'.$CARACTERES;
 
-	$P_Tabla 	=	PREFIX.'users';
-	$P_Campos 	=	'usuario,contrasena,nombre,apellido,email,created_at,updated_at,fecha_ult_acceso,principal,caracteres,activo,telephone,direcction';
-	$P_Valores 	=	"'".$_POST['email']."', AES_ENCRYPT('".$_POST['password']."','toga'),'".$_POST['full_nombre']."','','".$_POST['email']."','".date('Y-m-d H:i:s')."','".date('Y-m-d H:i:s')."','".date('Y-m-d H:i:s')."',1,'".$CARACTERES."','0','',''";
+	$P_Tabla 	=	PREFIX.'usuarios';
+	$P_Campos 	=	'usuario,contrasena,nombre,apellido,email,created_at,updated_at,principal,caracteres,activo';
+	$P_Valores 	=	"'".$_POST['email']."', '".$clave."','".$_POST['full_nombre']."','','".$_POST['email']."','".date('Y-m-d H:i:s')."','".date('Y-m-d H:i:s')."',1,'".$CARACTERES."','0'";
 	$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 	
 	$Obj		=	new EnviarCorreo();

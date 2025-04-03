@@ -67,8 +67,9 @@
               <!-- <th style="width:10px"><input type="checkbox" /></th> -->
               <th>Nombre</th>
               <th>Clase</th> 
-              <th>Fecha</th>
+              <th>Fecha Inicio</th>
               <th>Hora Inicio</th> 
+              <th>Fecha Fin</th>
               <th>Hora Fin</th>
               <th>Estado</th>
               <th></th>
@@ -83,9 +84,10 @@
               <!-- <td><input type="checkbox" /></td> -->
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['start_time']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['end_time']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_start']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_start']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_end']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_end']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
               <td class="text-center" style="width:10% !important;">
               <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editEvent('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
@@ -129,32 +131,43 @@
                <tbody>
                 <div class="alert alert-danger">Todos los campos son necesarios</div>
                  <tr>
-                   <td width="30%">Nombre <!--<span class="symbol required"></span>--></td>
+                   <td width="30%">Nombre <span class="symbol required"></span></td>
                    <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
                  </tr>
 
                  <tr>
                    <td width="30%">Clase <span class="symbol required"></span></td>
                    <td width="70%">
-                    <select name="event_class_add">
+                    <select name="event_class_add" id="event_class_add">
 
                     </select>
                    </td>
                  </tr>
 
-                 <tr>
-                   <td width="30%">Fecha [mes/dia/año] <!--<span class="symbol required"></span>--></td> 
-                   <td width="70%"><input autofocus="" name="event_add_date" onchange="" type="date" class="form-control" id="event_add_date" placeholder="Fecha"  min="03/06/2025"></td>
+                  <tr>
+                   <td width="30%">Fecha Inicio <span class="symbol required"></span>
+                    <br />
+                    <small class="color-gray">[mes/dia/año] </small>
+                  </td> 
+                   <td width="70%"><input autofocus="" name="event_add_date_ini" onchange="" type="date" class="form-control" id="event_add_date_ini" placeholder="Fecha"></td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Hora Inicio <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_ini"  type="time" class="form-control" id="event_add_date_ini" placeholder="Hora de Inicio" ></td>
+                   <td width="30%">Hora Inicio <span class="symbol required"></span></td>
+                   <td width="70%"><input autofocus="" name="event_add_hora_ini"  type="time" class="form-control" id="event_add_hora_ini" placeholder="Hora de Inicio" ></td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Hora Fin <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_fin" type="time" class="form-control" id="event_add_date_fin" placeholder="Hora Final"></td>
+                   <td width="30%">Fecha Fin <span class="symbol required"></span>
+                   <br />
+                   <small class="color-gray">[mes/dia/año] </small>
+                  </td> 
+                   <td width="70%"><input autofocus="" name="event_add_date_fin" onchange="" type="date" class="form-control" id="event_add_date_fin" placeholder="Fecha"></td>
+                 </tr>
+
+                 <tr>
+                   <td width="30%">Hora Fin <span class="symbol required"></span></td>
+                   <td width="70%"><input autofocus="" name="event_add_hora_fin" type="time" class="form-control" id="event_add_hora_fin" placeholder="Hora Final"></td>
                  </tr>
 
                  <tr>
@@ -215,7 +228,7 @@ Cargando contenidos...
 <script>
 
 var today = new Date().toISOString().slice(0, 10);
-document.getElementsByName("event_add_date")[0].min = today;
+document.getElementsByName("event_add_date_ini")[0].min = today;
 
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
@@ -280,10 +293,14 @@ function deleteRow ( id ) {
 // Add Event
 function addEvent () {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+  var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
   
   var nombre      = $('#nombre').val();
-  var precio      = $('#precio').val();
+  var clase       = $('#event_class_add').val();
+  var dateI       = $('#event_add_date_ini').val();
+  var horaI       = $('#event_add_hora_ini').val();
+  var dateF       = $('#event_add_date_fin').val();
+  var horaF       = $('#event_add_hora_fin').val();
   var estado      = $('#estado').val();
 
   if ( nombre == '' || precio.length < 1 ) {
@@ -292,15 +309,20 @@ function addEvent () {
     return false
   }
 
-  let route = "app/controllers/eventos.php?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/eventos.php";
+  //?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
       "Content-Type": "application/json: charset=utf-8"
     },
     url: route,
-    type: "GET",
-    data: "",
+    type: "POST",
+    data: {
+      idUser : id_user,
+      idCia  : id_cia,
+
+    },
     dataType        : 'html',
     success         : function (response) { 
       //contenido_editor.innerHTML = response;
@@ -409,9 +431,9 @@ $(document).ready( function () {
       columnDefs: 
       [ 
       {
-      targets: 6,
+      targets: 7,
       orderable: false
-      },{ width: "20%", targets: 0 },{ width: "20%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "10%", targets: 3 }
+      },{ width: "20%", targets: 0 },{ width: "20%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "10%", targets: 3 },{ width: "10%", targets: 4 },{ width: "10%", targets: 5 },{ width: "10%", targets: 6 },{ width: "8%", targets: 7 }
     ]
     });
 } );
