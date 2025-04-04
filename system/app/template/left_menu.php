@@ -547,8 +547,9 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php if ($objPermOpc->tienePermiso(800)) { ?>
 			<li class="list_item list__item--click" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="clip-users"></i>
-				<span class="title" >Usuarios</span>
+			<a href="javascript:void(0)" class="nav__link">
+				<i class="clip-settings"></i>
+				<span class="title" >Mantenimientos</span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>

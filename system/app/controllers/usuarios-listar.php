@@ -11,7 +11,7 @@ $P_Tabla 	=	PREFIX.'usuarios';
 $where 			= 	'id_cia="'.$id_cia.'" and id_usuario <> 1';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
 $listEmpleados 	=	$ObjMante->BuscarLoQueSea('email',PREFIX.'empleados',false,'array','id,nempleado');
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','active=1','array');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo=1','array');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {

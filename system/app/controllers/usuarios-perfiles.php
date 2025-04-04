@@ -20,7 +20,7 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 
 // Add
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
-	$P_Campos 		=	'name,id_cia,active,created_at,updated_at';
+	$P_Campos 		=	'name,id_cia,activo,created_at,updated_at';
 	$P_Valores 		=	"'".sanear_string($_GET['nombre'])."','".$_SESSION['id_cia']."','".$_GET['estado']."',NOW(),NOW()";
 	
 	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'name="'.$_GET['nombre'].'"','array');
@@ -29,7 +29,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 		echo $mssg	=	'Ya existe este registro.';
 	} else {
 		$P_Valores = "'".$_GET['nombre']."','".$_GET['id_cia']."','".$_GET['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'name,id_cia,active', $P_Valores);
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'name,id_cia,activo', $P_Valores);
 		echo $mssg 	=	'<div class="alert alert-success alert-exito">Se ingreso el registro con éxito</div>';
 	}
 }
@@ -42,7 +42,7 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 
 // Edit 
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."',active = '".$_GET['estado']."', updated_at=NOW()";
+	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."',activo = '".$_GET['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_GET['id'].'"');
   	if($l == 1){
 		echo 'ok';

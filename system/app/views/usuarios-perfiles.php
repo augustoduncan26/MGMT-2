@@ -28,16 +28,28 @@ div.dataTables_wrapper div.dataTables_filter label {
       <div class="clearfix"></div>
       <label id="label-mssg"><?=$mssg?></label>
     </div>
-<!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
-  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Perfil</a>
-  <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+  
+  <!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
+  <!-- <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Perfil</a>
+  <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a> -->
+
+  <div class="container">
+      <div class="col-md-7">
+      <h4><i class="clip-list-2"></i> Lista de Perfiles</h4>
+      </div>
+      <div class="col-md-5 text-right">
+        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos('usuario_perfiles');$('#usuario_acceso').focus();">[+] Nuevo Perfil</a>
+        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+        <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-12">
-       <div class="panel panel-default">
-          <div class="panel-heading">
-            <i class="clip-settings"></i> Perfiles
-          </div>
+      <div class=""><!-- panel panel-default -->
+          <!-- <div class="panel-heading">
+            <h4><i class="clip-calendar"></i> Administrar Perfiles</h4>
+          </div> -->
           <div class="panel-body">
               <div class="col-sm-12">
               <div style="height:10px;"></div>
@@ -61,10 +73,10 @@ div.dataTables_wrapper div.dataTables_filter label {
                         foreach ($listPerfiles['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <!-- <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td> -->
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+                        <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td> -->
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
                         <td class="text-center" style="width:10% !important;">
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
@@ -122,8 +134,8 @@ div.dataTables_wrapper div.dataTables_filter label {
       <td>Estado:</td>
       <td>
        <select name="estado" id="estado_edit" class="">
-         <option value="1" <?php if($data['active'] == 1) { echo 'selected'; } ?>>Activo</option>
-         <option value="0" <?php if($data['active'] == 0) { echo 'selected'; } ?>>Inactivo</option>
+         <option value="1" <?php if($data['activo'] == 1) { echo 'selected'; } ?>>Activo</option>
+         <option value="0" <?php if($data['activo'] == 0) { echo 'selected'; } ?>>Inactivo</option>
        </select>
       </td>
     </tr>
@@ -151,7 +163,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 <?php //get_view_part ( 'modificar-habitacion' )?>
 <!-- En Add Room -->
 
-<!-- Add Perfil -->
+<!-- Add Modal -->
   <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -216,7 +228,6 @@ function addPerfil () {
   let id_user     = '<?php echo $_SESSION["id_user"]?>';
   let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
 
-
   if (nombre.length < 1 ) {
     $("#mssg-alert").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
     setTimeout(()=>{
@@ -245,11 +256,11 @@ function addPerfil () {
     dataType        : 'html',
     success         : function (response) { 
       if (response != "Ya existe este registro.") {
-        $("#mssg-alert").html(response);
+        $("#mssg-alert").show().html(response);
         limpiarCampos ();
         listPerfiles();
       } else {
-        $('#mssg-alert').html('<div class="alert alert-danger">'+response+'</div>');
+        $('#mssg-alert').show().html('<div class="alert alert-danger">'+response+'</div>');
       }
       setTimeout(() => {
         $(".alert-exito").hide();
@@ -292,7 +303,7 @@ function listPerfiles() {
       let content = '';
       let classSetting   = '';
       arr.forEach((item,key)=>{
-        if (item.active == 0) {
+        if (item.activo == 0) {
           classSetting = "class='row-yellow-transp'";
           //class="text-center" style="width:10% !important;"
           textActivo   = "Inactivo";
@@ -339,8 +350,8 @@ $.ajax({
 
     $('#id_row').val(response['id']);
     $('#nombre_edit').val(response['name']);
-    $('#estado_edit').select2('val',response['active']);
-    //$('#estado_edit').val(response['active']);
+    $('#estado_edit').select2('val',response['o']);
+    //$('#estado_edit').val(response['activo']);
   },
   error           : function (error) {
     console.log(error);
@@ -398,6 +409,16 @@ $.ajax({
 });
 }
 
+/**
+ * Delete
+ */
+function deleteRow ( id ) {
+
+}
+
+/**
+ * Datatable
+ */
 $(document).ready( function () {
     $('#tabla-list-perfiles').DataTable({
       pageLength: 25,

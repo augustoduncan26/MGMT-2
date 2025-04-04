@@ -25,7 +25,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 <body>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
 
@@ -34,19 +34,50 @@ div.dataTables_wrapper div.dataTables_filter label {
       <div class="clearfix"></div>
       <label id="label-mssg"><?=$mssg?></label>
     </div>
-<!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
+<! -- onclick="$('#myModal').modal({'backdrop': 'static'});" -- >
   <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#usuario_acceso').focus();">[+] Nuevo Usuario</a>
   <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
   <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     <div class="row">
       <div class="col-sm-12">
-       <div class=""><!-- panel panel-info -->
+       <div class=""><! -- panel panel-info --  >
           <div class="panel-heading">
             <i class="clip-users"></i> Usuarios
           </div>
           <div class="panel-body  table-responsive">
               <div class="col-sm-12">
-              <div style="height:10px;"></div>
+              <div style="height:10px;"></div> -->
+
+              <div class="row view-container">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+
+    <div class="x_title">
+      <h3></h3>
+      <div class="clearfix"></div>
+      <label id="label-mssg"><?=$mssg?></label>
+    </div>
+
+    <div class="container">
+      <div class="col-md-7">
+      <h4><i class="clip-list-2"></i> Lista de Usuarios</h4>
+      </div>
+      <div class="col-md-5 text-right">
+        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos('usuario_listar');$('#usuario_acceso').focus();">[+] Nuevo Usuario</a>
+        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+        <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+      </div>
+    </div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class=""><!-- panel panel-default -->
+      <!-- <div class="panel-heading">
+        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
+      </div> -->
+      <div class="panel-body">
+        <div class="col-sm-12">
+          <div style="height:10px;"></div>
 
               <div class="x_content">
 
@@ -227,7 +258,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                     if (isset($listPerfiles['resultado'])) {
                       echo "<option></option>";
                       foreach ($listPerfiles['resultado'] as $key => $value) {
-                        echo "<option value='".$value['id']."'>".$value['id'].$value['name']."</option>";
+                        echo "<option value='".$value['id']."'>".$value['name']."</option>";
                       }
                     }
                 ?>
@@ -590,6 +621,10 @@ $.ajax({
   });
 }
 
+function deleteRow () {
+  
+}
+
 /**
  * Datatable
  */
@@ -636,30 +671,20 @@ ajax1.send(null);
 
 // Clean
 function limpiarCampos (form = false) {
-  if (form == 'add_usuario') {
-    $("#usuario_acceso").val('');
-    $("#usuario_clave").val('');
-    $("#usuario_nombre").val('');
-    $("#usuario_apellido").val('');
+
+  switch (form) {
+    case 'add_usuario':
+      $("#usuario_acceso").val('');
+      $("#usuario_clave").val('');
+      $("#usuario_nombre").val('');
+      $("#usuario_apellido").val('');
+    break;
+    case "usuario_listar":
+      $("#result_email_validate").html('');
+      $("#usuario_acceso").val('');
+    default:
+      break;
   }
-  
-
-  // $("#usuario_acceso_edit").val('');
-  // $("#usuario_clave_edit").val('');
-  // $("#usuario_nombre_edit").val('');
-  // $("#usuario_apellido_edit").val('');
-
-  // //$("#usuario_email").select2('val','');
-  // $("#usuario_email").val('');//.change();
-
-  // $("#usuario_depto").select2('val','');
-  // $("#usuario_depto").val('').change();
-
-  // $("#usuario_perfil").select2('val','');
-  // $("#usuario_perfil").val('').change();
-
-  // //$('#usuario_email_edit').select2('val','');
-  // $('#usuario_email_edit').val('');//.change();
 }
 
 $("[name='usuario_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
