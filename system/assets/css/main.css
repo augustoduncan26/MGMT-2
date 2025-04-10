@@ -488,7 +488,7 @@ ul.notifications li, ul.todo li, ul.posts li {
 }
 .navbar-tools .dropdown-menu li p, .navbar-tools .dropdown-menu li a, .navbar-tools .drop-down-wrapper li p, .navbar-tools .drop-down-wrapper li a {
 	color: #333333;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: 300;
 	margin: 0;
 	padding: 8px 8px 6px;

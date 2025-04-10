@@ -106,7 +106,7 @@ function get_theView ( $name = false ) {
 
 	$tags 				=	obtainGetValues();
 	$tags 				=	explode("/",$tags[0][0]);
-//dump($tags);
+	//dump($tags);
 	if ( $tags[0] == '') {
 
 		include_once dirname(__FILE__).'/app/views/home.php';
@@ -191,7 +191,7 @@ function first_character($str){
 /* Return directory url */
 function get_url_directory () {
 
-	return dirname(__FILES__.'/');
+	return dirname(__FILE__.'/');
 }
 
 
@@ -623,49 +623,58 @@ function sanear_string($string) {
     return $string;
 }
 
-function RandomString($length=7,$uc=TRUE,$n=TRUE,$sc=FALSE)
-    {
-        $source             = 'abcdefghijklmnopqrstuvwxyz';
-        if($uc==1) $source  .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if($n==1) $source   .= '1234567890';
-        if($sc==1) $source  .= '|@#~$%()=^*+[]{}-_';
-        if($length>0){
-            $rstr = "";
-            $source = str_split($source,1);
-            for($i=1; $i<=$length; $i++){
-                mt_srand((double)microtime() * 1000000);
-                $num = mt_rand(1,count($source));
-                $rstr .= $source[$num-1];
-            }
-     
-        }
-        return $rstr;
-    }
-
-	/**
-	 * Encryp & Decrypt
-	 * @return $output
-	 */
-	function encrypt_decrypt($action, $string) {
-		$output = false;
-	
-		$encrypt_method = $_ENV['ENCRYPT_METHOD'];
-		$secret_key = $_ENV['SECRET_KEY'];
-		$secret_iv = $_ENV['SECRET_IV'];
-	
-		// hash
-		$key = hash('sha256', $secret_key);
-		
-		// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
-		$iv = substr(hash('sha256', $secret_iv), 0, 16);
-	
-		if ( $action == 'encrypt' ) {
-			$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
-			$output = base64_encode($output);
-		} else if( $action == 'decrypt' ) {
-			$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+function RandomString($length=7,$uc=TRUE,$n=TRUE,$sc=FALSE) {
+	$source             = 'abcdefghijklmnopqrstuvwxyz';
+	if($uc==1) $source  .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	if($n==1) $source   .= '1234567890';
+	if($sc==1) $source  .= '|@#~$%()=^*+[]{}-_';
+	if($length>0){
+		$rstr = "";
+		$source = str_split($source,1);
+		for($i=1; $i<=$length; $i++){
+			mt_srand((double)microtime() * 1000000);
+			$num = mt_rand(1,count($source));
+			$rstr .= $source[$num-1];
 		}
 	
-		return $output;
 	}
+	return $rstr;
+}
+
+/**
+ * Encryp & Decrypt
+ * @return $output
+ */
+function encrypt_decrypt($action, $string) {
+	$output = false;
+
+	$encrypt_method = $_ENV['ENCRYPT_METHOD'];
+	$secret_key = $_ENV['SECRET_KEY'];
+	$secret_iv = $_ENV['SECRET_IV'];
+
+	// hash
+	$key = hash('sha256', $secret_key);
+	
+	// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+	$iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+	if ( $action == 'encrypt' ) {
+		$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+		$output = base64_encode($output);
+	} else if( $action == 'decrypt' ) {
+		$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+	}
+
+	return $output;
+}
+
+/**
+ * 
+ */
+function getNotifications () {
+	$ObjMant 	=	new Mantenimientos();
+	$query 		=	$ObjMant->BuscarLoQueSea('*',PREFIX.'events','activo =1','array');
+	$result 	= array('total'=>$query['total'], 'result'=>$query['resultado']);
+	return $result;
+}
 ?>

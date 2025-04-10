@@ -1,6 +1,12 @@
 // FUNCIONES REUTILIZABLES
 // *************************
 
+function goToTopPage () {
+  $("html, body").animate({
+    scrollTop: 0
+  }, "slow");
+  e.preventDefault();
+}
 function mostrar ( blo ) {
 	//$('#'+ blo).show();
 	document.getElementById(blo).style.display = "block";
@@ -51,5 +57,26 @@ function selectUseLike ( id ) {
   } else { 
     $('#use-sistem-as').val('rooms_bed');
     $('#use-like').html('Hostel').css('color','green');
+  }
+}
+
+/**
+ * Evaluar si la fecha final es mayor que
+ * la fecha de inicio
+ * @param {*} dateI 
+ * @param {*} dateF 
+ * @returns 
+ */
+const evaluarFechas = (dateI, dateF) => {
+  //Formato MES/DIA/AÑO
+  var primera = Date.parse(dateI); //01 de Octubre del 2013
+  var segunda = Date.parse(dateF); //03 de Octubre del 2013
+  
+  if (primera == segunda){
+      return true;
+  } else if (primera > segunda) {
+      return false;
+  } else{
+      return true;
   }
 }

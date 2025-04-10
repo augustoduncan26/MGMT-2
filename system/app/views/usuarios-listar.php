@@ -24,31 +24,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 </style>
 
 <body>
-
-<!-- <div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-
-    <div class="x_title">
-      <h3></h3>
-      <div class="clearfix"></div>
-      <label id="label-mssg"><?=$mssg?></label>
-    </div>
-<! -- onclick="$('#myModal').modal({'backdrop': 'static'});" -- >
-  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#usuario_acceso').focus();">[+] Nuevo Usuario</a>
-  <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-  <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
-    <div class="row">
-      <div class="col-sm-12">
-       <div class=""><! -- panel panel-info --  >
-          <div class="panel-heading">
-            <i class="clip-users"></i> Usuarios
-          </div>
-          <div class="panel-body  table-responsive">
-              <div class="col-sm-12">
-              <div style="height:10px;"></div> -->
-
-              <div class="row view-container">
+<div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
 
@@ -133,7 +109,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 
  <div class="clearfix"></div>
 
-  <!-- Edit Row -->
+  <!-- Edit Modal -->
 <?php /////////// Editar algo ?>
 <div class="<?php echo "modal fade"; ?>" id="edit_event" role="dialog" aria-hidden="true">
 <div class="<?php echo "modal-dialog"; ?> modal-xl">
@@ -158,7 +134,7 @@ div.dataTables_wrapper div.dataTables_filter label {
           <div class="col-md-2 col-sm-3">Contraseña <span class="symbol required"></div>
           <div class="col-md-4 col-sm-3">
             <input autofocus="" name="usuario_clave_edit" required="" type="password" maxlength="12" class="form-control" id="usuario_clave_edit" placeholder="Contraseña">
-            <small>Ingrese una contraseña si desea cambiarla.</small>
+            <small class="color-gray">Ingrese una contraseña si desea cambiarla.</small>
             <!-- <small><input type="checkbox" id="usuario_clave_edit_checkbox" /> <label class="cursor" for="usuario_clave_edit_checkbox">Generación de contraseña automática</label></small> -->
           </div>
         </div>
@@ -171,6 +147,20 @@ div.dataTables_wrapper div.dataTables_filter label {
           <div class="col-md-2 col-sm-3">Apellido <span class="symbol required"></div>
           <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_apellido_edit" required="" type="text" class="form-control" id="usuario_apellido_edit" placeholder="Apellido"></div>
         </div>
+
+        <div class="clearfix">&nbsp;</div>
+
+          <div class="row">
+          <div class="col-md-2 col-sm-3">F. de Cumpleaño <!--<span class="symbol required">--></div>
+            <div class="col-md-4 col-sm-3">
+            <input autofocus="" name="cumple_edit" required="" type="date" class="form-control" id="cumple_edit" placeholder="">
+            </div>
+
+            <div class="col-md-2 col-sm-3">Foto <!--<span class="symbol required">--></div> 
+            <div class="col-md-4 col-sm-3">
+            <input autofocus="" name="photo_edit" required="" type="file" class="form-control" id="photo_edit" placeholder="">
+            </div>
+          </div>
 
         <div class="clearfix">&nbsp;</div>
         
@@ -213,7 +203,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 </div>
 </div>
 </div>  <?php //////  Fin de editor ?>
-<!-- End Edit Events -->
+<!-- Edit Modal -->
 
 <!-- Add Modal -->
   <div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" style="display: none;">
@@ -248,6 +238,22 @@ div.dataTables_wrapper div.dataTables_filter label {
               <div class="col-md-2 col-sm-3">Apellido <span class="symbol required"></div>
               <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_apellido" required="" type="text" maxlength="12" class="form-control" id="usuario_apellido" placeholder="Apellido"></div>
             </div>
+
+            
+            <div class="clearfix">&nbsp;</div>
+
+            <div class="row">
+            <div class="col-md-2 col-sm-3">F. de Cumpleaño <!--<span class="symbol required">--></div>
+              <div class="col-md-4 col-sm-3">
+              <input autofocus="" name="cumple_add" required="" type="date" class="form-control" id="cumple_add" >
+              </div>
+
+              <div class="col-md-2 col-sm-3">Foto <!--<span class="symbol required">--></div> 
+              <div class="col-md-4 col-sm-3">
+              <input autofocus="" name="photo_add" required="" type="file" class="form-control" id="photo_add">
+              </div>
+            </div>
+
             <div class="clearfix">&nbsp;</div>
 
             <div class="row">
@@ -269,7 +275,7 @@ div.dataTables_wrapper div.dataTables_filter label {
               <div class="col-md-4 col-sm-3">
                 <select name="usuario_estado" id="usuario_estado" class="form-control">
                   <option value="1">Activo</option>
-                  <option value="0">Inactivo</option>
+                  <option value="0" selected>Inactivo</option>
                 </select>
               </div>
             </div>
@@ -280,7 +286,7 @@ div.dataTables_wrapper div.dataTables_filter label {
             <hr />
             <div class="row">
               <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_principal" /> <i class="clip-user-4"></i> Usuario principal. <small><i>(Usuario principal de la sección, área o departamento.)</i></small></div>
-              <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_director" /> <i class="clip-user-5"></i> Es el director.<small><i>(Es el director de establecimiento)</i></small></div>
+              <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_director" /> <i class="clip-user-5"></i> Es el director.<small><i>(Es el director del establecimiento)</i></small></div>
               <div class="col-md-12 col-sm-12"><input type="checkbox" id="enviar_email" checked /> <i class="clip-bubble-4"></i> Enviar notificación. <small><i>(Enviar notificación de creación de cuenta por correo.)</i></small></div>
             </div>
            </div>
@@ -351,7 +357,9 @@ $("[name='generar-clave']").on('click', ()=> {
   }
 });
 
-// Add User
+/**
+ * Add
+ */
 $("[name='agregar_usuario']").on('click', ()=>{
   let user_acceso =   $('#usuario_acceso').val();
   let estado      =   $('#usuario_estado').val();
@@ -359,6 +367,10 @@ $("[name='agregar_usuario']").on('click', ()=>{
   let nombre      =   $('#usuario_nombre').val();
   let apellido    =   $('#usuario_apellido').val();
   let perfil      =   $('#usuario_perfil').val();
+  let birthday    =   $('#cumple_edit').val();
+  let photo       =   $('#photo_add').prop('files')[0]; //$('#photo_add').val();
+//$('#photo_add').val();//
+  
 
   let principal   =   "";
   let director    =   "";
@@ -408,35 +420,54 @@ $("[name='agregar_usuario']").on('click', ()=>{
 
   let route = "app/controllers/usuarios-listar.php"; 
 
+  var form_data   =   new FormData();
+  form_data.append('add', 1);
+  form_data.append('user_acceso', user_acceso);
+  form_data.append('clave', clave);
+  form_data.append('nombre', nombre);
+  form_data.append('apellido', apellido);
+  form_data.append('perfil', perfil);
+  form_data.append('birthday', birthday);
+  form_data.append('file', photo);
+  form_data.append('principal', principal);
+  form_data.append('director', director);
+  form_data.append('enviar_email', enviar_email);
+  form_data.append('estado', estado);
+
+  // {
+  //   add             : 1,
+  //   user_acceso     : user_acceso,
+  //   clave           : clave,
+  //   nombre          : nombre,
+  //   apellido        : apellido,
+  //   perfil          : perfil,
+  //   birthday        : birthday,
+  //   file            : photo,
+  //   principal       : principal,
+  //   director        : director,
+  //   enviar_email    : enviar_email,
+  //   estado          : estado,
+  //   nocache         : '<?php echo rand(99999,66666)?>',
+  // },
     $.ajax({
-      headers: {
-        Accept        : "application/json; charset=utf-8",
-        "Content-Type": "application/json: charset=utf-8"
-      },
+      // headers: {
+      //   Accept        : "application/json; charset=utf-8",
+      //   "Content-Type": "application/json: charset=utf-8"
+      // },
       url: route,
-      type: "GET",
-      data: {
-        add             : 1,
-        user_acceso     : user_acceso,
-        clave           : clave,
-        nombre          : nombre,
-        apellido        : apellido,
-        perfil          : perfil,
-        //cargo           : cargo,
-        principal       : principal,
-        director        : director,
-        enviar_email    : enviar_email,
-        estado          : estado,
-        nocache         : '<?php echo rand(99999,66666)?>',
-      },
-      dataType        : 'html',
+      type: "POST",
+      data: form_data,
+      dataType        : 'text',
+      cache: false,
+      contentType: false,
+      processData: false,
       success         : function (response) { 
         if (response != "Ya existe este registro.") {
           $("#mssg-alert").removeClass('alert-danger').addClass('alert-success').show().html(response);
           //limpiarCampos ();
           //listUsuarios();
         } else {
-          $('#mssg-alert').html('<div class="alert alert-danger">'+response+'</div>');
+          $('#mssg-alert').removeClass('alert-success').addClass('alert-danger').show().html(response);
         }
         setTimeout(() => {
           $("#mssg-alert").hide();
@@ -450,7 +481,10 @@ $("[name='agregar_usuario']").on('click', ()=>{
 });
   
 
-// Open Edit Modal
+/** 
+ * Open Edit Modal
+ * @param {*} id 
+ */
 function editRow ( id ) {
   limpiarCampos ();
   $('#agregar_usuario_edit').prop('disabled',true);
@@ -474,7 +508,6 @@ $.ajax({
 
     $('#id_row_edit').val(response['id_usuario']);
     $('#usuario_acceso_edit').val(response['usuario']);
-    //$('#usuario_clave_edit').val('11111111');
     $('#usuario_nombre_edit').val(response['nombre']);
     $('#usuario_apellido_edit').val(response['apellido']);
       
@@ -501,19 +534,24 @@ $.ajax({
 
 }
 
-// Update Row
+/**
+ * Update
+ * @param {*} id  
+ * */
 function updateRow ( id ) {
   let user_acceso =   $('#usuario_acceso_edit').val();
   let estado      =   $('#usuario_estado_edit').val();
   let clave       =   $('#usuario_clave_edit').val();
   let nombre      =   $('#usuario_nombre_edit').val();
   let apellido    =   $('#usuario_apellido_edit').val();
+  let birthday    =   $('#cumple_edit').val();
+  let photo       =   $('#photo_edit').val();
 
   let perfil      =   $('#usuario_perfil_edit').val();
-  //let cargo       =   $('#usuario_cargo').val();
   let principal   =   "";
   let director    =   "";
   let enviar_email=   "";
+
   if ($('#usuario_principal_edit').is(':checked')) {
     principal   = 1;
   } else { principal   = 0; }

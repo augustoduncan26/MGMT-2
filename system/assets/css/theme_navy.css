@@ -103,7 +103,7 @@ ul.main-navigation-menu > li.open > a, ul.main-navigation-menu > li > a:hover, u
 }
 .navigation-toggler, .go-top {
 	background-color: #2B394A !important;
-	color: #5A7CA3;
+	color: #f0f2f4;
 }
 .navigation-toggler:hover i:first-child, .go-top:hover {
 	color: #A7B4D1;

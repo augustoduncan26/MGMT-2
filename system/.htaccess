@@ -10,6 +10,7 @@ RewriteRule ^([a-z]+)/?$ $1.php [NC]
 #RewriteRule ^(.*)$ $1.html
 #RewriteRule ^([a-z]+)/?$ $1.html [NC]
 
-
+RewriteRule ^(includes/|submit\.php) - [F,L,NC]
+#RedirectMatch 403 ^/app/controllers/clases.php$
 </IfModule>
 

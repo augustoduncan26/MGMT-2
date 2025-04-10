@@ -126,26 +126,30 @@
 
             <?php /* */ ?>
             <!-- start: NOTIFICATION DROPDOWN -->
+            <?php $r = getNotifications ();?>
              <li class="dropdown">
               <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                 <i class="clip-notification-2"></i>
-                <span class="badge"> 11</span>
+                <span class="badge"> <?php echo $r['total'];?></span>
               </a>
               <ul class="dropdown-menu notifications">
                 <li>
-                  <span class="dropdown-menu-title"> Existen 11 notificaciones</span>
+                  <span class="dropdown-menu-title"> Existen <?php echo $r['total'];?> notificación(es)</span>
                 </li>
                 <li>
                   <div class="drop-down-wrapper">
                     <ul>
+                      <?php 
+                        foreach ($r['result'] as $key => $value) {
+                      ?>
                       <li>
                         <a href="javascript:void(0)">
-                          <span class="label label-primary"><i class="fa fa-user"></i></span>
-                          <span class="message"> Nuevo registro de usuario</span>
-                          <span class="time"> 1 min</span>
+                          <span class="label label-success"><i class="fa fa-comment"></i></span>
+                          <span class="message"> <?=$value['name']?></span>
+                          <!-- <span class="time"> 1 min</span> -->
                         </a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a href="javascript:void(0)">
                           <span class="label label-success"><i class="fa fa-comment"></i></span>
                           <span class="message"> Nuevo comentario</span>
@@ -228,12 +232,15 @@
                           <span class="message"> Nuevo comentario</span>
                           <span class="time"> Ayer</span>
                         </a>
-                      </li>
+                      </li> -->
+                      <?php
+                        }
+                      ?>
                     </ul>
                   </div>
                 </li>
                 <li class="view-all">
-                  <a href="javascript:void(0)">
+                  <a href="?Eventos">
                     Ver todoas las notificaciones <i class="fa fa-arrow-circle-o-right"></i>
                   </a>
                 </li>

@@ -101,21 +101,6 @@ $passN 	 = 	$_POST["password"];
 
 $busco 	 =	$ObjUser->verificarUsuario ($nickN, $passN);
 
-// $plain_txt = "pelaito11";
-// echo "Plain Text =" .$plain_txt. "\n <br>";
-
-// $encrypted_txt = encrypt_decrypt('encrypt', $plain_txt);
-// echo "Encrypted Text = " .$encrypted_txt. "<br>";
-
-// $decrypted_txt = encrypt_decrypt('decrypt', $encrypted_txt);
-// echo "Decrypted Text =" .$decrypted_txt. "\n";
-
-// if ( $plain_txt === $decrypted_txt ) echo "SUCCESS";
-// else echo "FAILED";
-
-// echo "\n";
-
-// exit;
 if ( $busco == 1 ) { 
 	$saco 			=	$ObjUser->getUser( $nickN, "Usuario" );
 if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {

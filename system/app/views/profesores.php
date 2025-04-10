@@ -21,6 +21,9 @@
     width: 70%;
    max-width:1350px;
   } */
+  .fade {
+    overflow:hidden;
+  }
 }
 </style>
 
@@ -41,7 +44,7 @@
       <h4><i class="clip-user-5"></i> Lista de Profesores</h4>
       </div>
       <div class="col-md-5 text-right">
-      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Profesor</a>
+      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo Profesor</a>
       <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
       <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     </div>
@@ -66,29 +69,24 @@
               <tr class=""><!-- header-list-table -->
               <!-- <th style="width:10px"><input type="checkbox" /></th> -->
               <th>Nombre</th>
-              <th>Clase</th> 
-              <th>Fecha</th>
-              <th>Hora Inicio</th> 
-              <th>Hora Fin</th>
+              <th>Asignaturas</th> 
+              <th>Clases / Salones</th>
               <th>Estado</th>
               <th></th>
               </tr>
               </thead>
               <tbody>
               <?php
-              if ($sel1['resultado']){
-              foreach ($sel1['resultado'] as $datos) {
+              if ($selectTeachers['resultado']){
+              foreach ($selectTeachers['resultado'] as $datos) {
               ?>
               <tr>
-              <!-- <td><input type="checkbox" /></td> -->
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['start_time']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['end_time']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['subject_i']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_id']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
               <td class="text-center" style="width:10% !important;">
-              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editEvent('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" data-target="#edit_event" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
               <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
               </td>
               </tr>
@@ -112,49 +110,62 @@
  <div class="clearfix"></div>
 
 <!-- Modal Add -->
-<div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="formulario_nuevo"  role="dialog" aria-hidden="true" >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Profesor</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Asignación de Profesor</h3>
         </div>
-         <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
+         <form name="form_profesores" id="form_profesores" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <div id="mssg-add-eventos" style="color:red;"></div>
-             <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
-             <table class="table table-bordered table-hover" id="sample-table-4">
+             <div class="alert alert-danger" id="mssg-add"></div>
+             <table class="table table-hover" id="table-add-prof">
                <thead>
                </thead>
                <tbody>
-                <div class="alert alert-danger">Todos los campos son necesarios</div>
                  <tr>
-                   <td width="30%">Nombre <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input maxlength="50" autofocus="" name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre"></td>
+                   <td width="30%">Profesor <span class="symbol required"></span></td>
+                   <td width="70%">
+                    <select name="add_profesor[]" id="txt_add_profesor">
+                        <?php 
+                          if ($selectProfPerfil['resultado']) {
+                            echo '<option></option>';
+                            foreach ($selectProfPerfil['resultado'] as $key => $value) {
+                              echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
+                            }
+                          }
+                        ?>
+                    </select></td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Clase <span class="symbol required"></span></td>
+                   <td width="30%">Asignaturas <!--<span class="symbol required"></span>--></td>
                    <td width="70%">
-                    <select name="event_class_add">
-
+                    <select name="event_subject_add[]" id="txt_event_subject_add" multiple>
+                        <?php 
+                          if ($selectSubjects['resultado']) {
+                            foreach ($selectSubjects['resultado'] as $key => $value) {
+                              echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                            }
+                          }
+                        ?>
                     </select>
                    </td>
                  </tr>
-
                  <tr>
-                   <td width="30%">Fecha [mes/dia/año] <!--<span class="symbol required"></span>--></td> 
-                   <td width="70%"><input autofocus="" name="event_add_date" onchange="" type="date" class="form-control" id="event_add_date" placeholder="Fecha"  min="03/06/2025"></td>
-                 </tr>
-
-                 <tr>
-                   <td width="30%">Hora Inicio <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_ini"  type="time" class="form-control" id="event_add_date_ini" placeholder="Hora de Inicio" ></td>
-                 </tr>
-
-                 <tr>
-                   <td width="30%">Hora Fin <!--<span class="symbol required"></span>--></td>
-                   <td width="70%"><input autofocus="" name="event_add_date_fin" type="time" class="form-control" id="event_add_date_fin" placeholder="Hora Final"></td>
+                   <td width="30%">Clases <!--<span class="symbol required"></span>--></td>
+                   <td width="70%">
+                    <select name="event_class_add[]" id="txt_event_class_add" multiple>
+                        <?php 
+                          if ($selectClases['resultado']) {
+                            foreach ($selectClases['resultado'] as $key => $value) {
+                              echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                            }
+                          }
+                        ?>
+                    </select>
+                   </td>
                  </tr>
 
                  <tr>
@@ -171,7 +182,7 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="agregar_habitacion" type="button" class="btn btn-primary" id="agregar_evento" onClick="addEvent()" value="Guardar datos">
+          <input name="agregar_habitacion" type="button" class="btn btn-primary btn-add-prof" id="agregar_evento" value="Guardar datos">
           
         </div>
       </form>
@@ -194,7 +205,66 @@
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
-Cargando contenidos...
+ <div class="alert alert-danger" id="mssg-edit"></div>
+<table class="table table-hover" id="table-edit-prof">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="30%">Nombre <span class="symbol required"></span></td>
+      <td width="70%"><input maxlength="50" autofocus="" name="add_nombre" type="text" class="form-control" id="add_nombre" placeholder="Nombre"></td>
+    </tr>
+
+    <tr>
+      <td width="30%">Asignaturas <!--<span class="symbol required"></span>--></td>
+      <td width="70%">
+      <select name="event_subject_add[]" id="txt_event_subject_add" multiple>
+          <?php 
+            if ($selectSubjects['resultado']) {
+              foreach ($selectSubjects['resultado'] as $key => $value) {
+                echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+              }
+            }
+          ?>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="30%">Clases <!--<span class="symbol required"></span>--></td>
+      <td width="70%">
+      <select name="event_class_add[]" id="txt_event_class_add" multiple>
+          <?php 
+            if ($selectClases['resultado']) {
+              foreach ($selectClases['resultado'] as $key => $value) {
+                echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+              }
+            }
+          ?>
+      </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="30%">Email <span class="symbol required"></span></td>
+      <td width="70%"><input name="add_email" type="email" class="form-control" id="add_email" placeholder="Email"></td>
+    </tr>
+
+    <tr>
+      <td width="30%">Teléfono <!--<span class="symbol required"></span>--></td>
+      <td width="70%"><input maxlength="50" name="add_telephone" type="text" class="form-control" id="add_telephone" placeholder="Telefono"></td>
+    </tr>
+
+    <tr>
+      <td>Estado</td>
+      <td>
+      <select name="event_estado_edit"  class="form-control" id="event_estado_edit">
+        <option value="1">Activo</option>
+        <option value="0" selected="">Inactivo</option>
+      </select>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -214,8 +284,9 @@ Cargando contenidos...
 
 <script>
 
-var today = new Date().toISOString().slice(0, 10);
-document.getElementsByName("event_add_date")[0].min = today;
+$('#mssg-add').hide();
+// var today = new Date().toISOString().slice(0, 10);
+// document.getElementsByName("event_add_date")[0].min = today;
 
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
@@ -229,33 +300,6 @@ var runNavigationToggler = function () {
 };
 runNavigationToggler();
 
-// const listEventsResult = () => {
-//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-//   $('.fa-spinner').show();
-//   var contenido_editor = $('#list-events')[0];
-//   let route = "ajax/ajax_list_events.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
-//   $.ajax({
-//     headers: {
-//       Accept        : "application/json; charset=utf-8",
-//       "Content-Type": "application/json: charset=utf-8"
-//     },
-//     url: route,
-//     type: "GET",
-//     data: "",
-//     dataType        : 'html',
-//     success         : function (response) { 
-//       contenido_editor.innerHTML = response;
-//       $('.fa-spinner').hide();
-//       //loadDataTable()
-//     },
-//     error           : function (error) {
-//       console.log(error);
-//     }
-//   });
-// }
-
-//listEventsResult();
 
 // Delete Event
 function deleteRow ( id ) {
@@ -277,53 +321,67 @@ function deleteRow ( id ) {
   ajax2.send(null);
 }
 
-// Add Event
-function addEvent () {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  
-  var nombre      = $('#nombre').val();
-  var precio      = $('#precio').val();
-  var estado      = $('#estado').val();
+/**
+ * Add
+ */
+$('.btn-add-prof').on('click', ()=>{ 
 
-  if ( nombre == '' || precio.length < 1 ) {
-    $("#mssg-add-eventos").html('Los campos con (*) son necesarios');
+  let nombre      = $('#txt_add_profesor').val();
+  let subject     = $('#txt_event_subject_add').val();
+  let classes     = $('#txt_event_class_add').val();
+  let estado      = $('#event_estado_add').val();
+
+  if ( nombre == '' || subject == '' || classes == '') {
+    $("#mssg-add").show().html('<h5>Los campos con (*) son necesarios</h5>');
     $('#nombre').focus();
+    setTimeout(() => {
+      $("#mssg-add").hide()
+      }, 3000);
     return false
   }
 
-  let route = "app/controllers/eventos.php?add=1&nombre="+nombre+"&precio="+precio+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>";
+  let route = "app/controllers/profesores.php";
+
   $.ajax({
-    headers: {
-      Accept        : "application/json; charset=utf-8",
-      "Content-Type": "application/json: charset=utf-8"
-    },
     url: route,
-    type: "GET",
-    data: "",
+    type: "POST",
+    data: {
+      add : 1,
+      r1 : nombre,
+      r2 : subject,
+      r3 : classes,
+      r4 : estado,
+    },
     dataType        : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
+    },
     success         : function (response) { 
-      //contenido_editor.innerHTML = response;
-      $("#mssg-add-eventos").html(response);
-      $('.fa-spinner').hide();
-      listEvents();
+      if (response == 'ok') {
+        $("#mssg-add").removeClass('alert-danger').addClass('alert-success').css('color','#3c763d').show().html('<h5>Se ingreso el registro con éxito.</h5>');
+      } if (response == 'error') {
+        $("#mssg-add").removeClass('alert-success').addClass('alert-danger').show().html('<h5>Ya existe un registro con este mismo nombre.<h5>');
+      }
+
+      //listEvents();
       setTimeout(() => {
-        $(".alert-exito").hide();
-        $(".alert-danger").hide();
-      }, 3000);
+        $("#mssg-add").hide();
+      }, 4000);
   
-      $("#nombre").val('');
-      $("#precio").val('');
-      $("#nombre").focus();
+      $("#add_nombre").val('');
+      $("#add_email").val('');
+      $("#add_telephone").val('');
+      $("#txt_event_subject_add").val('');
+      $("#txt_event_class_add").focus();
     },
     error           : function (error) {
       console.log(error);
     }
   });
-}
+});
 
 // Edit Event
-function editEvent ( id ) {
+function editRow ( id ) {
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
   var contenido_editor = $('#contenido_editar')[0];
@@ -409,15 +467,16 @@ $(document).ready( function () {
       columnDefs: 
       [ 
       {
-      targets: 6,
+      targets: 4,
       orderable: false
-      },{ width: "20%", targets: 0 },{ width: "20%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "10%", targets: 3 }
+      },{ width: "20%", targets: 0 },{ width: "20%", targets: 1, },{ width: "20%", targets: 2, } ,{ width: "10%", targets: 3 },{ width: "8%", targets: 4 }
     ]
     });
 } );
 
-
-$("[name='event_class_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_add_profesor").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_event_subject_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_event_class_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>
