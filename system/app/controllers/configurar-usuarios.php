@@ -7,6 +7,10 @@ $ObjEjec    = new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'usuarios';
+$path 		=  	ROOT_DIR.REPOSITORY."profile_photos/";
+if (is_dir($path)) {
+	@chmod($path, 0755);
+}
 
 $where 			= 	'id_cia="'.$id_cia.'"';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');

@@ -7,6 +7,11 @@ class permisos {
 	* @var string Nombre de la tabla
 	*/
 	var $tablaDefinicionPermisos;
+
+	/**
+	* @var string Nombre de la tabla
+	*/
+	var $tablaUserPermisos;
 	
 	/**
 	* @var string Nombre de la tabla asociacion permisos y usuarios
@@ -22,6 +27,16 @@ class permisos {
 	* @var integer Llave primaria de la tabla usuario
 	*/
 	var $campoLlaveUsuario;
+
+	/**
+	* @var integer Llave de la tabla users_permissions
+	*/
+	var $campoLlaveIdUser;
+
+	/**
+	* @var integer Llave primaria de la tabla perfil o rol
+	*/
+	var $campoLlavePerfil;
 	
 	/**
 	* @var integer Llave primaria de la tabla definicion de permisos
@@ -55,7 +70,10 @@ class permisos {
 		$this->cual		=	$menu->Buscaridioma();
 		
 		$this->tablaDefinicionPermisos 				= PREFIX."permiso_definicion";
+		$this->tablaUserPermisos					= PREFIX."users_permissions";
 		$this->tablaPermisos 						= PREFIX."permisos";
+		$this->campoLlavePerfil 					= "id_perfil";
+		$this->campoLlaveIdUser 					= "id_user";
 		$this->campoLlaveUsuario 					= "id_usuario";
 		$this->campoLlaveDefinicionPermiso 			= "id_definicion_permiso";
 		$this->campoLlaveDefinicionPermisoPadre		= "permisoPadre";
@@ -96,12 +114,9 @@ class permisos {
 		$exito = false; 
 		
 		$objCons = new consultor();
-		if($P != false && $P != 'T')
-		{
+		if($P != false && $P != 'T') {
 			$P_Where	=	"tipo_permiso = '".$P."'";	
-		}
-		elseif($P == 'T')
-		{
+		} elseif($P == 'T') {
 			$P_Where	=	false;		
 		}
 		// Realizando consulta a tabla usuario
@@ -118,18 +133,15 @@ class permisos {
 	/**
 	*	Buscar permisos del usuario en tabla permiso
 	*/
-	public function TodosPermisos($P_sel, $P_tabla, $P_OtrosParam = false)
-	{	
+	public function TodosPermisos($P_sel, $P_tabla, $P_OtrosParam = false) {	
 		$P_data			=	false;
 		$exito			=	false;
 		$objCons 		= 	new consultor();
 		//echo $P_OtrosParam;
-		if($P_OtrosParam!=false)
-		{
+		if($P_OtrosParam!=false) {
 			$PWhere		=	$P_OtrosParam;
 				
-		}else
-		{
+		} else {
 			$PWhere		=	false;	
 		}
 			$P_data		=	$objCons->consultar($P_sel,$P_tabla,$PWhere);	
@@ -137,9 +149,7 @@ class permisos {
 			
 				$exito	=	true;
 			}
-			
 			return $exito;
-
 	}
 	
 	/** 
@@ -183,6 +193,40 @@ class permisos {
 		return $exito;				
 	}
 	
+	/**
+     * Get user permissions data
+     * @param $id
+     * @return $permission
+     */
+	public function getUserPermission ($id) {
+		$objCons 		= new consultor();
+		$ObjMante   	= new Mantenimientos();
+		$objCMS_T 		= new cms();
+		$idUs 			= $objCMS_T->consultarID();
+		$permissions    = $ObjMante->BuscarLoQueSea('*', $this->tablaUserPermisos,$this->campoLlaveIdUser."=".$idUs,'array');
+		//$objCons->consultar("*", $this->tablaUserPermisos, $this->campoLlaveIdUser."=".$idUs);
+		//$this->tablaUserPermisos UsersPermissions::select('id_permission')->where('id_user', $id)->get()->toArray();
+        $permission     = [];
+        foreach ($permissions['resultado'] as $key => $value) {
+            $permission[] = $value['id_permission'];
+        }
+        return $permission;
+	}
+
+	/**
+     * check user permissions
+     * @param $prem
+     * @return boolean
+     */
+    public static function checkUserPermission ($perm) {
+        // $permission    = UsersPermissions::select('id_permission')->where('id_user', Auth::id())->where('id_permission', $perm)->first();
+        // if ($permission) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
+    }
+
 	/** 
 	* Buscar si el usuario autenticado tiene un determinado permiso
 	* 

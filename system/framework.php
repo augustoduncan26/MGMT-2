@@ -119,6 +119,7 @@ if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
 	$_SESSION['username'] 			= 	$nombredesesion;
 	$_SESSION['id_session'] 		= 	session_id();
 	$_SESSION['id_user']  			= 	$saco['id_usuario'];
+	$_SESSION['id_rol']  			= 	$saco['id_perfil'];
 	$_SESSION['principal'] 			= 	$saco['principal'];
 	$_SESSION['superadmin'] 		= 	$saco['superadmin'];
 	$_SESSION['lastname']			= 	$saco['apellido'];

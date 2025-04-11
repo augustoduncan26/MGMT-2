@@ -3,9 +3,10 @@
 $objPermOpc 	= new permisos();
 $active			= "style='background-color: #C8C7CC4D;'";
 $activeOpen		= "class = 'active open'";
-
+$id_rol    		= $_SESSION['id_rol'];
 $id_user    	= $_SESSION['id_user'];
 $id_cia     	= $_SESSION['id_cia'];
+
 
 ?>
 <link href="assets/css/style_leftmenu.css" rel="stylesheet">
@@ -190,7 +191,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Announcements -->
-		<?PHP if($objPermOpc->tienePermiso(100)){  ?>
+		<?PHP //if($objPermOpc->tienePermiso(100)){  ?>
 			<li class="list_item">
 			<a href="?Anuncios" class="nav__link">
 			<div class="list__button">
@@ -200,7 +201,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			</div>
 			</a>
 		</li>
-		<?php } ?>
+		<?php //} ?>
 
 
 		<!-- <li class="list_item list__item--click <?php //if (strpos(GET()[0],'habitacion')!==false) { echo  'active open'; }?>">
@@ -544,26 +545,26 @@ $id_cia     	= $_SESSION['id_cia'];
 		* Menu Usuarios
 		*/
 		-->
-		<?php if ($objPermOpc->tienePermiso(800)) { ?>
+		<?php //if ($objPermOpc->tienePermiso(800)) { ?>
 			<li class="list_item list__item--click" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link">
 				<i class="clip-settings"></i>
-				<span class="title" >Mantenimientos</span>
+				<span class="title" >&nbsp;Mantenimientos</span>
 				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
+				<!-- <span class="selected"></span> -->
 			</a>
 			<img src="assets/images/arrow.svg" class="list__arrow arrow_usuarios">
 			</div>
 
 			<ul class="list__show">
-				<?PHP if($objPermOpc->tienePermiso(800)){  ?>
+				<?PHP //if($objPermOpc->tienePermiso(800)){  ?>
 				<li <?php if(GET()[0] == 'usuarios-listar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-listar" class="nav__link nav__link--inside">
 						-<span class="title">Mant. Usuarios</span>
 					</a>
 				</li>
-				<?php } ?>
+				<?php //} ?>
 				
 				<?PHP if($objPermOpc->tienePermiso(801)){  ?>
 				<li <?php if(GET()[0] == 'usuarios-perfiles'){ echo ' class="menu-backg-item"';}?>>
@@ -588,7 +589,7 @@ $id_cia     	= $_SESSION['id_cia'];
 				<?php } ?>
 			</ul>
 			</li>
-		<?php } ?>
+		<?php //} ?>
 		<!-- End: Menun Usuarios -->
 
 

@@ -1,8 +1,5 @@
 <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<!-- <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-<!-- <link rel="stylesheet" href="assets/css/styles_datatable.css" /> -->
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
@@ -18,43 +15,57 @@
   div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
   }
+  .modal-xl {
+    width: 70%;
+    max-width:1350px;
+  }
+}
+.fade {
+  overflow:hidden;
 }
 </style>
 
 <body>
 
-<div class="row">
+<div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-
     <div class="x_title">
       <h3></h3>
       <div class="clearfix"></div>
-      <label id="label-mssg"><?=$mssg?></label>
+      <div class="alert result-mssg"></div>
     </div>
-<!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
-  <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos();$('#nombre').focus();">[+] Nuevo Perfil</a>
-  <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+    
+  <div class="container">
+    <div class="col-md-7">
+      <h4><i class="clip-list-2"></i> Lista de Perfiles</h4>
+    </div>
+    <div class="col-md-5 text-right">
+      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#usuario_acceso').val('');$('#usuario_acceso').focus();">[+] Nuevo Perfil</a>
+      <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+      <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+    </div>
+  </div>
 
     <div class="row">
       <div class="col-sm-12">
-       <div class="panel panel-default">
-          <div class="panel-heading">
-            <i class="clip-settings"></i> Perfiles
-          </div>
+      <div class=""><!-- panel panel-default -->
+          <!-- <div class="panel-heading">
+            <h4><i class="clip-calendar"></i> Administrar Perfiles</h4>
+          </div> -->
           <div class="panel-body">
               <div class="col-sm-12">
               <div style="height:10px;"></div>
 
               <div class="x_content">
 
-			        <div id="table-responsive overflow">
-                <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover table-responsive">
+			        <div class="table-responsive">
+                <table id="tabla-list-perfiles" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <!-- <th>Id</th> -->
                       <th>Nombre</th>
-                      <th>Fecha creación</th>
+                      <th>Descripción</th>
                       <th>Estado</th>
                       <th></th>
                     </tr>
@@ -65,12 +76,12 @@
                         foreach ($listPerfiles['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <!-- <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['id']?></td> -->
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
-                        <td <?php if($value['active']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['active'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
-                        <td class="text-center" style="width:10% !important;">
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['name']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['description']?></td>
+                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
+                        <td class="text-center">
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
+                          <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiarCampos('edit_usuario');showUserPermisos('<?php echo $value['id']; ?>');"><i class="fa fa-key"></i></a>
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                         </td>
                       </tr>
@@ -126,8 +137,8 @@
       <td>Estado:</td>
       <td>
        <select name="estado" id="estado_edit" class="">
-         <option value="1" <?php if($data['active'] == 1) { echo 'selected'; } ?>>Activo</option>
-         <option value="0" <?php if($data['active'] == 0) { echo 'selected'; } ?>>Inactivo</option>
+         <option value="1" <?php if($data['activo'] == 1) { echo 'selected'; } ?>>Activo</option>
+         <option value="0" <?php if($data['activo'] == 0) { echo 'selected'; } ?>>Inactivo</option>
        </select>
       </td>
     </tr>
@@ -155,7 +166,7 @@
 <?php //get_view_part ( 'modificar-habitacion' )?>
 <!-- En Add Room -->
 
-<!-- Add Perfil -->
+<!-- Add Modal -->
   <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -200,6 +211,29 @@
   </div>
 <!-- End Perfil -->
 
+<!-- Show Permisos Modal -->
+<div class="modal fade" id="user-permission" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
+          <div id="mssg-label-edit-perm"></div>
+      </div>
+    <div class="modal-body" id="show-permisos">
+        Cargando...
+    </div>
+    <div class="modal-footer">
+      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
+    </div>
+    </div>
+  </div>
+</div>
+<!-- End Permisos Modal -->
+
 
 <?php get_template_part('footer_scripts');?>
 
@@ -210,6 +244,9 @@
 
 <script>
 
+$('.result-mssg').hide();
+$('#mssg-edt-alert').hide();
+$('#mssg-add-alert').hide();
 $('#cargando_add').hide()
 
 // Add
@@ -219,7 +256,6 @@ function addPerfil () {
   let estado      =   $('#estado').val();
   let id_user     = '<?php echo $_SESSION["id_user"]?>';
   let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-
 
   if (nombre.length < 1 ) {
     $("#mssg-alert").show().html('<div class="alert alert-danger">Los campos con (*) son necesarios');
@@ -249,11 +285,11 @@ function addPerfil () {
     dataType        : 'html',
     success         : function (response) { 
       if (response != "Ya existe este registro.") {
-        $("#mssg-alert").html(response);
+        $("#mssg-alert").show().html(response);
         limpiarCampos ();
         listPerfiles();
       } else {
-        $('#mssg-alert').html('<div class="alert alert-danger">'+response+'</div>');
+        $('#mssg-alert').show().html('<div class="alert alert-danger">'+response+'</div>');
       }
       setTimeout(() => {
         $(".alert-exito").hide();
@@ -291,15 +327,12 @@ function listPerfiles() {
     success         : function (response) { 
 
       let arr     = response;
-      if (!arr || arr == null) {
-        return false;
-      }
       let keys    = Object.keys(arr).length;
       let r       = "";
       let content = '';
       let classSetting   = '';
       arr.forEach((item,key)=>{
-        if (item.active == 0) {
+        if (item.activo == 0) {
           classSetting = "class='row-yellow-transp'";
           //class="text-center" style="width:10% !important;"
           textActivo   = "Inactivo";
@@ -333,26 +366,27 @@ let id_cia      = '<?php echo $_SESSION["id_cia"]?>';
 let contenido_editor = $('#contenido_editar')[0];
 
 let route = "app/controllers/configurar-perfiles.php?showEdit=1&id="+id+"&dml=editar&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>";
-  $.ajax({
-    headers: {
-      Accept        : "application/json; charset=utf-8",
-      "Content-Type": "application/json: charset=utf-8"
-    },
-    url: route,
-    type: "GET",
-    data: "",
-    dataType        : 'json',
-    success         : function (response) { 
+$.ajax({
+  headers: {
+    Accept        : "application/json; charset=utf-8",
+    "Content-Type": "application/json: charset=utf-8"
+  },
+  url: route,
+  type: "GET",
+  data: "",
+  dataType        : 'json',
+  success         : function (response) { 
 
-      $('#id_row').val(response['id']);
-      $('#nombre_edit').val(response['name']);
-      $('#estado_edit').select2('val',response['active']);
-      //$('#estado_edit').val(response['active']);
-    },
-    error           : function (error) {
-      console.log(error);
-    }
-  });
+    $('#id_row').val(response['id']);
+    $('#nombre_edit').val(response['name']);
+    $('#estado_edit').select2('val',response['o']);
+    //$('#estado_edit').val(response['activo']);
+  },
+  error           : function (error) {
+    console.log(error);
+  }
+});
+
 }
 
 // Update Row
@@ -404,10 +438,25 @@ $.ajax({
 });
 }
 
-// Delete Event
-function deleteRow ( id ) {
-  let id_cia    = '<?php echo $_SESSION["id_cia"]?>';
-  let route     = "app/controllers/configurar-perfiles.php";
+
+/**
+ * Show Permisos
+*/ 
+function showUserPermisos ( id ) {
+// var contenido_editor = $('#show-permisos')[0];
+// ajax1   = nuevoAjax();
+// ajax1.open("GET", "ajax/ajax_list_perfiles_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
+// ajax1.onreadystatechange=function() {
+
+// if (ajax1.readyState==4) {
+//   contenido_editor.innerHTML = ajax1.responseText;
+// }
+// }
+
+// ajax1.send(null);
+
+  var contenido_editor = $('#show-permisos')[0];
+  let route = 'ajax/ajax_list_perfiles_permisos.php';
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -416,21 +465,12 @@ function deleteRow ( id ) {
     url: route,
     type: "GET",
     data: {
-      delete    : 1,
-      id        : id,
-      id_cia    : id_cia,
-      nocache   : '<?php echo rand(99999,66666)?>',
+      edit  : 1,
+      id    : id ,
     },
     dataType        : 'html',
     success         : function (response) { 
-      window.location.reload();
-      //$("#mssg-alert").html(response);
-      //limpiarCampos ();
-      //listPerfiles();
-      // setTimeout(() => {
-      //   $(".alert-exito").hide();
-      //   $(".alert-danger").hide();
-      // }, 3000);
+      contenido_editor.innerHTML = response;
     },
     error           : function (error) {
       console.log(error);
@@ -438,6 +478,44 @@ function deleteRow ( id ) {
   });
 }
 
+
+/**
+ * Delete 
+ * @param {*} id 
+ */
+function deleteRow ( id ) {
+  let route = "app/controllers/configurar-perfiles.php";
+  let parametros = {
+    id : id,
+    delete : 1
+  }
+  $.ajax({
+    data: parametros,
+    url:   route,
+    type:  'post',
+    dataType : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
+    },
+    success:  function (response) {
+      if (response == 'ok') {
+        $(".result-mssg").removeClass('alert-danger').removeClass('alert-info').addClass('alert-success').show().html('<h5>Los datos fueron eliminados con éxito.</h5>');
+        listPerfiles();
+        setTimeout(() => {
+          $(".result-mssg").hide();
+          window.location.reload();
+        }, 3000);
+      }
+    },
+    error: function (e) {
+        console.log(e)
+    }
+  });
+}
+
+/**
+ * Datatable
+ */
 $(document).ready( function () {
     $('#tabla-list-perfiles').DataTable({
       pageLength: 25,
@@ -448,12 +526,12 @@ $(document).ready( function () {
       },
       order: [[0, 'asc']],
       columnDefs: 
-      [ 
-      {
-      targets: 3,
-      orderable: false
-      },{ width: "30%", targets: 0 },{ width: "10%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "20%", targets: 3 }
-    ]
+      [
+        {
+        targets: 3,
+        orderable: false
+      }, { width: "25%", targets: 0 } ,{ width: "25%", targets: 1 } , { width: "15%", targets: 2 } , { width: "15%", targets: 3 } 
+      ]
     });
 } );
 

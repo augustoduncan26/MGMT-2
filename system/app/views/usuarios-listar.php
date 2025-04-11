@@ -1,9 +1,7 @@
 <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<!-- <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-<!-- <link rel="stylesheet" href="assets/css/styles_datatable.css" /> -->
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/css/bootstrap_modal_right_sider_bar.css" />
 
 <style>
 @media (min-width: 768px) {
@@ -21,6 +19,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
 }
+.fade {
+    overflow:hidden;
+  }
 </style>
 
 <body>
@@ -42,6 +43,15 @@ div.dataTables_wrapper div.dataTables_filter label {
         <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos('usuario_listar');$('#usuario_acceso').focus();">[+] Nuevo Usuario</a>
         <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
         <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+        <!-- <div class="clearfix"></div> -->
+      </div>
+    </div>
+
+    <div class="container text-rigth">
+      <div class="clearfix col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <a class="btn btn-xs btn-teal tooltips"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
       </div>
     </div>
 
@@ -57,11 +67,10 @@ div.dataTables_wrapper div.dataTables_filter label {
 
               <div class="x_content">
 
-			        <div id="table-responsive">
+			        <div class="table-responsive">
                 <table id="tabla-list-usuarios" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Nombre</th>
                       <th>Email</th>
                       <th>Fecha creación</th>
@@ -75,7 +84,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                         foreach ($listUsers['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$key+1?></td>
+                        <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$key+1?></td> -->
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['nombre'].' '.$value['apellido']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['email']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
@@ -84,7 +93,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                         <td  <?php if($value['activo']==0){?> class="row-yellow-transp" <?php } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
                         <td class="text-center" >
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>
-                          <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiarCampos('edit_usuario');showUserPermisos('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-key"></i></a>
+                          <!-- <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiarCampos('edit_usuario');showUserPermisos('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-key"></i></a> -->
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id_usuario']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                         </td>
                       </tr>
@@ -190,9 +199,17 @@ div.dataTables_wrapper div.dataTables_filter label {
         <div class="clearfix ">&nbsp;</div>
         <hr />
         <div class="row">
-          <div class="col-md-12 col-sm-12"><input type="checkbox" name="usuario_principal_edit" id="usuario_principal_edit" /> <i class="clip-user-4"></i> <label for="usuario_principal" class="cursor"> Usuario principal. <small><i>(Usuario principal de la sección, área o departamento.)</i></small></label></div>
-          <div class="col-md-12 col-sm-12"><input type="checkbox" name="usuario_director_edit" id="usuario_director_edit" /> <i class="clip-user-5"></i> <label for="usuario_director" class="cursor"> Es el director.<small><i>(Es el director de establecimiento)</i></small></label></div>
-          <div class="col-md-12 col-sm-12" style="display: none;"><input type="checkbox" name="enviar_email_edit" id="enviar_email_edit" /> <i class="clip-bubble-4"></i> <label for="enviar_email" class="cursor">Enviar notificación? <small>(Enviar notificación de creación de cuenta por correo.)</small></label></div>
+          <div class="col-md-6 col-sm-6">
+            <div class="col-md-12 col-sm-12"><input type="checkbox" name="usuario_principal_edit" id="usuario_principal_edit" /> <i class="clip-user-4"></i> <label for="usuario_principal" class="cursor"> Usuario principal. <small><i>(Usuario principal del área.)</i></small></label></div>
+            <div class="col-md-12 col-sm-12"><input type="checkbox" name="usuario_director_edit" id="usuario_director_edit" /> <i class="clip-user-5"></i> <label for="usuario_director" class="cursor"> Es el director.<small><i>(Es el director del colegio.)</i></small></label></div>
+            <div class="col-md-12 col-sm-12" style="display: none;"><input type="checkbox" name="enviar_email_edit" id="enviar_email_edit" /> <i class="clip-bubble-4"></i> <label for="enviar_email" class="cursor">Enviar notificación? <small>(Enviar notificación de creación de cuenta por correo.)</small></label></div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <small class="color-gray">Imagen de perfil</small>
+            <br />
+            <img id="blah" style="width: 100px; height: 100px" src="" alt="" />
+          </div>
+          
         </div>
       </div>
     <div class="modal-footer">
@@ -206,7 +223,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 <!-- Edit Modal -->
 
 <!-- Add Modal -->
-  <div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="formulario_nuevo" role="dialog" aria-hidden="true" >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
@@ -300,28 +317,30 @@ div.dataTables_wrapper div.dataTables_filter label {
   </div>
 <!-- End Add Modal -->
 
-<!-- Show Permisos Modal -->
-<div class="modal fade" id="user-permission" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-        </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
-          <div id="mssg-label-edit-perm"></div>
-      </div>
-    <div class="modal-body" id="show-permisos">
-        Cargando...
+
+<!-- Side Bar Modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
+
+<div class="modal fade  come-from-modal right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
-      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
-    </div>
-    </div>
-  </div>
 </div>
-<!-- End Permisos Modal -->
+<!-- container -->
 
 <?php get_template_part('footer_scripts');?>
 
@@ -331,7 +350,6 @@ div.dataTables_wrapper div.dataTables_filter label {
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
-
 
 $('#cargando_add').hide();
 $('#usuario_area').prop('disabled',true);
@@ -369,8 +387,6 @@ $("[name='agregar_usuario']").on('click', ()=>{
   let perfil      =   $('#usuario_perfil').val();
   let birthday    =   $('#cumple_edit').val();
   let photo       =   $('#photo_add').prop('files')[0]; //$('#photo_add').val();
-//$('#photo_add').val();//
-  
 
   let principal   =   "";
   let director    =   "";
@@ -434,50 +450,35 @@ $("[name='agregar_usuario']").on('click', ()=>{
   form_data.append('enviar_email', enviar_email);
   form_data.append('estado', estado);
 
-  // {
-  //   add             : 1,
-  //   user_acceso     : user_acceso,
-  //   clave           : clave,
-  //   nombre          : nombre,
-  //   apellido        : apellido,
-  //   perfil          : perfil,
-  //   birthday        : birthday,
-  //   file            : photo,
-  //   principal       : principal,
-  //   director        : director,
-  //   enviar_email    : enviar_email,
-  //   estado          : estado,
-  //   nocache         : '<?php echo rand(99999,66666)?>',
-  // },
-    $.ajax({
-      // headers: {
-      //   Accept        : "application/json; charset=utf-8",
-      //   "Content-Type": "application/json: charset=utf-8"
-      // },
-      url: route,
-      type: "POST",
-      data: form_data,
-      dataType        : 'text',
-      cache: false,
-      contentType: false,
-      processData: false,
-      success         : function (response) { 
-        if (response != "Ya existe este registro.") {
-          $("#mssg-alert").removeClass('alert-danger').addClass('alert-success').show().html(response);
-          //limpiarCampos ();
-          //listUsuarios();
-        } else {
-          $('#mssg-alert').removeClass('alert-success').addClass('alert-danger').show().html(response);
-        }
-        setTimeout(() => {
-          $("#mssg-alert").hide();
-          window.location.reload();
-        }, 4000);
-      },
-      error           : function (error) {
-        console.log(error);
+  $.ajax({
+    // headers: {
+    //   Accept        : "application/json; charset=utf-8",
+    //   "Content-Type": "application/json: charset=utf-8"
+    // },
+    url: route,
+    type: "POST",
+    data: form_data,
+    dataType: 'text',
+    cache: false,
+    contentType: false,
+    processData: false,
+    success         : function (response) { 
+      if (response != "Ya existe este registro.") {
+        $("#mssg-alert").removeClass('alert-danger').addClass('alert-success').show().html(response);
+        //limpiarCampos ();
+        //listUsuarios();
+      } else {
+        $('#mssg-alert').removeClass('alert-success').addClass('alert-danger').show().html(response);
       }
-    });
+      setTimeout(() => {
+        $("#mssg-alert").hide();
+        window.location.reload();
+      }, 4000);
+    },
+    error           : function (error) {
+      console.log(error);
+    }
+  });
 });
   
 
@@ -487,8 +488,9 @@ $("[name='agregar_usuario']").on('click', ()=>{
  */
 function editRow ( id ) {
   limpiarCampos ();
-  $('#agregar_usuario_edit').prop('disabled',true);
-  $('#mssg-alert-edit').removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').show().html('Cargando información, por favor espere...');
+  $("#blah").attr("src",'');
+  $("#edit_usuarios *").prop('disabled',true);
+  $("#mssg-alert-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
   let route = "app/controllers/usuarios-listar.php";
 
 $.ajax({
@@ -504,13 +506,20 @@ $.ajax({
     nocache   : '<?php echo rand(99999,66666)?>'
   },
   dataType        : 'json',
-  success         : function (response) { 
-
+  success         : function (response) {
+    
     $('#id_row_edit').val(response['id_usuario']);
     $('#usuario_acceso_edit').val(response['usuario']);
     $('#usuario_nombre_edit').val(response['nombre']);
     $('#usuario_apellido_edit').val(response['apellido']);
-      
+    $('#cumple_edit').val(response['birthday']);
+    if (response['photo']) {
+      $("#blah").attr("src",'repositorio/profile_photos/'+response['photo']);
+    } else {
+      $("#blah").attr("src",'repositorio/profile_photos/user.png');
+    }
+    
+
     $('#usuario_perfil_edit').val(response['id_perfil']).change();
     $('#usuario_estado_edit').select2('val',response['activo']);
     if (response['is_principal'] == 1) {
@@ -521,6 +530,8 @@ $.ajax({
     }
 
     setTimeout(()=>{
+      //$("#edit_usuarios").find("*").prop("disabled", false);
+      $("#edit_usuarios *").prop('disabled',false);
       $('#agregar_usuario_edit').prop('disabled',false);
       $('#usuario_area_edit').val(response['id_area']).change();
       $('#mssg-alert-edit').hide().removeClass('alert-info');
@@ -545,7 +556,7 @@ function updateRow ( id ) {
   let nombre      =   $('#usuario_nombre_edit').val();
   let apellido    =   $('#usuario_apellido_edit').val();
   let birthday    =   $('#cumple_edit').val();
-  let photo       =   $('#photo_edit').val();
+  let photo       =   $('#photo_edit').prop('files')[0]; //$('#photo_add').val();
 
   let perfil      =   $('#usuario_perfil_edit').val();
   let principal   =   "";
@@ -578,24 +589,35 @@ function updateRow ( id ) {
       return false
   }
 
+if ( photo == undefined || photo == 'undefined' ) {
+  photo = '';
+}
+
+
 let route = "app/controllers/usuarios-listar.php";
+var form_data   =   new FormData();
+form_data.append('edit', 1);
+form_data.append('id', id);
+form_data.append('clave', clave);
+form_data.append('nombre', nombre);
+form_data.append('apellido', apellido);
+form_data.append('perfil', perfil);
+form_data.append('birthday', birthday);
+form_data.append('file', photo);
+form_data.append('estado', estado);
+
 $.ajax({
-  headers: {
-    Accept        : "application/json; charset=utf-8",
-    "Content-Type": "application/json: charset=utf-8"
-  },
+  // headers: {
+  //   Accept        : "application/json; charset=utf-8",
+  //   "Content-Type": "application/json: charset=utf-8"
+  // },
   url: route,
-  type: "GET",
-  data: {
-    edit      : 1,
-    id        : id ,
-    nombre    : nombre,
-    apellido  : apellido,
-    perfil    : perfil,
-    clave     : clave,
-    estado    : estado
-  },
-  dataType        : 'html',
+  type: "POST",
+  data: form_data,
+  dataType: 'text',
+  cache: false,
+  contentType: false,
+  processData: false,
   success         : function (response) { 
     if (response == 'ok') {
       $("#mssg-alert-edit").removeClass('alert-danger').addClass('alert-success').show().html('Los datos fueron actualizados con éxito. La página se actualizara en breve.');
@@ -616,7 +638,9 @@ $.ajax({
 });
 }
 
-// Edit Permisos
+/**
+ * Edit Permisos
+ */
 function editUserPermisos ( idParam ) {
   
   var id_user     = '<?php echo $_SESSION["id_user"]?>';
@@ -677,35 +701,35 @@ $(document).ready( function () {
       columnDefs: 
       [ 
         {
-          targets: 5,
+          targets: 4,
           orderable: false
-        },{ width: "3%", targets: 0, }, { width: "15%", targets: 1 } , { width: "15%", targets: 2 } , { width: "15%", targets: 3 } , { width: "8%", targets: 4 } , { width: "10%", targets: 5 } 
+        }, { width: "15%", targets: 0 } , { width: "15%", targets: 1 } , { width: "15%", targets: 2 } , { width: "8%", targets: 3 } , { width: "10%", targets: 4 } 
       ]
     });
 } );
 
-/**
- * Show Permisos
-*/ 
-function showUserPermisos ( id ) {
+// /**
+//  * Show Permisos
+// */ 
+// function showUserPermisos ( id ) {
 
-var id_user     = '<?php echo $_SESSION["id_user"]?>';
-var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-var contenido_editor = $('#show-permisos')[0];
+// var id_user     = '<?php echo $_SESSION["id_user"]?>';
+// var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
+// var contenido_editor = $('#show-permisos')[0];
 
-//$('#cargando_list').show()
-ajax1   = nuevoAjax();
-ajax1.open("GET", "ajax/ajax_list_users_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
-ajax1.onreadystatechange=function() {
+// //$('#cargando_list').show()
+// ajax1   = nuevoAjax();
+// ajax1.open("GET", "ajax/ajax_list_users_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
+// ajax1.onreadystatechange=function() {
 
-if (ajax1.readyState==4) {
-  contenido_editor.innerHTML = ajax1.responseText;
-}
-}
+// if (ajax1.readyState==4) {
+//   contenido_editor.innerHTML = ajax1.responseText;
+// }
+// }
 
-ajax1.send(null);
+// ajax1.send(null);
 
-}
+// }
 
 // Clean
 function limpiarCampos (form = false) {
@@ -726,12 +750,8 @@ function limpiarCampos (form = false) {
 }
 
 $("[name='usuario_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-// $("[name='usuario_depto']").select2({width: '100%', dropdownCssClass: "bigdrop"});
-// $("#usuario_area").select2({width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil']").select2({width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-// $("[name='usuario_depto_edit']").select2({width: '100%', dropdownCssClass: "bigdrop"});
-// $("#usuario_area_edit").select2({width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil_edit']").select2({width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>

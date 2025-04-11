@@ -6,6 +6,12 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
+  @media (min-width: 768px) {
+  .modal-xl {
+    width: 70%;
+   max-width:1350px;
+  }
+}
 .dataTables_filter {
   width: 30%;
 }
@@ -15,29 +21,38 @@ div.dataTables_wrapper div.dataTables_filter input {
 div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
 }
+.fade {
+    overflow:hidden;
+  }
 </style>
 
 <body>
 	
 <div class="">
-<h3></h3>
-
+  <h3></h3>
  <div class="clearfix"></div>
  <label id="label-mssg"><?=$mssg?></label>
 <!--  <div class="ln_solid"></div> -->
 
-<a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#mssg-label').text('');$('#nombre').focus();">[+] Nuevo Permiso</a>
-<a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>	
-<br />
+<div class="container">
+  <div class="col-md-7">
+    <h4><i class="clip-settings"></i> Lista de Permisos</h4>
+  </div>
+  <div class="col-md-5 text-right">
+    <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre_permiso').val('');">[+] Nuevo Permiso</a>
+    <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+    <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+  </div>
+</div>
   <!-- end: PAGE HEADER -->
   <!-- start: PAGE CONTENT -->
   <div class="row">
     <div class="col-sm-12">
       <!-- start: CONFIGURAR PERMISOS -->
-      <div class=""><!-- panel panel-default -->
+      <div class=""><!-- panel panel-default 
         <div class="panel-heading">
           <i class="clip-settings"></i>Permisos
-          </div>
+          </div>-->
 	         <div class="panel-body">
            <div class="col-sm-12">
               <div style="height:10px;"></div>

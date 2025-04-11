@@ -7,8 +7,10 @@ $ObjEjec    = 	new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'usuarios';
-
-
+$path 		=  	ROOT_DIR.REPOSITORY."profile_photos/";
+if (is_dir($path)) {
+	@chmod($path, 0755);
+}
 
 $where 			= 	'id_cia="'.$id_cia.'" and id_usuario <> 1';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
@@ -22,11 +24,13 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 	echo json_encode($listPerfiles['resultado']);
 }
 
-// Add
+/**
+ * Add
+ */
 if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') {
 	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email="'.$_POST['user_acceso'].'"','array');
 
-	$path =  ROOT_DIR.REPOSITORY."profile_photos/"; //$_SERVER['DOCUMENT_ROOT'].'/'.REPOSITORY."profile_photos/";//$_FILES['file']['name'];
+	 //$_SERVER['DOCUMENT_ROOT'].'/'.REPOSITORY."profile_photos/";//$_FILES['file']['name'];
 	if (is_dir($path)) {
 		@chmod($path, 0755);
 	}
@@ -110,16 +114,46 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 /**
  * Edit
  */
-if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
+if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
-	$P_Valores 	= "nombre='".$_GET['nombre']."', apellido = '".$_GET['apellido']."', id_perfil='".$_GET['perfil']."',  activo = '".$_GET['estado']."', updated_at=NOW()";
-	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_GET['id'].'"');
+	$newfilename 		= 	false;
+	$data       		= 	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_usuario="'.$_POST['id'].'" and id_cia = '.$id_cia,'extract');
+	$newfilename		=	$data['photo'];
+
+	// Insert Photo
+	if (isset($_FILES['file']['name']) && $_FILES['file']['name']!= '') {
+
+		@unlink($path.$data['photo']);
+
+		$rand 			=	rand('1234567890','0987654321');
+		$rand2 			=	rand('0987654321','1234567890');
+		$image 			= 	getimagesize($_FILES['file']['tmp_name']);
+		$extension 		=	explode('/',$image['mime']);
+		$temp 			= 	explode(".", $_FILES['file']['name']);
+		$newfilename    =   $id_cia.'-foto-'.$rand.'-'.date('Y-m-d').'-'.$rand2. '.' . $extension[1];
+		$fileTempName 	= 	$_FILES['file']['tmp_name'];
+		
+		// check if there is an error for particular entry in array
+		if(!empty($file['error']))  {
+			// some error occurred with the file in index $index
+			// yield an error here
+			echo 'error en foto';
+			return false;
+		}
+	}
+
+	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' ,id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
+	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
+
+	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
+		move_uploaded_file($fileTempName, $path . $newfilename);
+	}
   	
 	$clave = "";
-	if (isset($_GET['clave']) && $_GET['clave']!="") {
-		$clave 		=	encrypt_decrypt('encrypt', $_GET['clave']);
+	if (isset($_POST['clave']) && $_POST['clave']!="") {
+		$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
 		$clave 		= 	"contrasena='".$clave."'";
-		$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'id_usuario = "'.$_GET['id'].'"');
+		$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 	}
 	
 	if($l == 1){
