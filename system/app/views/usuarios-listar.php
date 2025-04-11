@@ -214,7 +214,7 @@ div.dataTables_wrapper div.dataTables_filter label {
       </div>
     <div class="modal-footer">
     <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="agregar_usuario_edit" type="button" class="btn btn-primary" id="agregar_usuario_edit" onClick="var id_row = $('#id_row_edit').val(); updateRow(id_row)" value="Modificar datos">                  
+      <input name="agregar_usuario_edit" type="button" class="btn btn-primary btn-update-row" id="agregar_usuario_edit" value="Modificar datos">               
     </div>
 </form>
 </div>
@@ -326,17 +326,17 @@ div.dataTables_wrapper div.dataTables_filter label {
 <div class="modal fade  come-from-modal right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
+            </div> -->
             <div class="modal-body">
                 ...
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -490,7 +490,7 @@ function editRow ( id ) {
   limpiarCampos ();
   $("#blah").attr("src",'');
   $("#edit_usuarios *").prop('disabled',true);
-  $("#mssg-alert-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
+  $("#mssg-alert-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-warning').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
   let route = "app/controllers/usuarios-listar.php";
 
 $.ajax({
@@ -548,8 +548,9 @@ $.ajax({
 /**
  * Update
  * @param {*} id  
- * */
-function updateRow ( id ) {
+*/
+$('.btn-update-row').on('click', () => {
+  let id          =   $('#id_row_edit').val();
   let user_acceso =   $('#usuario_acceso_edit').val();
   let estado      =   $('#usuario_estado_edit').val();
   let clave       =   $('#usuario_clave_edit').val();
@@ -620,11 +621,11 @@ $.ajax({
   processData: false,
   success         : function (response) { 
     if (response == 'ok') {
-      $("#mssg-alert-edit").removeClass('alert-danger').addClass('alert-success').show().html('Los datos fueron actualizados con éxito. La página se actualizara en breve.');
+      $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-danger').addClass('alert-success').show().html('Los datos fueron actualizados con éxito. La página se actualizara en breve.');
 
       //limpiarCampos();
       setTimeout(()=>{
-        $("#mssg-alert-edit").removeClass('alert-success').html('').hide();
+        $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').html('').hide();
         window.location.reload()
       },3000);    
       //listUsuarios();
@@ -636,7 +637,8 @@ $.ajax({
     console.log(error);
   }
 });
-}
+//}
+});
 
 /**
  * Edit Permisos

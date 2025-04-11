@@ -16,6 +16,7 @@ $where 			= 	'id_cia="'.$id_cia.'"';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
 $listEmpleados 	=	$ObjMante->BuscarLoQueSea('email',PREFIX.'empleados',false,'array','id,nempleado');
 $listUsuarios 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios',$where,'array');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo=1','array');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {

@@ -198,7 +198,7 @@ class permisos {
      * @param $id
      * @return $permission
      */
-	public function getUserPermission ($id) {
+	public function getUserPermission ($P_permiso) {
 		$objCons 		= new consultor();
 		$ObjMante   	= new Mantenimientos();
 		$objCMS_T 		= new cms();
