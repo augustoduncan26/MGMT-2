@@ -8,17 +8,21 @@ $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'perfiles';
 
-$where 			= 	'id_cia="'.$id_cia.'"';
+$where 			= 	'id <> 100 and activo=1 and id_cia="'.$id_cia.'"';
 $listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
 
-// Select al Perfiles
+/**
+ * Select al Perfiles
+ */
 if (isset($_GET['all']) && $_GET['all'] == 1) {
-	$where 			= 	'id_cia="'.$id_cia.'"';
+	$where 			= 	'id <> 100 and activo=1 and id_cia="'.$id_cia.'"';
 	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
 	echo json_encode($listPerfiles['resultado']);
 }
 
-// Add
+/**
+ * Add
+ */
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	$P_Campos 		=	'name,id_cia,activo,created_at,updated_at';
 	$P_Valores 		=	"'".sanear_string($_GET['nombre'])."','".$_SESSION['id_cia']."','".$_GET['estado']."',NOW(),NOW()";
@@ -34,15 +38,19 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	}
 }
 
-// Show Edit Modal & info
+/**
+ * Show Edit Modal & info
+ */
 if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	$data       = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	echo json_encode($data);
 }
 
-// Edit 
+/**
+ * Edit
+ */
 if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
-	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."',activo = '".$_GET['estado']."', updated_at=NOW()";
+	$P_Valores = "name = '".Reemplazar_letras($_GET['nombre'])."', activo = '".$_GET['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_GET['id'].'"');
   	if($l == 1){
 		echo 'ok';
@@ -51,9 +59,11 @@ if ( isset($_GET['edit']) && $_GET['edit'] == 1 && $_GET['nombre'] !='') {
 	}
 }
 
-// Delete 
+/**
+ * Delete
+ */
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
-	$ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."'");
+	$ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."' and id_cia='".$id_cia."'");
 	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
 }
 

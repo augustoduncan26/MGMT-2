@@ -4,6 +4,7 @@ include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 include_once ( dirname(dirname(__DIR__)) . '/functions.php');
 $ObjMante   = 	new Mantenimientos();
 $ObjEjec    = 	new ejecutorSQL();
+$id_rol 	=	$_SESSION['id_rol'];
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'usuarios';
@@ -15,12 +16,12 @@ if (is_dir($path)) {
 $where 			= 	'id_cia="'.$id_cia.'" and id_usuario <> 1';
 $listUsers 		=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','id_usuario');
 $listEmpleados 	=	$ObjMante->BuscarLoQueSea('email',PREFIX.'empleados',false,'array','id,nempleado');
-$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo=1','array');
+$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id <> 100 and activo=1 and id_cia="'.$id_cia.'"','array');
 
 // Select al Perfiles
 if (isset($_GET['all']) && $_GET['all'] == 1) {
-	$where 			= 	'id_cia="'.$id_cia.'"';
-	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'mant_perfiles',$where,'array','id,name');
+	$where 			= 	'id <> 100 and activo=1 and id_cia="'.$id_cia.'"';
+	$listPerfiles 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',$where,'array','id,name');
 	echo json_encode($listPerfiles['resultado']);
 }
 
@@ -75,6 +76,21 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 			$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'email = "'.$_POST['user_acceso'].'"');
 		}
 
+		// Add permissions
+		if ($_POST['perfil']) {
+			$dataUser 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email = "'.$_POST['user_acceso'].'"','extract');
+			$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
+			if ($selPerms['resultado']) {
+				foreach ($selPerms['resultado'] as $key => $perm) {
+					if (is_numeric($perm['id_definicion_permiso'])) {
+						$P_Campos 		=	'id_user,id_permission,id_cia,created_at';
+						$P_Valores 		=	"'".$_POST['id']."','".$perm['id_definicion_permiso']."','".$id_cia."',NOW()";
+						$ObjEjec->insertarRegistro(PREFIX.'users_permissions', $P_Campos, $P_Valores);
+					}
+				}
+			}
+		}
+
 		echo 'Se ingreso el registro con éxito';
 
 		if ($_POST['enviar_email']) {
@@ -112,7 +128,7 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 }
 
 /**
- * Edit
+ * Update
  */
 if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
@@ -149,12 +165,29 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 		move_uploaded_file($fileTempName, $path . $newfilename);
 	}
   	
+	// Update password
 	$clave = "";
 	if (isset($_POST['clave']) && $_POST['clave']!="") {
 		$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
 		$clave 		= 	"contrasena='".$clave."'";
 		$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 	}
+
+	// Update permissions
+	if ($data['id_perfil'] != $_POST['perfil']) {
+		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
+		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
+		if ($selPerms['resultado']) {
+			foreach ($selPerms['resultado'] as $key => $perm) {
+				if (is_numeric($perm['id_definicion_permiso'])) {
+					$P_Campos 		=	'id_user,id_permission,id_cia,created_at';
+					$P_Valores 		=	"'".$_POST['id']."','".$perm['id_definicion_permiso']."','".$id_cia."',NOW()";
+					$ObjEjec->insertarRegistro(PREFIX.'users_permissions', $P_Campos, $P_Valores);
+				}
+			}
+		}
+	}
+	
 	
 	if($l == 1){
 		echo 'ok';

@@ -140,7 +140,7 @@ div.dataTables_wrapper div.dataTables_filter label {
             <input type="hidden" name="id_row_edit" id="id_row_edit" />  
             <input autofocus="" name="usuario_acceso_edit" disabled required="" type="text" class="form-control" id="usuario_acceso_edit" placeholder="Usuario para entrar al sistema">
           </div>
-          <div class="col-md-2 col-sm-3">Contraseña <span class="symbol required"></div>
+          <div class="col-md-2 col-sm-3">Contraseña <!--<span class="symbol required">--></div>
           <div class="col-md-4 col-sm-3">
             <input autofocus="" name="usuario_clave_edit" required="" type="password" maxlength="12" class="form-control" id="usuario_clave_edit" placeholder="Contraseña">
             <small class="color-gray">Ingrese una contraseña si desea cambiarla.</small>

@@ -732,7 +732,9 @@ function showUserPermisos ( id ) {
 
 }
 
-// Edit Permisos
+/**
+ * Edit Permisos
+ */
 function editUserPermisos ( idParam ) {
   
     var id_user     = '<?php echo $_SESSION["id_user"]?>';

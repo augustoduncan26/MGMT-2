@@ -220,14 +220,14 @@
             ×
         </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
-          <div id="mssg-label-edit-perm"></div>
+          <div class="alert" id="mssg-label-edit-perm"></div>
       </div>
     <div class="modal-body" id="show-permisos">
         Cargando...
     </div>
     <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
+      <input name="permisos_user" type="button" class="btn btn-primary btn-edit-permissions" id="permisos_user"  value="Modificar datos">
     </div>
     </div>
   </div>
@@ -443,18 +443,6 @@ $.ajax({
  * Show Permisos
 */ 
 function showUserPermisos ( id ) {
-// var contenido_editor = $('#show-permisos')[0];
-// ajax1   = nuevoAjax();
-// ajax1.open("GET", "ajax/ajax_list_perfiles_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
-// ajax1.onreadystatechange=function() {
-
-// if (ajax1.readyState==4) {
-//   contenido_editor.innerHTML = ajax1.responseText;
-// }
-// }
-
-// ajax1.send(null);
-
   var contenido_editor = $('#show-permisos')[0];
   let route = 'ajax/ajax_list_perfiles_permisos.php';
   $.ajax({
@@ -478,6 +466,45 @@ function showUserPermisos ( id ) {
   });
 }
 
+/**
+ * Edit Permisos
+ * @param {*} idParam  
+ */
+$('.btn-edit-permissions').on('click', () => {
+  var id_         = $('#id_row_perm').val(); //idParam;
+  var datas       = new Array();
+
+  // Capturar los valores que seleccionan
+  $("input:checkbox:checked").each(function() {
+    datas.push($(this).val());
+  });
+
+  var editperm    = 1;
+  var form_data   =  new FormData();
+
+  form_data.append('editperm' , editperm);
+  form_data.append('permisos', permisos);
+  form_data.append('valores', datas);
+  form_data.append('id_', id_);
+
+$.ajax({
+      url: 'app/controllers/configurar-perfiles.php',
+      dataType: 'text',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: form_data,
+      type: 'post',
+      success: function (response) {
+        console.log(response)
+        $('#mssg-label-edit-perm').show().css('color','#0f5132').addClass('alert-success').removeClass('alert-danger').html('<h5>'+response+'</h5>');
+        setTimeout(()=>{$('#mssg-label-edit-perm').hide('slow')},3000)
+      },
+      error: function (response) {
+      }
+  });
+//}
+});
 
 /**
  * Delete 
@@ -538,6 +565,20 @@ $(document).ready( function () {
 // Clean
 function limpiarCampos () {
   $("#nombre_perfil").val('');
+}
+
+/**
+ * Tildar / Destildar checks 
+ * @param {*} source  
+*/
+function toggle(source) {
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i] != source) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
+  if($('.select-all').html() == 'Tildar Todos') { $('.select-all').html('Destildar Todos')} else { $('.select-all').html('Tildar Todos')}
 }
 
 $("[name='estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});

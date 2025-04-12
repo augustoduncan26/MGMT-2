@@ -138,7 +138,7 @@ div.dataTables_wrapper div.dataTables_filter label {
             <input type="hidden" name="id_row_edit" id="id_row_edit" />  
             <input autofocus="" name="usuario_acceso_edit" disabled required="" type="text" class="form-control" id="usuario_acceso_edit" placeholder="Usuario para entrar al sistema">
           </div>
-          <div class="col-md-2 col-sm-3">Contraseña <span class="symbol required"></div>
+          <div class="col-md-2 col-sm-3">Contraseña <!--<span class="symbol required">--></div>
           <div class="col-md-4 col-sm-3">
             <input autofocus="" name="usuario_clave_edit" required="" type="password" maxlength="12" class="form-control" id="usuario_clave_edit" placeholder="Contraseña">
             <small class="color-gray">Ingrese una contraseña si desea cambiarla.</small>
@@ -592,7 +592,7 @@ if ( photo == undefined || photo == 'undefined' ) {
 }
 
 
-let route = "app/controllers/usuarios-listar.php";
+let route = "app/controllers/configurar-usuarios.php";
 var form_data   =   new FormData();
 form_data.append('edit', 1);
 form_data.append('id', id);
@@ -619,19 +619,19 @@ $.ajax({
   success         : function (response) { 
     if (response == 'ok') {
       $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-danger').addClass('alert-success').show().html('Los datos fueron actualizados con éxito. La página se actualizara en breve.');
-
-      //limpiarCampos();
-      setTimeout(()=>{
-        $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').html('').hide();
-        window.location.reload()
-      },3000);    
-      //listUsuarios();
     } else {
+      $("#mssg-alert-edit").show().removeClass('alert-warning').removeClass('alert-success').addClass('alert-danger').html('Hubo un error al tratar de actualizar el registro.');
       console.log(response);
     }
+    //limpiarCampos();
+    setTimeout(()=>{
+        $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').hide();
+        //window.location.reload()
+      },3000);    
+      //listUsuarios();
   },
   error           : function (error) {
-    console.log(error);
+    //console.log(error);
   }
 });
 });

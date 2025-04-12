@@ -24,13 +24,13 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
  * Permisos
 */ 
 if (isset($_POST['editperm']) && $_POST['editperm']==1) {
-	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_perfil = '".$_POST['id_']."'");
+	$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_perfil = '".$_POST['id_']."' and id_cia='".$id_cia."'");
 	$exp 		=	explode(",",$_POST['valores']);
 	$cuantos = count($exp);
 	for ($i = 0 ; $i < $cuantos; $i++) {
 		if ($exp[$i]!='on') {
-			$P_Campos 		=	'id_perfil,id_definicion_permiso';
-			$P_Valores 		=	"'".$_POST['id_']."','".$exp[$i]."'";
+			$P_Campos 		=	'id_perfil,id_definicion_permiso,id_cia,activo';
+			$P_Valores 		=	"'".$_POST['id_']."','".$exp[$i]."','".$id_cia."',1";
 			$ObjEjec->insertarRegistro(PREFIX.'permisos', $P_Campos, $P_Valores);
 		}
 	}

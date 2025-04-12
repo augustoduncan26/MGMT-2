@@ -47,6 +47,14 @@
       </div>
     </div>
 
+    <div class="container text-rigth">
+      <div class="clearfix col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <a class="btn btn-xs btn-teal tooltips"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
+      </div>
+    </div>
+    
 <div class="row">
   <div class="col-sm-12">
     <div class="">

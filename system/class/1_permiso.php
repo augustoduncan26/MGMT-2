@@ -11,12 +11,17 @@ class permisos {
 	/**
 	* @var string Nombre de la tabla
 	*/
-	var $tablaUserPermisos;
+	var $tablaUsersPermisos;
 	
 	/**
 	* @var string Nombre de la tabla asociacion permisos y usuarios
 	*/
 	var $tablaPermisos;
+
+	/**
+	* @var string Nombre de la tabla usuarios
+	*/
+	var $tablaUsuarios;
 	
 	/**
 	* @var array
@@ -24,12 +29,12 @@ class permisos {
 	var $DefinicionPermisos;
 	
 	/**
-	* @var integer Llave primaria de la tabla usuario
+	* @var integer Llave primaria (id_usuario) de la tabla usuario
 	*/
 	var $campoLlaveUsuario;
 
 	/**
-	* @var integer Llave de la tabla users_permissions
+	* @var integer Campo id_user de la tabla users_permissions
 	*/
 	var $campoLlaveIdUser;
 
@@ -37,6 +42,11 @@ class permisos {
 	* @var integer Llave primaria de la tabla perfil o rol
 	*/
 	var $campoLlavePerfil;
+
+	/**
+	* @var integer Campo id_permission de la tabla users_permissions
+	*/
+	var $campoLlaveIdPermission;
 	
 	/**
 	* @var integer Llave primaria de la tabla definicion de permisos
@@ -66,13 +76,15 @@ class permisos {
 		$menu		=	false;
 		$cual		=	false;
 		
-		$menu			=	new idioma();
-		$this->cual		=	$menu->Buscaridioma();
+		$menu		=	new idioma();
+		$this->cual	=	$menu->Buscaridioma();
 		
 		$this->tablaDefinicionPermisos 				= PREFIX."permiso_definicion";
-		$this->tablaUserPermisos					= PREFIX."users_permissions";
+		$this->tablaUsersPermisos					= PREFIX."users_permissions";
 		$this->tablaPermisos 						= PREFIX."permisos";
+		$this->tablaUsuarios 						= PREFIX."usuarios";
 		$this->campoLlavePerfil 					= "id_perfil";
+		$this->campoLlaveIdPermission 				= "id_permission";
 		$this->campoLlaveIdUser 					= "id_user";
 		$this->campoLlaveUsuario 					= "id_usuario";
 		$this->campoLlaveDefinicionPermiso 			= "id_definicion_permiso";
@@ -195,17 +207,12 @@ class permisos {
 	
 	/**
      * Get user permissions data
-     * @param $id
-     * @return $permission
+     * @param $ID
      */
-	public function getUserPermission ($P_permiso) {
-		$objCons 		= new consultor();
+	public function getUserPermissions ($ID) {
 		$ObjMante   	= new Mantenimientos();
-		$objCMS_T 		= new cms();
-		$idUs 			= $objCMS_T->consultarID();
-		$permissions    = $ObjMante->BuscarLoQueSea('*', $this->tablaUserPermisos,$this->campoLlaveIdUser."=".$idUs,'array');
-		//$objCons->consultar("*", $this->tablaUserPermisos, $this->campoLlaveIdUser."=".$idUs);
-		//$this->tablaUserPermisos UsersPermissions::select('id_permission')->where('id_user', $id)->get()->toArray();
+		$permissions    = $ObjMante->BuscarLoQueSea('*', $this->tablaUsersPermisos, " id_cia=".$_SESSION['id_cia']." and ".$this->campoLlaveIdUser."=".$ID,'array');
+		
         $permission     = [];
         foreach ($permissions['resultado'] as $key => $value) {
             $permission[] = $value['id_permission'];
@@ -214,18 +221,37 @@ class permisos {
 	}
 
 	/**
-     * check user permissions
-     * @param $prem
-     * @return boolean
+     * Check User Permissions
      */
-    public static function checkUserPermission ($perm) {
-        // $permission    = UsersPermissions::select('id_permission')->where('id_user', Auth::id())->where('id_permission', $perm)->first();
-        // if ($permission) {
-        //     return true;
-        // } else {
-        //     return false;
-        // } 
+    public function checkUserPermission ($P_permiso, $P_idUser) {
+		$ObjMante   	= new Mantenimientos();
+		$permission     = $ObjMante->BuscarLoQueSea('*', $this->tablaUsersPermisos, " id_cia=".$_SESSION['id_cia']." and ".$this->campoLlaveIdPermission."=".$P_permiso." and ".$this->campoLlaveIdUser."=".$P_idUser,'extract');
+		
+		if ($permission['id_permission'])
+			$exito = true;
+		else
+			$exito = false;
+			
+		return $exito;
     }
+
+	/**
+	 * Consultar el Rol del Usuario
+	 * @param $P_idUser
+	 * @retun $exito
+	 */
+	public function checkUserRol($P_idUser){
+		$exito 		= false;
+		$ObjMante   = new Mantenimientos();
+		$data 	    = $ObjMante->BuscarLoQueSea('*', $this->tablaUsuarios, " id_cia=".$_SESSION['id_cia']." and ".$this->campoLlaveUsuario."=".$P_idUser,'extract');
+		
+		if ($data['id_perfil'])
+			$exito = true;
+		else
+			$exito = false;
+			
+		return $exito;
+	}
 
 	/** 
 	* Buscar si el usuario autenticado tiene un determinado permiso
@@ -404,116 +430,116 @@ class permisos {
 	* @param integer $P_Usuario Id del usuario del cual pertenece el nodo de permiso
 	* @return string Cadena con  html/javascript del nodo 
 	*/
-	function crearNodoPermiso ($IDpermiso, $descPermiso, $permisosPadre, $P_Usuario){
-		//$control  = '<table border=0 width=100%> <tr><td>';
-		$control	=	FALSE;
-		$DefPerm	=	FALSE;
-		$PWhere		=	false;
-		$Pexito		=	false;	
+	// function crearNodoPermiso ($IDpermiso, $descPermiso, $permisosPadre, $P_Usuario){
+	// 	//$control  = '<table border=0 width=100%> <tr><td>';
+	// 	$control	=	FALSE;
+	// 	$DefPerm	=	FALSE;
+	// 	$PWhere		=	false;
+	// 	$Pexito		=	false;	
 		
-		$DefPerm	=	$this->consultarInfoPadre($IDpermiso);
-		$objCons 	= 	new consultor();
-		$PWhere		=	'id_definicion_permiso = "'.$IDpermiso.'" and permisoPadre IS NULL';
-		$objCons->consultar('*', 'definicion_permiso',$PWhere);
-		if ($objCons->totalFilas > 0){
-			$reg 	= $objCons->extraerRegistro();
-			$Pexito = $reg;
-		}
-		for($i = 0; $i < $objCons->totalFilas; $i++)
-			{
-				if($this->cual=='es')
-				{
-					$control .='<font color=#000080><strong>'.strtoupper($Pexito['definicion_permiso']).'</strong></font><hr /> <p />';		
-				}
-				else
-				{
-					$control .='<font color=#000080><strong>'.strtoupper($Pexito['definicion_permiso_ing']).'</strong></font><hr /> <p />';	
-				}
-			}	
+	// 	$DefPerm	=	$this->consultarInfoPadre($IDpermiso);
+	// 	$objCons 	= 	new consultor();
+	// 	$PWhere		=	'id_definicion_permiso = "'.$IDpermiso.'" and permisoPadre IS NULL';
+	// 	$objCons->consultar('*', 'definicion_permiso',$PWhere);
+	// 	if ($objCons->totalFilas > 0){
+	// 		$reg 	= $objCons->extraerRegistro();
+	// 		$Pexito = $reg;
+	// 	}
+	// 	for($i = 0; $i < $objCons->totalFilas; $i++)
+	// 		{
+	// 			if($this->cual=='es')
+	// 			{
+	// 				$control .='<font color=#000080><strong>'.strtoupper($Pexito['definicion_permiso']).'</strong></font><hr /> <p />';		
+	// 			}
+	// 			else
+	// 			{
+	// 				$control .='<font color=#000080><strong>'.strtoupper($Pexito['definicion_permiso_ing']).'</strong></font><hr /> <p />';	
+	// 			}
+	// 		}	
 		
-		//$control .='<font color=#000080><strong>'.$IDpermiso.'</strong></font><hr /> <p />';	
+	// 	//$control .='<font color=#000080><strong>'.$IDpermiso.'</strong></font><hr /> <p />';	
 		
-		$control .= "\t\t<input type=\"checkbox\" name=\"permisos[]\" value=\"".$IDpermiso."\" id=\"PERM_".$IDpermiso."\" ";
+	// 	$control .= "\t\t<input type=\"checkbox\" name=\"permisos[]\" value=\"".$IDpermiso."\" id=\"PERM_".$IDpermiso."\" ";
 		
 		
-		if ($this->tienePermisoUsuario($IDpermiso, $P_Usuario))
-			$control .= " checked=\"checked\" ";
+	// 	if ($this->tienePermisoUsuario($IDpermiso, $P_Usuario))
+	// 		$control .= " checked=\"checked\" ";
 		
-		$permHijo = $this->obtenerListadoPermisoHijo($IDpermiso);
+	// 	$permHijo = $this->obtenerListadoPermisoHijo($IDpermiso);
 		
-		if ($permisosPadre!=false OR $permHijo!=false){
+	// 	if ($permisosPadre!=false OR $permHijo!=false){
 			
-			$control .= " onclick=\"javascript: ";
-			$control .= "c = 0; ";
+	// 		$control .= " onclick=\"javascript: ";
+	// 		$control .= "c = 0; ";
 			
-			if ($permisosPadre!=false){
+	// 		if ($permisosPadre!=false){
 				
-				$control .= "if (this.checked){ ";
-					foreach($permisosPadre  as $permPadre){
-						$control .= " document.getElementById('PERM_".$permPadre."').checked = this.checked; ";
-					}
+	// 			$control .= "if (this.checked){ ";
+	// 				foreach($permisosPadre  as $permPadre){
+	// 					$control .= " document.getElementById('PERM_".$permPadre."').checked = this.checked; ";
+	// 				}
 				
-				$control .= "}else{";
-				$padreInmediato = $this->consultarPadre ($IDpermiso);
+	// 			$control .= "}else{";
+	// 			$padreInmediato = $this->consultarPadre ($IDpermiso);
 				
-				if ($padreInmediato != 0){
+	// 			if ($padreInmediato != 0){
 					
-					$permSubHijoArr = $this->obtenerListadoPermisoHijo($padreInmediato);
+	// 				$permSubHijoArr = $this->obtenerListadoPermisoHijo($padreInmediato);
 					
-					foreach($permSubHijoArr  as $permSubHijo){
-						$control .= " if (document.getElementById('PERM_".$permSubHijo[$this->campoLlaveDefinicionPermiso]."').checked) { c++; } ";							
-					}						
+	// 				foreach($permSubHijoArr  as $permSubHijo){
+	// 					$control .= " if (document.getElementById('PERM_".$permSubHijo[$this->campoLlaveDefinicionPermiso]."').checked) { c++; } ";							
+	// 				}						
 					
-				}	
-				else{
-					$permSubHijoArr = $this->obtenerListadoPermisoPadre();
+	// 			}	
+	// 			else{
+	// 				$permSubHijoArr = $this->obtenerListadoPermisoPadre();
 						
-					foreach($permSubHijoArr  as $permSubHijo){
-						$control .= " if (document.getElementById('PERM_".$permSubHijo[$this->campoLlaveDefinicionPermiso]."').checked) { c++; } ";							
-					}						
-				}		
+	// 				foreach($permSubHijoArr  as $permSubHijo){
+	// 					$control .= " if (document.getElementById('PERM_".$permSubHijo[$this->campoLlaveDefinicionPermiso]."').checked) { c++; } ";							
+	// 				}						
+	// 			}		
 				
-				$control .= "if (c == 0) {  document.getElementById('PERM_".$padreInmediato."').click(); } ";
+	// 			$control .= "if (c == 0) {  document.getElementById('PERM_".$padreInmediato."').click(); } ";
 				
-				$control .= "}";
-			}
+	// 			$control .= "}";
+	// 		}
 			
 			
-			$control .= "\n //Hijos \n";
+	// 		$control .= "\n //Hijos \n";
 			
-			$control .= $this->checkarHijos ($IDpermiso);
+	// 		$control .= $this->checkarHijos ($IDpermiso);
 			
-			$control .= "\"";
-		}
+	// 		$control .= "\"";
+	// 	}
 		
-		$control .= " />";
+	// 	$control .= " />";
 		
-		$control .= "<label for=\"PERM_".$IDpermiso."\"> ".$descPermiso."</label>\n";
+	// 	$control .= "<label for=\"PERM_".$IDpermiso."\"> ".$descPermiso."</label>\n";
 		
-		$control .= "<br />";
+	// 	$control .= "<br />";
 		
 		
 		
-		if ($permHijo != false){
-			$control .= "\t\t\t<blockquote>";
+	// 	if ($permHijo != false){
+	// 		$control .= "\t\t\t<blockquote>";
 			
-			if ($permisosPadre == false)
-				$permisosPadre = array();
+	// 		if ($permisosPadre == false)
+	// 			$permisosPadre = array();
 			
-			$permisosPadre[] = $IDpermiso;
+	// 		$permisosPadre[] = $IDpermiso;
 			
-			foreach($permHijo  as $permisoDH){				
-				$control .= $this->crearNodoPermiso ($permisoDH[$this->campoLlaveDefinicionPermiso], $permisoDH[$this->campoDefinicionPermiso], $permisosPadre, $P_Usuario);
-			}
+	// 		foreach($permHijo  as $permisoDH){				
+	// 			$control .= $this->crearNodoPermiso ($permisoDH[$this->campoLlaveDefinicionPermiso], $permisoDH[$this->campoDefinicionPermiso], $permisosPadre, $P_Usuario);
+	// 		}
 			
-			//$control .= "<br />";
-			$control .= "</blockquote>\n";
-		}
-		//$control .= '</td></tr></table>';
-		return ($control);
+	// 		//$control .= "<br />";
+	// 		$control .= "</blockquote>\n";
+	// 	}
+	// 	//$control .= '</td></tr></table>';
+	// 	return ($control);
 		
 		
-	}
+	// }
 	
 	/** 
 	* Construye control HTML que visualiza los permisos asignados a un usuario.
@@ -522,24 +548,24 @@ class permisos {
 	* @param string $P_Usuario Id del usuario del que se esta creando el control
 	* @return string HTML y javascript del control generado
 	*/
-	function generarControlPermiso($P_ancho, $P_Usuario){
-		$permPadre = $this->obtenerListadoPermisoPadre();
-		$control = "";
+	// function generarControlPermiso($P_ancho, $P_Usuario){
+	// 	$permPadre = $this->obtenerListadoPermisoPadre();
+	// 	$control = "";
 		
-		if ($permPadre === false){
-			$control = "No existen definiciones de permiso en este sistema";
-		}
-		else{
-			foreach($permPadre as $permisoD){
-				$idPerm = $permisoD[$this->campoLlaveDefinicionPermiso];
-				$descPerm = $permisoD[$this->campoDefinicionPermiso];
+	// 	if ($permPadre === false){
+	// 		$control = "No existen definiciones de permiso en este sistema";
+	// 	}
+	// 	else{
+	// 		foreach($permPadre as $permisoD){
+	// 			$idPerm = $permisoD[$this->campoLlaveDefinicionPermiso];
+	// 			$descPerm = $permisoD[$this->campoDefinicionPermiso];
 				
-				$control .= $this->crearNodoPermiso ($idPerm, $descPerm, false, $P_Usuario);
-			}		
-		}
+	// 			$control .= $this->crearNodoPermiso ($idPerm, $descPerm, false, $P_Usuario);
+	// 		}		
+	// 	}
 		
-		echo $control;		
-	}
+	// 	echo $control;		
+	// }
 	
 	
 	function consultarPermisosPerfil($P_idPerfil){
@@ -568,298 +594,45 @@ class permisos {
 		return ($exito);
 	}
 	
-	/**
-	* Aplicar perfil
-	* @param $P_idUsuario int - ID del usuario
-	* @param $P_idPerfil int - ID del perfil
-	* @param $bCampoPerfilTblUsr bool - (false)
-	* (true) Dice si hay campo de perfil asignado en tabla de usuario
-	* @param $bAsocPrflCondic bool - (false) No hay restriccion al perfil
-	* (true) Existe condiciones, definir...
-	*/
-	function aplicarPerfil($P_idUsuario, $P_idPerfil, $P_Principal=false,$bCampoPerfilTblUsr=false, $bAsocPrflCondic=false){
-		$exito = false;
-		$objEjec = new ejecutorSQL();
-		
-		if($P_idPerfil)
-		{
-			 $P_idPerfil;	
-		}
-		
-		if($bAsocPrflCondic===true){
-			
-		}
-		else{
-			$permisosPerfil = $this->consultarPermisosPerfil($P_idPerfil);
-		//echo ' b ';
-		
-		if ($permisosPerfil != false){
-			//Agregar grupo a tabla: usuario_grupo
-			$this->InsertarEnGrupos($P_idUsuario, $P_idPerfil,$P_Principal);
-			/* Asocia perfil en tabla de usuario */
-			if($bCampoPerfilTblUsr===true){
-				$val = "id_perfil = '".$P_idPerfil."'";
-				$tbl = "ad_usuario";
-				$cdc = "id_usuario = '".$P_idUsuario."'";
-				$objEjec->actualizarRegistro($val, $tbl, $cdc);
-			}
-			
-			$exito = $this->asignarPermisosGrupo($permisosPerfil, $P_idUsuario);
-		}
-		else
-		{
-			$CrearGrupo = $this->InsertarEnGrupos($P_idUsuario, $P_idPerfil,$P_Principal);;	
-			$exito	=	$CrearGrupo;
-		}
-			return ($exito);
-		}
-	}
+	
 	
 	//Consultar el grupo del usuario
-	function ConsultarGrupo($P_idUsuario)
-	{
-		$exito		=	FALSE;
-		$objEjec 		= new ejecutorSQL();
-		$objConsultor 	= new consultor();
+	// function ConsultarGrupo($P_idUsuario)
+	// {
+	// 	$exito		=	FALSE;
+	// 	$objEjec 		= new ejecutorSQL();
+	// 	$objConsultor 	= new consultor();
 		
-		$cons		=	"*";
-		$tbl		=	"ad_usuario_grupo";
-		$where		=	"id_usuario = '".$P_idUsuario."'";
-		$ope		=	$objConsultor->consultar($cons,$tbl,$where);
+	// 	$cons		=	"*";
+	// 	$tbl		=	"ad_usuario_grupo";
+	// 	$where		=	"id_usuario = '".$P_idUsuario."'";
+	// 	$ope		=	$objConsultor->consultar($cons,$tbl,$where);
 
-		if ($ope == true){
-			$exito = $objConsultor->extraerRegistro();
-		}else{ $exito = false;}
+	// 	if ($ope == true){
+	// 		$exito = $objConsultor->extraerRegistro();
+	// 	}else{ $exito = false;}
 		
-		return($exito);
-	}
-	/*
-	Funcion para ingresar el numero de grupo segun el usuario
-	Tabla 911_mant_secciones
-	*/
-	public function InsertarEnGrupos($P_idUsuario, $P_idGrupo,$P_Principal)
-	{
-		$objEjec 		= new ejecutorSQL();
-		$objConsultor 	= new consultor();
-		$exito			=	false;
-		$P_idUsuario;
-		$sel 			= "id_usuario";
-		$tbl 			= "ad_usuario_grupo";
-		$whr 			= "id_usuario=".$P_idUsuario;
-		$objConsultor->consultar($sel, $tbl, $whr);
-
-		SWITCH($P_idGrupo)
-		{
-			case '1':		//JEFES
-				//$P_idPerfil	=	'3';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-					$objEjec->actualizarRegistro('principal=1', 'usuario', $whr);
-					$exito	=	true;
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario, principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."', '".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);
-					//$objEjec->insertarRegistro('usuario','principal', $val);	
-					$exito	=	true;
-				}
-			break;
-			
-			case 2:		//SUPERVISORES
-				//$P_idPerfil	=	'4';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-					//Tabla Ususario
-					$objEjec->actualizarRegistro('principal=1', 'usuario', $whr);
-					
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario, principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."','".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);			
-				}
-			break;
-			
-			case 3:		//USUARIO OPERACIONES
-				   // $P_idPerfil	=	'5';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-					$objEjec->actualizarRegistro('principal=1', 'usuario', $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario,principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."','".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);			
-				}
-			break;
-			
-			case 4:		//USUARIO PRE-HOSPITALARIA
-				//$P_idPerfil	=	'6';
-				
-				if ($objConsultor->totalFilas > 0 ){
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-					$objEjec->actualizarRegistro('principal=1', 'usuario', $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario, principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."','".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);			
-				}
-			break;
-			
-			case 5:		//USUARIO O.I.R.H.
-				//$P_idPerfil	=	'7';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario, principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."','".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);		
-				}
-			break;
-			
-			case 6:		//USUARIO COMUN
-				//$P_idPerfil	=	'8';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idGrupo."', principal = '".$P_Principal."'";
-					$tbl 	= 	"ad_usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario, principal";
-					$tbl 	= 	"ad_usuario_grupo";
-					$val 	= 	"'".$P_idGrupo."','".$P_idUsuario."','".$P_Principal."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);		
-				}
-			break;
-			
-			case 7:		//PERFIL DE EJMEPLO
-				$P_idPerfil	=	'';
-			break;
-			/*
-			case 8:		//FUNSIONARIO ENLACE CON ENTIDAD
-				$P_idPerfil	=	'2';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idPerfil."'";
-					$tbl 	= 	"usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario";
-					$tbl 	= 	"usuario_grupo";
-					$val 	= 	"'".$P_idPerfil."','".$P_idUsuario."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);			
-				}
-			break;
-			
-			case 9:		//FUNSIONARIO SECRETARIA GENERAL
-				$P_idPerfil	=	'9';
-				if ($objConsultor->totalFilas > 0 ){
-		
-					$camp	= 	"id_grupo = '".$P_idPerfil."'";
-					$tbl 	= 	"usuario_grupo";
-					$whr 	= 	"id_usuario = '".$P_idUsuario."'";
-					$exito	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-				}
-				else
-				{
-					$cmp	= 	"id_grupo, id_usuario";
-					$tbl 	= 	"usuario_grupo";
-					$val 	= 	"'".$P_idPerfil."','".$P_idUsuario."'";///"id_usuario = $P_idUsuario";
-					$exito	=	$objEjec->insertarRegistro($tbl, $cmp, $val);			
-				}
-			break;
-			*/
-			case 50:
-					$exito = true;
-			break;
-			
-		}
-		
-		/*
-			VERIFICAR PRINCIPAL DEL GRUPO
-			=============================
-		*/
-		if($P_Principal=="SI")
-		{
-			//echo $P_infoUsuario[usuario];
-			
-			$cons		=	"principal";
-			$tbl		=	"ad_usuario_grupo,ad_usuario";
-			$where		=	"usuario_grupo.id_grupo = '".$P_idGrupo."' and usuario_grupo.principal = 1 and usuario_grupo.id_usuario = usuario.id_usuario and usuario.id_entidad = ".$_POST['entidad'];
-			$objConsultor->consultar($cons,$tbl,$where);
-			$datos		=	$objConsultor->extraerRegistro();
-			
-			if ($objConsultor->totalFilas > 0 ){
-				 $_POST['mensaje'] = 'Ya existe un usuario como principal de este grupo';
-			}else{
-				$camp	= 	"principal = 1";
-				$tbl 	= 	"ad_usuario_grupo";
-				$whr	=	"id_usuario = '".$P_idUsuario."' and  id_grupo = '".$P_idGrupo."'";
-				$resulta	=	$objEjec->actualizarRegistro($camp, $tbl, $whr);
-				$exito	=	true;
-					
-			}
-		}
-		
-		return ($exito);
-	}
+	// 	return($exito);
+	// }
 	
 	// Buscar permiso del usuario
 	// **************************
-	function tienePermisoElUsuario($P_permiso,$idUser){
+	// function tienePermisoElUsuario($P_permiso,$idUser){
 		
-		//$idUs 	= 	$P_Usuario;
-		$where 	= 	"id_usuario = '".$idUser."' and id_definicion_permiso = '".$P_permiso."'";
+	// 	//$idUs 	= 	$P_Usuario;
+	// 	$where 	= 	"id_usuario = '".$idUser."' and id_definicion_permiso = '".$P_permiso."'";
 		
-		$SQ		=	mysqli_query("SELECT * FROM permiso WHERE ".$where);
+	// 	$SQ		=	mysqli_query("SELECT * FROM permiso WHERE ".$where);
 		
-		if(mysqli_num_rows($SQ)>0)
-		{
-			$exito	=	TRUE;
-		}else
-		{
-			$exito	=	FALSE;	
-		}
-		return $exito;
-	}
+	// 	if(mysqli_num_rows($SQ)>0)
+	// 	{
+	// 		$exito	=	TRUE;
+	// 	}else
+	// 	{
+	// 		$exito	=	FALSE;	
+	// 	}
+	// 	return $exito;
+	// }
 	
 }// Clase Permiso	
 ?>

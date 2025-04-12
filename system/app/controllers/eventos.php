@@ -3,7 +3,7 @@
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
-
+$id_rol     = $_SESSION["id_rol"];
 $id_user    = $_SESSION["id_user"];
 $id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
@@ -12,7 +12,7 @@ $P_Tabla 	= PREFIX.'events';
 
 // All
 $selectClases  = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array');
-$selectPerfiles= $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo = 1 and id_cia = '.$id_cia,'array');
+$selectPerfiles= $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id <> 100 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectEventos = $ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_cia = '.$id_cia,'array');
 
 /**
