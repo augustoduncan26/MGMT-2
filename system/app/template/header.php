@@ -1,5 +1,5 @@
   <head>
-        <title>DC System</title>
+        <title><?=$_ENV['APP_NAME']?></title>
         <!-- start: META -->
         <meta charset="utf-8" />
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -72,7 +72,16 @@
         <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 
-        
+        <!-- 
+        For all Pages
+        - Select2
+        - Font awesome
+        - Side bar Modal 
+        -->
+        <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/css/bootstrap_modal_right_sider_bar.css" />
         
 </head>
     <!-- end: HEAD -->

@@ -1,4 +1,19 @@
+<?php
+include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+$ObjMante   	= new Mantenimientos();
+$ObjEjec    	= new ejecutorSQL();
+$id_rol     	= $_SESSION["id_rol"];
+$id_user    	= $_SESSION["id_user"];
+$id_cia 		= $_SESSION['id_cia'];
+$email 			= $_SESSION['email'];
+$username 		= $_SESSION['username'];
+$P_tabla   		= PREFIX.'usuarios';
 
+$evensLists 	= $ObjMante->BuscarLoQueSea('*',PREFIX.'events',false,'array');
+$totalStudents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=2',false);
+$totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
+
+?>
 <script src="assets/js/Chart.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
 
@@ -167,83 +182,19 @@
             </div>
             <div class="panel-body panel-scroll ps-container" style="height:300px">
                 <ul class="todo">
+                    <?php
+                        foreach ($evensLists['resultado'] as $key => $value) {
+                    ?>
                     <li>
                         <a class="todo-actions" href="javascript:void(0)">
                             <i class="fa fa-square-o"></i>
-                            <span class="desc" style="opacity: 1; text-decoration: none;">Staff Meeting</span>
+                            <span class="desc" style="opacity: 1; text-decoration: none;"><?=$value['name']?></span>
                             <span class="label label-danger" style="opacity: 1;"> today</span>
                         </a>
                     </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc" style="opacity: 1; text-decoration: none;"> New frontend layout</span>
-                            <span class="label label-danger" style="opacity: 1;"> today</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> Hire developers</span>
-                            <span class="label label-warning"> tommorow</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc">Staff Meeting</span>
-                            <span class="label label-warning"> tommorow</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> New frontend layout</span>
-                            <span class="label label-success"> this week</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> Hire developers</span>
-                            <span class="label label-success"> this week</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> New frontend layout</span>
-                            <span class="label label-info"> this month</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> Hire developers</span>
-                            <span class="label label-info"> this month</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc" style="opacity: 1; text-decoration: none;">Staff Meeting</span>
-                            <span class="label label-danger" style="opacity: 1;"> today</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc" style="opacity: 1; text-decoration: none;"> New frontend layout</span>
-                            <span class="label label-danger" style="opacity: 1;"> today</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="todo-actions" href="javascript:void(0)">
-                            <i class="fa fa-square-o"></i>
-                            <span class="desc"> Hire developers</span>
-                            <span class="label label-warning"> tommorow</span>
-                        </a>
-                    </li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px; width: 448px; display: none;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 300px; display: inherit;"><div class="ps-scrollbar-y" style="top: 0px; height: 214px;"></div></div></div>
         </div>

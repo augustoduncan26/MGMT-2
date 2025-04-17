@@ -60,8 +60,6 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 	<?php
 		}
 	}
-    
-    //echo json_encode($list);
 }
 
 /**

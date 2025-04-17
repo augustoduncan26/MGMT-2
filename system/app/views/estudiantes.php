@@ -38,13 +38,21 @@
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-users-2"></i> Lista de Estudiantes</h4>
+      <h4><i class="clip-users-2"></i> Asignación de Estudiantes</h4>
       </div>
       <div class="col-md-5 text-right">
-      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Estudiante</a>
+      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo</a>
       <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
       <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     </div>
+    </div>
+
+    <div class="container text-rigth">
+      <div class="clearfix col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <a class="btn btn-xs btn-teal tooltips"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
+      </div>
     </div>
 
 <div class="row">

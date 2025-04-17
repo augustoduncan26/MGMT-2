@@ -362,11 +362,6 @@ $('#usuario_acceso').on('input', ()=>{
 
 $('#mssg-alert').hide();
 
-// $('#agregar-emal').on('click',()=>{
-// //$("[name='agregar_usuario']").on('click', ()=>{
-//   $('#usuario_email').hide();
-// });
-
 $("[name='generar-clave']").on('click', ()=> {
   if ($("[name='generar-clave']").is(':checked')) {
     console.log('Genera clave')
@@ -465,8 +460,6 @@ $("[name='agregar_usuario']").on('click', ()=>{
     success         : function (response) { 
       if (response != "Ya existe este registro.") {
         $("#mssg-alert").removeClass('alert-danger').addClass('alert-success').show().html(response);
-        //limpiarCampos ();
-        //listUsuarios();
       } else {
         $('#mssg-alert').removeClass('alert-success').addClass('alert-danger').show().html(response);
       }
@@ -709,29 +702,6 @@ $(document).ready( function () {
       ]
     });
 } );
-
-// /**
-//  * Show Permisos
-// */ 
-// function showUserPermisos ( id ) {
-
-// var id_user     = '<?php echo $_SESSION["id_user"]?>';
-// var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-// var contenido_editor = $('#show-permisos')[0];
-
-// //$('#cargando_list').show()
-// ajax1   = nuevoAjax();
-// ajax1.open("GET", "ajax/ajax_list_users_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
-// ajax1.onreadystatechange=function() {
-
-// if (ajax1.readyState==4) {
-//   contenido_editor.innerHTML = ajax1.responseText;
-// }
-// }
-
-// ajax1.send(null);
-
-// }
 
 // Clean
 function limpiarCampos (form = false) {

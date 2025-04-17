@@ -1,3 +1,19 @@
+<?php
+include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+$ObjMante   	= new Mantenimientos();
+$ObjEjec    	= new ejecutorSQL();
+$id_rol     	= $_SESSION["id_rol"];
+$id_user    	= $_SESSION["id_user"];
+$id_cia 		= $_SESSION['id_cia'];
+$email 			= $_SESSION['email'];
+$username 		= $_SESSION['username'];
+$P_tabla   		= PREFIX.'usuarios';
+
+$totalTeachers 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=3',false);
+$totalStudents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=2',false);
+$totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
+
+?>
 <!-- Top Data: Students, Teachers, Parents -->
 <div class="row">
 	
@@ -8,7 +24,7 @@
 				<h2>Profesores</h2>
 			</div>
 			<div class="content">
-				<h4><span>Total:</span> 123123</h4>
+				<h4><span>Total:</span> <?=($totalTeachers['total'])?$totalTeachers['total']:0?></h4>
 			</div>
 			<a class="view-more" href="#">
 			Ver Más <i class="clip-arrow-right-2"></i>
@@ -24,7 +40,7 @@
 				<h2 style="text-align: left;">Estudiantes</h2>
 			</div>
 			<div class="content">
-				<h4><span>Total:</span> 123123</h4>
+				<h4><span>Total:</span> <?=($totalParents['total'])?$totalParents['total']:0?></h4>
 			</div>
 			<a class="view-more" href="#">
 				Ver Más <i class="clip-arrow-right-2"></i>
@@ -39,7 +55,7 @@
 				<h2>Padres</h2>
 			</div>
 			<div class="content">
-				<h4><span>Total:</span> 123123</h4>
+				<h4><span>Total:</span> <?=($totalTeachers['total'])?$totalTeachers['total']:0?></h4>
 			</div>
 			<a class="view-more" href="#">
 			Ver Más <i class="clip-arrow-right-2"></i>
