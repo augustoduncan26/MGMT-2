@@ -20,7 +20,7 @@ $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
 	<div class="col-sm-4">
 		<div class="core-box core-box-top-menu">
 			<div class="heading">
-				<i class="fa fa-group circle-icon circle-teal"></i>
+				<i class="clip-users circle-icon circle-teal"></i>
 				<h2>Profesores</h2>
 			</div>
 			<div class="content">
@@ -51,7 +51,7 @@ $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
 	<div class="col-sm-4">
 		<div class="core-box core-box-top-menu">
 			<div class="heading">
-				<i class="fa fa-group circle-icon circle-bricky"></i>
+				<i class="clip-users circle-icon  circle-bricky"></i>
 				<h2>Padres</h2>
 			</div>
 			<div class="content">

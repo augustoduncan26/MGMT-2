@@ -1,7 +1,6 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
+<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
-
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" /> -->
 
 
 <style>
@@ -41,7 +40,10 @@
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-user-5"></i> Asignación de Profesores</h4>
+      <h4>
+        <i class="clip-user-5"></i> Asignación de Profesores <a data-toggle="modal" data-target="#myAssistant" class="btn btn-xs btn-green tooltips">
+        <i class="clip-info" title="Información" ></i></a>
+      </h4>
       </div>
       <div class="col-md-5 text-right">
       <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
@@ -283,6 +285,26 @@
 </div>
 </div>  <?php //////  Fin de editor ?>
 <!-- End Edit Events -->
+
+
+<div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>
 
 <?php get_template_part('footer_scripts');?>
 

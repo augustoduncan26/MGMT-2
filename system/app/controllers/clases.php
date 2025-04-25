@@ -79,7 +79,6 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 
 // Edit 
 if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
-    //echo 5; //$_POST['nombre'];
 	$P_Valores = "class_name = '".Reemplazar_letras($_POST['nombre'])."', capacity='".$_POST['cantidad']."', supervisor_id='".$_POST['superv']."', grade='".$_POST['grado']."', activo = '".$_POST['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['id'].'"');
   	if($l == 1){

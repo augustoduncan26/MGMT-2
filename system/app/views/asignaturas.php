@@ -1,4 +1,3 @@
-
 <style>
 @media (min-width: 768px) {
   .modal-xl {
@@ -35,7 +34,7 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="container">
       <div class="col-md-7">
         <h4>
-          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias <a data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-green tooltips">
+          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias <a data-toggle="modal" data-target="#myAssistant" class="btn btn-xs btn-green tooltips">
           <i class="clip-info" title="Información" ></i></a>
         </h4>
       </div>
@@ -146,7 +145,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                  </tr>
 
                  <tr>
-                   <td width="30%">Asignar a: <span class="symbol required"></span></td>
+                   <td width="30%">Asignar profesor: <span class="symbol required"></span></td>
                    <td width="70%">
                     <select name="teacher_add" id="teacher_add" multiple>
                     <option></option>
@@ -200,63 +199,65 @@ div.dataTables_wrapper div.dataTables_filter label {
  <div class="modal-body" id="contenido_editar">
  <div id="mssg-add-assignaments" style="color:red;"></div>
     <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
-    <table class="table table-hover" id="sample-table-4">
-      <thead>
-      </thead>
-      <tbody>
-      <div class="alert alert-danger">Todos los campos son necesarios</div>
-        <tr>
-          <td width="30%">Nombre <span class="symbol required"></span></td>
-          <td width="70%"><input maxlength="50" autofocus="" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre"></td>
-        </tr>
+    <table class="table  table-hover" id="sample-table-4">
+    <thead>
+    </thead>
+    <tbody>
+    <div class="alert alert-danger mssg-add-modal">Todos los campos son necesarios</div>
+      <tr>
+        <td width="30%">Nombre <span class="symbol required"></span></td>
+        <td width="70%"><input maxlength="50" autofocus="" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
+        <input maxlength="50" autofocus="" name="id_row" type="hidden" class="form-control" id="id_row">
+      </td>
+      </tr>
 
-        <tr>
-          <td width="30%">Clase <span class="symbol required"></span></td>
-          <td width="70%">
-          <select name="class_edit" id="class_edit">
-            <option></option>
-                <?php 
-                  if ($selectClases['resultado']) {
-                    foreach ($selectClases['resultado'] as $key => $value) {
-                      echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
-                    }
-                  }
-                ?>
-            </select>
-          </td>
-        </tr>
+      <tr>
+        <td width="30%">Clase <span class="symbol required"></span></td>
+        <td width="70%">
+        <select name="class_edit" id="class_edit">
+        <option></option>
+            <?php 
+              if ($selectClases['resultado']) {
+                foreach ($selectClases['resultado'] as $key => $value) {
+                  echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                }
+              }
+            ?>
+        </select>
+        </td>
+      </tr>
 
-        <tr>
-          <td width="30%">Asignar a: <span class="symbol required"></span></td>
-          <td width="70%">
-          <select name="teacher_edit" id="teacher_edit" multiple>
-            <option></option>
-                <?php 
-                  if ($selectTeachers['resultado']) {
-                    foreach ($selectTeachers['resultado'] as $key => $value) {
-                      echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
-                    }
-                  }
-                ?>
-            </select>
-          </td>
-        </tr>
-        
-        <tr>
-          <td>Estado</td>
-          <td>
-          <select name="estado_edit"  class="form-control" id="estado_edit">
-            <option value="1">Activo</option>
-            <option value="0" selected="">Inactivo</option>
-          </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <tr>
+        <td width="30%">Asignar profesor: <span class="symbol required"></span></td>
+        <td width="70%">
+        <select name="teacher_edit" id="teacher_edit" multiple>
+        <option></option>
+            <?php 
+              if ($selectTeachers['resultado']) {
+                foreach ($selectTeachers['resultado'] as $key => $value) {
+                  echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
+                }
+              }
+            ?>
+        </select>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Estado</td>
+        <td>
+        <select name="estado_edit"  class="form-control" id="estado_edit">
+          <option value="1">Activo</option>
+          <option value="0" selected>Inactivo</option>
+        </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="agregar_habitacion" type="button" class="btn btn-primary" id="agregar_evento" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
+      <input name="agregar_habitacion" type="button" class="btn btn-primary btn-edit-asignatura" id="edit_evento"  value="Modificar datos">
 </div>
 </form>
 </div>
@@ -271,7 +272,8 @@ div.dataTables_wrapper div.dataTables_filter label {
 </button> 
 -->
 
-<div class="modal fade  come-from-modal right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Assistant Modal -->
+<div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -289,6 +291,7 @@ div.dataTables_wrapper div.dataTables_filter label {
         </div>
     </div>
 </div>
+<!-- //Assistant Modal -->
 <!-- container -->
 
 <?php get_template_part('footer_scripts');?>
@@ -395,44 +398,123 @@ $('.add-event').on('click', ()=>{
   });
 });
 
-// Edit Event
+/** 
+ * Open Edit Modal
+ */
 function editRow ( id ) {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  var contenido_editor = $('#contenido_editar')[0];
-
-  ajax2   = nuevoAjax();
-  ajax2.open("GET", "ajax/ajax_editar_evento.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax2.onreadystatechange=function() {
-
-    if (ajax2.readyState==4) {
-      contenido_editor.innerHTML = ajax2.responseText;
-      listEvents();
+let contenido_editor = $('#contenido_editar')[0];
+$('.mssg-edit-clases').hide();
+  let route = "app/controllers/asignaturas.php";
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: {
+      showEdit  : 1,
+      id        : id,
+      dml       : 'edit'
+    },
+    dataType        : 'json',
+    success         : function (response) {
+      $('#id_row').val(response['id']);
+      $('#nombre_edit').val(response['name']);
+      $('#class_edit').select2('val',response['class_id']);
+      $('#teacher_edit').select2('val',response['teacher_id']);
+      $('#estado_edit').select2('val',response['activo']);
+      // $('#teacher_edit').val(response['capacity']);
+      // $('#class_edit').val(response['grade']);
+      // $('#event_edit_supervisor').select2('val',response['supervisor_id']);
+    },
+    error           : function (error) {
+      console.log(error);
     }
-  }
-
-  ajax2.send(null);
+  });
 }
+
+/**
+ * Update
+ * @param {*} id  
+*/
+$('.btn-edit-class').on('click', ()=>{ 
+//function updateEvent ( id ) {
+  let nombre        = $('#nombre_edit').val();
+  let cantidad      = $('#event_edit_capacity').val();
+  let grado         = $('#event_edit_grade').val();
+  let superv        = $('#event_edit_supervisor').val();
+  let estado        = $('#event_estado_edit').val();
+  let id            = $('#id_row').val();
+
+  let route = "app/controllers/clases.php"; 
+
+var parametros = {
+  edit : 1, nombre : nombre, id : id, superv:superv, cantidad: cantidad, grado: grado, estado:estado,
+};
+
+  $.ajax({
+    data: parametros,
+    url:   route,
+    type:  'post',
+    dataType : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
+    },
+    success:  function (response) {
+      if (response == 'ok') {
+        
+        jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
+
+        $(".mssg-edit-clases").removeClass('alert-danger').addClass('alert-success').show().html('<h5>Los datos fueron actualizados con éxito.</h5>');
+        listClasses();
+        setTimeout(() => {
+          $(".mssg-edit-clases").hide();
+          //window.location.reload();
+        }, 4000);
+      }
+    }
+  });
+});
+
+// Edit Event
+// function editRow ( id ) {
+//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
+//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+//   var contenido_editor = $('#contenido_editar')[0];
+
+//   ajax2   = nuevoAjax();
+//   ajax2.open("GET", "ajax/ajax_editar_evento.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
+//   ajax2.onreadystatechange=function() {
+
+//     if (ajax2.readyState==4) {
+//       contenido_editor.innerHTML = ajax2.responseText;
+//       listEvents();
+//     }
+//   }
+
+//   ajax2.send(null);
+// }
 
 // Update Event
-function updateEvent ( id ) {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  var nombre      = $('#txt_nombre').val();
-  var precio      = $('#txt_precio').val();
-  var estado      = $('#txt_estado').val();
-  ajax3   = nuevoAjax();
-  ajax3.open("GET", "app/controllers/eventos.php?edit=1&id="+id+"&precio="+precio+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax3.onreadystatechange=function() {
+// function updateEvent ( id ) {
+//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
+//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
+//   var nombre      = $('#txt_nombre').val();
+//   var precio      = $('#txt_precio').val();
+//   var estado      = $('#txt_estado').val();
+//   ajax3   = nuevoAjax();
+//   ajax3.open("GET", "app/controllers/eventos.php?edit=1&id="+id+"&precio="+precio+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
+//   ajax3.onreadystatechange=function() {
 
-    if (ajax3.readyState==4) {
-      //contenido_editor.innerHTML = ajax2.responseText;
-      $("#mssg-edit-eventos").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
-      listEvents();
-    }
-  }
-  ajax3.send(null);
-}
+//     if (ajax3.readyState==4) {
+//       //contenido_editor.innerHTML = ajax2.responseText;
+//       $("#mssg-edit-eventos").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
+//       listEvents();
+//     }
+//   }
+//   ajax3.send(null);
+// }
 
 // Delete Event
 function deleteRow ( id ) {

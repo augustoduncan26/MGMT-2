@@ -71,9 +71,21 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	echo json_encode($data);
 }
 
+// Edit 
+if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
+	$P_Valores = "name = '".Reemplazar_letras($_POST['r1'])."', capacity='".$_POST['cantidad']."', supervisor_id='".$_POST['superv']."', grade='".$_POST['grado']."', activo = '".$_POST['estado']."', updated_at=NOW()";
+	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['id'].'"');
+  	if($l == 1){
+		echo 'ok';
+	} else {
+		echo 'error';
+	}
+}
+
 /**
  * Edit
  */
+/*
 if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
 	if ($_POST['r4'] =='') { $_POST['r4'] = '00:00';}
 	if ($_POST['r6'] =='') { $_POST['r6'] = '00:00';}
@@ -98,6 +110,7 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
 		echo 'error';
 	}
 }
+*/
 
 /**
  * Delete
