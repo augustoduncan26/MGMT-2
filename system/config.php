@@ -26,7 +26,7 @@ define("SAD_URL_AMIGABLE",false);							//SI SE UTILIZA URL AMIGABLE						-	*
 define("SAD_CARPETA_IMAGENES","assets/images");				//CARPETA EN DONDE ESTAN LAS IMAGENES				-	*
 
 define('ROOT_DIR', __DIR__);								//CARPETA DONDE CORRE EL PROYECTO
-define('REPOSITORY',"/repositorio/");						//CARPETA SE GUARDAN LAS IMAGENES
+define('REPOSITORY',$_ENV['FLD_REPOSITORY']);				//CARPETA SE GUARDAN LAS IMAGENES
 
 $link       = @mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']) or die("<h1>No existe conección a la Base de Datos</h1>");
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);

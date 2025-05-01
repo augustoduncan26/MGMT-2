@@ -1,7 +1,3 @@
-<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" /> -->
-
 <style>
 @media (min-width: 768px) {
   .dataTables_filter {
@@ -38,8 +34,9 @@
 
     <div class="container">
       <div class="col-md-7">
-        <h4><i class="clip-calendar"></i> Lista de Eventos <a data-toggle="modal" data-target="#myAssistant" class="btn btn-xs btn-green tooltips">
-        <i class="clip-info" title="Información" ></i></a>
+        <h4>
+        <i class="clip-calendar"></i> Lista de Eventos 
+        <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green tooltips"><i class="clip-info"></i></button>
       </h4> 
       </div>
       <div class="col-md-5 text-right">
@@ -228,7 +225,7 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="agregar_habitacion" type="button" class="btn btn-primary" id="agregar_evento" onClick="addEvent()" value="Guardar datos">
+          <input name="agregar_evento" type="button" class="btn btn-primary" id="agregar_evento" onClick="addEvent()" value="Guardar datos">
           
         </div>
       </form>
@@ -375,6 +372,13 @@
 
 <script>
 
+/** 
+ * Open Asistant Modal 
+*/
+$('.open-assistant').on('click', ()=>{
+  $('#myAssistant').modal('show'); 
+});
+
 $('.result-mssg').hide();
 $('#mssg-add-eventos').hide();
 $('#mssg-edit-eventos').hide();
@@ -407,6 +411,7 @@ function addEvent () {
   var horaF       = $('#event_add_hora_fin').val();
   var estado      = $('#event_estado_add').val();
   let descrip     = $('#descripcion_add').val();
+  let perfil      = $('#text_event_perfil_add').val();
 
   if ( nombre == '' || dateI == '' || dateF == '') {
     $("#mssg-add-eventos").show().html('<h5>Los campos con (*) son necesarios</h5>');
@@ -440,6 +445,7 @@ function addEvent () {
       r6 : horaF,
       r7 : estado,
       r8 : descrip,
+      r9:perfil,
     },
     dataType : 'html',
     beforeSend: function () {

@@ -101,7 +101,7 @@ function get_theView ( $name = false ) {
 	$cadena_comienzo 	= 	"http://";
 	$cadena_fin 		=	".php";
 	$total 				= 	strpos($url,$cadena_comienzo);
-	$total2 			= 	strpos($cadena,$cadena_fin);
+	$total2 			= 	strpos($cadena_comienzo,$cadena_fin);
 	$total3 			= 	($maximo - $total2 - 4);
 
 	$tags 				=	obtainGetValues();

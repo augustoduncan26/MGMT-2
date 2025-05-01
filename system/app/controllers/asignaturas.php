@@ -1,6 +1,7 @@
 <?php
 
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
+include_once ( dirname(dirname(__DIR__)) . '/functions.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 $id_rol     = $_SESSION["id_rol"];
@@ -24,15 +25,34 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 	if ($sql['total'] > 0 ) {
 		echo 'error';
 	} else {
+		$perfilArr = $_POST['r3'];
+		$perfilArr1 = $_POST['r2'];
+
+		// if ($_POST['r2'] && strlen($_POST['r2']) > 1) {
+		// 	foreach ($_POST['r2'] as $key => $value) {
+		// 		if($perfilArr1 != '') {
+		// 			$perfilArr1 .=  ',';
+		// 		}	
+		// 		$perfilArr1		.=	 $value;
+		// 	}
+		// } else { $perfilArr1 = $_POST['r2'];}
+		// if ($_POST['r3'] && strlen($_POST['r3']) > 1) {
+		// 	foreach ($_POST['r3'] as $key => $value) {
+		// 		if($perfilArr != '') {
+		// 			$perfilArr .=  ',';
+		// 		}	
+		// 		$perfilArr		.=	 $value;
+		// 	}
+		// } else { $perfilArr = $_POST['r3'];}
+
 		$P_Campos 	=	'id_cia,name,class_id,teacher_id,created_at,activo';
-		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$_POST['r2']."','".$_POST['r3']."',NOW(),'".$_POST['r4']."'";
+		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$perfilArr1."','".$perfilArr."',NOW(),'".$_POST['r4']."'";
 		$l = $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
         if ($l) {
             echo "ok";
         } else {
             echo $l;
         }
-		
 	}
 }
 
@@ -45,11 +65,23 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 	if ($listEvents['total'] > 0) {
 		foreach ($listEvents['resultado'] as $key => $datos) {
 			$sel3 = $ObjMante->BuscarLoQueSea('nombre,apellido',PREFIX.'usuarios','id_usuario='.$datos['teacher_id'],'extract',false);
-            $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract',false);
+			$resultClass = false;
+			$r    = explode(',',$datos['class_id']);
+			$tot  = count($r);
+			for ($i = 0 ; $i < $tot+1; $i++) {
+				if (isset($r[$i])) {
+					$sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$r[$i],'extract',false);
+				if($resultClass != false) {
+					$resultClass .=  ', ';
+				}	
+				$resultClass .=  $sel2['class_name'];
+				$resultClass = rtrim($resultClass, ", ");
+				}
+			}
 	?>
 		<tr>
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
-			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo isset($sel2['class_name']) ? $sel2['class_name'] : '- - - - -';?></td>
+			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo $resultClass;?></td>
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo $sel3['nombre'].' '.$sel3['apellido'];?></td>
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
 			<td class="text-center" style="width:10% !important;">
@@ -72,9 +104,28 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 }
 
 // Edit 
-if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
-	$P_Valores = "name = '".Reemplazar_letras($_POST['r1'])."', capacity='".$_POST['cantidad']."', supervisor_id='".$_POST['superv']."', grade='".$_POST['grado']."', activo = '".$_POST['estado']."', updated_at=NOW()";
-	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['id'].'"');
+if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r2'] !='') {
+	$perfilArr = false;
+	$perfilArr1 = false;
+
+	if ($_POST['r3']) {
+		foreach ($_POST['r3'] as $key => $value) {
+			if($perfilArr1 != '') {
+				$perfilArr1 .=  ',';
+			}	
+			$perfilArr1		.=	 $value;
+		}
+	}
+	if ($_POST['r4']) {
+		foreach ($_POST['r4'] as $key => $value) {
+			if($perfilArr != '') {
+				$perfilArr .=  ',';
+			}	
+			$perfilArr		.=	 $value;
+		}
+	}
+	$P_Valores = "name = '".Reemplazar_letras($_POST['r2'])."', teacher_id='".$perfilArr."', class_id='".$perfilArr1."',  activo = '".$_POST['r5']."'";
+	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['r1'].'"');
   	if($l == 1){
 		echo 'ok';
 	} else {

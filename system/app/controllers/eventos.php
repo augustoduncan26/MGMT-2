@@ -27,8 +27,17 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 	if ($sql['total'] > 0 ) {
 		echo 'error';
 	} else {
-		$P_Campos 	=	'id_cia,name,class,date_start,time_start,date_end,time_end,class_id,description,created_at,activo';
-		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$_POST['r2']."','".$_POST['r3']."','".$_POST['r4']."','".$_POST['r5']."','".$_POST['r6']."','".$_POST['r2']."','".$_POST['r8']."',NOW(),'".$_POST['r7']."'";
+		$perfilArr = false;
+		if ($_POST['r9']) {
+			foreach ($_POST['r9'] as $key => $value) {
+				if($perfilArr != '') {
+					$perfilArr .=  ',';
+				}	
+				$perfilArr		.=	 $value;
+			}
+		}
+		$P_Campos 	=	'id_cia,name,class,date_start,time_start,date_end,time_end,class_id,perfil_id,description,created_at,activo';
+		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$_POST['r2']."','".$_POST['r3']."','".$_POST['r4']."','".$_POST['r5']."','".$_POST['r6']."','".$_POST['r2']."','".$perfilArr."','".$_POST['r8']."',NOW(),'".$_POST['r7']."'";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		echo "ok";
 	}

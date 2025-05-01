@@ -99,7 +99,7 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 							&nbsp;&nbsp;Se ha creado su usuario con éxito.<br><br>
 							&nbsp;&nbsp;Sus datos de acceso son:<br>
 							&nbsp;&nbsp;Nombre de usuario: ".$_POST['user_acceso']."<br>			
-							&nbsp;&nbsp;Clave de acceso: ".$clave."<br>
+							&nbsp;&nbsp;Clave de acceso: ".$_POST['clave']."<br>
 							";
 			
 			//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);

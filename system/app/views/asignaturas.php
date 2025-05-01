@@ -17,6 +17,11 @@ div.dataTables_wrapper div.dataTables_filter label {
 .fade {
     overflow:hidden;
   }
+.select-all-label {
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 5px;
+}
 </style>
 
 <body>
@@ -34,8 +39,8 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="container">
       <div class="col-md-7">
         <h4>
-          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green popovers">
-          <i class="clip-info"></i></button>
+          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias 
+          <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green tooltips"><i class="clip-info"></i></button>
         </h4>
       </div>
       <div class="col-md-5 text-right">
@@ -78,11 +83,23 @@ div.dataTables_wrapper div.dataTables_filter label {
               if ($selectAssig['resultado']){
                 foreach ($selectAssig['resultado'] as $datos) {
                   $sel3 = $ObjMante->BuscarLoQueSea('nombre,apellido',PREFIX.'usuarios','id_usuario='.$datos['teacher_id'],'extract',false);
-                  $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract',false);
+                  $resultClass = false;
+                  $r    = explode(',',$datos['class_id']);
+                  $tot  = count($r);
+                  for ($i = 0 ; $i < $tot+1; $i++) {
+                    if (isset($r[$i])) { 
+                      $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$r[$i],'extract',false);
+                      if($resultClass != false) {
+                        $resultClass .=  ', ';
+                      }	
+                      $resultClass .=  $sel2['class_name'];
+                      $resultClass = rtrim($resultClass, ", ");
+                    }
+                  }
               ?>
               <tr>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo isset($sel2['class_name']) ? $sel2['class_name'] : '- - - - -';?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo $resultClass?></td>
 			        <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo $sel3['nombre'].' '.$sel3['apellido'];?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
               <td class="text-center" style="width:10% !important;">
@@ -132,8 +149,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                  <tr>
                    <td width="30%">Clase <span class="symbol required"></span></td>
                    <td width="70%">
-                    <select name="class_add" id="class_add">
-                    <option></option>
+                    <select name="class_add[]" id="class_add" multiple>
                         <?php 
                           if ($selectClases['resultado']) {
                             foreach ($selectClases['resultado'] as $key => $value) {
@@ -142,14 +158,14 @@ div.dataTables_wrapper div.dataTables_filter label {
                           }
                         ?>
                     </select>
+                    <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-class-options" id="select-all-class" /> <label class="select-all-label cursor" for="select-all-class">Todos</label></label>
                    </td>
                  </tr>
 
                  <tr>
                    <td width="30%">Asignar profesor: <span class="symbol required"></span></td>
                    <td width="70%">
-                    <select name="teacher_add" id="teacher_add" multiple>
-                    <option></option>
+                    <select name="teacher_add[]" id="teacher_add" multiple>
                         <?php 
                           if ($selectTeachers['resultado']) {
                             foreach ($selectTeachers['resultado'] as $key => $value) {
@@ -158,6 +174,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                           }
                         ?>
                     </select>
+                     <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-prof-options " id="select-all-prof" /> <label class="select-all-label cursor" for="select-all-prof">Todos</label></label>
                    </td>
                  </tr>
                  
@@ -194,7 +211,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 <button type="button" class="close" data-dismiss="modal"><!--  aria-hidden="true" -->
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Evento</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Asignatura / Materia</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
@@ -204,7 +221,7 @@ div.dataTables_wrapper div.dataTables_filter label {
     <thead>
     </thead>
     <tbody>
-    <div class="alert alert-danger mssg-add-modal">Todos los campos son necesarios</div>
+    <div class="alert alert-danger mssg-edit-modal">Todos los campos son necesarios</div>
       <tr>
         <td width="30%">Nombre <span class="symbol required"></span></td>
         <td width="70%"><input maxlength="50" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
@@ -215,8 +232,7 @@ div.dataTables_wrapper div.dataTables_filter label {
       <tr>
         <td width="30%">Clase <span class="symbol required"></span></td>
         <td width="70%">
-        <select name="class_edit" id="class_edit">
-        <option></option>
+        <select name="class_edit[]" id="class_edit" multiple>
             <?php 
               if ($selectClases['resultado']) {
                 foreach ($selectClases['resultado'] as $key => $value) {
@@ -225,14 +241,14 @@ div.dataTables_wrapper div.dataTables_filter label {
               }
             ?>
         </select>
+        <!-- <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-class-edit-options" id="select-all-class-edit" /> <label class="select-all-label cursor" for="select-all-class-edit">Todos</label></label> -->
         </td>
       </tr>
 
       <tr>
         <td width="30%">Asignar profesor: <span class="symbol required"></span></td>
         <td width="70%">
-        <select name="teacher_edit" id="teacher_edit" multiple>
-        <option></option>
+        <select name="teacher_edit[]" id="teacher_edit" multiple>
             <?php 
               if ($selectTeachers['resultado']) {
                 foreach ($selectTeachers['resultado'] as $key => $value) {
@@ -241,6 +257,7 @@ div.dataTables_wrapper div.dataTables_filter label {
               }
             ?>
         </select>
+        <!-- <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-prof-edit-options " id="select-all-prof-edit" /> <label class="select-all-label cursor" for="select-all-prof-edit">Todos</label></label> -->
         </td>
       </tr>
       
@@ -302,9 +319,10 @@ div.dataTables_wrapper div.dataTables_filter label {
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
-setTimeout(() => {
+//setTimeout(() => {
   $('.mssg-add-modal').hide();
-}, 3000);
+  $('.mssg-edit-modal').hide();
+//}, 3000);
 
 /** 
  * Open Asistant Modal 
@@ -364,7 +382,7 @@ $('.add-event').on('click', ()=>{
   let estado      = $('#estado_add').val();
   let form_data   = new FormData();
 
-  if ( nombre == '' || clase == '' || teacher == null || teacher == '' || estado == '' ) {
+  if ( nombre == '' || clase == '' || clase == null || teacher == null || teacher == '' || estado == '' ) {
     $(".mssg-add-modal").addClass('alert-danger').removeClass('alert-success').show().html('Los campos con (*) son necesarios');
     setTimeout(() => {
       $('.mssg-add-modal').hide();
@@ -434,12 +452,33 @@ $('.mssg-edit-clases').hide();
     success         : function (response) {
       $('#id_row').val(response['id']);
       $('#nombre_edit').val(response['name']);
-      $('#class_edit').select2('val',response['class_id']);
-      $('#teacher_edit').select2('val',response['teacher_id']);
+      //$('#class_edit').select2('val',response['class_id']);
+      //$('#teacher_edit').select2('val',response['teacher_id']);
       $('#estado_edit').select2('val',response['activo']);
-      // $('#teacher_edit').val(response['capacity']);
-      // $('#class_edit').val(response['grade']);
-      // $('#event_edit_supervisor').select2('val',response['supervisor_id']);
+      
+      if (response['class_id']!= null && response['class_id']!='' && response['class_id']!='NULL') {
+        let arr   = response['class_id'].split (",");
+        let keys  = Object.keys(arr).length;
+        let r  = "";
+        arr.forEach((item,key)=>{
+          if (item) {
+            r =  arr + ',';
+            $('#class_edit').val(arr).change();
+          }
+        });
+      }
+      if (response['teacher_id']!= null && response['teacher_id']!='' && response['teacher_id']!='NULL') {
+        let arr   = response['teacher_id'].split (",");
+        let keys  = Object.keys(arr).length;
+        let r  = "";
+        arr.forEach((item,key)=>{
+          if (item) {
+            r =  arr + ',';
+            $('#teacher_edit').val(arr).change();
+          }
+        });
+      }
+
     },
     error           : function (error) {
       console.log(error);
@@ -451,20 +490,28 @@ $('.mssg-edit-clases').hide();
  * Update
  * @param {*} id  
 */
-$('.btn-edit-class').on('click', ()=>{ 
+$('.btn-edit-asignatura').on('click', ()=>{
 //function updateEvent ( id ) {
-  let nombre        = $('#nombre_edit').val();
-  let cantidad      = $('#event_edit_capacity').val();
-  let grado         = $('#event_edit_grade').val();
-  let superv        = $('#event_edit_supervisor').val();
-  let estado        = $('#event_estado_edit').val();
-  let id            = $('#id_row').val();
+  let id          = $('#id_row').val();
+  let nombre      = $('#nombre_edit').val();
+  let clase       = $('#class_edit').val();
+  let teacher     = $('#teacher_edit').val();
+  let estado      = $('#estado_edit').val();
+  let form_data   = new FormData();
 
-  let route = "app/controllers/clases.php"; 
+  if ( nombre == '' || clase == '' || clase == null || teacher == null || teacher == '' || estado == '' ) {
+    $(".mssg-edit-modal").addClass('alert-danger').removeClass('alert-success').show().html('Los campos con (*) son necesarios');
+    setTimeout(() => {
+      $('.mssg-edit-modal').hide();
+    }, 3000);
+    return false
+  }
 
-var parametros = {
-  edit : 1, nombre : nombre, id : id, superv:superv, cantidad: cantidad, grado: grado, estado:estado,
-};
+  let route = "app/controllers/asignaturas.php"; 
+
+  let parametros = {
+    edit : 1, r2 : nombre, r1 : id, r3:clase, r4: teacher, r5:estado,
+  };
 
   $.ajax({
     data: parametros,
@@ -476,58 +523,16 @@ var parametros = {
     },
     success:  function (response) {
       if (response == 'ok') {
-        
-        jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
-
-        $(".mssg-edit-clases").removeClass('alert-danger').addClass('alert-success').show().html('<h5>Los datos fueron actualizados con éxito.</h5>');
-        listClasses();
+        $(".mssg-edit-modal").removeClass('alert-danger').addClass('alert-success').show().html('<h5>Los datos fueron actualizados con éxito.</h5>');
+        listAll();
         setTimeout(() => {
-          $(".mssg-edit-clases").hide();
+          $(".mssg-edit-modal").hide();
           //window.location.reload();
         }, 4000);
       }
     }
   });
 });
-
-// Edit Event
-// function editRow ( id ) {
-//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-//   var contenido_editor = $('#contenido_editar')[0];
-
-//   ajax2   = nuevoAjax();
-//   ajax2.open("GET", "ajax/ajax_editar_evento.php?id="+id+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-//   ajax2.onreadystatechange=function() {
-
-//     if (ajax2.readyState==4) {
-//       contenido_editor.innerHTML = ajax2.responseText;
-//       listEvents();
-//     }
-//   }
-
-//   ajax2.send(null);
-// }
-
-// Update Event
-// function updateEvent ( id ) {
-//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-//   var nombre      = $('#txt_nombre').val();
-//   var precio      = $('#txt_precio').val();
-//   var estado      = $('#txt_estado').val();
-//   ajax3   = nuevoAjax();
-//   ajax3.open("GET", "app/controllers/eventos.php?edit=1&id="+id+"&precio="+precio+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-//   ajax3.onreadystatechange=function() {
-
-//     if (ajax3.readyState==4) {
-//       //contenido_editor.innerHTML = ajax2.responseText;
-//       $("#mssg-edit-eventos").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
-//       listEvents();
-//     }
-//   }
-//   ajax3.send(null);
-// }
 
 // Delete Event
 function deleteRow ( id ) {
@@ -537,7 +542,7 @@ function deleteRow ( id ) {
     if (ajax2.readyState==4) {
       $('html, body').animate({scrollTop: '0px'},'slow');
       $('#label-mssg').html(ajax2.responseText);
-      listEvents();
+      listAll();
       if ($('.alert-danger').is(':visible')) {
         setTimeout(() => {
           $('.alert-danger').html('');
@@ -549,38 +554,80 @@ function deleteRow ( id ) {
   ajax2.send(null);
 }
 
-// List Events
-function listEvents() {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  $('#cargando_list').show()
-  var contenido_editor = $('#list-events')[0];
-  ajax1   = nuevoAjax();
-  ajax1.open("GET", "ajax/ajax_list_events.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax1.onreadystatechange=function() {
+/** 
+ * Select all options
+ */
+// $('.select-all-prof-options').on('click', ()=>{
+//   if ($('.select-all-prof-options').is(':checked')) {
+//     $("#teacher_add > option").prop("selected","selected");
+//     $("#teacher_add").trigger("change");
+//   } else {
+//     $("#teacher_add").val([]).trigger('change')
+//   }
+// });
+// $('.select-all-class-options').on('click', ()=>{
+//   if ($('.select-all-class-options').is(':checked')) {
+//     $("#class_add > option").prop("selected","selected");
+//     $("#class_add").trigger("change");
+//   } else {
+//     $("#class_add").val([]).trigger('change')
+//   }
+// });
 
-    if (ajax1.readyState==4) {
-      contenido_editor.innerHTML = ajax1.responseText;
-      $('#cargando_list').hide();
-      //loadDataTable();
+$(".select-all-class-options, .select-all-prof-options").on('click' , function() {
+  if (this.id == 'select-all-class') {
+    if ($('.select-all-class-options').is(':checked')) {
+      $("#class_add > option").prop("selected","selected");
+      $("#class_add").trigger("change");
+    } else {
+      $("#class_add").val([]).trigger('change')
     }
   }
+  if (this.id == 'select-all-prof') {
+    if ($('.select-all-prof-options').is(':checked')) {
+      $("#teacher_add > option").prop("selected","selected");
+      $("#teacher_add").trigger("change");
+    } else {
+      $("#teacher_add").val([]).trigger('change')
+    }
+  }
+  //console.log("Clicked:", this.id); // 'this' refers to the clicked element
+});
 
-  ajax1.send(null);
-}
+$(".select-all-class-options, .select-all-prof-options").on('click' , function() {
+  if (this.id == 'select-all-class') {
+    if ($('.select-all-class-options').is(':checked')) {
+      $("#class_add > option").prop("selected","selected");
+      $("#class_add").trigger("change");
+    } else {
+      $("#class_add").val([]).trigger('change')
+    }
+  }
+  if (this.id == 'select-all-prof') {
+    if ($('.select-all-prof-options').is(':checked')) {
+      $("#teacher_add > option").prop("selected","selected");
+      $("#teacher_add").trigger("change");
+    } else {
+      $("#teacher_add").val([]).trigger('change')
+    }
+  }
+  //console.log("Clicked:", this.id); // 'this' refers to the clicked element
+});
+
+
 
 // Clean
-function limpiar () {
-  $("#nombre").val('');
-  $("#precio").val('');
-  $("#txt_nombre").val('');
-  $("#txt_precio").val('');
-  $('#mssg-edit-eventos').html('');
-}
+// function limpiar () {
+//   $("#nombre").val('');
+//   $("#precio").val('');
+//   $("#txt_nombre").val('');
+//   $("#txt_precio").val('');
+//   $('#mssg-edit-eventos').html('');
+// }
 
 // Make some default options
-$("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-$("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
+// $("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
+// $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 
 
 
@@ -604,11 +651,11 @@ $(document).ready( function () {
 } );
 
 
-$("[name='class_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("[name='teacher_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#class_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
+$("#teacher_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("[name='estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("[name='class_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("[name='teacher_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#class_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#teacher_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>
