@@ -354,7 +354,7 @@
             <div class="modal-header">
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel">Ayuda</h4>
             </div>
             <div class="modal-body">
                 ...
@@ -683,12 +683,12 @@ $(document).ready( function () {
     });
 } );
 
-$('.close').on('click', ()=>{
-  window.location.reload();
-});
-$('.btn-danger').on('click', ()=>{
-  window.location.reload();
-});
+// $('.close').on('click', ()=>{
+//   window.location.reload();
+// });
+// $('.btn-danger').on('click', ()=>{
+//   window.location.reload();
+// });
 
 function goToTopPage(){
   //jQuery('.go-top').on('click', ()=> {
@@ -702,4 +702,5 @@ $("[name='event_class_add']").select2({ width: '100%', dropdownCssClass: "bigdro
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});// , dropdownParent: $("#formulario_nuevo")});
 $("[name='event_class_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+
 </script>

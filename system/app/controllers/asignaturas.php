@@ -45,7 +45,7 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 	if ($listEvents['total'] > 0) {
 		foreach ($listEvents['resultado'] as $key => $datos) {
 			$sel3 = $ObjMante->BuscarLoQueSea('nombre,apellido',PREFIX.'usuarios','id_usuario='.$datos['teacher_id'],'extract',false);
-            $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract','class_name');
+            $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract',false);
 	?>
 		<tr>
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
@@ -81,36 +81,6 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
 		echo 'error';
 	}
 }
-
-/**
- * Edit
- */
-/*
-if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
-	if ($_POST['r4'] =='') { $_POST['r4'] = '00:00';}
-	if ($_POST['r6'] =='') { $_POST['r6'] = '00:00';}
-	if ($_POST['r7'] =='') { $_POST['r7'] = 0;}
-	
-	$perfilArr = false;
-
-	if ($_POST['r9']) {
-		foreach ($_POST['r9'] as $key => $value) {
-			if($perfilArr != '') {
-				$perfilArr .=  ',';
-			}	
-			$perfilArr		.=	 $value;
-		}
-	}
-
-	$P_Valores = "name = '".$_POST['r1']."', time_start='".$_POST['r4']."', time_end='".$_POST['r6']."', activo = '".$_POST['r8']."', class_id='".$_POST['r7']."', perfil_id='".$perfilArr."', description = '".$_POST['r2']."'";
-	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['r_r'].'"');
-	if($l == 1){
-		echo 'ok';
-	} else {
-		echo 'error';
-	}
-}
-*/
 
 /**
  * Delete

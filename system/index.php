@@ -1,1 +1,1 @@
-<script>location.href='Home';</script>
+<script>location.href='home';</script>

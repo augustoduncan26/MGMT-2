@@ -142,7 +142,7 @@ if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
 	$logadmin = true;
 
 ?>
-	<SCRIPT LANGUAGE="javascript"> location.href = 'Home'; </SCRIPT>
+	<SCRIPT LANGUAGE="javascript"> location.href = 'home'; </SCRIPT>
 
 <?php 
 

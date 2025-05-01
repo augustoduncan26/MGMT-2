@@ -34,21 +34,21 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="container">
       <div class="col-md-7">
         <h4>
-          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias <a data-toggle="modal" data-target="#myAssistant" class="btn btn-xs btn-green tooltips">
-          <i class="clip-info" title="Información" ></i></a>
+          <i class="fa fa-indent"></i> Lista de Asignaturas / Materias <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green popovers">
+          <i class="clip-info"></i></button>
         </h4>
       </div>
       <div class="col-md-5 text-right">
-      <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
-      <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-      <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+      <a data-toggle="modal" data-original-title="Agregar Asignaturas" data-placement="top" class="btn btn-primary tooltips"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
+      <a data-toggle="modal" data-original-title="Exportar a CSV" data-placement="top" class="btn btn-info tooltips"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+      <a data-toggle="modal" data-original-title="Importar a CSV" data-placement="top" class="btn btn-success tooltips"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
     </div>
     </div>
 
     <div class="container text-rigth">
       <div class="clearfix col-md-6"></div>
       <div class="col-md-6 text-right">
-        <a class="btn btn-xs btn-teal tooltips"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
+        <a class="btn btn-xs btn-teal tooltips" data-content="Editar un registro" data-original-title="Editar" id="add-regular"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
         <a class="btn btn-xs btn-bricky tooltips"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
       </div>
     </div>
@@ -76,16 +76,17 @@ div.dataTables_wrapper div.dataTables_filter label {
               <tbody id="tbody-table-assignments">
               <?php
               if ($selectAssig['resultado']){
-              foreach ($selectAssig['resultado'] as $datos) {
+                foreach ($selectAssig['resultado'] as $datos) {
+                  $sel3 = $ObjMante->BuscarLoQueSea('nombre,apellido',PREFIX.'usuarios','id_usuario='.$datos['teacher_id'],'extract',false);
+                  $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract',false);
               ?>
               <tr>
-              <!-- <td><input type="checkbox" /></td> -->
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_id']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['teacher_id']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo isset($sel2['class_name']) ? $sel2['class_name'] : '- - - - -';?></td>
+			        <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo $sel3['nombre'].' '.$sel3['apellido'];?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
               <td class="text-center" style="width:10% !important;">
-              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#form_edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-xs btn-teal tooltips" data-original-title="Editar" data-toggle="modal" role="button" href="#form_edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
               <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
               </td>
               </tr>
@@ -109,11 +110,11 @@ div.dataTables_wrapper div.dataTables_filter label {
  <div class="clearfix"></div>
 
 <!-- Modal Add -->
-<div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+          <button type="button" class="close" data-dismiss="modal" >  × </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Asignatura / Materia</h3>
         </div>
          <form name="eventos" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
@@ -125,7 +126,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                 <div class="alert alert-danger mssg-add-modal">Todos los campos son necesarios</div>
                  <tr>
                    <td width="30%">Nombre <span class="symbol required"></span></td>
-                   <td width="70%"><input maxlength="50" autofocus="" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Nombre"></td>
+                   <td width="70%"><input maxlength="50" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Nombre"></td>
                  </tr>
 
                  <tr>
@@ -173,7 +174,7 @@ div.dataTables_wrapper div.dataTables_filter label {
              </table>
            </div>
         <div class="modal-footer">
-          <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+          <button data-dismiss="modal" class="btn btn-danger">Cerrar</button>
           <input name="agregar_habitacion" type="button" class="btn btn-primary add-event" id="agregar_evento" value="Guardar datos">
           
         </div>
@@ -186,11 +187,11 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 <!-- Edit -->
 <?php /////////// Editar algo ?>
-<div class="<?php echo "modal fade"; ?>" id="form_edit_event" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="<?php echo "modal fade"; ?>" id="form_edit_event" tabindex="-1" role="dialog" >
 <div class="<?php echo "modal-dialog"; ?>">
 <div class="modal-content">
 <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+<button type="button" class="close" data-dismiss="modal"><!--  aria-hidden="true" -->
 &times;
 </button>
 <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Evento</h3>
@@ -206,8 +207,8 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="alert alert-danger mssg-add-modal">Todos los campos son necesarios</div>
       <tr>
         <td width="30%">Nombre <span class="symbol required"></span></td>
-        <td width="70%"><input maxlength="50" autofocus="" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
-        <input maxlength="50" autofocus="" name="id_row" type="hidden" class="form-control" id="id_row">
+        <td width="70%"><input maxlength="50" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
+        <input maxlength="50" name="id_row" type="hidden" class="form-control" id="id_row">
       </td>
       </tr>
 
@@ -256,7 +257,8 @@ div.dataTables_wrapper div.dataTables_filter label {
   </table>
   </div>
  <div class="modal-footer">
-      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+            <!-- aria-hidden="true"  -->
+      <button data-dismiss="modal" class="btn btn-danger">Cerrar</button>
       <input name="agregar_habitacion" type="button" class="btn btn-primary btn-edit-asignatura" id="edit_evento"  value="Modificar datos">
 </div>
 </form>
@@ -273,13 +275,12 @@ div.dataTables_wrapper div.dataTables_filter label {
 -->
 
 <!-- Assistant Modal -->
-<div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myAssistant">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
+                <button type="button" class="close" data-dismiss="modal" >  × </button>
+                <h4 class="modal-title" id="myAssistant">Asistente</h4>
             </div>
             <div class="modal-body">
                 ...
@@ -304,6 +305,13 @@ div.dataTables_wrapper div.dataTables_filter label {
 setTimeout(() => {
   $('.mssg-add-modal').hide();
 }, 3000);
+
+/** 
+ * Open Asistant Modal 
+*/
+$('.open-assistant').on('click', ()=>{
+  $('#myAssistant').modal('show'); 
+});
 
 // var today = new Date().toISOString().slice(0, 10);
 // document.getElementsByName("event_add_date")[0].min = today;
@@ -356,8 +364,8 @@ $('.add-event').on('click', ()=>{
   let estado      = $('#estado_add').val();
   let form_data   = new FormData();
 
-  if ( nombre == '' || clase == '' || teacher == '' || estado == '' ) {
-    $(".mssg-add-modal").html('Los campos con (*) son necesarios');
+  if ( nombre == '' || clase == '' || teacher == null || teacher == '' || estado == '' ) {
+    $(".mssg-add-modal").addClass('alert-danger').removeClass('alert-success').show().html('Los campos con (*) son necesarios');
     setTimeout(() => {
       $('.mssg-add-modal').hide();
     }, 3000);
@@ -371,7 +379,7 @@ $('.add-event').on('click', ()=>{
   form_data.append('r4', estado);
 
   let route = "app/controllers/asignaturas.php"; 
-  console.log(nombre,clase,teacher,estado)
+  //console.log(nombre,clase,teacher,estado)
 
   $.ajax({
     url: route,
@@ -382,15 +390,20 @@ $('.add-event').on('click', ()=>{
     data: form_data,
     type: 'post',
     success         : function (response) { 
-      $(".mssg-add-modal").removeClass('alert-danger').addClass('alert-success').show().html(response);
-      setTimeout(() => {
-        $(".mssg-add-modal").hide();
-      }, 3000);
-      $("#nombre_add").val('');
-      $('#class_add').val();
-      $('#teacher_add').val();
-      $("#precio").val('');
-      $("#nombre_add").focus();
+      if (response == 'ok') {
+        $(".mssg-add-modal").removeClass('alert-danger').addClass('alert-success').css('color','#3c763d').show().html('<h5>Se ingreso el registro con éxito.</h5>');
+        listAll();
+        $("#nombre_add").val('');
+        $('#class_add').val();
+        $("#class_add").val('').trigger('change')
+        $("#teacher_add").val([]).trigger('change')
+        $("#estado_add").val('').trigger('change')
+      } if (response == 'error') {
+        $(".mssg-add-modal").removeClass('alert-success').addClass('alert-danger').show().html('<h5>Ya existe un registro con este mismo nombre.<h5>');
+      }
+        setTimeout(() => {
+          $(".mssg-add-modal").hide();
+        }, 3000);
     },
     error           : function (error) {
       console.log(error);
@@ -597,4 +610,5 @@ $("[name='estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='class_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='teacher_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+
 </script>

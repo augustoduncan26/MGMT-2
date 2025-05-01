@@ -24,7 +24,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Home -->
 		<li class="list_item">
-		<a href="Home" class="nav__link">
+		<a href="home" class="nav__link">
 			<div class="list__button">
 				<i class="clip-home-3"></i>
 				<span class="title">Home</span>

@@ -1,13 +1,16 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
-#RewriteBase /
-RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php
 RewriteRule ^([a-z]+)/?$ $1.php [NC]
 
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME}.html -f
+#RewriteRule ^(.*)$ $1.html
+#RewriteRule ^([a-z]+)/?$ $1.html [NC]
+
 RewriteRule ^(includes/|submit\.php) - [F,L,NC]
-#RedirectMatch 403 ^/app/controllers/clases.php$
+#RedirectMatch 404 ^/app/controllers/clases.php$
 </IfModule>
 

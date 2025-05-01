@@ -83,6 +83,10 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/css/bootstrap_modal_right_sider_bar.css" />
         
+
+        <!-- start: CSS >Gritter Notifications< -->
+		<link rel="stylesheet" href="assets/plugins/gritter/css/jquery.gritter.css">
+		<!-- end: CSS-->
 </head>
     <!-- end: HEAD -->
 

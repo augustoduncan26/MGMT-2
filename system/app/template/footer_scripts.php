@@ -22,6 +22,7 @@
         <script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
         <script src="assets/js/main.js"></script>
         <!-- end: MAIN JAVASCRIPTS -->
+         
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <script src="assets/plugins/flot/jquery.flot.js"></script>
         <script src="assets/plugins/flot/jquery.flot.pie.js"></script>
@@ -31,22 +32,38 @@
         <script src="assets/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
         <script src="assets/plugins/FullCalendar/fullcalendar/fullcalendar.js"></script>
         <!-- <script src='../assets/plugins/FullCalendar/js/fullcalendar/fullcalendar.js'></script> -->
-        <!-- <script src="assets/js/index.js"></script> -->
+        <script src="assets/js/index.js"></script>
 
-        
-        <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+        <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<script src="assets/plugins/bootstrap-paginator/src/bootstrap-paginator.js"></script>
+		<script src="assets/plugins/jquery.pulsate/jquery.pulsate.min.js"></script>
+		<script src="assets/plugins/gritter/js/jquery.gritter.min.js"></script>
+		<script src="assets/js/ui-elements.js"></script>
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 
-        <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-         -->
+        <!-- <script src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+		<script src="assets/js/login.js"></script> -->
+
         <script>
             jQuery(document).ready(function() {
-                //Main.init();
+                Main.init();
+                //Login.init();
                 //Index.init();
                 //UITreeview.init();
+                UIElements.init();
 
                 // Go to Top page
                 jQuery('.go-top').on('click', ()=> {
                     jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
                 });
             });
+
+        $('.close').on('click', ()=>{
+            window.location.reload();
+        });
+        $('.btn-danger').on('click', ()=>{
+            window.location.reload();
+        });
+
+        
         </script>

@@ -119,7 +119,9 @@ function get_theView ( $name = false ) {
 		}
 		if (file_exists(dirname(__FILE__).'/app/views/'.strtolower($tags[0]).'.php')) {
 			include_once dirname(__FILE__).'/app/views/'.strtolower($tags[0]).'.php';
-		}	
+		} else {
+			include_once dirname(__FILE__).'/404.php';
+		}
 	}
 }
 

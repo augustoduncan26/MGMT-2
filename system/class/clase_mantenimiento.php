@@ -89,12 +89,9 @@ class Mantenimientos
 		//Salida
 		if ($objCons->totalFilas > 0):
 			
-			if($P_salida == 'extract')
-			{
+			if($P_salida == 'extract') {
 				$exito 		= $objCons->extraerRegistro();
-			}
-			else
-			{
+			} else {
 				$exito = array(
 				'total'     => $objCons->totalFilas,
 				'resultado' => $objCons->volcarTotalRegistro(),
