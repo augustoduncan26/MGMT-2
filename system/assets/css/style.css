@@ -70,3 +70,6 @@
 .cursor { cursor: pointer;}
 .cursor-underline:hover { text-decoration: underline; color: red;}
 .overflow { overflow: auto !important;}
+.img-dashboard { opacity: 20%; margin-top: -5%; display: flex; justify-content: center;}
+.logo_mgmt { width: 45%; height: 45%;}
+.welcome-title {/* opacity: 50%; */margin-top: -5%;display: flex;justify-content: center;}

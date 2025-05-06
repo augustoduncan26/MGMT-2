@@ -79,8 +79,8 @@ function obtainPostValues() {
 	$exito 				=	false;
 
 	$numero 			= 	count($_POST);
-	$tags 				= 	array_keys($_POST);	// obtain name of param
-	$valores 			= 	array_values($_POST);// obtain values of param
+	$tags 				= 	array_keys($_POST);		// obtain name of param
+	$valores 			= 	array_values($_POST);	// obtain values of param
 	$exito   			=	array($tags , $valores);
 	
 	return $exito;

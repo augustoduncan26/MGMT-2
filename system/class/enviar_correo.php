@@ -71,11 +71,7 @@
 							   <br><br>
 							   <img alt="Boletin Informativo" src="cid:boletin'.$i.'">';
 				}
-			}
-			
-			else
-			
-			{
+			} else {
 			//ENVIO DE CORREOS COMUNES
 			//=========================================
 			$mail->From     = "no-reply@hhsys.com";//"info@decoflorespaola.com";

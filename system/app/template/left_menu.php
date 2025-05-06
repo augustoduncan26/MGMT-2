@@ -33,10 +33,21 @@ $id_cia     	= $_SESSION['id_cia'];
 		</a>
 		</li>
 
+		<!-- Home -->
+		<li class="list_item">
+		<a href="?Estadisticas" class="nav__link">
+			<div class="list__button">
+				<i class="clip-stats"></i>
+				<span class="title">Estadisticas</span>
+				<!-- <span class="selected"></span> -->
+			</div>
+		</a>
+		</li>
+
 		<!-- Events -->
 		<?php 
-		//if ($objPermOpc->tienePermiso(50)) {
-		if(in_array('50', $objPermOpc->getUserPermissions($id_user))) { 
+			//if ($objPermOpc->tienePermiso(50)) {
+			if(in_array('50', $objPermOpc->getUserPermissions($id_user))) { 
 		?>
 		<li class="list_item">
 			<a href="?Eventos" class="nav__link">

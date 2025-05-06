@@ -1,9 +1,6 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<!-- <link rel="stylesheet" href="assets/plugins/DataTables/media/css/DT_bootstrap.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-<!-- <link rel="stylesheet" href="assets/css/styles_datatable.css" /> -->
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" /> -->
 
 <style>
   @media (min-width: 768px) {
@@ -80,7 +77,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['permiso_padre']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
                         <td class="text-center" style="width:10% !important;">
-                          <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_permiso" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
+                          <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver - Editar" data-toggle="modal" role="button" href="#edit_permiso" onclick="editRow('<?php echo $value['id']; ?>');"><i class="fa fa-edit"></i></a>
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deletePermiso('<?php echo $value['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                         </td>
                       </tr>
@@ -118,7 +115,7 @@ div.dataTables_wrapper div.dataTables_filter label {
         </div>
          <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <table class="table table-bordered table-hover" id="sample-table-4">
+             <table class="table table-hover" id="sample-table-4">
                <thead>
                </thead>
                <tbody>
@@ -174,7 +171,7 @@ div.dataTables_wrapper div.dataTables_filter label {
     </div>
     <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
      <div class="modal-body" id="contenido_editar">
-     <table class="table table-bordered table-hover" id="sample-table-4">
+     <table class="table table-hover" id="sample-table-4">
         <thead>
         </thead>
         <tbody>
