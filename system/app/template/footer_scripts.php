@@ -67,3 +67,5 @@
 
         
         </script>
+
+<!-- <script src="components/like_buton.js"></script> -->

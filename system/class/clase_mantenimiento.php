@@ -574,5 +574,19 @@ class Mantenimientos
 	
 		return $exito;
 	}
+
+	/**
+	 * Exportar datos a: CSV
+	 */
+	public function exportarDatos () {
+
+	}
+
+	/**
+	 * Importar datos
+	 */
+	public function importarDatos () {
+		
+	}
 }
 ?>

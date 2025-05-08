@@ -64,12 +64,12 @@ class consultor extends funcionesDB {
 	var $limCuantos;
 	
 	/**
-	* @var boolean Flag utilizado para habilitar SQL_FOUND_ROWS. Si el valor es TRUE solamente devolver� los registros delimitados en la secci�n LIMIT, el atributo $totalFOUNDROWS tendr� el total de registros de la consulta sin aplicar el LIMIT (Ideal para paginaci�n y queries grandes)
+	* @var boolean Flag utilizado para habilitar SQL_FOUND_ROWS. Si el valor es TRUE solamente devolvera los registros delimitados en la seccion LIMIT, el atributo $totalFOUNDROWS tendr� el total de registros de la consulta sin aplicar el LIMIT (Ideal para paginaci�n y queries grandes)
 	*/
 	var $FOUNDROWS;
 	
 	/**
-	* @var integer En caso de que $FOUNDROWS sea TRUE, este contendr� el total de registros de una consulta sin el LIMIT
+	* @var integer En caso de que $FOUNDROWS sea TRUE, este contendra el total de registros de una consulta sin el LIMIT
 	*/
 	var $totalFOUNDROWS;
 	
@@ -205,7 +205,7 @@ class consultor extends funcionesDB {
 		if ($this->agruparPor != "")
 			$sql .= " GROUP BY ".$this->agruparPor; 
 		
-		// Condici�n HAVING de grupo
+		// Condicion HAVING de grupo
 		if ($this->condicionHAVING != "")
 			$sql .= " HAVING ".$this->condicionHAVING; 
 		
@@ -249,7 +249,7 @@ class consultor extends funcionesDB {
 	* @param string|array $P_Tabla Cadena que contiene tabla a consultar.
 	* @param string|array $P_condicion Cadena que contiene condiciones de la consulta.
 	* @param boolean $P_SQLUnion Flag que indica si la consulta se trata de una consulta tipo UNION .
-	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentacion de MySql para mayor informaci�n.
+	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentacion de MySql para mayor informacion.
 	* @param boolean $P_GenerarEnArchivo Flag que valida si se genera (TRUE) o no (FALSE), la consulta en un archivo.
 	* @return boolean Retorna TRUE si pudo ejecutar la consulta y FALSE si no se pudo ejecutar.
 	*/
@@ -311,7 +311,7 @@ class consultor extends funcionesDB {
 					}		
 				}
 				else{
-					// no hubo conexi�n a la base de datos
+					// no hubo conexion a la base de datos
 					$exito	= false;	
 				}									
 			break;
@@ -353,13 +353,13 @@ class consultor extends funcionesDB {
 						// Si se utiliza SQL_CALC_FOUND_ROWS 					
 						/* POR INVESTIGAR
 						if ($this->FOUNDROWS){
-							// Ejecutar SQL: SELECT FOUND_ROWS(); ... el cual trae el n�mero de filas de la consulta anterior sin el LIMIT
+							// Ejecutar SQL: SELECT FOUND_ROWS(); ... el cual trae el numero de filas de la consulta anterior sin el LIMIT
 							$q = "SELECT FOUND_ROWS();";
 							$tFR = mysql_query($q);
 							
 							if ($tFR != false){
 								$rFR = mysql_fetch_array($tFR);
-								// Variable en la clase que contiene n�mero de ROWS sin el L�mite
+								// Variable en la clase que contiene numero de ROWS sin el Limite
 								$this->totalFOUNDROWS = $rFR[0];
 							}						
 						}
@@ -368,7 +368,7 @@ class consultor extends funcionesDB {
 					}		
 				}
 				else{
-					// no hubo conexi�n a la base de datos
+					// no hubo conexion a la base de datos
 					$exito	= false;	
 				}									
 			break;
@@ -378,7 +378,7 @@ class consultor extends funcionesDB {
 	}	
 	
 	/** 
-	* Verifica si se llev� a cabo la ejecucipon de de un SQL
+	* Verifica si se lleva a cabo la ejecucipon de de un SQL
 	* 
 	* @return boolean Retorna TRUE si pudo ejecutar la consulta y FALSE si no se pudo ejecutar.
 	*/
@@ -386,7 +386,7 @@ class consultor extends funcionesDB {
 		$this->err = "";
 		$exito = false;
 		
-		//Verifica si existe alg�n resource
+		//Verifica si existe algun resource
 		if ($this->resource == NULL){
 			$exito = false;
 			$this->err = "No se ha ejecutado ninguna consulta";
@@ -399,18 +399,18 @@ class consultor extends funcionesDB {
 	/** 
 	* Extrae UN registro de los resultados devueltos en la consulta  en un array
 	* 
-	* @return array|boolean Retorna arreglo de valores, en caso de no quedar m�s registros retorna FALSE
+	* @return array|boolean Retorna arreglo de valores, en caso de no quedar mas registros retorna FALSE
 	*/
 	function extraerRegistro(){
 		$this->err = "";
 		$exito = false;
 		
-		// ejecutar c�digo dependiendo de tip de base de datos
+		// ejecutar codigo dependiendo de tip de base de datos
 		switch ($this->tipoBD){
 			case "mysql" 	:	
-				// Verificar si existe una conexi�n a la Base de Datos
+				// Verificar si existe una conexion a la Base de Datos
 				if ($this->verificarConeccionBD()){
-					// Verifica si se ha ejecutado alg�n c�digo
+					// Verifica si se ha ejecutado algun codigo
 					if ($this->verificarEjecucion()){
 						// Extrae registro
 						$exito	= mysqli_fetch_array($this->resource);
@@ -430,9 +430,9 @@ class consultor extends funcionesDB {
 			break;
 			
 			case "oracle" 	:	
-				// Verificar si existe una conexi�n a la Base de Datos
+				// Verificar si existe una conexion a la Base de Datos
 				if ($this->verificarConeccionBD()){
-					// Verifica si se ha ejecutado alg�n c�digo
+					// Verifica si se ha ejecutado algun codigo
 					if ($this->verificarEjecucion()){
 						// Extrae registro
 						$exito	= oci_fetch_array($this->resource);
@@ -458,20 +458,20 @@ class consultor extends funcionesDB {
 	
 	/** 
 	* Extrae TODOS los registros resultados de una consulta en un array
-	* NOTA: Se debe tener precauci�n cuando los resultados son demasiados grandes, ya que PHP tiene un l�mite de MEMORIA y si el resultado 
-	* es muy grande �ste arrojar� un error de memmory allocation
+	* NOTA: Se debe tener precaucion cuando los resultados son demasiados grandes, ya que PHP tiene un limite de MEMORIA y si el resultado 
+	* es muy grande este arrojara un error de memmory allocation
 	* 
-	* @return array|boolean Retorna arreglo de valores, en caso de no quedar m�s registros retorna FALSE
+	* @return array|boolean Retorna arreglo de valores, en caso de no quedar mas registros retorna FALSE
 	*/
 	function volcarTotalRegistro(){
-		// Inicializaci�n de variables 
+		// Inicializacion de variables 
 		$this->err = "";
 		$exito = false;
 		
-		//Depenciendo del tipo de base de datos ejecutar c�digo de PHP
+		//Depenciendo del tipo de base de datos ejecutar codigo de PHP
 		switch ($this->tipoBD){
 			case "mysql" 	:
-				// Verificar que existe una conexi�n
+				// Verificar que existe una conexion
 				if ($this->verificarConeccionBD()){
 					
 					//Verificar que se haya realizado una consulta
@@ -487,18 +487,18 @@ class consultor extends funcionesDB {
 						}	
 					}
 					else{
-						// No se realiz� la operaci�n
+						// No se realiza la operacion
 						$exito	= false;
 					}
 				}
 				else{
-					// No se realiz� la operaci�n
+					// No se realiza la operacion
 					$exito	= false;						
 				}									
 			break;
 			
 			case "oracle" 	:
-				// Verificar que existe una conexi�n
+				// Verificar que existe una conexion
 				if ($this->verificarConeccionBD()){
 					
 					//Verificar que se haya realizado una consulta
@@ -514,12 +514,12 @@ class consultor extends funcionesDB {
 						}	
 					}
 					else{
-						// No se realiz� la operaci�n
+						// No se realiza la operacion
 						$exito	= false;
 					}
 				}
 				else{
-					// No se realiz� la operaci�n
+					// No se realiza la operacion
 					$exito	= false;						
 				}									
 			break;	
@@ -528,18 +528,18 @@ class consultor extends funcionesDB {
 	}//volcarTotalRegistro
 	
 	/** 
-	* Construye cadena SQL de la consulta tipo UNION, con los par�metros especificados.
+	* Construye cadena SQL de la consulta tipo UNION, con los parametros especificados.
 	* 
 	* @param array $P_Campos Cadena que contiene los campos a consultar
 	* @param array $P_Tabla Cadena que contiene tabla a consultar
 	* @param array $P_condicion Cadena que contiene condiciones de la consulta
-	* @param boolean $P_addFR Flag que se�ala la utilizaci�n o no de SQL_CALC_FOUND_ROWS en la consulta
-	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentaci�n de MySql para mayor informaci�n.
+	* @param boolean $P_addFR Flag que senala la utilizacion o no de SQL_CALC_FOUND_ROWS en la consulta
+	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentacion de MySql para mayor informacion.
 	* @param string $P_GenerarEnArchivo Ruta y nombre del archivo donde se va a generar el archivo (en caso de que se quiera que la consulta se genere en un archivo)
 	* @return string Retorna cadena SQL de la consulta.
 	*/	
 	function construirUnionSql($P_Campos, $P_Tabla, $P_condicion, $P_addFR=false, $P_TypeUnion, $P_GenerarEnArchivo=false){
-		// Inicializaci�n de  variables
+		// Inicializacion de  variables
 		$sql="";
 		
 		// Contar cuantos arreglos de consultas se han enviado
@@ -588,8 +588,8 @@ class consultor extends funcionesDB {
 	* @param string|array $P_Tabla Cadena que contiene tabla a consultar.
 	* @param string|array $P_condicion Cadena que contiene condiciones de la consulta.
 	* @param boolean $P_SQLUnion Flag que indica si la consulta se trata de una consulta tipo UNION .
-	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentaci�n de MySql para mayor informaci�n.
-	* @param boolean $P_GenerarEnArchivo Flag que se�ala si se genera (TRUE) o no (FALSE), la consulta en un archivo.
+	* @param boolean $P_TypeUnion Indica tipo de UNION. Valor por defecto ALL. Referir documentacion de MySql para mayor informacion.
+	* @param boolean $P_GenerarEnArchivo Flag que senala si se genera (TRUE) o no (FALSE), la consulta en un archivo.
 	* @return boolean Retorna TRUE si pudo ejecutar la consulta y FALSE si no se pudo ejecutar.
 	*/
 	function consultaRapida($P_Campos, $P_Tabla="", $P_condicion="", $P_SQLUnion=false, $P_TypeUnion="ALL", $P_GenerarEnArchivo=false){

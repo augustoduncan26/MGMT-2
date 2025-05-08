@@ -4,9 +4,9 @@
 */
 
 /** 
-* Clase que permite la abstracci�n de las conexiones a las base de datos.
+* Clase que permite la abstraccion de las conexiones a las base de datos.
 * Primera clase de capa de base de datos. 
-* Contiene par�metros y m�todos que manejan la conexi�n a las bases de datos de la aplicaci�n.
+* Contiene parametros y metodos que manejan la conexion a las bases de datos de la aplicacion.
 *
 */
 class odbc{
@@ -49,22 +49,22 @@ class odbc{
 	var $nombreBD;
 	
 	/**
-	* @var string Contiene el tipo de base de datos a conectarse. Hasta ahora solo esta implementado la codificaci�n para MySql
+	* @var string Contiene el tipo de base de datos a conectarse. Hasta ahora solo esta implementado la codificacion para MySql
 	*/
 	var $tipoBD;
 	
 	/**
-	* @var string Atributo que almacena cadena de error que devuelve el engine de la base de datos. En caso de que no exista la cadena estar� vac�a.
+	* @var string Atributo que almacena cadena de error que devuelve el engine de la base de datos. En caso de que no exista la cadena estara vacia.
 	*/
 	var $err;
 	
 	/**
-	* @var integer N�mero de error seg�n engine de base de datos
+	* @var integer Numero de error segun engine de base de datos
 	*/
 	var $err_no;
 	
 	/**
-	* @var resource LINK RESOURCE de conexi�n de base de datos
+	* @var resource LINK RESOURCE de conexion de base de datos
 	*/
 	var $linkBD;		
 	
@@ -73,12 +73,12 @@ class odbc{
 	////////////////////////////////////////////////////////////////////
 	/** 
 	* Constructor de la clase odbc. 
-	* Utilizando las constantes de conexi�n declaradas en el archivo de configuraci�n, realiza la conexi�n a la base de datos. 
+	* Utilizando las constantes de conexion declaradas en el archivo de configuracion, realiza la conexion a la base de datos. 
 	* @access constructor
-	* @param Char(1) $P_Serv C�digo que define si se utiliza el servidor Master (Codigo 'M')  o el servidor Slave('S'), Valor por defecto 'M' 
+	* @param Char(1) $P_Serv Codigo que define si se utiliza el servidor Master (Codigo 'M')  o el servidor Slave('S'), Valor por defecto 'M' 
 	*/
 	function odbc($P_Serv='M'){
-		// Cargando a atributos de clase el valor de las constantes declaradas en el archivo de configuraci�n
+		// Cargando a atributos de clase el valor de las constantes declaradas en el archivo de configuracion
 		$this->servidor	= DB_HOST;
 		$this->usuario	= DB_USER;
 		$this->clave	= DB_PASS;
@@ -101,13 +101,13 @@ class odbc{
 	}
 	
 	////////////////////////////////////////////////////////////////////
-	// M�todos
+	// Metodos
 	///////////////////////////////////////////////////////////////////
 	/** 
 	* Conecta a la base de datos especificada en los atributos de la clase. Se recomienda hacer la llamada desde el constructor de la clase.
 	* 
-	* @param Char(1) $P_Serv C�digo que define si se utiliza el servidor Master (Codigo 'M')  o el servidor Slave('S'), Valor por defecto 'M' 
-	* @return Boolean Retorna TRUE si pudo realizar la operaci�n o FALSE sino fue exitosa
+	* @param Char(1) $P_Serv Codigo que define si se utiliza el servidor Master (Codigo 'M')  o el servidor Slave('S'), Valor por defecto 'M' 
+	* @return Boolean Retorna TRUE si pudo realizar la operacion o FALSE sino fue exitosa
 	*/	
 	function conectarBD($P_Serv){
 		// variables		
@@ -118,10 +118,10 @@ class odbc{
 		switch ($this->tipoBD){
 			// Funciones para MYSQL
 			case "mysql" 	:	
-								// En caso de ser una configuraci�n de un solo servidor.
+								// En caso de ser una configuracion de un solo servidor.
 								if (DB_MODO == "SIMPLE"){
 									$this->linkBD 	= @mysqli_connect($this->servidor, $this->usuario, $this->clave);
-								} // En caso de ser una configuraci�n MASTER - SLAVE								
+								} // En caso de ser una configuracion MASTER - SLAVE								
 								elseif (DB_MODO == "REPLICACION"){
 									// Conectar a master y almacenar LINK RESOURCE
 									if ($P_Serv=='M'){
@@ -132,9 +132,9 @@ class odbc{
 									}	
 								}						
 								
-								// Si no se pudo establecer conexi�n a la BD, enviar error
+								// Si no se pudo establecer conexion a la BD, enviar error
 								if (!$this->linkBD){
-									$this->err 	= "Ocurrio un error al conectar a la Base de Datos: MySql Dice ".mysql_error();
+									$this->err 	= "Ocurrio un error al conectar a la Base de Datos: MySql Dice ".mysqli_error($this->linkBD);
 									$exito 		= false;
 								} // Caso contrario devolver TRUE
 								else{
@@ -144,17 +144,17 @@ class odbc{
 			
 			// Funciones para ORACLE
 			case "oracle" 	:	
-								// En caso de ser una configuraci�n de un solo servidor.
+								// En caso de ser una configuracion de un solo servidor.
 								if (DB_MODO == "SIMPLE"){
 									$cadConeccion = '//'.$this->servidor.'/'.$this->nombreBD;
 									$this->linkBD 	= @oci_connect($this->usuario, $this->clave, $cadConeccion);
-								} // En caso de ser una configuraci�n MASTER - SLAVE								
+								} // En caso de ser una configuracion MASTER - SLAVE								
 								elseif (DB_MODO == "REPLICACION"){
 									// Por investigar
 									
 								}						
 								
-								// Si no se pudo establecer conexi�n a la BD, enviar error
+								// Si no se pudo establecer conexion a la BD, enviar error
 								if (!$this->linkBD){
 									$arrErr = oci_error();
 									$this->err 	= "Ocurrio un error al conectar a la Base de Datos: Oracle Dice ".$arrErr['message'];
@@ -191,42 +191,42 @@ class odbc{
 	} // Metodo verificarConeccionBD
 	
 	/** 
-	* M�todo que cierra conexi�n activa a Base de Datos.
+	* Metodo que cierra conexion activa a Base de Datos.
 	* 
-	* @return Boolean Retorna TRUE si pudo realizar la operaci�n o FALSE sino fue exitosa
+	* @return Boolean Retorna TRUE si pudo realizar la operacion o FALSE sino fue exitosa
 	*/
 	function desconectarBD(){
-		// Inicializaci�n de variables 
+		// Inicializacion de variables 
 		$this->err = "";
 		$exito = false;
 		
 		// En base a tipo de base de datos, seleccionar sentencias a ejecutar
 		switch ($this->tipoBD){
 			case "mysql" 	:	
-								// En caso de no haber conexi�n activa a la BD
+								// En caso de no haber conexion activa a la BD
 								if (!$this->verificarConeccionBD()){									
 									$exito = false;
 								}
-								// En caso de haber conexi�n activa a la BD
+								// En caso de haber conexion activa a la BD
 								else{
-									$exito = mysql_close($this->linkBD);
+									$exito = mysqli_close($this->linkBD);
 									
-									// Si ocurri� alg�n error registrar error
+									// Si ocurrio algun error registrar error
 									if (!$exito)
-										$this->err 	= "Ha ocurrido un error. MySql dice ".mysql_error();
+										$this->err 	= "Ha ocurrido un error. MySql dice ".mysqli_error($this->linkBD);
 								}									
 			break;
 			
 			case "oracle" 	:	
-								// En caso de no haber conexi�n activa a la BD
+								// En caso de no haber conexion activa a la BD
 								if (!$this->verificarConeccionBD()){									
 									$exito = false;
 								}
-								// En caso de haber conexi�n activa a la BD
+								// En caso de haber conexion activa a la BD
 								else{
 									$exito = oci_close($this->linkBD);
 									
-									// Si ocurri� alg�n error registrar error
+									// Si ocurrio algun error registrar error
 									if (!$exito){
 										$arrErr = oci_error();
 										$this->err 	= "Ha ocurrido un error. Oracle dice ".$arrErr['message'];
@@ -238,41 +238,41 @@ class odbc{
 	} // Metodo ConectarBD
 	
 	/** 
-	* M�todo que selecciona Base de Datos de un Servidor de Base de Datos
+	* Metodo que selecciona Base de Datos de un Servidor de Base de Datos
 	*
 	* @param string $P_bd Nombre de la Base de datos a seleccionar
-	* @return Boolean Retorna TRUE si pudo realizar la operaci�n o FALSE sino fue exitosa
+	* @return Boolean Retorna TRUE si pudo realizar la operacion o FALSE sino fue exitosa
 	*/
 	function seleccionarBD($P_bd){
-		// declaraci�n de variables
+		// declaracion de variables
 		$this->err = "";
 		$exito = false;
 		$this->nombreBD = $P_bd;
 		
-		// Selecci�n de sentecias seg�n tipo de base de datos
+		// Seleccion de sentecias segun tipo de base de datos
 		switch ($this->tipoBD){
 			case "mysql" 	:	
-								// Si existe conexi�n a Base de Datos activa
+								// Si existe conexion a Base de Datos activa
 								if ($this->verificarConeccionBD()){
 									// Selecciona base de datos
 									$exito = mysqli_select_db($this->linkBD,$this->nombreBD);
 									
 									// En caso de error logear
 									if (!$exito)
-										$this->err 	= "Ha ocurrido un error. MySql dice ".mysql_error();
+										$this->err 	= "Ha ocurrido un error. MySql dice ".mysqli_error($this->linkBD);
 									
-								} // Si no  hubo conexi�n devolver FALSE
+								} // Si no  hubo conexion devolver FALSE
 								else{
 									$exito		= false;
 								}									
 			break;	
 			
 			case "oracle" 	:	
-								// Si existe conexi�n a Base de Datos activa
+								// Si existe conexion a Base de Datos activa
 								if ($this->verificarConeccionBD()){
 									// Selecciona base de datos
 									$exito = true;									
-								} // Si no  hubo conexi�n devolver FALSE
+								} // Si no  hubo conexion devolver FALSE
 								else{
 									$exito		= false;
 								}									

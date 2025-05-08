@@ -13,7 +13,7 @@ $P_Tabla 	= PREFIX.'teachers';
 // All
 $selectProfPerfil   = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_perfil = 3 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectClases       = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array');
-$selectSubjects     = $ObjMante->BuscarLoQueSea('*',PREFIX.'subjects','activo = 1 and id_cia = '.$id_cia,'array');
+$selectAssignment   = $ObjMante->BuscarLoQueSea('*',PREFIX.'assignment','activo = 1 and id_cia = '.$id_cia,'array');
 $selectPerfiles     = $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo = 1 and id_cia = '.$id_cia,'array');
 $selectTeachers     = $ObjMante->BuscarLoQueSea('*',PREFIX.'teachers','id_cia = '.$id_cia,'array');
 
@@ -21,20 +21,20 @@ $selectTeachers     = $ObjMante->BuscarLoQueSea('*',PREFIX.'teachers','id_cia = 
  * Add
  */
 if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
-	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_cia="'.$id_cia.'" and name = "'.$_POST['r1'].'"','array');
+	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_cia="'.$id_cia.'" and teacher_id = "'.$_POST['r1'].'"','array');
 
 	if ($sql['total'] > 0 ) {
 		echo 'error';
 	} else {
-        $subjectsArr = false;
+        $asignArr = false;
         $classesArr = false;
 
         if ($_POST['r2']) {
             foreach ($_POST['r2'] as $key => $value) {
-                if($subjectsArr != '') {
-                    $subjectsArr .=  ',';
+                if($asignArr != '') {
+                    $asignArr .=  ',';
                 }	
-                $subjectsArr		.=	 $value;
+                $asignArr		.=	 $value;
             }
         }
 
@@ -47,8 +47,10 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
             }
         }
 
-		$P_Campos 	=	'id_cia,name,subjects_id,class_id,created_at,activo';
-		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$subjectsArr."','".$classesArr."',NOW(),'".$_POST['r4']."'";
+		$teacher_name 	=	$ObjMante->BuscarLoQueSea('*','usuarios','id_cia="'.$id_cia.'" and id_usuario = "'.$_POST['r1'].'"','extract');
+		$tName 			= $teacher_name['nombre']. ' ' .$teacher_name['apellido'];
+		$P_Campos 		=	'id_cia,teacher_id,teacher_name,assignment_id,class_id,created_at,activo';
+		$P_Valores 		=	"'".$id_cia."','".$_POST['r1']."','".$tName."','".$asignArr."','".$classesArr."',NOW(),'".$_POST['r4']."'";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		echo "ok";
 	}

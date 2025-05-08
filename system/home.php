@@ -74,14 +74,10 @@ include ( dirname(__FILE__).'/load.php' );
               } else {
 
                 echo '<div class="row">
-                        <div class="img-dashboard col-md-12 col-sm-12"><img src="'.$_ENV['FLD_ASSETS'].'/images/template/logo_mgmt.png" class="logo_mgmt" alt="">
-                        </div>
-                        <div class="welcome-title col-md-6 col-md-offset-3"><h4>Bienvenid@: '.$_SESSION['username'].'</h4></div>
-                      </div>';
-                //get_template_part('home_statistic_data');
-
-                //get_template_part('home_charts');
-
+                  <div class="img-dashboard col-md-12 col-sm-12"><img src="'.$_ENV['FLD_ASSETS'].'/images/template/logo_mgmt.png" class="logo_mgmt" alt="">
+                  </div>
+                  <div class="welcome-title col-md-6 col-md-offset-3"><h4>Bienvenid@: '.$_SESSION['username'].'</h4></div>
+                </div>';
               }
 
               ?>
@@ -95,6 +91,17 @@ include ( dirname(__FILE__).'/load.php' );
     <!-- end: MAIN CONTAINER -->
 
    <?php get_template_part('footer');?>
-   
+
+   <script type="text/babel" src="components/Events.js"></script>
+   <script type="text/babel" src="components/ListEvents.js"></script>
+   <script type="text/babel">
+    const dropNotification  = ReactDOM.createRoot(document.getElementById("drop-down-notifications"));
+    const notification      = ReactDOM.createRoot(document.getElementById("total-eventos"));
+    const notificationB     = ReactDOM.createRoot(document.getElementById("total-eventos-b"));
+    notificationB.render(<Events path="<?=$_ENV['URL_API'];?>" />);
+    notification.render(<Events path="<?=$_ENV['URL_API'];?>" />);
+    dropNotification.render(<ListEvents path="<?=$_ENV['URL_API'];?>" />);
+    </script>
+
   </body>
 </html>

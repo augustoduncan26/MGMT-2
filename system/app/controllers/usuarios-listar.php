@@ -35,8 +35,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 	if (is_dir($path)) {
 		@chmod($path, 0755);
 	}
-	// echo ROOT_DIR;
-	// exit;
 	if ($sql['total'] > 0 ) {
 		echo $mssg	=	'Ya existe este registro.';
 	} else {

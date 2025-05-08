@@ -73,3 +73,10 @@
 .img-dashboard { opacity: 20%; margin-top: -5%; display: flex; justify-content: center;}
 .logo_mgmt { width: 45%; height: 45%;}
 .welcome-title {/* opacity: 50%; */margin-top: -5%;display: flex;justify-content: center;}
+.icon-teachers {
+    width: 20px;
+    height: 20px;
+	/* color: #7F7F7F; */
+	/* background-image: url("assets/images/teacher.png"); */
+	/* background-color: rgba(0, 0, 0, 0); */
+}

@@ -19,8 +19,8 @@ define("ENV",$dotenv->load());
 
 define("SAD_DIR", getcwd()."//");							//DIRECTORIO RAIZ DE LA APLICACION			-	*
 define("SAD_DIR_TMP", SAD_DIR."tmp\\");						//DIRECTORIO PARA DESCARGAR LOS TEMP		-	*
-define("SAD_URL","http://localhost/hhs/");			        //URL DE LA PALICACION						
-define("SAD_URL_BASE","/hhs/");						        //DIRECTORIO BASE SOBRE EL QUE ESTA LA APLICACION	
+define("SAD_URL","http://localhost/MGMT/");			        //URL DE LA PALICACION						
+define("SAD_URL_BASE","/system/");						        //DIRECTORIO BASE SOBRE EL QUE ESTA LA APLICACION	
 define("SAD_URL_AMIGABLE",false);							//SI SE UTILIZA URL AMIGABLE						-	*
 															//False, PARA DESACTIVAR URL AMIGABLE				-	*
 define("SAD_CARPETA_IMAGENES","assets/images");				//CARPETA EN DONDE ESTAN LAS IMAGENES				-	*

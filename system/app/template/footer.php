@@ -1,3 +1,4 @@
+    <div id="like_button_container"></div>
     <!-- start: FOOTER -->
         <div class="footer clearfix">
             <div class="footer-inner" style="color:black">

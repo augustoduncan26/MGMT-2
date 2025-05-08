@@ -33,7 +33,10 @@ $id_cia     	= $_SESSION['id_cia'];
 		</a>
 		</li>
 
-		<!-- Home -->
+		<!-- Estadisticas -->
+		<?php 
+			if(in_array('850', $objPermOpc->getRolPermissions($id_rol))) { 
+		?>
 		<li class="list_item">
 		<a href="?Estadisticas" class="nav__link">
 			<div class="list__button">
@@ -43,11 +46,12 @@ $id_cia     	= $_SESSION['id_cia'];
 			</div>
 		</a>
 		</li>
+		<?php } ?>
 
 		<!-- Events -->
 		<?php 
 			//if ($objPermOpc->tienePermiso(50)) {
-			if(in_array('50', $objPermOpc->getUserPermissions($id_user))) { 
+			if(in_array('50', $objPermOpc->getRolPermissions($id_rol))) { 
 		?>
 		<li class="list_item">
 			<a href="?Eventos" class="nav__link">
@@ -61,20 +65,19 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Teachers -->
-		<?PHP if(in_array('100', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('100', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Profesores" class="nav__link">
 			<div class="list__button">
-				<i class="clip-user-5"></i>
+				<img src="assets/images/teacher.png" class="icon-teachers" />
 				<span class="title">Profesores</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
 		<?php } ?>
 
 		<!-- Students -->
-		<?PHP if(in_array('150', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('150', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Estudiantes" class="nav__link">
 			<div class="list__button">
@@ -87,7 +90,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Parents -->
-		<?PHP if(in_array('200', $objPermOpc->getUserPermissions($id_user))) {  ?>
+		<?PHP if(in_array('200', $objPermOpc->getRolPermissions($id_rol))) {  ?>
 			<li class="list_item">
 			<a href="?Padres" class="nav__link">
 			<div class="list__button">
@@ -100,7 +103,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Subjects -->
-		<?PHP if(in_array('250', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('250', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Asignaturas" class="nav__link">
 			<div class="list__button">
@@ -113,7 +116,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Classes -->
-		<?PHP if(in_array('300', $objPermOpc->getUserPermissions($id_user))) {  ?>
+		<?PHP if(in_array('300', $objPermOpc->getRolPermissions($id_rol))) {  ?>
 			<li class="list_item">
 			<a href="?Clases" class="nav__link">
 			<div class="list__button">
@@ -126,7 +129,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Lessons -->
-		<?PHP if(in_array('350', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('350', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Lecciones" class="nav__link">
 			<div class="list__button">
@@ -139,7 +142,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Exams -->
-		<?PHP if(in_array('400', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('400', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Examenes" class="nav__link">
 			<div class="list__button">
@@ -152,7 +155,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Assignments -->
-		<?PHP if(in_array('450', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('450', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Tareas" class="nav__link">
 			<div class="list__button">
@@ -165,7 +168,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Results -->
-		<?PHP if(in_array('500', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('500', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Resultados" class="nav__link">
 			<div class="list__button">
@@ -178,7 +181,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Attendance -->
-		<?PHP if(in_array('550', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('550', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Asistencias" class="nav__link">
 			<div class="list__button">
@@ -191,7 +194,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Messages -->
-		<?PHP if(in_array('600', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('600', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Mensajes" class="nav__link">
 			<div class="list__button">
@@ -204,7 +207,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 
 		<!-- Announcements -->
-		<?PHP if(in_array('650', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('650', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li class="list_item">
 			<a href="?Anuncios" class="nav__link">
 			<div class="list__button">
@@ -251,7 +254,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 
 		<!-- Planning -->
-		<?PHP if(in_array('700', $objPermOpc->getUserPermissions($id_user))) {   ?>
+		<?PHP if(in_array('700', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 		<li class="list_item list__item--click" <?php if (strpos(GET()[0],'planning')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
@@ -554,7 +557,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<!-- End Roles de Turnos -->
 
 		<!--  Menu Usuarios -->
-		<?php if(in_array('800', $objPermOpc->getUserPermissions($id_user))) { ?>
+		<?php if(in_array('800', $objPermOpc->getRolPermissions($id_rol))) { ?>
 			<li class="list_item list__item--click" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link">
@@ -567,7 +570,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			</div>
 
 			<ul class="list__show">
-				<?PHP if(in_array('800', $objPermOpc->getUserPermissions($id_user))) {  ?>
+				<?PHP if(in_array('800', $objPermOpc->getRolPermissions($id_rol))) {  ?>
 				<li <?php if(GET()[0] == 'usuarios-listar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-listar" class="nav__link nav__link--inside">
 						-<span class="title">Mant. Usuarios</span>
@@ -575,14 +578,14 @@ $id_cia     	= $_SESSION['id_cia'];
 				</li>
 				<?php } ?>
 				
-				<?PHP if(in_array('801', $objPermOpc->getUserPermissions($id_user))) {   ?>
+				<?PHP if(in_array('801', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 				<li <?php if(GET()[0] == 'usuarios-perfiles'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-perfiles" class="nav__link nav__link--inside">
 						-<span class="title"> Mant. Perfiles </span>
 					</a>
 				</li>
 				<?php } ?>
-				<?PHP if(in_array('802', $objPermOpc->getUserPermissions($id_user))) {   ?>
+				<?PHP if(in_array('802', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 				<li <?php if(GET()[0] == 'usuarios-cambiar-clave'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-cambiar-clave" class="nav__link nav__link--inside">
 						-<span class="title"> Cambiar Contraseña </span>

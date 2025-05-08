@@ -22,6 +22,17 @@
 </style>
 
 <body>
+
+<!-- Message Exportar -->
+<div class="alert alert-block alert-info fade in hide messg-exportar-process">
+  <button data-dismiss="alert" class="close btn-cancelar-exportar" type="button"> × </button>
+  <p><h4 class="alert-heading mssg-label-exportar"> Esta seguro de querer exportar todos los <?=getPageRealName()?>? </h4></p>
+  <p>
+    <a href="#" class="btn btn-primary btn-acept-exportar"> Aceptar </a>
+    <a href="#" class="btn btn-danger btn-cancelar-exportar"> Cancelar </a>
+  </p>
+</div>
+                  
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -40,17 +51,17 @@
       </h4> 
       </div>
       <div class="col-md-5 text-right">
-        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo</a>
-        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
+        <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+        <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
       </div>
     </div>
 
     <div class="container text-rigth">
       <div class="clearfix col-md-6"></div>
       <div class="col-md-6 text-right">
-        <a class="btn btn-xs btn-teal tooltips"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
-        <a class="btn btn-xs btn-bricky tooltips"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
+        <a class="btn btn-xs btn-teal tooltips" title="Ver - Editar"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips" title="Eliminar"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
       </div>
     </div>
     
@@ -97,8 +108,8 @@
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_end']?></td>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
                   <td class="text-center" style="width:10% !important;">
-                  <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" title="Editar este registro" data-toggle="modal" data-target="#form_edit_event" role="button" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
-                  <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" title="Eliminar este registro" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+                  <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver - Editar" data-toggle="modal" data-target="#form_edit_event" role="button" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
+                  <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                   </td>
                   </tr>
               <?php
@@ -344,14 +355,34 @@
 </div>
 <!-- End Edit Events -->
 
-
-<div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Assistant -->
+<div class="modal fade  come-from-modal right" id="myAssistant" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel">Ayuda</h4>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Ayuda</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!-- Importar -->
+<div class="modal fade  come-from-modal right" id="myImporter" role="dialog" aria-labelledby="myModalImporter">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalImporter"><i class="clip-download-3"></i> Importador</h4>
             </div>
             <div class="modal-body">
                 ...
@@ -377,6 +408,24 @@
 */
 $('.open-assistant').on('click', ()=>{
   $('#myAssistant').modal('show'); 
+});
+
+/** Btn Exportar */
+$('.btn-exportar').on('click', ()=>{
+  if ($('.messg-exportar-process').is(':visible')) {
+    $('.messg-exportar-process').removeClass('hide');
+  } else {
+    $('.messg-exportar-process').removeClass('hide').fadeIn('slow');
+  }
+});
+/** 
+ * Acept Exportar
+ */
+$('.btn-acept-exportar').on('click',()=>{
+  $('.btn-acept-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.btn-cancelar-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.mssg-label-exportar').html('Estamos exportando los datos, espere por favor... <img src="assets/images/loading.gif" id="cargando_list" />');
+  console.log('Procesando Exportar')
 });
 
 $('.result-mssg').hide();

@@ -71,6 +71,8 @@
         <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
         <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+        <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+        <!-- // End load react -->
 
         <!-- 
         For all Pages
@@ -87,6 +89,8 @@
         <!-- start: CSS >Gritter Notifications< -->
 		<link rel="stylesheet" href="assets/plugins/gritter/css/jquery.gritter.css">
 		<!-- end: CSS-->
+
+
 </head>
     <!-- end: HEAD -->
 

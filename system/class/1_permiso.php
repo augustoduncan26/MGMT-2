@@ -206,6 +206,23 @@ class permisos {
 	}
 	
 	/**
+     * Get Rol / Perfil permissions data
+     * @param $ID
+     */
+	public function getRolPermissions ($ID) {
+		$ObjMante   	= new Mantenimientos();
+		$permissions    = $ObjMante->BuscarLoQueSea('*', $this->tablaPermisos, " id_cia=".$_SESSION['id_cia']." and ".$this->campoLlavePerfil."=".$ID,'array');
+		
+        $permission     = [];
+		if ($permissions['resultado']) {
+			foreach ($permissions['resultado'] as $key => $value) {
+				$permission[] = $value['id_definicion_permiso'];
+			}
+		}
+        return $permission;
+	}
+
+	/**
      * Get user permissions data
      * @param $ID
      */

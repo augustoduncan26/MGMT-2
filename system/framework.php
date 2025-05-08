@@ -63,6 +63,21 @@ foreach ($arrFiles as $File){
 }
 unset ($nombCarp, $arrFiles, $File);
 
+#=============================================
+#   Process Api Files                        =
+#=============================================
+// $nombCarp = "api";
+// $arrFiles = scandir (dirname(__FILE__).'/'.$nombCarp);
+	
+// foreach ($arrFiles as $File){
+// 	if ($File != "." AND $File != ".."){
+// 		if (mb_ereg(".php$", $File)) {
+// 			include_once $nombCarp.DIRECTORY_SEPARATOR.$File;
+// 		}
+// 	}
+// }
+// unset ($nombCarp, $arrFiles, $File);
+
 $url_server		=	$_SERVER['HTTP_HOST']; 
 $url 			= 	$_SERVER['PHP_SELF'];
 $ip 			=	$_SERVER['REMOTE_ADDR'];

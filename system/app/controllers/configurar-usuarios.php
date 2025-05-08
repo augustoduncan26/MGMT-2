@@ -35,8 +35,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 	if (is_dir($path)) {
 		@chmod($path, 0755);
 	}
-	// echo ROOT_DIR;
-	// exit;
 	if ($sql['total'] > 0 ) {
 		echo $mssg	=	'Ya existe este registro.';
 	} else {
@@ -159,6 +157,7 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 	}
 
 	if ($_POST['birthday']=='') {$_POST['birthday']='0000-00-00';}
+	// Update user data
 	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' ,id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
 	$l 			= $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 
@@ -176,7 +175,10 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
 	// Update permissions
 	if ($data['id_perfil'] != $_POST['perfil']) {
+		unset($_SESSION['id_rol']);
+		$_SESSION['id_rol'] = $_POST['perfil'];
 		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
+		//$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_pefil = '".$_POST['perfil']."' and id_cia='".$id_cia."'");
 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
 		if ($selPerms['resultado']) {
 			foreach ($selPerms['resultado'] as $key => $perm) {

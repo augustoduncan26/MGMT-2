@@ -15,13 +15,25 @@ if (!ini_get('register_globals')) {
 }
 
 function get_noPermission () {
-
 	if ($_SESSION['id_user']==7) { 
 	echo '
       <p />
       <h2>: '.$_SESSION['username'].' <i class="clip-user-block"></i></h2>
       <h5 style="color:red">: No cuenta con permisos para esta página.</h5>';
     }
+}
+
+/** 
+ * Page Real Name
+ * @return $query_str
+ */
+function getPageRealName () {
+	$query_str = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+	if ($query_str) {
+		return $query_str;
+	} else {
+		return false;
+	}
 }
 
 /* Return directory assets */
@@ -671,12 +683,12 @@ function encrypt_decrypt($action, $string) {
 }
 
 /**
- * 
+ * Get eventos
  */
-function getNotifications () {
-	$ObjMant 	=	new Mantenimientos();
-	$query 		=	$ObjMant->BuscarLoQueSea('*',PREFIX.'events','activo =1','array');
-	$result 	= array('total'=>$query['total'], 'result'=>$query['resultado']);
-	return $result;
-}
+// function getNotifications () {
+// 	$ObjMant 	=	new Mantenimientos();
+// 	$query 		=	$ObjMant->BuscarLoQueSea('*',PREFIX.'events','activo =1','array');
+// 	$result 	= array('total'=>$query['total'], 'result'=>$query['resultado']);
+// 	return $result;
+// }
 ?>

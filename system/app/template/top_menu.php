@@ -126,19 +126,19 @@
 
             <?php /* */ ?>
             <!-- start: NOTIFICATION DROPDOWN -->
-            <?php $r = getNotifications ();?>
+            <?php //$r = getNotifications (); // Get Eventos ?>
              <li class="dropdown">
               <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                 <i class="clip-notification-2"></i>
-                <span class="badge"> <?php echo $r['total'];?></span>
+                <span class="badge" id="total-eventos"> 0</span>
               </a>
               <ul class="dropdown-menu notifications">
                 <li>
-                  <span class="dropdown-menu-title"> Existen <?php echo $r['total'];?> notificación(es)</span>
+                  <span class="dropdown-menu-title"> Existen <span id="total-eventos-b">0</span> notificación(es)</span>
                 </li>
                 <li>
-                  <div class="drop-down-wrapper">
-                    <ul>
+                  <div class="drop-down-wrapper" id="drop-down-notifications">
+                    <!-- <ul>
                       <?php 
                         foreach ($r['result'] as $key => $value) {
                       ?>
@@ -146,97 +146,13 @@
                         <a href="javascript:void(0)">
                           <span class="label label-success"><i class="fa fa-comment"></i></span>
                           <span class="message"> <?=$value['name']?></span>
-                          <!-- <span class="time"> 1 min</span> -->
+                          <! -- <span class="time"> 1 min</span> -- >
                         </a>
                       </li>
-                      <!-- <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nuevo comentario</span>
-                          <span class="time"> 7 min</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nuevo comentario</span>
-                          <span class="time"> 8 min</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nuevo comentario</span>
-                          <span class="time"> 16 min</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-primary"><i class="fa fa-user"></i></span>
-                          <span class="message"> Nuevo registro de usuario</span>
-                          <span class="time"> 36 min</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-warning"><i class="fa fa-shopping-cart"></i></span>
-                          <span class="message"> Nueva reserva</span>
-                          <span class="time"> 1 hour</span>
-                        </a>
-                      </li>
-                      <li class="warning">
-                        <a href="javascript:void(0)">
-                          <span class="label label-danger"><i class="fa fa-user"></i></span>
-                          <span class="message"> Nuev evento</span>
-                          <span class="time"> 2 hour</span>
-                        </a>
-                      </li>
-                      <li class="warning">
-                        <a href="javascript:void(0)">
-                          <span class="label label-danger"><i class="fa fa-shopping-cart"></i></span>
-                          <span class="message"> Reserva cancelada</span>
-                          <span class="time"> 6 hour</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nuevo comentario</span>
-                          <span class="time"> yesterday</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-primary"><i class="fa fa-user"></i></span>
-                          <span class="message"> Nuevo factura</span>
-                          <span class="time"> Ayer</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-primary"><i class="fa fa-user"></i></span>
-                          <span class="message"> Nuevo evento</span>
-                          <span class="time"> Ayer</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nueva reserva</span>
-                          <span class="time"> Ayer</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> Nuevo comentario</span>
-                          <span class="time"> Ayer</span>
-                        </a>
-                      </li> -->
                       <?php
                         }
                       ?>
-                    </ul>
+                    </ul> -->
                   </div>
                 </li>
                 <li class="view-all">
