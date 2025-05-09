@@ -90,6 +90,9 @@
 		<link rel="stylesheet" href="assets/plugins/gritter/css/jquery.gritter.css">
 		<!-- end: CSS-->
 
+        <!-- FullCalendar -->
+        <link rel="stylesheet" href="assets/plugins/FullCalendar/fullcalendar/fullcalendar.css">
+        <!-- FullCalendar -->
 
 </head>
     <!-- end: HEAD -->

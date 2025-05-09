@@ -41,8 +41,17 @@
 		<script src="assets/js/ui-elements.js"></script>
 		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 
+        <!-- New Full Calendar Plugin -->
+        
+        <!-- end: New Full Calendar Plugin -->
+
+        
         <!-- <script src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
 		<script src="assets/js/login.js"></script> -->
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
         <script>
             jQuery(document).ready(function() {

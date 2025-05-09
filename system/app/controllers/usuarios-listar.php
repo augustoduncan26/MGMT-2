@@ -173,6 +173,10 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
 	// Update permissions
 	if ($data['id_perfil'] != $_POST['perfil']) {
+		if ($id_user == $data['id_usuario']) {
+			unset($_SESSION['id_rol']);
+			$_SESSION['id_rol'] = $_POST['perfil'];
+		}
 		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
 		if ($selPerms['resultado']) {

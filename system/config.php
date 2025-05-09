@@ -30,9 +30,10 @@ define('REPOSITORY',$_ENV['FLD_REPOSITORY']);				//CARPETA SE GUARDAN LAS IMAGEN
 
 $link       = @mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']) or die("<h1>No existe conección a la Base de Datos</h1>");
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
+
 $mysqli->set_charset("utf8");
 if ($mysqli->connect_error) {
-die('Error de Conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+	die('Error de Conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
 define("DB_HOST_S"	,	"");

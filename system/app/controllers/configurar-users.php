@@ -65,8 +65,8 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 		}
 
 		$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
-		$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
+		$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".$_POST['birthday']."','".$_POST['telefono']."', '".$_POST['genero']."', '".$_POST['direccion']."', '".$_POST['tiposangre']."','".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,birthday,tipo_sangre,telefono,genero,direccion,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
 		
 		if (is_uploaded_file($_FILES['file']['tmp_name'])) {
 			move_uploaded_file($fileTempName, $path . $newfilename);
@@ -158,7 +158,7 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
 	if ($_POST['birthday']=='') {$_POST['birthday']='0000-00-00';}
 	// Update user data
-	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' ,id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
+	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' , telefono='".$_POST['telefono']."' , genero='".$_POST['genero']."', direccion='".$_POST['direccion']."', tipo_sangre='".$_POST['tiposangre']."' , id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
 	$l 			= $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 
 	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
@@ -175,8 +175,11 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 
 	// Update permissions
 	if ($data['id_perfil'] != $_POST['perfil']) {
-		unset($_SESSION['id_rol']);
-		$_SESSION['id_rol'] = $_POST['perfil'];
+		if ($id_user == $data['id_usuario']) {
+			unset($_SESSION['id_rol']);
+			$_SESSION['id_rol'] = $_POST['perfil'];
+		}
+		
 		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
 		//$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_pefil = '".$_POST['perfil']."' and id_cia='".$id_cia."'");
 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');

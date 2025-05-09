@@ -6,6 +6,8 @@ defined('DIRECTORY_SEPARATOR') or define('DIRECTORY_SEPARATOR', '/');
 
 include ('config.php') ;
 
+$mysqli = $mysqli;
+
 // include_once ("class/enviar_correo.php");
 // include_once("class/class.phpmailer.php");
 // include_once("class/class.smtp.php");
@@ -13,6 +15,7 @@ include ('config.php') ;
 // Otras yerbas
 $caja_prefix 		=	'caja_';
 $fcatura_prefix 	=	'fact_';
+
 
 #=============================================
 #   Envio de Emails                          =

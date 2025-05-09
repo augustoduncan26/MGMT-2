@@ -10,7 +10,7 @@ $id_user    = $_SESSION["id_user"];
 $id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
-$P_Tabla 	= PREFIX.'teachers';
+$P_Tabla 	= PREFIX.'parents';
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 // All
@@ -19,7 +19,7 @@ $sql = mysqli_query($mysqli,'SELECT us.id_usuario, us.activo, us.id_perfil, us.n
 			us.apellido, us.email, p.name, p.description'
             . ' FROM '.PREFIX.'usuarios us'
             . ' LEFT JOIN '.PREFIX.'perfiles p ON us.id_perfil = p.id'
-			. ' WHERE p.name like "%profesore%"')or die(mysqli_error($mysqli));
+			. ' WHERE p.name like "%padres%"')or die(mysqli_error($mysqli));
 $selectTeachers['resultado'] = $sql; $d=mysqli_fetch_array($sql);
 
 //$selectTeachers   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_perfil = 3 and activo = 1 and id_cia = '.$id_cia,'array');

@@ -508,10 +508,29 @@ class Mantenimientos
 		return ($P_result);
 	}
 	
+	/**
+	 * Consulta sencilla tipo Join
+	 */
+	public function ConsultaTipoJoin ($P_tablas, $P_select, $P_Join ,$P_where = false, $P_salida = false) {
+		$exito			=	false;$where=false;
+		$T_tablas		=	explode(',',$P_tablas);
+		$objCons 		= 	new consultor();
+		
+		if ($P_select=='') { $P_select = '*';}
+
+		$objCons->consultar($P_select, $P_tablas , $where);
+
+		// 'SELECT us.id_usuario, us.id_perfil, us.nombre, us.apellido, us.email, p.name, p.description'
+        //     . ' FROM '.PREFIX.'usuarios us'
+        //     . ' LEFT JOIN '.PREFIX.'perfiles p ON us.id_perfil = p.id'
+		// 	. ' WHERE p.name like "%profesore%"'
+
+	}
+
 	//FUNCION UTILIZADA PARA HACER UN JOIN A CUALQUIER TABLA SEGUN CODIGO DEL EMPLEADO
 	//=================================================================================
 	//
-	function ConsultaTipoJoin($P_tablas, $P_Id = false, $P_codigo = false, $P_salida = false)
+	function ConsultaTipoJoinB($P_tablas, $P_Id = false, $P_codigo = false, $P_salida = false)
 	{
 		$exito			=	false;$where=false;
 		$objCons 		= 	new consultor();

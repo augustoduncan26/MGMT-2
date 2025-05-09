@@ -170,6 +170,36 @@ div.dataTables_wrapper div.dataTables_filter label {
           </div>
 
         <div class="clearfix">&nbsp;</div>
+
+        <div class="row">
+          <div class="col-md-2 col-sm-3">Telefono </div>
+          <div class="col-md-4 col-sm-3">
+            <input type="text" class="form-control" maxlength="30" name="usuario_telefono_edit" id="usuario_telefono_edit" />
+          </div>
+          <div class="col-md-2 col-sm-3">Tipo de Sangre </div>
+          <div class="col-md-4 col-sm-3">
+            <input type="text" class="form-control" maxlength="30" name="usuario_tiposangre_edit" id="usuario_tiposangre_edit" />
+          </div>
+        </div>
+
+        <div class="clearfix ">&nbsp;</div>
+
+        <div class="row">
+          <div class="col-md-2 col-sm-3">Genero </div>
+          <div class="col-md-4 col-sm-3">
+          <select name="usuario_genero_edit" id="usuario_genero_edit" class="form-control">
+              <option value="">seleccionar</option>
+              <option value="femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+            </select>
+          </div>
+          <div class="col-md-2 col-sm-3">Dirección </div>
+          <div class="col-md-4 col-sm-3">
+            <textarea maxlength="100" name="usuario_direccion_edit" id="usuario_direccion_edit" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="clearfix">&nbsp;</div>
         
         <div class="row">
           <div class="col-md-2 col-sm-3">Perfil <span class="symbol required"></div>
@@ -272,6 +302,36 @@ div.dataTables_wrapper div.dataTables_filter label {
             <div class="clearfix">&nbsp;</div>
 
             <div class="row">
+              <div class="col-md-2 col-sm-3">Telefono </div>
+              <div class="col-md-4 col-sm-3">
+                <input type="text" class="form-control" maxlength="30" name="usuario_telefono_add" id="usuario_telefono_add" />
+              </div>
+              <div class="col-md-2 col-sm-3">Tipo de Sangre </div>
+              <div class="col-md-4 col-sm-3">
+                <input type="text" class="form-control" maxlength="30" name="usuario_tiposangre_add" id="usuario_tiposangre_add" />
+              </div>
+            </div>
+
+            <div class="clearfix ">&nbsp;</div>
+
+            <div class="row">
+              <div class="col-md-2 col-sm-3">Genero </div>
+              <div class="col-md-4 col-sm-3">
+              <select name="usuario_genero" id="usuario_genero" class="form-control">
+                  <option value="">seleccionar</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="masculino">Masculino</option>
+                </select>
+              </div>
+              <div class="col-md-2 col-sm-3">Dirección </div>
+              <div class="col-md-4 col-sm-3">
+                <textarea maxlength="100" name="usuario_direccion" id="usuario_direccion" class="form-control"></textarea>
+              </div>
+            </div>
+
+            <div class="clearfix">&nbsp;</div>
+
+            <div class="row">
             <div class="col-md-2 col-sm-3">Perfil <span class="symbol required"></div>
               <div class="col-md-4 col-sm-3">
                 <select name="usuario_perfil" id="usuario_perfil">
@@ -295,8 +355,7 @@ div.dataTables_wrapper div.dataTables_filter label {
               </div>
             </div>
 
-            <div class="clearfix ">&nbsp;</div>
-            
+            <div class="clearfix">&nbsp;</div>
             
             <hr />
             <div class="row">
@@ -315,30 +374,6 @@ div.dataTables_wrapper div.dataTables_filter label {
   </div>
 <!-- End Add Modal -->
 
-<?php /* ?>
-<!-- Show Permisos Modal -->
-<div class="modal fade" id="user-permission" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-        </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Permisos</h3>
-          <div id="mssg-label-edit-perm"></div>
-      </div>
-    <div class="modal-body" id="show-permisos">
-        Cargando...
-    </div>
-    <div class="modal-footer">
-      <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="permisos_user" type="button" class="btn btn-primary" id="permisos_user" onClick="let id_row_perm = $('#id_row_perm').val(); editUserPermisos(id_row_perm)" value="Modificar datos">
-    </div>
-    </div>
-  </div>
-</div>
-<!-- End Permisos Modal -->
-<?php */ ?>
 <?php get_template_part('footer_scripts');?>
 
 
@@ -380,7 +415,11 @@ $("[name='agregar_usuario']").on('click', ()=>{
   let estado      =   $('#usuario_estado').val();
   let clave       =   $('#usuario_clave').val();
   let nombre      =   $('#usuario_nombre').val();
+  let genero      =   $('#usuario_genero').val();
+  let direccion   =   $('#usuario_direccion').val();
   let apellido    =   $('#usuario_apellido').val();
+  let telef       =   $('#usuario_telefono_add').val();
+  let tiposangre  =   $('#usuario_tiposangre_add').val();
   let perfil      =   $('#usuario_perfil').val();
   let birthday    =   $('#cumple_edit').val();
   let photo       =   $('#photo_add').prop('files')[0]; //$('#photo_add').val();
@@ -438,8 +477,12 @@ $("[name='agregar_usuario']").on('click', ()=>{
   form_data.append('user_acceso', user_acceso);
   form_data.append('clave', clave);
   form_data.append('nombre', nombre);
+  form_data.append('genero', genero);
+  form_data.append('direccion', direccion);
   form_data.append('apellido', apellido);
   form_data.append('perfil', perfil);
+  form_data.append('telefono', telef);
+  form_data.append('tiposangre', tiposangre);
   form_data.append('birthday', birthday);
   form_data.append('file', photo);
   form_data.append('principal', principal);
@@ -487,7 +530,7 @@ function editRow ( id ) {
   limpiarCampos ();
   $("#blah").attr("src",'');
   $("#edit_usuarios *").prop('disabled',true);
-  $("#mssg-alert-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-warning').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
+  $("#mssg-alert-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
   let route = "app/controllers/usuarios-listar.php";
 
 $.ajax({
@@ -507,6 +550,9 @@ $.ajax({
     
     $('#id_row_edit').val(response['id_usuario']);
     $('#usuario_acceso_edit').val(response['usuario']);
+    $('#usuario_telefono_edit').val(response['telefono']);
+    $('#usuario_direccion_edit').val(response['direccion']);
+    $('#usuario_tiposangre_edit').val(response['tipo_sangre']);
     $('#usuario_nombre_edit').val(response['nombre']);
     $('#usuario_apellido_edit').val(response['apellido']);
     $('#cumple_edit').val(response['birthday']);
@@ -515,9 +561,9 @@ $.ajax({
     } else {
       $("#blah").attr("src",'repositorio/profile_photos/user.png');
     }
-    
-
     $('#usuario_perfil_edit').val(response['id_perfil']).change();
+    $('#usuario_genero_edit').val(response['genero']).change();
+
     $('#usuario_estado_edit').select2('val',response['activo']);
     if (response['is_principal'] == 1) {
       $('#usuario_principal_edit').attr('checked',true)
@@ -552,8 +598,12 @@ $('.btn-update-row').on('click', () => {
   let estado      =   $('#usuario_estado_edit').val();
   let clave       =   $('#usuario_clave_edit').val();
   let nombre      =   $('#usuario_nombre_edit').val();
+  let genero      =   $('#usuario_genero_edit').val();
+  let direccion   =   $('#usuario_direccion_edit').val();
   let apellido    =   $('#usuario_apellido_edit').val();
   let birthday    =   $('#cumple_edit').val();
+  let telefono    =   $('#usuario_telefono_edit').val();
+  let tiposangre  =   $('#usuario_tiposangre_edit').val();
   let photo       =   $('#photo_edit').prop('files')[0]; //$('#photo_add').val();
 
   let perfil      =   $('#usuario_perfil_edit').val();
@@ -598,9 +648,13 @@ form_data.append('edit', 1);
 form_data.append('id', id);
 form_data.append('clave', clave);
 form_data.append('nombre', nombre);
+form_data.append('genero', genero);
+form_data.append('direccion', direccion);
 form_data.append('apellido', apellido);
 form_data.append('perfil', perfil);
 form_data.append('birthday', birthday);
+form_data.append('telefono', telefono);
+form_data.append('tiposangre', tiposangre);
 form_data.append('file', photo);
 form_data.append('estado', estado);
 
@@ -626,7 +680,7 @@ $.ajax({
     //limpiarCampos();
     setTimeout(()=>{
         $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').hide();
-        //window.location.reload()
+        window.location.reload()
       },3000);    
       //listUsuarios();
   },
@@ -749,8 +803,10 @@ function limpiarCampos (form = false) {
 
 $("[name='usuario_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil']").select2({width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='usuario_genero']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil_edit']").select2({width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='usuario_genero_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>
 
