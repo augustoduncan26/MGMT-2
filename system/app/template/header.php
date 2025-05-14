@@ -57,8 +57,8 @@
 
 
         <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
-        <link rel="shortcut icon" href="assets/images/template/DC-2.png" />
-
+        <link rel="icon" type="image/x-icon" href="assets/images/template/mgmt_logo_transparent.ico" />
+        
         <!-- Modal Styles / modal-sm / modal-md / modal-lg -->
 
         

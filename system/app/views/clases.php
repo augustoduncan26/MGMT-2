@@ -76,7 +76,7 @@
               <th>Nombre</th>
               <th>Capacidad</th> 
               <th>Grado</th>
-              <th>Supervisor / Profesor</th> 
+              <th>Maestro / Supervisor</th> 
               <th>Estado</th>
               <th></th>
               </tr>
@@ -91,7 +91,7 @@
                     <!-- <td><input type="checkbox" /></td> -->
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_name']?></td>
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['capacity']?></td>
-                    <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grade']?></td>
+                    <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grade'].' &deg;'?></td>
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$userName['nombre'].' '.$userName['apellido']?></td>
                     <!-- <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['end_time']?></td> -->
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
@@ -129,8 +129,6 @@
         </div>
          <form name="clases" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <!-- <div id="mssg-add-eventos" style="color:red;"></div> -->
-             <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
              <table class="table  table-hover" id="sample-table-4">
                <thead>
                </thead>
@@ -152,13 +150,16 @@
 
                  <tr>
                    <td width="30%">Grado <span class="symbol required"></span><br />
-                   <small class="color-gray">Representa el nivel o grado.</small>
+                   
                   </td> 
-                   <td width="70%"><input autofocus="" name="event_add_grade" onchange="" type="number" class="form-control" id="event_add_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1"></td>
+                   <td width="70%">
+                    <input autofocus="" name="event_add_grade" onchange="" type="number" class="form-control" id="event_add_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1">
+                    <small class="color-gray">Representa el nivel o grado.</small>
+                  </td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Profesor / Supervisor <span class="symbol required"></span></td>
+                   <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
                    <td width="70%">
                    <select name="event_add_supervisor" id="event_add_supervisor">
                       <?php
@@ -209,8 +210,6 @@
 </div>
       <form name="clases" id="eeventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <!-- <div id="mssg-add-eventos" style="color:red;"></div> -->
-             <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
              <table class="table  table-hover" id="sample-table-4">
                <thead>
                </thead>
@@ -223,19 +222,20 @@
                  </tr>
 
                  <tr>
-                   <td width="30%">Capacidad <span class="symbol required"></span><br />
-                    <small class="color-gray">Representa la cantidad de estudiantes que pueden pertenecer a esta clase.</small>
+                   <td width="30%">Capacidad <span class="symbol required"></span>
                   </td>
                    <td width="70%">
-                   <input autofocus="" name="event_edit_capacity" onchange="" type="number" class="form-control" id="event_edit_capacity" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Capacidad" step="1"  min="1" max="100" value="1">
+                    <input autofocus="" name="event_edit_capacity" onchange="" type="number" class="form-control" id="event_edit_capacity" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Capacidad" step="1"  min="1" max="100" value="1">
+                    <small class="color-gray">Cantidad de personas que pueden pertenecer a esta clase.</small>
                    </td>
                  </tr>
 
                  <tr>
-                   <td width="30%">Grado <span class="symbol required"></span><br />
-                   <small class="color-gray">Representa el nivel o grado.</small>
-                  </td> 
-                   <td width="70%"><input autofocus="" name="event_edit_grade" onchange="" type="number" class="form-control" id="event_edit_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1"></td>
+                   <td width="30%">Grado <span class="symbol required"></span></td> 
+                   <td width="70%">
+                    <input autofocus="" name="event_edit_grade" onchange="" type="number" class="form-control" id="event_edit_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1">
+                    <small class="color-gray">Representa el nivel o grado.</small>
+                  </td>
                  </tr>
 
                  <tr>

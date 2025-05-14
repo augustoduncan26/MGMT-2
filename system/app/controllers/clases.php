@@ -19,26 +19,13 @@ $P_Tabla    = PREFIX.'class';
 // All
 $selectAll      = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_cia = '.$id_cia,'array','class_name');
 
-// $r = mysqli_query($linkServidor,"SELECT * FROM ".PREFIX."usuarios u 
-// LEFT JOIN ".PREFIX."class c
-// ON c.supervisor_id = u.id_perfil 
-// WHERE u.id_cia = '".$id_cia."'");// or die(mysqli_error($linkServidor));
-
-// $list  = mysqli_query($linkServidor,"SELECT ".$PCampos."fd.* FROM ".PREFIX."mant_formulas_detalle fd
-// LEFT JOIN ".PREFIX."mant_formulas f ON f.id_detalle = fd.id 
-// Where fd.id_cia = ".$id_cia." order by fila ASC");
-// $tot = mysqli_num_rows($list);
-
-//echo "<pre>";
-//var_dump($r);
-
 $selecPerfiles  = $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id_cia = '.$id_cia,'array');
 $selecUsers     = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','(id_perfil = 3 or id_perfil = 5) and id_cia = '.$id_cia,'array');
 
 
 // Add
 if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
-	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'class_name="'.$_GET['nombre'].'" and id_cia="'.$id_cia.'"','array');
+	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'class_name="'.$_GET['nombre'].'" and grade="'.$_GET['grado'].'" and id_cia="'.$id_cia.'"','array');
 	if ($sql['total'] > 0 ) {
 		echo 'Ya existe este registro.';
 	} else {

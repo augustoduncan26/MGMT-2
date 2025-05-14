@@ -31,7 +31,6 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') {
 	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email="'.$_POST['user_acceso'].'"','array');
 
-	 //$_SERVER['DOCUMENT_ROOT'].'/'.REPOSITORY."profile_photos/";//$_FILES['file']['name'];
 	if (is_dir($path)) {
 		@chmod($path, 0755);
 	}
@@ -65,8 +64,9 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 		}
 
 		$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
-		$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
+		$perfilData =	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id="'.$_POST['perfil'].'"');
+		$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".$perfilData['name']."','".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,name_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
 		
 		if (is_uploaded_file($_FILES['file']['tmp_name'])) {
 			move_uploaded_file($fileTempName, $path . $newfilename);
@@ -156,7 +156,7 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 		}
 	}
 
-	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' ,id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
+	$P_Valores 	= "nombre='".$_POST['nombre']."', apellido = '".$_POST['apellido']."', photo='".$newfilename."', birthday='".$_POST['birthday']."' , id_perfil='".$_POST['perfil']."',  activo = '".$_POST['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 
 	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
@@ -177,6 +177,8 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 			unset($_SESSION['id_rol']);
 			$_SESSION['id_rol'] = $_POST['perfil'];
 		}
+		$perfilData =	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id="'.$_POST['perfil'].'"');
+		$ObjEjec->actualizarRegistro("name_perfil='".$perfilData['name']."'", $P_Tabla, 'id_usuario = "'.$_POST['id'].'"');
 		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
 		if ($selPerms['resultado']) {

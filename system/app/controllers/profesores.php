@@ -14,7 +14,6 @@ $P_Tabla 	= PREFIX.'teachers';
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 // All
-//$sel = $ObjMante->ConsultaTipoJoin('usuarios,perfil,', $P_Id = false, $P_codigo = false, $P_salida = false);
 $sql = mysqli_query($mysqli,'SELECT us.id_usuario, us.activo, us.id_perfil, us.nombre, 
 			us.apellido, us.email, p.name, p.description'
             . ' FROM '.PREFIX.'usuarios us'

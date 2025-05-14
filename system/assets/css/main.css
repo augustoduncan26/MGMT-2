@@ -3968,9 +3968,9 @@ ul#countdown li p.timeRefDays, ul#countdown li p.timeRefHours, ul#countdown li p
 	font-weight: bold;
 }
 
-.fc-state-highlight {
+/* .fc-state-highlight {
 	background: #F5F5F5 !important;
-}
+} */
 .fc-button {
 	color: #666666 !important;
 }

@@ -17,7 +17,7 @@
 var defaults = {
 
 	// display
-	defaultView: 'basicWeek',//'month',
+	defaultView: 'month',//'month',basicWeek
 	aspectRatio: 1.35,
 	header: {
 		left: 'title',

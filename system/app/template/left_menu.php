@@ -76,6 +76,17 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
+		<!-- Cronograma Profesores -->
+		<?PHP if(in_array('350', $objPermOpc->getRolPermissions($id_rol))) {   ?>
+			<li class="list_item tooltips" data-original-title="Agenda Profesores" data-placement="right" title="Agenda Profesores">
+			<a href="?Schedule-teachers" class="nav__link">
+			<div class="list__button">
+				<i class="clip-calendar"></i>
+				<span class="title">Agenda Profesores</span>
+			</div>
+			</a>
+		</li>
+		<?php } ?>
 
 		<!-- Students / Estudiantes-->
 		<?PHP if(in_array('150', $objPermOpc->getRolPermissions($id_rol))) {   ?>
@@ -85,6 +96,17 @@ $id_cia     	= $_SESSION['id_cia'];
 				<i class="clip-users-2"></i>
 				<span class="title">Estudiantes</span>
 				<!-- <span class="selected"></span> -->
+			</div>
+			</a>
+		</li>
+		<?php } ?>
+		<!-- Cronograma Estudiantes -->
+		<?PHP if(in_array('351', $objPermOpc->getRolPermissions($id_rol))) {   ?>
+			<li class="list_item tooltips" data-original-title="Agenda Estudiantes" data-placement="right" title="Agenda Estudiantes">
+			<a href="?Schedule-students" class="nav__link">
+			<div class="list__button">
+				<i class="clip-calendar"></i>
+				<span class="title">Agenda Estudiantes</span>
 			</div>
 			</a>
 		</li>
@@ -128,18 +150,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
-
-		<!-- Lessons / Task / Tareas -->
-		<!-- <?PHP if(in_array('350', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Lista de Tareas" data-placement="right" title="Lista de Tareas">
-			<a href="?Lecciones" class="nav__link">
-			<div class="list__button">
-				<i class="clip-list-2"></i>
-				<span class="title">Tareas</span>
-			</div>
-			</a>
-		</li>
-		<?php } ?> -->
+		
 
 		<!-- Exams -->
 		<?PHP if(in_array('400', $objPermOpc->getRolPermissions($id_rol))) {   ?>
@@ -275,11 +286,11 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!--  Menu Usuarios -->
 		<?php if(in_array('800', $objPermOpc->getRolPermissions($id_rol))) { ?>
-			<li class="list_item list__item--click tooltips" data-original-title="Mant. Usuarios" data-placement="right" title="Mant. Usuarios" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
+			<li class="list_item list__item--click tooltips" data-original-title="Mantenimientos" data-placement="right" title="Mantenimientos" <?php if (strpos(GET()[0],'usuarios')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link">
 				<i class="clip-settings"></i>
-				<span class="title" >&nbsp;Mantenimientos</span>
+				<span class="title" >&nbsp;&nbsp;Mantenimientos</span>
 				<i class="fa icon-arrow"></i>
 				<!-- <span class="selected"></span> -->
 			</a>
@@ -290,7 +301,7 @@ $id_cia     	= $_SESSION['id_cia'];
 				<?PHP if(in_array('800', $objPermOpc->getRolPermissions($id_rol))) {  ?>
 				<li <?php if(GET()[0] == 'usuarios-listar'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-listar" class="nav__link nav__link--inside">
-						-<span class="title">Mant. Usuarios</span>
+						-<span class="title"> Usuarios</span>
 					</a>
 				</li>
 				<?php } ?>
@@ -298,7 +309,14 @@ $id_cia     	= $_SESSION['id_cia'];
 				<?PHP if(in_array('801', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 				<li <?php if(GET()[0] == 'usuarios-perfiles'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?usuarios-perfiles" class="nav__link nav__link--inside">
-						-<span class="title"> Mant. Perfiles </span>
+						-<span class="title"> Perfiles </span>
+					</a>
+				</li>
+				<?php } ?>
+				<?PHP if(in_array('801', $objPermOpc->getRolPermissions($id_rol))) {   ?>
+				<li <?php if(GET()[0] == 'usuarios-tipo-eventos'){ echo ' class="menu-backg-item"';}?>>
+					<a href="?usuarios-tipo-eventos" class="nav__link nav__link--inside">
+						-<span class="title"> Tipo de Eventos </span>
 					</a>
 				</li>
 				<?php } ?>
@@ -557,11 +575,12 @@ $id_cia     	= $_SESSION['id_cia'];
 		<!-- End Reportes -->
 
 		<!-- Configurations -->
-        <?php if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
+        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
+		<?PHP if(in_array('9999', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 		<li class="list_item list__item--click tooltips" data-original-title="Configuraciones" data-placement="right" title="Configuraciones" <?php if (strpos(GET()[0],'configurar')!==false) { echo  'class = "active open"'; }?> >
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-settings"></i>
-				<span class="title" >&nbsp;Configuraciones </span>
+				<span class="title" >&nbsp;&nbsp;Configuraciones </span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>
@@ -613,7 +632,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<a href="quit" class="nav__link">
 					<i class="clip-exit"></i>
-					<span class="title">&nbsp;Salir </span>
+					<span class="title">&nbsp;&nbsp;Salir </span>
 					<span class="selected"></span>
 				</a>
 			</div>

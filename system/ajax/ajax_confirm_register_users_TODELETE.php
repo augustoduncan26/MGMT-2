@@ -3,7 +3,7 @@
 
 //include_once ('framework.php');
 include_once ('../framework.php');
-
+set_error_handler(header("Location: ../404"));
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
 
@@ -14,7 +14,7 @@ $ObjEjec    = new ejecutorSQL();
 		$PCod			=	explode('-000-',$_GET['Z']);
 		$exito 			=	false;
 
-		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'users','caracteres = "'.$PCod[1].'" and activo=0');
+		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','caracteres = "'.$PCod[1].'" and activo=0');
 		
 		if ( $Data["total"] == 1 ):
 			// Activate user

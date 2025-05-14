@@ -5,30 +5,129 @@
 	
 	get_template_part ( 'header' );
 
-	// Register User
+	$ObjMante   = 	new Mantenimientos();
+	$ObjEjec    = 	new ejecutorSQL();
+	$objCons	=	new consultor();
+
+	/** 
+	* Sign Up User
+	*/
 	if ( isset($_POST['register_users']) ) {
 		
-		$email 		= 	isset($_POST['email'])?$_POST['email']:'';//isset($_POST['usuario'])?$_POST['usuario']:'';
+		$email 		= 	isset($_POST['email'])?$_POST['email']:'';
 		$clave 		= 	isset($_POST['password'])?$_POST['password']:'';
 		$full_name 	= 	isset($_POST['full_nombre'])?$_POST['full_nombre']:'';
-		//$cia 		= 	isset($_POST['cia'])?$_POST['cia']:'';
-		//$tipo		= 	isset($_POST['select_tipo'])?$_POST['select_tipo']:'';
-		//$flagEjec 	= 	isset($_POST['acceso'])?$_POST['acceso']:'';
 		
 		$error		=	FALSE;
 		$MSG		=	FALSE;
 		$P			=	FALSE;
 		$MSSG		=	FALSE;
-		include_once ( dirname(__FILE__) .'/ajax/ajax_register_users.php' );
+		
+		//include_once ( dirname(__FILE__) .'/ajax/ajax_register_users.php' );
 
+		$CARACTERES	=	RandomString($length=10,$uc=TRUE,$n=TRUE,$sc=FALSE);
+		$DESPISTAR	=	RandomString($length=20,$uc=TRUE,$n=TRUE,$sc=FALSE);
+		$IDFALSE	=	rand(1970,1968);
+
+		$where 		= 'usuario = "'.$_POST['email'].'"';
+		$sel1       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios',$where);
+
+		if ($sel1['total'] > 0){
+			
+			$mensaje	=	'Ya existe un usuario con este email';
+			$display	=	'block';
+
+		} else {
+			
+			//$RUTA	=	'companies/';
+			
+			// REGISTER BLOCK USER
+			$clave 		=	encrypt_decrypt('encrypt', $_POST['password']);
+			//$PCLAVE		=	"AES_ENCRYPT('".htmlentities($_POST['password'])."','toga')";//CryptPass( $POST_clave );
+			//$REALNAME	=	'Usuario_'.$CARACTERES;
+
+			$P_Tabla 	=	PREFIX.'usuarios';
+			$P_Campos 	=	'usuario,contrasena,nombre,apellido,email,id_perfil,name_perfil,created_at,updated_at,id_cia,superadmin,principal,caracteres,activo';
+			$P_Valores 	=	"'".$_POST['email']."', '".$clave."','".$_POST['full_nombre']."','','".$_POST['email']."','6','Usuario',NOW(),NOW(),0,0,0,'".$CARACTERES."','0'";
+			$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
+			
+			// Setear Permisos
+			$permisosNormalUser = [];
+			$DataUser       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','email = "'.$_POST['email'].'" and activo=0', 'extract');
+
+			$DataPerm       = 	$ObjMante->BuscarLoQueSea('*',PREFIX.'new_users_permissions',false,'array');
+			foreach ($DataPerm['resultado'] as $key => $value) {
+				$P_Tabla 	=	PREFIX.'permisos';
+				$P_Campos 	=	'id_perfil,id_definicion_permiso,id_cia,activo';
+				$P_Valores 	=	"'".$DataUser['id_perfil']."', '".$value['permiso']."','".$DataUser['id_cia']."','1'";
+				$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
+			}
+
+			$Obj		=	new EnviarCorreo();
+
+			$mensaG			=	"<font face=verdana size=1.5 />Hola ".$_POST['full_nombre']."&nbsp;<br /><br />
+							
+							&nbsp;&nbsp;Gracias por tu registro.<br><br>
+							&nbsp;&nbsp;Recuerda tus datos de acceso:<br>
+							&nbsp;&nbsp;Nombre de usuario: ".$_POST['email']."<br>			
+							&nbsp;&nbsp;Para confirmar tu registro, sigue este enlace: <a h	ref='".ENV['URL_NAME']."/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
+							&nbsp;&nbsp;Esta confirmación estará activa durante 7 días.<br />
+							";
+			
+			//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
+			
+			$mail_to_send_to = $_POST['email'];
+			$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
+			$subject		 = "Confirma tu registro";
+			//$message		= "\r\n" . "Name: TEST" . "\r\n";
+			$headers  = "From: " . strip_tags($from_email) . "\r\n";
+			$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+			$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
+			$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+			$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
+			$mensaje	=	'Debes confirmar tu cuenta para ingresar. <br />Revisa tu buzón de (entrada / no deseados) para confirmarlo.';
+		}
 	}
 
-	// Validate users register
-	if (isset($_GET['Z'])) {
-		include_once ( dirname(__FILE__) .'/ajax/ajax_confirm_register_users.php' );
+	/** 
+	* Validate Sign Up User
+	*/
+	if (isset($_GET['Z']) && $_GET['Z']!='') {
+		//include_once ( dirname(__FILE__) .'/ajax/ajax_confirm_register_users.php' );
+		
+		$PCod			=	explode('-000-',$_GET['Z']);
+
+		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','caracteres = "'.$PCod[1].'" and activo=0');
+		
+		if ( $Data["total"] == 1 ):
+			// Activate user
+			$Data       		= 	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','caracteres = "'.$PCod[1].'" and activo=0','extract');
+			$Hecho 				=	$ObjEjec->ejecutarSQL("Update ".PREFIX."usuarios SET activo=1, id_cia='".$Data['id_usuario']."', updated_at=NOW()  Where id_usuario = '".$Data['id_usuario']."'");
+				
+			if($Hecho==true):
+				// Setear Permisos
+				$permisosNormalUser = [];
+				$DataPerm       = 	$ObjMante->BuscarLoQueSea('*',PREFIX.'new_users_permissions',false,'array');
+				foreach ($DataPerm as $key => $value) {
+					$P_Tabla 	=	PREFIX.'permisos';
+					$P_Campos 	=	'id_perfil,id_definicion_permiso,id_cia,activo';
+					$P_Valores 	=	"'".$Data['id_perfil']."', '".$value['permiso']."','".$Data['id_cia']."','1'";
+					$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
+				}
+				
+				//$mensaje	=	'Activation has been successfully. <br> Now you can login with your user account and password.';
+				$mensaje	=	'Hemos activado su cuenta con éxito. Ahora puedes disfrutar de H&HSys';
+			;else:
+				//$mensaje	=	'¡Error!,Could not validate the activation.';
+				$mensaje	=	'¡Error!, No hemos podido validar su activación.';
+			endif;
+		endif; 
 	}
 
-	// Send Reset Password
+	/** 
+	* Reset Password
+	*/
 	if ( isset($_POST['emailReset']) ) {
 		include_once ( dirname(__FILE__) .'/ajax/ajax_reset_password.php' );
 	}
@@ -56,7 +155,7 @@
 				</p> -->
 				<form class="form-login" action="#SELF" method="post">
 					<div class="errorHandler alert <?php if(!isset($mensaje)){?>  no-display alert-info <?php } else { ?> alert-danger <?php } ?>">
-						<i class="fa fa-remove-sign"></i><?=$mensaje?>.
+						<i class="fa fa-remove-sign"></i><?=$mensaje?>
 					</div>
 					<fieldset>
 						<div class="form-group">
@@ -78,9 +177,9 @@
 								Recordarme 
 							</label>
 
-							<!-- <label for="remember" class="checkbox-inline" onclick="javascript: $('#registerusers').show(); $('#logo-text').hide();$('#loginform').hide();" style="color:#F05F40">
+							<label for="remember" class="checkbox-inline text-sign-up" onclick="javascript: $('#registerusers').show(); $('#logo-text').hide();$('#loginform').hide();" style="color:#F05F40">
 								Regístrate Gratis
-							</label> -->
+							</label>
 
 							<span class="input-icon pull-right">
 							<input type="submit" class="btn btn-bricky pull-right btn-login" name="entrar" value="Login" id="entrar">

@@ -264,7 +264,7 @@
 
             <li class="dropdown current-user">
               <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                <img src="assets/images/template/DC-2.png" class="circle-img circle-img-size" alt="">
+                <img src="assets/images/template/logo_mgmt.png" class="circle-img circle-img-size" alt="">
                 <span class="username"><?=$_SESSION['username']?></span>
                 <i class="clip-chevron-down"></i>
               </a>

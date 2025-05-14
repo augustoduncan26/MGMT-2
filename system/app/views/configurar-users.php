@@ -642,7 +642,7 @@ if ( photo == undefined || photo == 'undefined' ) {
 }
 
 
-let route = "app/controllers/configurar-usuarios.php";
+let route = "app/controllers/configurar-users.php";
 var form_data   =   new FormData();
 form_data.append('edit', 1);
 form_data.append('id', id);

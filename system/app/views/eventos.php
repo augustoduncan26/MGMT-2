@@ -68,21 +68,14 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="">
-      <!-- panel panel-default -->
-      <!-- <div class="panel-heading">
-        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
-      </div> -->
       <div class="panel-body">
         <div class="col-sm-12">
           <div style="height:10px;"></div>
-
         <div class="x_content">
-        <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
             <div class="table-responsive">
               <table id="list-table-events" class="table table-striped table-bordered table-hover">
               <thead>
-              <tr class=""><!-- header-list-table -->
-              <!-- <th style="width:10px"><input type="checkbox" /></th> -->
+              <tr class="">
               <th>Nombre</th>
               <th>Clase</th> 
               <th>Fecha Inicio</th>
@@ -96,12 +89,30 @@
               <tbody id="tbody-table-eventes">
               <?php
                 if ($selectEventos['resultado']){
+                  $resultClass =false;
                   foreach ($selectEventos['resultado'] as $datos) {
-                    $sel2 = $ObjMante->BuscarLoQueSea('class_name',PREFIX.'class','id='.$datos['class_id'],'extract');
+                    if ($datos['class_id']) {
+                      $expl = explode(',',$datos['class_id']);
+                      $tot  = count($expl);
+                      if ($tot > 1) {
+                        for ($i=0;$i<$tot;$i++) { 
+                          $classes   = $ObjMante->BuscarLoQueSea('class_name,grade',PREFIX.'class','id='.$expl[$i],'extract');
+                          if ($classes) {
+                            $resultClass .= $classes['class_name'].' '.$classes['grade'].'&deg;,';
+                          }
+                        }
+                        $resultClass = rtrim($resultClass, ", ");
+                      } else {
+                        $classes    = $ObjMante->BuscarLoQueSea('class_name,grade',PREFIX.'class','id='.$datos['class_id'],'extract');
+                        $resultClass= $classes['class_name'].' '.$classes['grade'].'&deg;';
+                      }
+                    }
+                    
+                    if (empty($resultClass)) { $resultClass = '- - - -';}
               ?>
                   <tr>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
-                  <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php echo isset($sel2['class_name']) ? $sel2['class_name'] : '- - - - -';?></td>
+                  <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$resultClass;?></td>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_start']?></td>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_start']?></td>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_end']?></td>
@@ -113,6 +124,7 @@
                   </td>
                   </tr>
               <?php
+                    $resultClass = '';
                   }
                 }
               ?>
@@ -141,8 +153,6 @@
         </div>
          <form name="add_eventos" id="add_eventos" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-             <!-- <div id="mssg-add-eventos" style="color:red;"></div> -->
-             <!-- <img src="images/ajax-loader.gif" id="cargando_add" /> -->
              <div class="alert alert-danger" id="mssg-add-eventos"><h5>Todos los campos son necesarios</h5></div>
              <table class="table table-hover" id="table-eventos">
                <thead>
@@ -150,62 +160,61 @@
                <tbody>
                  <tr>
                     <td width="15%">Nombre <span class="symbol required"></span>
-                    <br />
-                    <small class="color-gray">Introduzca un nombre descriptivo para el evento. </small>
                     </td>
-                    <td width="35%"><input maxlength="40" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Nombre"></td>
-                    <td width="15%">Detalle <br />
-                    <small class="color-gray">Introduzca un detalle sobre el evento. </small>
+                    <td width="35%">
+                      <input maxlength="40" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Nombre">
+                      <small class="color-gray">Nombre descriptivo para el evento. </small>
                     </td>
-                    <td width="35%"><input maxlength="100" name="descripcion_add" type="text" class="form-control" id="descripcion_add" placeholder="Descripción"></td>
+                    <td width="15%">Detalle</td>
+                    <td width="35%">
+                      <input maxlength="100" name="descripcion_add" type="text" class="form-control" id="descripcion_add" placeholder="Descripción">
+                      <small class="color-gray">Detalle sobre el evento. </small>
+                    </td>
                   </tr>
                   <tr>
                    <td width="15%">Fecha Inicio <span class="symbol required"></span>
-                    <br />
-                    <small class="color-gray">Formato: [mes/dia/año] </small>
                     </td> 
-                    <td width="35%"><input autofocus="" name="event_add_date_ini" onchange="" type="date" class="form-control" id="event_add_date_ini" placeholder="Fecha"></td>
+                    <td width="35%">
+                      <input autofocus="" name="event_add_date_ini" onchange="" type="date" class="form-control" id="event_add_date_ini" placeholder="Fecha">
+                      <small class="color-gray">Formato: [mes/dia/año] </small>
+                    </td>
                     <td width="15%">Hora Inicio <!--<span class="symbol required"></span>-->
-                    <br />
-                    <small class="color-gray">Este campo no es obligatorio. </small>
                   </td>
-                    <td width="35%"><input autofocus="" name="event_add_hora_ini"  type="time" class="form-control" id="event_add_hora_ini" placeholder="Hora de Inicio" ></td>
+                    <td width="35%">
+                      <input autofocus="" name="event_add_hora_ini"  type="time" class="form-control" id="event_add_hora_ini" placeholder="Hora de Inicio" >
+                      <small class="color-gray">Este campo no es obligatorio. </small>
+                    </td>
                   </tr>
 
                  <tr>
                    <td width="15%">Fecha Fin <span class="symbol required"></span>
-                   <br />
-                   <small class="color-gray">Formato: [mes/dia/año] </small>
                   </td> 
-                   <td width="35%"><input autofocus="" name="event_add_date_fin" onchange="" type="date" class="form-control" id="event_add_date_fin" placeholder="Fecha"></td>
-                   <td width="15%">Hora Fin <!--<span class="symbol required"></span>-->
-                   <br />
-                   <small class="color-gray">Este campo no es obligatorio. </small>
-                  </td>
-                   <td width="35%"><input autofocus="" name="event_add_hora_fin" type="time" class="form-control" id="event_add_hora_fin" placeholder="Hora Final"></td>
-                </tr>
-
-                 <tr>
-                 <td width="15%">Clase <!--<span class="symbol required"></span>-->
-                  <br />
-                  <small class="color-gray">Seleccione una clase si desea mostrarles este evento. </small>
-                  </td>
                    <td width="35%">
-                    <select name="event_class_add" id="event_class_add">
+                    <input autofocus="" name="event_add_date_fin" onchange="" type="date" class="form-control" id="event_add_date_fin" placeholder="Fecha">
+                    <small class="color-gray">Formato: [mes/dia/año] </small>
+                  </td>
+                   <td width="15%">Hora Fin</td>
+                   <td width="35%">
+                    <input autofocus="" name="event_add_hora_fin" type="time" class="form-control" id="event_add_hora_fin" placeholder="Hora Final">
+                    <small class="color-gray">Este campo no es obligatorio. </small>
+                  </td>
+                </tr>
+                 <tr>
+                 <td width="15%">Clase </td>
+                   <td width="35%">
+                    <select name="event_class_add" id="event_class_add" multiple>
                         <option></option>
                         <?php 
                           if ($selectClases['resultado']) {
                             foreach ($selectClases['resultado'] as $key => $value) {
-                              echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                              echo '<option value="'.$value['id'].'">'.$value['class_name'].' - '.$value['grade'].'</option>';
                             }
                           }
                         ?>
                     </select>
+                    <small class="color-gray">Clase(s) que puedan ver este evento. </small>
                    </td>
-                   <td width="15%">Perfil <!--<span class="symbol required"></span>-->
-                  <br />
-                  <small class="color-gray">Seleccione uno o varios perfiles, si desea que puedan ver este evento. </small>
-                  </td>
+                   <td width="15%">Perfil</td>
                  <td width="35%">
                     <select name="event_perfil_add[]" id="text_event_perfil_add" multiple>
                         <option></option>
@@ -217,6 +226,7 @@
                           }
                         ?>
                     </select>
+                    <small class="color-gray">Perfil(es) que puedan ver este evento. </small>
                    </td>
                  </tr>
                  <tr>
@@ -227,8 +237,18 @@
                       <option value="0" selected>Inactivo</option>
                     </select>
                    </td>
-                   <td>&nbsp;</td>
-                   <td>&nbsp;</td>
+                   <td>Definir Color</td>
+                   <td>
+                   <select name="tipo_color_add" id="tipo_color_add">
+                   <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
+                    <option style="background-color: rgb(255, 140, 0);" value="#ff8c00">Naranja</option>
+                    <option style="background-color:rgba(239, 13, 13, 0.81);" value="#ef0d0d">Rojo</option>
+                    <option style="background-color: rgb(255, 140, 187);" value="#ff8cbb">Rosado</option>
+                    <option style="background-color:rgba(22, 185, 16, 0.56);" value="#16b910">Verde</option>
+                    <option style="background-color:rgb(0, 0, 0);" value="#000000">Negro</option>
+                  </select>
+                    <small>Este es el color por defecto: </small><small class="color-gray" style="background-color: #3a87ad;">&nbsp;&nbsp;&nbsp;</small>
+                   </td>
                  </tr>
 
                </tbody>
@@ -243,7 +263,7 @@
       </div>
     </div>
   </div>
-<!-- En Add Event -->
+<!-- En Add Modal -->
 
 
 <!-- Edit Modal -->
@@ -265,58 +285,53 @@
           <tbody>
           <div class="alert alert-danger" id="mssg-edit-eventos"><h5>Todos los campos son necesarios</h5></div>
             <tr>
-              <td width="15%">Nombre <span class="symbol required"></span>
-              <br />
-                    <small class="color-gray">Introduzca un nombre descriptivo para el evento. </small>
-            </td>
-              <td width="35%"><input maxlength="40" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
+              <td width="15%">Nombre <span class="symbol required"></span</td>
+              <td width="35%">
+                <input maxlength="40" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
+                <small class="color-gray">Nombre descriptivo para el evento. </small>
               <input name="id_row" type="hidden" class="form-control" id="id_row" placeholder="Nombre"></td>
-              <td width="15%">Descripción <br />
-              <small class="color-gray">Introduzca un detalle sobre el evento. </small>
+              <td width="15%">Descripción</td>
+              <td width="35%">
+                <input maxlength="100" name="descripcion_edit" type="text" class="form-control" id="descripcion_edit" placeholder="Descripción">
+                <small class="color-gray">Detalle sobre el evento. </small>
               </td>
-              <td width="35%"><input maxlength="100" name="descripcion_edit" type="text" class="form-control" id="descripcion_edit" placeholder="Descripción"></td>
             </tr>
             <tr>
-              <td width="15%">Fecha Inicio <span class="symbol required"></span>
-              <br />
+              <td width="15%">Fecha Inicio <span class="symbol required"></span></td> 
+              <td width="35%">
+                <input autofocus="" name="event_edit_date_ini" onchange="" type="date" class="form-control" id="event_edit_date_ini" placeholder="Fecha">
               <small class="color-gray">Formato: [mes/dia/año] </small>
-              </td> 
-              <td width="35%"><input autofocus="" name="event_edit_date_ini" onchange="" type="date" class="form-control" id="event_edit_date_ini" placeholder="Fecha"></td>
-              <td width="15%">Hora Inicio <!--<span class="symbol required"></span>--></td>
+            </td>
+              <td width="15%">Hora Inicio </td>
               <td width="35%"><input autofocus="" name="event_edit_hora_ini"  type="time" class="form-control" id="event_edit_hora_ini" placeholder="Hora de Inicio" ></td>
             </tr>
 
             <tr>
-              <td width="15%">Fecha Fin <span class="symbol required"></span>
-              <br />
-              <small class="color-gray">Formato: [mes/dia/año] </small>
-            </td> 
-              <td width="35%"><input autofocus="" name="event_edit_date_fin" onchange="" type="date" class="form-control" id="event_edit_date_fin" placeholder="Fecha"></td>
-              <td width="15%">Hora Fin <!--<span class="symbol required"></span>--></td>
+              <td width="15%">Fecha Fin <span class="symbol required"></span></td> 
+              <td width="35%">
+                <input autofocus="" name="event_edit_date_fin" onchange="" type="date" class="form-control" id="event_edit_date_fin" placeholder="Fecha">
+                <small class="color-gray">Formato: [mes/dia/año] </small>
+              </td>
+              <td width="15%">Hora Fin </td>
               <td width="35%"><input autofocus="" name="event_edit_hora_fin" type="time" class="form-control" id="event_edit_hora_fin" placeholder="Hora Final"></td>
           </tr>
 
             <tr>
-            <td width="15%">Clase <!--<span class="symbol required"></span>-->
-            <br />
-            <small class="color-gray">Seleccione una clase si desea mostrarles este evento. </small>
-          </td>
+            <td width="15%">Clase </td>
               <td width="35%">
-              <select name="event_class_edit" id="event_class_edit" class="">
+              <select name="event_class_edit" id="txt_event_class_edit" class="" multiple>
                 <option value="">seleccionar</option>
                   <?php 
                     if ($selectClases['resultado']) {
                       foreach ($selectClases['resultado'] as $key => $value) {
-                        echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                        echo '<option value="'.$value['id'].'">'.$value['class_name'].' - '.$value['grade'].'&deg;</option>';
                       }
                     }
                   ?>
               </select>
+              <small class="color-gray">Clase(s) que puedan ver este evento. </small>
               </td>
-              <td width="15%">Perfil <!--<span class="symbol required"></span>-->
-                  <br />
-                  <small class="color-gray">Seleccione uno o varios perfiles, si desea que puedan ver este evento. </small>
-                  </td>
+              <td width="15%">Perfil</td>
                  <td width="35%">
                     <select name="event_perfil_edit[]" id="text_event_perfil_edit" multiple>
                         <option></option>
@@ -328,6 +343,7 @@
                           }
                         ?>
                     </select>
+                    <small class="color-gray">Perfil(es) que puedan ver este evento. </small>
                    </td>
             </tr>
             <tr>
@@ -338,8 +354,18 @@
                 <option value="0" selected="">Inactivo</option>
               </select>
               </td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td>Definir Color</td>
+                   <td>
+                   <select name="tipo_color_edit" id="tipo_color_edit">
+                    <option  value="#3a87ad" selected>Default </option>
+                    <option  value="#ff8c00">Naranja</option>
+                    <option  value="#ef0d0d">Rojo</option>
+                    <option  value="#ff8cbb">Rosado</option>
+                    <option  value="#16b910">Verde</option>
+                    <option  value="#000000">Negro</option>
+                  </select>
+                    <small>Este es el color por defecto: </small><small class="color-gray" style="background-color: #3a87ad;">&nbsp;&nbsp;&nbsp;</small>
+                   </td>
             </tr>
           </tbody>
         </table>
@@ -362,15 +388,11 @@
             <div class="modal-header">
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Ayuda</h4>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Asistente</h4>
             </div>
             <div class="modal-body">
                 ...
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -387,10 +409,6 @@
             <div class="modal-body">
                 ...
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -460,6 +478,7 @@ function addEvent () {
   var horaF       = $('#event_add_hora_fin').val();
   var estado      = $('#event_estado_add').val();
   let descrip     = $('#descripcion_add').val();
+  let tipo_color  = $('#tipo_color_add').val();
   let perfil      = $('#text_event_perfil_add').val();
 
   if ( nombre == '' || dateI == '' || dateF == '') {
@@ -494,7 +513,8 @@ function addEvent () {
       r6 : horaF,
       r7 : estado,
       r8 : descrip,
-      r9:perfil,
+      r9: perfil,
+      r10 : tipo_color,
     },
     dataType : 'html',
     beforeSend: function () {
@@ -513,8 +533,10 @@ function addEvent () {
       }, 4000);
   
       $("#nombre_add").val('');
+      $("#event_add_date_ini").val('');
+      $("#event_add_date_fin").val('');
       $("#descripcion_add").val('');
-      $("#event_class_add").val('');
+      $("#event_class_add").val('').change();
       $("#nombre_add").focus();
     },
     error           : function (error) {
@@ -547,7 +569,6 @@ function editRow ( id ) {
     },
     dataType        : 'json',
     success         : function (response) {
-
       $("#text_event_perfil_edit").trigger('change');
       $('#id_row').val(response['id']);
       $('#nombre_edit').val(response['name']);
@@ -558,8 +579,21 @@ function editRow ( id ) {
       $('#event_edit_hora_fin').val(response['time_end']);
       $('#event_estado_edit').select2('val',response['activo']);
       $('#event_class_edit').select2('val',response['class_id']);
+      //$('#tipo_color_edit').select2('val', response['tipo_color']).change();
+      $('#tipo_color_edit').val(response['tipo_color']).change();
 
-      
+      if (response['class_id']!= null && response['class_id']!='' && response['class_id']!='NULL') {
+        let arr   = response['class_id'].split (",");
+        let keys  = Object.keys(arr).length;
+        let r  = "";
+        arr.forEach((item,key)=>{
+          if (item) {
+            r =  arr + ',';
+            $('#txt_event_class_edit').val(arr).change();
+          }
+        });
+      }
+
       if (response['perfil_id']!= null && response['perfil_id']!='' && response['perfil_id']!='NULL') {
         let arr   = response['perfil_id'].split (",");
         let keys  = Object.keys(arr).length;
@@ -595,10 +629,11 @@ $('.btn-edit-evento').on('click', ()=>{
   let horaI         = $('#event_edit_hora_ini').val();
   let dateF         = $('#event_edit_date_fin').val();
   let horaF         = $('#event_edit_hora_fin').val();
-  let clase         = $('#event_class_edit').val();
+  let clase         = $('#txt_event_class_edit').val();
   let estado        = $('#event_estado_edit').val();
   let id            = $('#id_row').val();
   let perfil        = $('#text_event_perfil_edit').val();
+  let tipo_color    = $('#tipo_color_edit').val();
 
   // console.log(perfil);
   //  return false
@@ -612,7 +647,7 @@ $('.btn-edit-evento').on('click', ()=>{
   let route = "app/controllers/eventos.php"; 
 
   var parametros = {
-    edit : 1, r1 : nombre, r_r : id, r2:descrip, r3: dateI, r4: horaI, r5: dateF, r6: horaF, r7 : clase, r8:estado, r9:perfil,
+    edit : 1, r1 : nombre, r_r : id, r2:descrip, r3: dateI, r4: horaI, r5: dateF, r6: horaF, r7 : clase, r8:estado, r9:perfil, r10: tipo_color,
   };
 
   $.ajax({
@@ -738,12 +773,6 @@ $(document).ready( function () {
     });
 } );
 
-// $('.close').on('click', ()=>{
-//   window.location.reload();
-// });
-// $('.btn-danger').on('click', ()=>{
-//   window.location.reload();
-// });
 
 function goToTopPage(){
   //jQuery('.go-top').on('click', ()=> {
@@ -753,9 +782,12 @@ function goToTopPage(){
 
 $("#text_event_perfil_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#text_event_perfil_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_event_class_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='event_class_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"}); // , dropdownParent: $("#formulario_nuevo")});
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});// , dropdownParent: $("#formulario_nuevo")});
 $("[name='event_class_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='tipo_color_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='tipo_color_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 </script>

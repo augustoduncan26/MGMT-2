@@ -20,7 +20,7 @@
               <!-- start: FULL CALENDAR PANEL -->
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <i class="fa fa-calendar"></i>Planners
+                  <i class="fa fa-calendar"></i>Agenda Estudiantes
                   <div class="panel-tools">
                     <a class="btn btn-xs btn-link panel-refresh" href="#">
                       <i class="fa fa-refresh"></i>
@@ -73,10 +73,12 @@
                   </tr>
                   <tr>
                    <td width="15%">Fecha Inicio <span class="symbol required"></span>
+                    <!-- <br />
+                    <small class="color-gray">Formato: [mes/dia/año] </small> -->
                     </td> 
                     <td width="35%">
+                      <!-- <input autofocus="" name="event_add_date_ini" onchange="" type="date" class="form-control" id="event_add_date_ini" placeholder="Fecha"> -->
                       <input type="date" name="start" class="form-control" id="start" readonly>
-                      <small class="color-gray">Formato: [mes/dia/año] </small>
                     </td>
                     <td width="15%">Hora Inicio <span class="symbol required"></span>
                   </td>
@@ -87,9 +89,11 @@
 
                  <tr>
                    <td width="15%">Fecha Fin <span class="symbol required"></span>
+                   <!-- <br />
+                   <small class="color-gray">Formato: [mes/dia/año] </small> -->
                   </td> 
                    <td width="35%"><input type="date" name="end" class="form-control" id="end" readonly>
-                   <small class="color-gray">Formato: [mes/dia/año] </small>
+                   <!-- <input autofocus="" name="event_add_date_fin" onchange="" type="date" class="form-control" id="event_add_date_fin" placeholder="Fecha"> -->
                   </td>
                    <td width="15%">Hora Fin <span class="symbol required"></span>
                   </td>
@@ -139,12 +143,11 @@
                    <td>Definir Color</td>
                    <td>
                    <select name="tipo_color" id="tipo_color">
-                   <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
-                    <option style="background-color: rgb(255, 140, 0);" value="#ff8c00">Naranja</option>
-                    <option style="background-color:rgba(239, 13, 13, 0.81);" value="#ef0d0d">Rojo</option>
-                    <option style="background-color: rgb(255, 140, 187);" value="#ff8cbb">Rosado</option>
-                    <option style="background-color:rgba(22, 185, 16, 0.56);" value="#16b910">Verde</option>
-                    <option style="background-color:rgb(0, 0, 0);" value="#000000">Negro</option>
+                    <!-- <option value="">Seleccionar</option> -->
+                    <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
+                    <option style="background-color:rgba(22, 185, 16, 0.56);" value="rgba(22, 185, 16, 0.56)">Evento Especial</option>
+                    <option style="background-color:rgba(239, 13, 13, 0.81);" value="rgba(239, 13, 13, 0.81)">Rojo</option>
+                    <option style="background-color:rgb(0, 0, 0);" value="rgb(0, 0, 0)">Negro</option>
                   </select>
                     <small>Este es el color por defecto: </small><small class="color-gray" style="background-color: #3a87ad;">&nbsp;&nbsp;&nbsp;</small>
                    </td>
@@ -369,12 +372,13 @@
           <label for="color" class="col-sm-2 control-label">Color</label>
           <div class="col-sm-10">
             <select name="color" class="form-control" id="color">
-              <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
-              <option style="background-color: rgb(255, 140, 0);" value="#ff8c00">Naranja</option>
-              <option style="background-color:rgba(239, 13, 13, 0.81);" value="#ef0d0d">Rojo</option>
-              <option style="background-color: rgb(255, 140, 187);" value="#ff8cbb">Rosado</option>
-              <option style="background-color:rgba(22, 185, 16, 0.56);" value="#16b910">Verde</option>
-              <option style="background-color:rgb(0, 0, 0);" value="#000000">Negro</option>
+              <option value="">Seleccionar</option>
+              <option style="color:#FF0000;" value="#FF0000">&#9724; Reservado</option>      
+              <!-- <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option> -->
+              <option style="color:#008000;" value="#008000">&#9724; En la habitación</option>             
+              <option style="color:#FFD700;" value="#FFD700">&#9724; Limpieza</option>
+              <option style="color:#FF8C00;" value="#FF8C00">&#9724; Evento Especial</option>   
+              <!-- <option style="color:#000;" value="#000">&#9724; Negro</option> --> 
             </select>
           </div>
           </div>
@@ -651,10 +655,10 @@ document.forms["EditDataModal"].submit();
   },100);
 
   $(document).ready(function() {
-      let date = new Date();
-      let yyyy = date.getFullYear().toString();
-      let mm   = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
-      let dd   = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
+    var date = new Date();
+       var yyyy = date.getFullYear().toString();
+       var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+       var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
     
     jQuery('#calendar').fullCalendar({
       theme: true,
@@ -673,7 +677,7 @@ document.forms["EditDataModal"].submit();
       selectable: true,
       selectHelper: true,
       select: function(start, end) {
-        //console.log(start)
+        
         $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
         $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
         $('#ModalAdd').modal('show');
@@ -734,27 +738,27 @@ document.forms["EditDataModal"].submit();
         // en los campos al querer editar la info.
         // ********************************************
           id: '<?php echo $event['id']; ?>',
-          title: '<?php echo $event['name']; ?>',
-          //email: '<?php echo $event['email']; ?>',
-          start: '<?php echo $event['date_start'].$event['time_start']; ?>',
-          end: '<?php echo $event['date_end'].$event['time_end']; ?>',
+          title: '<?php echo $event['title']; ?>',
+          email: '<?php echo $event['email']; ?>',
+          start: '<?php echo $event['fecha_e'].$event['start']; ?>',
+          end: '<?php echo $event['fecha_s'].$event['end']; ?>',
           tipo: 'E',//'<?php echo $event['tipo']?>',
           //start: '<?php echo $start; ?>',
           //end: '<?php echo $end; ?>',
-          color: '<?php echo $event['tipo_color']; ?>',
+          color: '<?php echo $event['color']; ?>',
         },
       <?php endforeach; 
       //endif; ?>
-      // {
-      //     title: 'Long Event',
-      //     start: '2025-05-07T05:00:00',
-      //     end: '2025-05-10T05:00:00'
-      //   },
-      //   {
-      //     title: 'Conference',
-      //     start: '2025-05-11T05:00:00',
-      //     end: '2025-05-12T06:00:00'
-      //   },
+      {
+          title: 'Long Event',
+          start: '2025-05-07T05:00:00',
+          end: '2025-05-10T05:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2025-05-11T05:00:00',
+          end: '2025-05-12T06:00:00'
+        },
       ]
     });
     

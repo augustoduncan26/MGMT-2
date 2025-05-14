@@ -74,7 +74,7 @@ include ( dirname(__FILE__).'/load.php' );
               } else {
 
                 echo '<div class="row">
-                  <div class="img-dashboard col-md-12 col-sm-12"><img src="'.$_ENV['FLD_ASSETS'].'/images/template/logo_mgmt.png" class="logo_mgmt" alt="">
+                  <div class="img-dashboard col-md-12 col-sm-12"><img src="'.$_ENV['FLD_ASSETS'].'/images/template/mgmt_logo_transparent.png" class="logo_mgmt" alt="">
                   </div>
                   <div class="welcome-title col-md-6 col-md-offset-3"><h4>Bienvenid@: '.$_SESSION['username'].'</h4></div>
                 </div>';

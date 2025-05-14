@@ -44,7 +44,7 @@ const validate = (resultInput, emailInput) => {
   } else{
     $result.show();
     $result.text(email + ' no es válido.');
-    $result.css('color', 'red');
+    $result.css('color', '#721c24');
   }
   return false;
 }

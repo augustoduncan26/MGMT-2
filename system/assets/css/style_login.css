@@ -61,6 +61,7 @@ h1, h2, h3 {
 .casointerno_destacado{ color: blue; font-weight:bold; }
 .casointerno_sindestacar { color: 000000; font-weight:normal;}
 .gris_chico { font-size: 10px; color:#666; }
+.text-sign-up { color: #909090 !important; text-decoration:underline}
 
 /* ---------------------------------------------------------------------- */
 /*	Forms
