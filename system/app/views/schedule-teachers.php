@@ -11,6 +11,8 @@
 </style>
 <body>
 
+<div class="alert mssg-planner"></div>
+
 <div class="">
       <!-- <h3>Planners</h3> -->
       <!-- end: PAGE HEADER -->
@@ -20,7 +22,7 @@
               <!-- start: FULL CALENDAR PANEL -->
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <i class="fa fa-calendar"></i>Agenda Profesores
+                  <i class="fa fa-calendar"></i>Planners
                   <div class="panel-tools">
                     <a class="btn btn-xs btn-link panel-refresh" href="#">
                       <i class="fa fa-refresh"></i>
@@ -59,29 +61,21 @@
                  <tr>
                     <td width="15%">Titulo <span class="symbol required"></span>
                     </td>
-                    <td width="35%"><input maxlength="40" name="titulo_add" type="text" class="form-control" id="titulo_add" placeholder="Agregar un Tiítulo"></td>
-                    <td width="15%">Tipo de Evento <span class="symbol required"></span></td>
+                    <td width="35%"><input maxlength="40" name="titulo_add" type="text" class="form-control" id="titulo_add" placeholder="Título del evento"></td>
+                    <td width="15%">Descripción </td>
                     <td width="35%">
-                    <select required="required" id="tipo_evento" name="tipo_evento">
-                      <option value="">seleccione</option>
-                      <option value="A">Asignación Especial</option>
-                      <option value="E">Evento</option>
-                      <option value="X">Exámen</option>
-                      <option value="T">Tarea</option>
-                    </select>
+                      <input maxlength="100" name="descripcion_add" type="text" class="form-control" id="descripcion_add" placeholder="Descripción">
+                      <small class="color-gray">Descripción sobre el evento. </small>
                     </td>
                   </tr>
                   <tr>
                    <td width="15%">Fecha Inicio <span class="symbol required"></span>
-                    <!-- <br />
-                    <small class="color-gray">Formato: [mes/dia/año] </small> -->
                     </td> 
                     <td width="35%">
-                      <!-- <input autofocus="" name="event_add_date_ini" onchange="" type="date" class="form-control" id="event_add_date_ini" placeholder="Fecha"> -->
                       <input type="date" name="start" class="form-control" id="start" readonly>
+                      <small class="color-gray">Formato: [mes/dia/año] </small>
                     </td>
-                    <td width="15%">Hora Inicio <span class="symbol required"></span>
-                  </td>
+                    <td width="15%">Hora Inicio </td>
                     <td width="35%">
                       <input autofocus="" name="event_add_hora_ini"  type="time" class="form-control" id="event_add_hora_ini" placeholder="Hora de Inicio" >
                     </td>
@@ -89,23 +83,19 @@
 
                  <tr>
                    <td width="15%">Fecha Fin <span class="symbol required"></span>
-                   <!-- <br />
-                   <small class="color-gray">Formato: [mes/dia/año] </small> -->
                   </td> 
                    <td width="35%"><input type="date" name="end" class="form-control" id="end" readonly>
-                   <!-- <input autofocus="" name="event_add_date_fin" onchange="" type="date" class="form-control" id="event_add_date_fin" placeholder="Fecha"> -->
+                   <small class="color-gray">Formato: [mes/dia/año] </small>
                   </td>
-                   <td width="15%">Hora Fin <span class="symbol required"></span>
-                  </td>
+                   <td width="15%">Hora Fin</td>
                    <td width="35%"><input autofocus="" name="event_add_hora_fin" type="time" class="form-control" id="event_add_hora_fin" placeholder="Hora Final"></td>
                 </tr>
 
                  <tr>
-                 <td width="15%">Clase <!--<span class="symbol required"></span>-->
+                 <td width="15%">Clase
                   </td>
                    <td width="35%">
                     <select name="event_class_add" id="event_class_add" multiple>
-                        <!-- <option>seleccionar</option> -->
                         <?php 
                           if ($selectClases['resultado']) {
                             foreach ($selectClases['resultado'] as $key => $value) {
@@ -116,11 +106,10 @@
                     </select>
                     <lable class="color-gray">Seleccionar todos <input type="checkbox" id="select_classes" /> </lable>
                    </td>
-                   <td width="15%">Perfil <!--<span class="symbol required"></span>-->
+                   <td width="15%">Perfil
                   </td>
                  <td width="35%">
                     <select name="event_perfil_add[]" id="text_event_perfil_add" multiple style="width: 250px !important;">
-                        <!-- <option></option> -->
                         <?php 
                           if ($selectPerfiles['resultado']) {
                             foreach ($selectPerfiles['resultado'] as $key => $value) {
@@ -143,11 +132,12 @@
                    <td>Definir Color</td>
                    <td>
                    <select name="tipo_color" id="tipo_color">
-                    <!-- <option value="">Seleccionar</option> -->
-                    <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
-                    <option style="background-color:rgba(22, 185, 16, 0.56);" value="rgba(22, 185, 16, 0.56)">Evento Especial</option>
-                    <option style="background-color:rgba(239, 13, 13, 0.81);" value="rgba(239, 13, 13, 0.81)">Rojo</option>
-                    <option style="background-color:rgb(0, 0, 0);" value="rgb(0, 0, 0)">Negro</option>
+                   <option style="background-color: #3a87ad;" value="#3a87ad" selected>Default </option>
+                    <option style="background-color: rgb(255, 140, 0);" value="#ff8c00">Naranja</option>
+                    <option style="background-color:rgba(239, 13, 13, 0.81);" value="#ef0d0d">Rojo</option>
+                    <option style="background-color: rgb(255, 140, 187);" value="#ff8cbb">Rosado</option>
+                    <option style="background-color:rgba(22, 185, 16, 0.56);" value="#16b910">Verde</option>
+                    <option style="background-color:rgb(0, 0, 0);" value="#000000">Negro</option>
                   </select>
                     <small>Este es el color por defecto: </small><small class="color-gray" style="background-color: #3a87ad;">&nbsp;&nbsp;&nbsp;</small>
                    </td>
@@ -167,267 +157,68 @@
   </div>
 <!-- En Add Modal -->
     
-  <!-- Modal (Right) Ver Informacion // Editar -->
+  <!-- Modal (Right) View Informations // Editar -->
   <div class="modal fade  come-from-modal right" id="ModalEdit" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document" style="width: 100%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                        <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Profesor: <label class="nombre-del-profesor h4"></label></h4>
-                    </div>
-                    <div class="modal-body" style="height: 100% !important">
-                      <!-- <input name="guardar_data" type="button" class="btn btn-primary float-right" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos"> -->
-                      
-                      <!-- Row 1 -->
-                      <div class="row f1" style="font-size: 14px;">
-                        <!-- section 1 -->
-                        <div class="col-md-3 flex " style="padding: 5px;">
-                          <div class="col-md-12 col-sm-12 ">
-                            <img id="blah-photo-user" class="photo-user" style="width: 100px; height: 100px" src="repositorio/profile_photos/user.png" alt="Foto">
-                          </div>
-                        </div>
-                        <!-- section 2 -->
-                        <div class="col-md-5 flex bg-color-gray-transp border-radius" style="padding: 5px;">
-                          <div class="col-md-12"><i class="fa fa-envelope"></i> <label class="email-del-profesor"></label></div>
-                          <div class="col-md-12"><i class="clip-calendar"></i> <label class="cumple-del-profesor"></label></div>
-                          <div class="col-md-12"><i class="clip-phone"></i> <label class="telefono-del-profesor"></label></div>
-                          <div class="col-md-12"><i class="fa fa-medkit"></i> <label class="tiposangre-del-profesor"></label></div>
-                        </div>
-                        <!-- section 3 -->
-                        <div class="col-md-4 flex" style="padding: 5px;">
-                          <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-list-2"></i> <a href="#">Clases</a></div>
-                          <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-indent"></i> <a href="#">Materias</a></div>
-                          <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-users-2"></i> <a href="#">Estudiantes</a></div>
-                          <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-envelope"></i> <a href="#">Asignaciones</a></div>
-                        </div>
-                      </div>
-
-                      <!-- Row 2 Calendar -->
-                      <hr />
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="panel panel-default">
-                            <div class="panel-heading">
-                              <i class="clip-calendar"></i>
-                              Calendar
-                              <div class="panel-tools">
-                                <!-- <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
-                                <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal"> <i class="fa fa-wrench"></i> </a> -->
-                                <a class="btn btn-xs btn-link panel-refresh" href="#">
-                                  <i class="fa fa-refresh"></i>
-                                </a>
-                                <!-- <a class="btn btn-xs btn-link panel-expand" href="#">
-                                  <i class="fa fa-resize-full"></i>
-                                </a>
-                                <a class="btn btn-xs btn-link panel-close" href="#">
-                                  <i class="fa fa-times"></i>
-                                </a> -->
-                              </div>
-                            </div>
-                            <div class="panel-body">
-                            <div id='calendar'></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- End Calendar -->
-
-                    </div>
-                    <!-- <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Modificar datos</button>
-                    </div> -->
-                    <!-- <div class="modal-footer">
-                        <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-                        <input name="guardar_data" type="button" class="btn btn-primary" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
-                  </div> -->
+      <div class="modal-dialog" role="document" style="width: 100%;">
+          <div class="modal-content">
+          <form class="form-horizontal" method="POST" name="EditDataModal" id="EditDataModal" action="?planning">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                  <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel">
+                    <i class="fa fa-calendar"></i><!-- Evento: -->
+                    <label class="titulo-evento h4" id="titulo-del-evento"></label></h4>
+                    <input type="hidden" name="id" class="form-control" id="id_editar">
                 </div>
-            </div>
-        </div>   
-    
-    <!-- Modal EDITAR -->
-    <div class="modal fade" id="ModalEdit" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-      <div class="modal-content">
-      <form class="form-horizontal" method="POST" name="EditDataModal" id="EditDataModal" action="?planning"><!--editEventTitle.php-->
-        <input type="hidden" name="form-action" id="form-action" value="edit">
-        <input type="hidden" name="tipo_reserva_edit" id="tipo_reserva_edit" value="">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"> <i class="glyphicon glyphicon-edit"></i> Editar</h4>
-        </div>
-        <div class="modal-body">
-        
-        <?php //$sql = myysql_qury("select * from ".$TblBooking." Where id = '".."'"); ?>
-
-          <div class="form-group">
-          <label for="title" class="col-sm-2 control-label">Nombre</label>
-          <div class="col-sm-10">
-            <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
-          </div>
-          </div>
-
-          <!-- EDITAR RESERVAR -->
-
-          <div class="form-group" id="div_reservar_editar" style="display: none">
-
-            <div class="form-group">
-
-              <label for="apellido" class="col-sm-2 control-label">Apellido</label>
-              <div class="col-sm-4">
-                <input type="text" name="apellido_edit" class="form-control" id="apellido_edit" placeholder="Apellido">
-              </div>
-           
-
-              <label for="email" class="col-sm-1 control-label">Email</label>
-              <div class="col-sm-5">
-                <input type="email" name="email" required="required" class="form-control" id="email" placeholder="Email">
-              </div>
-
-            </div>
-
-             <div class="form-group">
-                <label for="habitacion" class="col-sm-2 control-label">Habitación</label>
-                <div class="col-sm-4">
-                  <?php $sql  = mysqli_query($link,"Select * From ".$TblRooms." Where activo = 1");?>
-                  <select id="habitacion_edit" name="habitacion_edit" required="required" class="form-control" onchange="activarCamposEdit( this )">
-                    
-                    <?php
-                        while($data = mysqli_fetch_array($sql)) {
-                    ?>
-                        <option value="<?php echo $data['id']; ?>"><?php echo $data['codigo']?></option>
-                    <?php } ?>
-                    
-                  </select>
-                </div>
-
-                <label for="tot_personas" class="col-sm-3 control-label">Tot. Personas</label>
-                <div class="col-sm-3">
-                  <input type="number" min="1" required="required" max="8" name="tot_personas" class="form-control" id="tot_personas" placeholder="Total de personas" value="1">
-                </div>
-             </div>
-
-             <div class="form-group">
-                <label for="precio" class="col-sm-2 control-label">Precio</label>
-                <div class="col-sm-4">
-                  <input type="number" min="1" step="0.01" name="precio_edit" class="form-control" id="precio_edit" placeholder="Precio" value="0">
-                </div>
-
-                <label for="descuento" class="col-sm-3 control-label">Descuento</label>
-                <div class="col-sm-3">
-                  <input type="number" min="0" step="0.01" name="descuento_edit" class="form-control" id="descuento_edit" placeholder="Descuento" value="0">
-                </div>
-             </div>
-
-             <!-- Nacionalidad -->
-
-             <div class="form-group">
-             <?php $sql  = mysqli_query($link,"Select * From ad_pais");?>
-             <label for="nacionalidad" class="col-sm-2 control-label">Nacionalidad</label>
-              <div class="col-sm-10">
-                <select class="form-control" id="nacionalidad_edit" name="nacionalidad_edit">
-                  <option value="">select</option>
-                  <?php while ($datos = mysqli_fetch_array($sql)) { ?>
-                    <option value="<?php echo $datos['id']; ?>"><?php echo sanear_string($datos['pais']); ?></option>
-                  <?php } ?>
-                  </option>
-                </select>
-              </div>
-             </div>
-             
-            <!-- Tipo de Documento -->
-            <div class="form-group">
-            <?php $sql  = mysqli_query($link,"Select * From ad_tipo_documentos");?>
-             <label for="documento" class="col-sm-2 control-label">Documento</label>
-              <div class="col-sm-4">
-                <select required="required" class="form-control" id="documento_edit" name="documento_edit">
-                  <option value="">select</option>
-                  <option value="DNI">Documento de Identidad</option>
-                  <option value="PASS">Pasaporte</option>
-                  </option>
-                </select>
-              </div>
-            <!-- </div> -->
- 
-            <!-- Número de Documento -->
-            <!-- <div class="form-group"> -->
-              <label for="n_documento" class="col-sm-3 control-label">N° Documento</label>
-              <div class="col-sm-3">
-                <input type="text" name="n_documento_edit" class="form-control" id="n_documento_edit" placeholder="N°Documento">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="observacion" class="col-sm-2 control-label">Observación</label>
-              <div class="col-sm-10">
-                <textarea name="observacion_edit" class="form-control" rows="2" cols="50" style="width:100%" id="observacion_edit" placeholder="observacion" maxlength="80"></textarea>
-                <label>(80 caracteres)</label>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="form-group">
-          <label for="color" class="col-sm-2 control-label">Color</label>
-          <div class="col-sm-10">
-            <select name="color" class="form-control" id="color">
-              <option value="">Seleccionar</option>
-              <option style="color:#FF0000;" value="#FF0000">&#9724; Reservado</option>      
-              <!-- <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option> -->
-              <option style="color:#008000;" value="#008000">&#9724; En la habitación</option>             
-              <option style="color:#FFD700;" value="#FFD700">&#9724; Limpieza</option>
-              <option style="color:#FF8C00;" value="#FF8C00">&#9724; Evento Especial</option>   
-              <!-- <option style="color:#000;" value="#000">&#9724; Negro</option> --> 
-            </select>
-          </div>
-          </div>
-
-          <div class="form-group">
-
-              <label for="" class="col-sm-2 control-label">F. Inicio</label>
-              <div class="col-sm-4">
-                <input type="text" name="fecha_e_editar" required="required" class="form-control" id="fecha_e_editar" placeholder="">
+              <div class="modal-body" style="height: 100% !important">
                 
+                <!-- Row 1 -->
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 control-label">Fecha Desde:</label>
+                  <div class="col-sm-3 bg-color-gray-transp">
+                    <input type="text" name="fecha_desde_editar" required="required" class="form-control" id="fecha_desde_editar" style="border: 0px;" readonly> 
+                  </div>
+                  <label for="" class="col-sm-3 control-label">Fecha Hasta:</label>
+                  <div class="col-sm-3 bg-color-gray-transp">
+                    <input type="text" name="fecha_hasta_editar" required="required" class="form-control" id="fecha_hasta_editar" style="border: 0px;" readonly>
+                    <input type="hidden" name="id" class="form-control" id="id_editar">
+                  </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 control-label">Hora Inicio:</label>
+                  <div class="col-sm-3">
+                    <input type="time" name="hora_inicio_editar" required="required" class="form-control" id="hora_inicio_editar" style="border: 0px;"> 
+                  </div>
+                  <label for="" class="col-sm-3 control-label">Hora Final:</label>
+                  <div class="col-sm-3">
+                    <input type="time" name="hora_final_editar" required="required" class="form-control" id="hora_final_editar" style="border: 0px;">
+                    <input type="hidden" name="id" class="form-control" id="id_editar">
+                  </div>
+                </div>
+
+                <hr />
+
+                <!-- Row 3 -->
+                <div class="form-group row">
+                <label for="" class="col-sm-3 control-label">Descripción:</label>
+                <div class="col-sm-9"><input type="text" name="descripcion_editar" required="required" class="form-control" id="descripcion_editar" style="border: 0px;"> </div>
+                </div>
+                <hr />
+                <div class="modal-footer text-center">
+                  <!-- <label class="text-danger" style="float: left;">&nbsp;&nbsp;<input type="checkbox" name="delete"> <i class="fa fa-trash-o"></i> Eliminar</label> --> 
+                  <!-- <button onClick="Javascript: var id = $('#id_editar').val(); window.location.href='?facturacion/idP='+id" type="button" class="btn btn-green" style="margin-left:10px;float: left;"> <i class="fa fa-print"></i> Facturar</button> -->
+                  <!--   <a data-toggle="modal" class="btn btn-green"  role="button" href="#facturar_cliente" onclick="$('#nombre').focus();"><i class="fa fa-print"></i> Facturar</a> -->
+                  <!-- <a data-toggle="modal" class="btn btn-blue"  role="button" href="#facturar-productos" onclick=""><i class="fa fa-qrcode"></i> Productos</a> -->
+                  <!-- <button onClick="#" type="button" class="btn btn-teal ladda-button" style="margin-left:10px;float: left;"> <i class="fa fa-coffee"></i> + Servicios</button> -->
+                  <!-- <button type="button" class="btn btn-primary" onClick="guardarDatos()">Modificar</button> -->
+                  <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button> -->
+                </div>
+              </form>
               </div>
-          
-              <label for="" class="col-sm-2 control-label">F. Final</label>
-              <div class="col-sm-4">
-                <input type="text" name="fecha_s_editar" required="required" class="form-control" id="fecha_s_editar" placeholder="">
-               
-              </div>
-               <label class="text-danger" style="float: left;">&nbsp;&nbsp;<input type="checkbox" name="delete"> <i class="fa fa-trash-o"></i> Eliminar</label>
-            </div>
-           <!--  <div class="form-group header-list-table col-sm-12" style="uppercase;font-weight: bold;"> 
-            <div class="row">
-              <div class="checkbox col-sm-6">
-                <label class="text-danger">&nbsp;&nbsp;<input type="checkbox" name="delete"> Eliminar Registro</label>
-              </div>
-              <div class="checkbox col-sm-6">
-                <button onClick="window.location.href='?facturacion/12'" type="button" class="btn btn-default">Facturar</button>
-              </div>
-           </div>
-          </div> -->
-          
-          <input type="hidden" name="id" class="form-control" id="id_editar">
-        
-        
-        </div>
-        <div class="modal-footer">
-        <!-- <label class="text-danger" style="float: left;">&nbsp;&nbsp;<input type="checkbox" name="delete"> <i class="fa fa-trash-o"></i> Eliminar</label> --> 
-        <button onClick="Javascript: var id = $('#id_editar').val(); window.location.href='?facturacion/idP='+id" type="button" class="btn btn-green" style="margin-left:10px;float: left;"> <i class="fa fa-print"></i> Facturar</button>
-      <!--   <a data-toggle="modal" class="btn btn-green"  role="button" href="#facturar_cliente" onclick="$('#nombre').focus();"><i class="fa fa-print"></i> Facturar</a> -->
-        <a data-toggle="modal" class="btn btn-blue"  role="button" href="#facturar-productos" onclick=""><i class="fa fa-qrcode"></i> Productos</a>
-        <a data-toggle="modal" class="btn btn-teal ladda-button"  role="button" href="#facturar-servicio" onclick=""><i class="fa fa-coffee"></i> Servicios</a>
-        <!-- <button onClick="#" type="button" class="btn btn-teal ladda-button" style="margin-left:10px;float: left;"> <i class="fa fa-coffee"></i> + Servicios</button> -->
-        <button type="button" class="btn btn-primary" onClick="guardarDatos()">Modificar</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        
-        </div>
-      </form>
+          </div>
       </div>
-      </div>
-    </div>
+  </div>
 
   <!-- </div> -->
   <!-- /.container -->
@@ -435,9 +226,6 @@
 
   <!-- FullCalendar -->
   <script src='assets/js/moment/moment.min.js'></script>
-  <!-- <script src='assets/plugins/FullCalendar/js/fullcalendar/fullcalendar.min.js'></script>
-  <script src='assets/plugins/FullCalendar/js/fullcalendar/fullcalendar.js'></script>
-  <script src='assets/plugins/FullCalendar/js/fullcalendar/locale/es.js'></script> -->
   
   <link rel='stylesheet' href='<?php echo $_ENV['FLD_ASSETS']?>/plugins/FullCalendar/demos/cupertino/jquery-ui.min.css' />
 
@@ -449,12 +237,17 @@
 
 
 <script>
+
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 $('.result-mssg').hide();
 $('#mssg-add-eventos').hide();
 $('#mssg-edit-eventos').hide();
+$('.mssg-planner').hide();
 
 
+/** 
+ * Select All clases or Perfiles
+ */
 $("#select_classes").click(function(){
   if($("#select_classes").is(':checked') ){
       $("#event_class_add > option").prop("selected","selected");
@@ -464,7 +257,6 @@ $("#select_classes").click(function(){
         $("#event_class_add").trigger("change");
   }
 });
-
 $("#select_perfiles").click(function(){
   if($("#select_perfiles").is(':checked') ){
       $("#text_event_perfil_add > option").prop("selected","selected");
@@ -474,90 +266,87 @@ $("#select_perfiles").click(function(){
         $("#text_event_perfil_add").trigger("change");
   }
 });
-$('[class*="input-tot_"]').on('change', (e)=>{
-  totalPagar ( $('#precio').val(), false )
-});
 
-// function guardarReserva () {
-//   if ($('#tipo_reserva').val() == '') {
-//     jQuery('#mssg').html('Seleccione tipo de evento');
-//     //jQuery('#mssg').focus();
-//   }
-// }
+// $('[class*="input-tot_"]').on('change', (e)=>{
+//   totalPagar ( $('#precio').val(), false )
+// });
 
-// function activarCampos () {
-
-// if( $('#habitacion').val() != '') { 
-
-//   $('#precio').removeAttr('disabled');
-//   $('#descuento').removeAttr('disabled'); 
-
-//   var precio        =   $("#precio")[0]; 
-//   var room          =   $("#habitacion").val(); 
-//   var tbl           =   '<?php echo 'rooms'; ?>';
-
-//    //mostrar('cargando'); 
-//    ajax2Z = nuevoAjax();
-//    ajax2Z.open("GET", "ajax/ajax_buscar_precio.php?hab="+room+"&tbl="+tbl,true);
-    
-//    ajax2Z.onreadystatechange = function() {
-//        if ( ajax2Z.readyState==4 ) {
-//           $("#precio").val(ajax2Z.responseText) ;
-//           totalPagar ( ajax2Z.responseText, false )
-//        }
-//    }
-//    ajax2Z.send(null);
-
-
-// } else { 
-
-//   $('#precio').attr('disabled','disabled');
-//   $('#descuento').attr('disabled','disabled'); 
-//   $('#precio').val('0');
-//   $('#descuento').val('0');
-// } 
-// }
-
-
-// function activarCamposEdit () {
-
-// if( $('#habitacion_edit').val() != '') { 
-
-//   //$('#precio_edit').removeAttr('disabled');
-//   //$('#descuento_edit').removeAttr('disabled'); 
-
-//   var precio        =   $("#precio_edit")[0]; 
-//   var price         =   $("#habitacion_edit").val(); 
-//   var tbl           =   '<?php echo $TblRooms; ?>';
-
-//    //mostrar('cargando'); 
-//    ajax2Z = nuevoAjax();
-//    ajax2Z.open("GET", "ajax/ajax_buscar_precio.php?hab="+price+"&tbl="+tbl,true);
-
-//    ajax2Z.onreadystatechange = function() {
-//        if ( ajax2Z.readyState==4 ) {
-//           $("#precio_edit").val(ajax2Z.responseText) ; 
-//        }
-//    }
-//    ajax2Z.send(null);
-
-
-// } else { 
-//   alert('No se puede hacer esta acción');
-//   return false;
-//   //$('#precio_edit').attr('disabled','disabled');
-//   //$('#descuento_edit').attr('disabled','disabled'); 
-//   $('#precio_edit').val('0');
-//   $('#descuento_edit').val('0');
-// } 
-// }
-
+/**
+ * Add
+ */
 $('#agregar_evento').on('click', ()=> {
-  let titulo  = $('#titulo_add').val();
+  let nombre    = $('#titulo_add').val();
+  let descrip   = $('#descripcion_add').val();
+  let dateI     = $('#start').val();
+  let dateF     = $('#end').val();
+  let horaI     = $('#event_add_hora_ini').val();
+  let horaF     = $('#event_add_hora_fin').val();
+  let clase     = $('#event_class_add').val();
+  let perfil    = $('#text_event_perfil_add').val();
+  let tipo_color= $('#tipo_color').val();
+  let estado    = $('#event_estado_add').val();
 
-  if (titulo == '') {
-    $('#mssg-add-eventos').show().css('color','#721c24').html('Los campos con (*) son requeridos');
+  if ( nombre == '' || dateI == '' || dateF == '') {
+    $("#mssg-add-eventos").show().css('color','#721c24').html('<h5>Los campos con (*) son necesarios</h5>');
+    $('#nombre').focus();
+    setTimeout(() => {
+        $("#mssg-add-eventos").hide();
+      }, 3000);
+    return false
   }
+
+  if (evaluarFechas(dateI, dateF) == false) {
+    $("#mssg-add-eventos").show().html('<h5>La fecha final debe ser mayor o igual a la fecha de inicio</h5>');
+    $('#nombre').focus();
+    setTimeout(() => {
+        $("#mssg-add-eventos").hide();
+      }, 4000);
+    return false
+  }
+
+  let route = "app/controllers/planning.php";
+  $.ajax({
+    url: route,
+    type: "post",
+    data: {
+      add : 1,
+      r1 : nombre,
+      r2 : clase,
+      r3 : dateI,
+      r4 : horaI,
+      r5 : dateF,
+      r6 : horaF,
+      r7 : estado,
+      r8 : descrip,
+      r9: perfil,
+      r10 : tipo_color,
+    },
+    dataType : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
+    },
+    success         : function (response) { 
+      if (response == 'ok') {
+        $("#mssg-add-eventos").removeClass('alert-danger').addClass('alert-success').css('color','#3c763d').show().html('<h5>Se ingreso el registro con éxito.</h5>');
+      } if (response == 'error') {
+        $("#mssg-add-eventos").removeClass('alert-success').addClass('alert-danger').show().html('<h5>Ya existe un registro con este mismo nombre.<h5>');
+      }
+      setTimeout(() => {
+        $("#mssg-add-eventos").hide();
+      }, 4000);
+  
+      $("#nombre_add").val('');
+      $("#event_add_date_ini").val('');
+      $("#event_add_date_fin").val('');
+      $("#descripcion_add").val('');
+      $("#event_class_add").val('').change();
+      $("#nombre_add").focus();
+    },
+    error           : function (error) {
+      console.log(error);
+    }
+  });
+
 });
 
 
@@ -578,70 +367,6 @@ let totalPagar = ( valPrice,valDescounts ) => {
   $('#total_pagar').val(result.toFixed(2));
 }
 
-// function cambiarEvento () {
-
-// jQuery('#mssg').html('');
-
-// if( $('#tipo_reserva').val() == 'R') { 
-
-//   $('.reserva').attr('id', 'title');
-//   $('.reserva').attr('name', 'title');
-//   $('.reserva').prop('required', true);
-//   $('.reserva').focus();
-
-//   $('.evento').attr('id', '');
-//   $('.evento').attr('name', '');
-//   $('.evento').prop('required', false);
-
-//   $('#email').prop('required', true);
-//   $('#habitacion').prop('required', true);
-//   $('#tot_personas').prop('required', true);
-//   $('#documento').prop('required', true);
-
-
-//   $('#div_nombre').show();
-//   $('#div_titulo').hide(); 
-
-// } 
-
-// if ( $('#tipo_reserva').val() == 'E' ) {
-
-//   $('.evento').attr('id', 'title');
-//   $('.evento').attr('name', 'title');
-//   $('.evento').prop('required', true);
-//   $('.evento').focus();
-
-//   $('.reserva').attr('id', '');
-//   $('.reserva').attr('name', '');
-//   $('.reserva').prop('required', false);
-
-//   $('#email').prop('required', false);
-//   $('#habitacion').prop('required', false);
-//   $('#tot_personas').prop('required', false);
-//   $('#documento').prop('required', false);
-
-//   $('#div_nombre').hide();
-//   $('#div_titulo').show(); 
-
-// } 
-
-// if ( $('#tipo_reserva').val() == '' ) {
-
-//   $('.evento').attr('id', '');
-//   $('.evento').attr('name', '');
-//   $('.evento').prop('required', false);
-
-//   $('.reserva').attr('id', '');
-//   $('.reserva').attr('name', '');
-//   $('.reserva').prop('required', false);
-
-//   $('#div_nombre').hide();
-//   $('#div_titulo').hide(); 
-
-//   jQuery('#mssg').html('Seleccione tipo de evento');
-// }
-
-// }
 
 // EDIT / MOdIFICAR / MOdIFIER
 function guardarDatos () {
@@ -649,16 +374,17 @@ function guardarDatos () {
 document.forms["EditDataModal"].submit();
 }
 
+
+setTimeout(()=>{
   $('.fa-refresh').trigger('click');
-  setTimeout(()=>{
-    $('.fc-button-agendaWeek').trigger('click');
-  },100);
+  //$('.fc-button-agendaWeek').trigger('click');
+},100);
 
   $(document).ready(function() {
-    var date = new Date();
-       var yyyy = date.getFullYear().toString();
-       var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
-       var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
+      let date = new Date();
+      let yyyy = date.getFullYear().toString();
+      let mm   = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+      let dd   = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
     
     jQuery('#calendar').fullCalendar({
       theme: true,
@@ -669,34 +395,39 @@ document.forms["EditDataModal"].submit();
         right: 'month,agendaWeek,agendaDay'
         //right: 'month,basicWeek,basicDay',
       },
-      initialView: 'basicWeek',
-
+      //initialView: 'month',
+      //initialView: 'basicWeek',
       //defaultDate: yyyy+"-"+mm+"-"+dd,
       editable: true,
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: true,
       selectable: true,
       selectHelper: true,
       select: function(start, end) {
-        
         $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
         $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
         $('#ModalAdd').modal('show');
       },
       eventRender: function(event, element) {
-        //element.bind('dblclick', function() {
         element.bind('click', function() {
-          // Eventos
-          if ( event.tipo == 'E') {
-            $('#ModalEdit #div_reservar_editar').hide();
-            $('#ModalEdit #id_editar').val(event.id);
-            $('#ModalEdit #title').val(event.title);
-            $('#ModalEdit #color').val(event.color);
-          // Reservas
-          } 
+          //$('#ModalEdit #div_reservar_editar').hide();
+          $('#ModalEdit #id_editar').val(event.id);
+          $('#ModalEdit #titulo-del-evento').html(event.title);
+          $('#ModalEdit #color').val(event.color);
+
+          let hora1 = event.hora_inicio.split('T');
+          let hora2 = event.hora_final.split('T');
           
-            $('#ModalEdit #tipo_reserva_edit').val(event.tipo);
-            $('#ModalEdit #fecha_e_editar').val(moment(event.start).format('YYYY-MM-DD'));
-            $('#ModalEdit #fecha_s_editar').val(moment(event.end).format('YYYY-MM-DD'));
+          $('#ModalEdit #tipo_reserva_edit').val(event.tipo);
+          $('#ModalEdit #fecha_desde_editar').val(moment(event.start).format('YYYY-MM-DD'));
+          $('#ModalEdit #fecha_hasta_editar').val(moment(event.end).format('YYYY-MM-DD'));
+          $('#ModalEdit #hora_inicio_editar').val(hora1[1]);
+          $('#ModalEdit #hora_final_editar').val(hora2[1]);
+
+          if (event.descripcion!='') {
+            $('#ModalEdit #descripcion_editar').val(event.descripcion);
+          } else {
+            $('#ModalEdit #descripcion_editar').val('- - - - -');
+          }
 
           $('#ModalEdit').modal('show');
         });
@@ -714,56 +445,38 @@ document.forms["EditDataModal"].submit();
       dayMaxEvents: true, // allow "more" link when too many events
       events: [
       <?php 
-      //if ($event!=null) :
-      
       foreach($events as $event):
-        // $start  = explode(" ", $event['fecha_e']);
-        // $end    = explode(" ", $event['fecha_s']);
-        // $price  = '';//$event['price'];
-        // $apellido  = '';//$event['last_name'];
-
-        // if($start[1] == '00:00:00'){
-        //   $start = $start[0];
-        // }else{
-        //   $start = $event['start'];
-        // }
-        // if($end[1] == '00:00:00'){
-        //   $end = $end[0];
-        // }else{
-        //   $end = $event['end'];
-        // }
       ?> 
         { 
         // Aqui muestro en el calendario y los muestro
         // en los campos al querer editar la info.
         // ********************************************
-          id: '<?php echo $event['id']; ?>',
-          title: '<?php echo $event['title']; ?>',
-          email: '<?php echo $event['email']; ?>',
-          start: '<?php echo $event['fecha_e'].$event['start']; ?>',
-          end: '<?php echo $event['fecha_s'].$event['end']; ?>',
-          tipo: 'E',//'<?php echo $event['tipo']?>',
-          //start: '<?php echo $start; ?>',
-          //end: '<?php echo $end; ?>',
-          color: '<?php echo $event['color']; ?>',
+          id:     '<?php echo $event['id']; ?>',
+          title:  '<?php echo $event['name']; ?>',
+          start:  '<?php echo $event['date_start'].$event['time_start']; ?>',
+          end:    '<?php echo $event['date_end'].$event['time_end']; ?>',
+          hora_inicio:  '<?php echo $event['time_start']?>',
+          hora_final:   '<?php echo $event['time_end']?>',
+          descripcion:  '<?php echo $event['description']; ?>',
+          color:  '<?php echo $event['tipo_color']; ?>',
+          allDay: false,
         },
-      <?php endforeach; 
-      //endif; ?>
-      {
-          title: 'Long Event',
-          start: '2025-05-07T05:00:00',
-          end: '2025-05-10T05:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2025-05-11T05:00:00',
-          end: '2025-05-12T06:00:00'
-        },
+      <?php endforeach;?>
+      // Examples
+      // {
+      //     title: 'Long Event',
+      //     start: '2025-05-07T05:00:00',
+      //     end: '2025-05-10T05:00:00'
+      //   },
+      //   {
+      //     title: 'Conference',
+      //     start: '2025-05-15T08:00:00',
+      //     end: '2025-05-12T10:00:00'
+      //   },
       ]
     });
     
     function edit(event){
-      console.log(event)
       //$('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
       //$('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
       start = moment(event.start).format('YYYY-MM-DD HH:mm:ss');
@@ -781,35 +494,40 @@ document.forms["EditDataModal"].submit();
       Event[2] = end;
       
       $.ajax({
-       url: 'ajax/editEventDate.php',
+       url: 'app/controllers/planning.php',
        type: "POST",
        data: {Event:Event},
        success: function(rep) {
         
           if(rep == 'OK'){
-            alert('El Evento se ha guardado correctamente');
+            $('.mssg-planner').show().removeClass('alert-danger').addClass('alert-success').html('<h4>El evento se ha actualizado correctamente.</h4>'); 
+            setTimeout(()=>{ 
+              $('.mssg-planner').hide('slow');
+              $('.fa-refresh').trigger('click'); 
+            },3000);
+            
+            goToTopPage();
+
           }else{
-            alert('No se pudo guardar. Inténtalo de nuevo.'); 
+            $('.mssg-planner').show().removeClass('alert-success').addClass('alert-danger').html('<h4>No se ha podido actualizado el evento.</h4>');
+            setTimeout(()=>{ $('.mssg-planner').hide('slow'); window.location.reload() },3000);
           }
         }
       });
     }
     
   });
-
-// DATE PICKER
-
+/** 
+ * Datepicker
+ */
 //Pass the user selected date format
 // $( "#fecha_e_editar" ).datepicker();
 // $( "#fecha_e_editar" ).datepicker("option", "dateFormat","yy-mm-dd");
-
-
 // $( "#fecha_s_editar" ).datepicker();
 // $( "#fecha_s_editar" ).datepicker("option", "dateFormat","yy-mm-dd");
 
 $("#tipo_evento").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#habitacion").select2({ width: '100%', dropdownCssClass: "bigdrop" });
-
 $("#nacionalidad").select2({ width: '100%', dropdownCssClass: "bigdrop" });
 $("#event_estado_add").select2({ width: '100%', dropdownCssClass: "bigdrop" });
 $("[name='tipo_color']").select2({ width: '100%', dropdownCssClass: "bigdrop"});

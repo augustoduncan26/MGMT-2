@@ -162,18 +162,12 @@
 <!-- End Edit Events -->
 
 
-<!-- Modal Add Room -->
-<?php //get_view_part ( 'modificar-habitacion' )?>
-<!-- En Add Room -->
-
 <!-- Add Modal -->
   <div class="modal fade" id="formulario_nuevo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-          </button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
           <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Agregar Perfil</h3>
           <label id="mssg-label"></label>
         </div>
@@ -248,6 +242,7 @@ $('.result-mssg').hide();
 $('#mssg-edt-alert').hide();
 $('#mssg-add-alert').hide();
 $('#cargando_add').hide()
+$('#mssg-label-edit-perm').hide();
 
 // Add
 function addPerfil () {

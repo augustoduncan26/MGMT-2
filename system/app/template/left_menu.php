@@ -38,7 +38,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		//dump($objPermOpc->getRolPermissions($id_rol));
 			if(in_array('850', $objPermOpc->getRolPermissions($id_rol))) { 
 		?>
-		<li class="list_item tooltips" id="Estadisticas" data-original-title="Gráficos Estadísticos" data-placement="right" title="Estadisticas">
+		<li <?php if(GET()[0] == 'Estadisticas'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> id="Estadisticas" data-original-title="Gráficos Estadísticos" data-placement="right" title="Estadisticas">
 		<a href="?Estadisticas" class="nav__link">
 			<div class="list__button">
 				<i class="clip-stats"></i>
@@ -54,7 +54,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			//if ($objPermOpc->tienePermiso(50)) {
 			if(in_array('50', $objPermOpc->getRolPermissions($id_rol))) { 
 		?>
-		<li class="list_item tooltips" data-original-title="Admin. Eventos" data-placement="right" title="Adminstrar Eventos">
+		<li <?php if(GET()[0] == 'Eventos'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Admin. Eventos" data-placement="right" title="Adminstrar Eventos">
 			<a href="?Eventos" class="nav__link">
 			<div class="list__button">
 				<i class="clip-calendar"></i>
@@ -67,7 +67,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Teachers -->
 		<?PHP if(in_array('100', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Lista de Profesores" data-placement="right" title="Lista de Profesores">
+			<li <?php if(GET()[0] == 'Profesores'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Profesores" data-placement="right" title="Lista de Profesores">
 			<a href="?Profesores" class="nav__link">
 			<div class="list__button">
 				<img src="assets/images/teacher.png" class="icon-teachers" />
@@ -78,7 +78,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 		<!-- Cronograma Profesores -->
 		<?PHP if(in_array('350', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Agenda Profesores" data-placement="right" title="Agenda Profesores">
+			<li <?php if(GET()[0] == 'Schedule-teachers'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Agenda Profesores" data-placement="right" title="Agenda Profesores">
 			<a href="?Schedule-teachers" class="nav__link">
 			<div class="list__button">
 				<i class="clip-calendar"></i>

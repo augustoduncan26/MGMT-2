@@ -3,6 +3,7 @@
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
+$objPermOpc = new permisos();
 $id_rol     = $_SESSION["id_rol"];
 $id_user    = $_SESSION["id_user"];
 $id_cia 	= $_SESSION['id_cia'];
@@ -29,6 +30,7 @@ $selectEventos = $ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_cia = '.$id_c
 if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_cia="'.$id_cia.'" and name = "'.$_POST['r1'].'"','array');
 	if ($_POST['r2'] =='') { $_POST['r2'] = 0;}
+	if ($_POST['r9'] =='') { $_POST['r9'] = 0;}
 	if ($_POST['r4'] =='') { $_POST['r4'] = '00:00';}
 	if ($_POST['r6'] =='') { $_POST['r6'] = '00:00';}
 
@@ -55,8 +57,8 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 				$perfilArr		.=	 $value;
 			}
 		}
-		$P_Campos 	=	'id_cia,name,class,date_start,time_start,date_end,time_end,class_id,perfil_id,description,tipo_color,created_at,activo';
-		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$_POST['r2']."','".$_POST['r3']."','T".$_POST['r4'].":00','".$_POST['r5']."','T".$_POST['r6'].":00','".$classArr."','".$perfilArr."','".$_POST['r8']."','".$_POST['r10']."',NOW(),'".$_POST['r7']."'";
+		$P_Campos 	=	'id_cia,name,date_start,time_start,date_end,time_end,class_id,perfil_id,description,tipo_color,created_at,activo';
+		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$_POST['r3']."','T".$_POST['r4']."','".$_POST['r5']."','T".$_POST['r6']."','".$classArr."','".$perfilArr."','".$_POST['r8']."','".$_POST['r10']."',NOW(),'".$_POST['r7']."'";
 		$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
 		echo "ok";
 	}
@@ -100,8 +102,8 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_end']?></td>
 			<td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
 			<td class="text-center" style="width:10% !important;">
-			<a class="btn btn-xs btn-teal tooltips" title="Editar este registro" data-original-title="Ver Detalle" data-toggle="modal" role="button" data-target="#form_edit_event" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
-			<a class="btn btn-xs btn-bricky tooltips" title="Eliminar este registro" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+			<?php if(in_array('52', $objPermOpc->getRolPermissions($id_rol))) { ?><a class="btn btn-xs btn-teal tooltips" title="Editar este registro" data-original-title="Ver Detalle" data-toggle="modal" role="button" data-target="#form_edit_event" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a><?php } ?>
+			<?php if(in_array('53', $objPermOpc->getRolPermissions($id_rol))) { ?><a class="btn btn-xs btn-bricky tooltips" title="Eliminar este registro" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a><?php } ?>
 			</td>
 		</tr>
 	<?php
@@ -147,8 +149,9 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
 		}
 	}
 
-	$P_Valores = "name = '".$_POST['r1']."', date_start='".$_POST['r3']."', time_start='T".$_POST['r4'].":00', date_end='".$_POST['r5']."', time_end='T".$_POST['r6'].":00', activo = '".$_POST['r8']."', class_id='".$classArr."', perfil_id='".$perfilArr."', tipo_color='".$_POST['r10']."', description = '".$_POST['r2']."'";
+	$P_Valores = "name = '".$_POST['r1']."', date_start='".$_POST['r3']."', time_start='T".$_POST['r4']."', date_end='".$_POST['r5']."', time_end='T".$_POST['r6']."', activo = '".$_POST['r8']."', class_id='".$classArr."', perfil_id='".$perfilArr."', tipo_color='".$_POST['r10']."', description = '".$_POST['r2']."'";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['r_r'].'"');
+	//var_dump($l);
 	if($l == 1){
 		echo 'ok';
 	} else {

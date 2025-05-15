@@ -5,7 +5,7 @@ function goToTopPage () {
   $("html, body").animate({
     scrollTop: 0
   }, "slow");
-  e.preventDefault();
+  //e.preventDefault();
 }
 function mostrar ( blo ) {
 	//$('#'+ blo).show();
@@ -48,6 +48,33 @@ const validate = (resultInput, emailInput) => {
   }
   return false;
 }
+
+// const validateSignUpEmail = (email) => {
+//   let route = "login.php";
+//   $.ajax({
+//       headers: {
+//           Accept        : "application/json; charset=utf-8",
+//           "Content-Type": "application/json: charset=utf-8"
+//       },
+//       url: route,
+//       type: "GET",
+//       data: {
+//           showEdit  : 1,
+//           r1        : email,
+//           check     : 'check'
+//       },
+//       dataType        : 'json',
+//       success         : function (response) {
+//           if (response['result']==1) {
+//               return false;
+//           }
+//       },
+//       error           : function (error) {
+//           console.log(error);
+//           return false;
+//       }
+//   });
+// }
 // End: Validate Email
 
 function selectUseLike ( id ) {

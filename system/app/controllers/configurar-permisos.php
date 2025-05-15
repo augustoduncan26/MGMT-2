@@ -6,9 +6,9 @@ $ObjEjec    = new ejecutorSQL();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $whr 		= 'id_cia='.$id_cia;
+
 /** Listar Permisos */
-$listPermisos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',$whr,'array','nombre,permiso');
-//'id_cia='.$id_cia
+$listPermisos 		= $ObjMante->BuscarLoQueSea('*',PREFIX.'permiso_definicion',$whr,'array','permiso');
 
 // Select al Permissions
 if (isset($_GET['all']) && $_GET['all'] == 1) {

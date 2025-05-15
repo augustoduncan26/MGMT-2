@@ -2,13 +2,24 @@
 
 	require_once( dirname(__FILE__) . '/functions.php' ); 
 	require_once( dirname(__FILE__) . '/framework.php' );
-	
-	get_template_part ( 'header' );
 
 	$ObjMante   = 	new Mantenimientos();
 	$ObjEjec    = 	new ejecutorSQL();
 	$objCons	=	new consultor();
 
+	if (isset($_GET['check']) && $_GET['r1']!='') {
+		$exito['result'] 	= 0;
+		$where 				= 'usuario = "'.$_GET['r1'].'"';
+		$selQ       		= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios',$where,'extract');
+		if ($selQ['usuario']) {
+			$exito['result']= 1;
+		}
+		// echo json_encode($exito);
+		echo $exito['result'];
+		exit;
+	}
+	
+	get_template_part ( 'header' );
 	/** 
 	* Sign Up User
 	*/
@@ -261,8 +272,8 @@
 						</div>
 						<div class="form-group">
 							<div>
-								<label for="agree" class="checkbox-inline">
-									<input type="checkbox" class="grey agree" id="agree" name="agree" checked>
+								<label for="agree_check" class="checkbox-inline">
+									<input type="checkbox" class="grey agree" id="agree_check" name="agree" checked>
 									Acepto los terminos y servicios de privacidad.
 								</label>
 							</div>

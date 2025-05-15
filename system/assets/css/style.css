@@ -72,6 +72,7 @@
 .bg-color-skies-transp { --tw-bg-opacity: 1;background-color: rgb(237 249 253 / var(--tw-bg-opacity)); padding: 3px; }
 .bg-color-yellow-transp { --tw-bg-opacity: 1;background-color: rgb(254 252 232 / var(--tw-bg-opacity)); padding: 3px;}
 .bg-color-purple-transp { --tw-bg-opacity: 1;background-color: rgb(241 240 255 / var(--tw-bg-opacity)); padding: 3px;}
+.bg-color-gray-normal { background-color: #f0f0f0;}
 /* .bg-color-skies-transp { --tw-bg-opacity: 1;background-color: rgb(237 249 253 / var(--tw-bg-opacity)); padding: 3px;} */
 
 /** Cursors */

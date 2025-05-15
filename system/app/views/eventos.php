@@ -51,7 +51,7 @@
       </h4> 
       </div>
       <div class="col-md-5 text-right">
-        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
+        <?php if(in_array('51', $objPermOpc->getRolPermissions($id_rol))) { ?><a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a><?php } ?>
         <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
         <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
       </div>
@@ -119,8 +119,8 @@
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['time_end']?></td>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
                   <td class="text-center" style="width:10% !important;">
-                  <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver - Editar" data-toggle="modal" data-target="#form_edit_event" role="button" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
-                  <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
+                  <?php if(in_array('52', $objPermOpc->getRolPermissions($id_rol))) { ?><a class="btn btn-xs btn-teal tooltips" data-original-title="Ver - Editar" data-toggle="modal" data-target="#form_edit_event" role="button" href="#" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a><?php } ?>
+                  <?php if(in_array('53', $objPermOpc->getRolPermissions($id_rol))) { ?><a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a><?php } ?>
                   </td>
                   </tr>
               <?php
@@ -159,16 +159,16 @@
                </thead>
                <tbody>
                  <tr>
-                    <td width="15%">Nombre <span class="symbol required"></span>
+                    <td width="15%">Título <span class="symbol required"></span>
                     </td>
                     <td width="35%">
-                      <input maxlength="40" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Nombre">
-                      <small class="color-gray">Nombre descriptivo para el evento. </small>
+                      <input maxlength="40" name="nombre_add" type="text" class="form-control" id="nombre_add" placeholder="Título del evento">
+                      <small class="color-gray">Título del evento. </small>
                     </td>
-                    <td width="15%">Detalle</td>
+                    <td width="15%">Descripción</td>
                     <td width="35%">
                       <input maxlength="100" name="descripcion_add" type="text" class="form-control" id="descripcion_add" placeholder="Descripción">
-                      <small class="color-gray">Detalle sobre el evento. </small>
+                      <small class="color-gray">Descripción sobre el evento. </small>
                     </td>
                   </tr>
                   <tr>
@@ -203,7 +203,6 @@
                  <td width="15%">Clase </td>
                    <td width="35%">
                     <select name="event_class_add" id="event_class_add" multiple>
-                        <option></option>
                         <?php 
                           if ($selectClases['resultado']) {
                             foreach ($selectClases['resultado'] as $key => $value) {
@@ -212,12 +211,12 @@
                           }
                         ?>
                     </select>
-                    <small class="color-gray">Clase(s) que puedan ver este evento. </small>
+                    <lable class="color-gray">Seleccionar todos <input type="checkbox" id="select_classes" /> </lable>
+                    <!-- <small class="color-gray">Clase(s) que puedan ver este evento. </small> -->
                    </td>
                    <td width="15%">Perfil</td>
                  <td width="35%">
                     <select name="event_perfil_add[]" id="text_event_perfil_add" multiple>
-                        <option></option>
                         <?php 
                           if ($selectPerfiles['resultado']) {
                             foreach ($selectPerfiles['resultado'] as $key => $value) {
@@ -226,7 +225,8 @@
                           }
                         ?>
                     </select>
-                    <small class="color-gray">Perfil(es) que puedan ver este evento. </small>
+                    <!-- <small class="color-gray">Perfil(es) que puedan ver este evento. </small> -->
+                    <label class="color-gray">Seleccionar todos <input type="checkbox" id="select_perfiles" /> </label>
                    </td>
                  </tr>
                  <tr>
@@ -285,15 +285,15 @@
           <tbody>
           <div class="alert alert-danger" id="mssg-edit-eventos"><h5>Todos los campos son necesarios</h5></div>
             <tr>
-              <td width="15%">Nombre <span class="symbol required"></span</td>
+              <td width="15%">Título <span class="symbol required"></span</td>
               <td width="35%">
-                <input maxlength="40" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Nombre">
-                <small class="color-gray">Nombre descriptivo para el evento. </small>
+                <input maxlength="40" name="nombre_edit" type="text" class="form-control" id="nombre_edit" placeholder="Título del evento">
+                <small class="color-gray">Título del evento. </small>
               <input name="id_row" type="hidden" class="form-control" id="id_row" placeholder="Nombre"></td>
               <td width="15%">Descripción</td>
               <td width="35%">
                 <input maxlength="100" name="descripcion_edit" type="text" class="form-control" id="descripcion_edit" placeholder="Descripción">
-                <small class="color-gray">Detalle sobre el evento. </small>
+                <small class="color-gray">Descripción sobre el evento. </small>
               </td>
             </tr>
             <tr>
@@ -320,7 +320,6 @@
             <td width="15%">Clase </td>
               <td width="35%">
               <select name="event_class_edit" id="txt_event_class_edit" class="" multiple>
-                <option value="">seleccionar</option>
                   <?php 
                     if ($selectClases['resultado']) {
                       foreach ($selectClases['resultado'] as $key => $value) {
@@ -329,12 +328,11 @@
                     }
                   ?>
               </select>
-              <small class="color-gray">Clase(s) que puedan ver este evento. </small>
+              <label class="color-gray">Seleccionar todos <input type="checkbox" id="select_classes_edit" /> </label>
               </td>
               <td width="15%">Perfil</td>
                  <td width="35%">
                     <select name="event_perfil_edit[]" id="text_event_perfil_edit" multiple>
-                        <option></option>
                         <?php 
                           if ($selectPerfiles['resultado']) {
                             foreach ($selectPerfiles['resultado'] as $key => $value) {
@@ -343,7 +341,7 @@
                           }
                         ?>
                     </select>
-                    <small class="color-gray">Perfil(es) que puedan ver este evento. </small>
+                    <label class="color-gray">Seleccionar todos <input type="checkbox" id="select_perfiles_edit" /> </label>
                    </td>
             </tr>
             <tr>
@@ -465,11 +463,51 @@ var runNavigationToggler = function () {
 };
 runNavigationToggler();
 
+/** 
+ * Select All clases or Perfiles
+ */
+$("#select_classes").click(function(){
+  if($("#select_classes").is(':checked') ){
+      $("#event_class_add > option").prop("selected","selected");
+      $("#event_class_add").trigger("change");
+  }else{
+      $("#event_class_add > option").removeAttr("selected");
+        $("#event_class_add").trigger("change");
+  }
+});
+$("#select_perfiles").click(function(){
+  if($("#select_perfiles").is(':checked') ){
+      $("#text_event_perfil_add > option").prop("selected","selected");
+      $("#text_event_perfil_add").trigger("change");
+  }else{
+      $("#text_event_perfil_add > option").removeAttr("selected");
+      $("#text_event_perfil_add").trigger("change");
+  }
+});
+$("#select_classes_edit").click(function(){
+  if($("#select_classes_edit").is(':checked') ){
+      $("#txt_event_class_edit > option").prop("selected","selected");
+      $("#txt_event_class_edit").trigger("change");
+  }else{
+      $("#txt_event_class_edit > option").removeAttr("selected");
+      $("#txt_event_class_edit").trigger("change");
+  }
+});
+$("#select_perfiles_edit").click(function(){
+  if($("#select_perfiles_edit").is(':checked') ){
+      $("#text_event_perfil_edit > option").prop("selected","selected");
+      $("#text_event_perfil_edit").trigger("change");
+  }else{
+      $("#text_event_perfil_edit > option").removeAttr("selected");
+        $("#text_event_perfil_edit").trigger("change");
+  }
+});
 
 /** 
  * Add
  */
-function addEvent () {
+//function addEvent () {
+$('#agregar_evento').on('click', ()=> {
   var nombre      = $('#nombre_add').val();
   var clase       = $('#event_class_add').val();
   var dateI       = $('#event_add_date_ini').val();
@@ -543,7 +581,7 @@ function addEvent () {
       console.log(error);
     }
   });
-}
+});
 
 /**
  * Open Edit Modal
@@ -569,14 +607,18 @@ function editRow ( id ) {
     },
     dataType        : 'json',
     success         : function (response) {
+
+      let hora1 = response['time_start'].split('T');
+      let hora2 = response['time_end'].split('T');
+
       $("#text_event_perfil_edit").trigger('change');
       $('#id_row').val(response['id']);
       $('#nombre_edit').val(response['name']);
       $('#descripcion_edit').val(response['description']);
       $('#event_edit_date_ini').val(response['date_start']);
-      $('#event_edit_hora_ini').val(response['time_start']);
+      $('#event_edit_hora_ini').val(hora1[1]);
       $('#event_edit_date_fin').val(response['date_end']);
-      $('#event_edit_hora_fin').val(response['time_end']);
+      $('#event_edit_hora_fin').val(hora2[1]);
       $('#event_estado_edit').select2('val',response['activo']);
       $('#event_class_edit').select2('val',response['class_id']);
       //$('#tipo_color_edit').select2('val', response['tipo_color']).change();
