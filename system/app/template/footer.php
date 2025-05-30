@@ -1,3 +1,20 @@
+<!-- -->
+ <!-- Assistant -->
+<div class="modal fade  come-from-modal right" id="myViewEvents" role="dialog" aria-labelledby="myViewEvents">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Asistente</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+    
     <div id="like_button_container"></div>
     <!-- start: FOOTER -->
         <div class="footer clearfix">

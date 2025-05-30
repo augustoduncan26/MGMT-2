@@ -1,9 +1,9 @@
 <?php
-	header("Content-Type: text/html;charset=utf-8");
-	include_once('../ad_config/ad_config.php');
-	include_once('../ad_libreria/fecha.php');
+	//header("Content-Type: text/html;charset=utf-8");
+	//include_once('../ad_config/ad_config.php');
+	//include_once('../ad_libreria/fecha.php');
 	//include_once('ad_Reemplazar_letras.inc.php');
-	include_once('../ad_funciones_php/ad_functions.php');
+	//include_once('../ad_funciones_php/ad_functions.php');
 ?>
 
 <?php

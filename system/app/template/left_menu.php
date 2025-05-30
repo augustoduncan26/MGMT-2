@@ -1,5 +1,4 @@
 <?php 
-
 $objPermOpc 	= new permisos();
 $active			= "style='background-color: #C8C7CC4D;'";
 $activeOpen		= "class = 'active open'";
@@ -28,14 +27,12 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-home-3"></i>
 				<span class="title">Home</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 		</a>
 		</li>
 
 		<!-- Estadisticas -->
 		<?php 
-		//dump($objPermOpc->getRolPermissions($id_rol));
 			if(in_array('850', $objPermOpc->getRolPermissions($id_rol))) { 
 		?>
 		<li <?php if(GET()[0] == 'Estadisticas'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> id="Estadisticas" data-original-title="Gráficos Estadísticos" data-placement="right" title="Estadisticas">
@@ -43,7 +40,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-stats"></i>
 				<span class="title" >Estadisticas</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 		</a>
 		</li>
@@ -51,7 +47,6 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Events -->
 		<?php 
-			//if ($objPermOpc->tienePermiso(50)) {
 			if(in_array('50', $objPermOpc->getRolPermissions($id_rol))) { 
 		?>
 		<li <?php if(GET()[0] == 'Eventos'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Admin. Eventos" data-placement="right" title="Adminstrar Eventos">
@@ -59,7 +54,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-calendar"></i>
 				<span class="title">Eventos</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -76,13 +70,14 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
+
 		<!-- Cronograma Profesores -->
 		<?PHP if(in_array('350', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li <?php if(GET()[0] == 'Schedule-teachers'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Agenda Profesores" data-placement="right" title="Agenda Profesores">
 			<a href="?Schedule-teachers" class="nav__link">
 			<div class="list__button">
 				<i class="clip-calendar"></i>
-				<span class="title">Agenda Profesores</span>
+				<span class="title">Agenda Profesor</span>
 			</div>
 			</a>
 		</li>
@@ -90,7 +85,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Students / Estudiantes-->
 		<?PHP if(in_array('150', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Lista de Estudiantes" data-placement="right" title="Lista de Estudiantes">
+			<li <?php if(GET()[0] == 'Estudiantes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Estudiantes" data-placement="right" title="Lista de Estudiantes">
 			<a href="?Estudiantes" class="nav__link">
 			<div class="list__button">
 				<i class="clip-users-2"></i>
@@ -102,11 +97,11 @@ $id_cia     	= $_SESSION['id_cia'];
 		<?php } ?>
 		<!-- Cronograma Estudiantes -->
 		<?PHP if(in_array('351', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Agenda Estudiantes" data-placement="right" title="Agenda Estudiantes">
+			<li <?php if(GET()[0] == 'Schedule-students'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Agenda Estudiantes" data-placement="right" title="Agenda Estudiantes">
 			<a href="?Schedule-students" class="nav__link">
 			<div class="list__button">
 				<i class="clip-calendar"></i>
-				<span class="title">Agenda Estudiantes</span>
+				<span class="title">Agenda Estudiante</span>
 			</div>
 			</a>
 		</li>
@@ -114,7 +109,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Parents / Padres-->
 		<?PHP if(in_array('200', $objPermOpc->getRolPermissions($id_rol))) {  ?>
-			<li class="list_item tooltips" data-original-title="Lista de Padres" data-placement="top" title="Lista de Padres">
+			<li <?php if(GET()[0] == 'Padres'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Padres" data-placement="top" title="Lista de Padres">
 			<a href="?Padres" class="nav__link">
 			<div class="list__button">
 				<i class="fa fa-group"></i>
@@ -127,7 +122,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Subjects / Materias-->
 		<?PHP if(in_array('250', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Asignaturas" data-placement="right" title="Asignaturas-Materias">
+			<li <?php if(GET()[0] == 'Asignaturas'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Asignaturas" data-placement="right" title="Asignaturas-Materias">
 			<a href="?Asignaturas" class="nav__link">
 			<div class="list__button">
 				<i class="fa fa-indent"></i>
@@ -140,7 +135,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Classes -->
 		<?PHP if(in_array('300', $objPermOpc->getRolPermissions($id_rol))) {  ?>
-			<li class="list_item tooltips" data-original-title="Listado de Clases" data-placement="top" title="Lista de Clases">
+			<li <?php if(GET()[0] == 'Clases'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Listado de Clases" data-placement="top" title="Lista de Clases">
 			<a href="?Clases" class="nav__link">
 			<div class="list__button">
 				<i class="clip-list-2"></i>
@@ -154,7 +149,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Exams -->
 		<?PHP if(in_array('400', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Lista de Examenes" data-placement="top" title="Lista de Examentes">
+			<li <?php if(GET()[0] == 'Examenes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Examenes" data-placement="top" title="Lista de Examentes">
 			<a href="?Examenes" class="nav__link">
 			<div class="list__button">
 				<i class="clip-calendar-3"></i>
@@ -167,7 +162,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Assignments / Tareas -->
 		<?PHP if(in_array('450', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Lista de Tareas" data-placement="top" title="Lista de Tareas">
+			<li <?php if(GET()[0] == 'Tareas'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Tareas" data-placement="top" title="Lista de Tareas">
 			<a href="?Tareas" class="nav__link">
 			<div class="list__button">
 				<i class="fa fa-tasks"></i>
@@ -180,7 +175,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Results -->
 		<?PHP if(in_array('500', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Resultados" data-placement="right" title="Resultados">
+			<li <?php if(GET()[0] == 'Resultados'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Resultados" data-placement="right" title="Resultados">
 			<a href="?Resultados" class="nav__link">
 			<div class="list__button">
 				<i class="clip-list-2"></i>
@@ -193,7 +188,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Attendance / % de Asistencia -->
 		<?PHP if(in_array('550', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Asistencias" data-placement="right" title="Asistencias">
+			<li <?php if(GET()[0] == 'Asistencias'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Asistencias" data-placement="right" title="Asistencias">
 			<a href="?Asistencias" class="nav__link">
 			<div class="list__button">
 				<i class="clip-checkbox"></i>
@@ -206,7 +201,7 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Messages -->
 		<?PHP if(in_array('600', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item tooltips" data-original-title="Mensajes" data-placement="right" title="Mensajes">
+			<li <?php if(GET()[0] == 'Mensajes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Mensajes" data-placement="right" title="Mensajes">
 			<a href="?Mensajes" class="nav__link">
 			<div class="list__button">
 				<i class="clip-bubble-dots-2"></i>
@@ -234,7 +229,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<li class="list_item list__item--click tooltips" data-original-title="Planning" data-placement="right" title="Planning" <?php if (strpos(GET()[0],'planning')!==false) { echo  'class = "active open"'; }?>>
 			<div class="list__button list__button--click">
 			<a href="javascript:void(0)" class="nav__link"><i class="clip-calendar"></i>
-				<span class="title" >&nbsp;&nbsp;Planning</span>
+				<span class="title" >&nbsp;&nbsp;Planner</span>
 				<i class="fa icon-arrow"></i>
 				<span class="selected"></span>
 			</a>
@@ -244,41 +239,22 @@ $id_cia     	= $_SESSION['id_cia'];
 			<ul class="list__show">
 				<li <?php if(GET()[0] == 'planning'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?planning" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Planning </span>
+						<i class="clip-calendar"></i><span class="title"> Planner </span>
 					</a>
 				</li>
 
-				<li <?php if(GET()[0] == 'planning-bookers'){ echo ' class="menu-backg-item"';}?>>
+				<!-- <li <?php if(GET()[0] == 'planning-bookers'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?planning-bookers" class="nav__link nav__link--inside">
 						<i class="clip-calendar"></i><span class="title"> Agencias / Bookers </span>
 					</a>
-				</li>
+				</li> -->
 
-				<li <?php if(GET()[0] == 'planning-clientes'){ echo ' class="menu-backg-item"';}?>>
+				<!-- <li <?php if(GET()[0] == 'planning-clientes'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?planning-clientes" class="nav__link nav__link--inside">
 						<i class="clip-calendar"></i><span class="title"> Clientes </span>
 					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'planning-servicios'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?planning-servicios" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Servicios </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'planning-entradas'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?planning-entradas" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Entradas(Check-In) </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'planning-salidas'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?planning-salidas" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Salidas(Check-Out) </span>
-					</a>
-				</li>
+				</li> -->
 			</ul>
-
 		</li>
 		<?php } ?>
 		<!-- End Planning -->

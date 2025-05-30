@@ -74,7 +74,9 @@
             window.location.reload();
         });
 
-        
+        // function reedNotifications () {
+        //     alert()
+        // }
         </script>
 
 <!-- <script src="components/like_buton.js"></script> -->

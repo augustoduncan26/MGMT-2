@@ -22,7 +22,7 @@
               <!-- start: FULL CALENDAR PANEL -->
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <i class="fa fa-calendar"></i>Planners
+                  <i class="fa fa-calendar"></i>Profesor: <?=$_SESSION['username']?>
                   <div class="panel-tools">
                     <a class="btn btn-xs btn-link panel-refresh" href="#">
                       <i class="fa fa-refresh"></i>
@@ -398,9 +398,9 @@ setTimeout(()=>{
       //initialView: 'month',
       //initialView: 'basicWeek',
       //defaultDate: yyyy+"-"+mm+"-"+dd,
-      editable: true,
+      editable: false,
       eventLimit: true,
-      selectable: true,
+      selectable: false,
       selectHelper: true,
       select: function(start, end) {
         $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));

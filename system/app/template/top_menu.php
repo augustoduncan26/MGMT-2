@@ -1,3 +1,4 @@
+<?php $objPermOpc 	= new permisos();$id_rol= $_SESSION['id_rol'];?>
 <div class="navbar navbar-inverse navbar-fixed-top">
       <!-- start: TOP NAVIGATION CONTAINER -->
       <div class="container" ><!-- style="background-color: #f05f40e6;" -->
@@ -134,30 +135,16 @@
               </a>
               <ul class="dropdown-menu notifications">
                 <li>
-                  <span class="dropdown-menu-title"> Existen <span id="total-eventos-b">0</span> notificación(es)</span>
+                  <span class="dropdown-menu-title"> Existen <span id="total-eventos-text">0</span> notificación(es)</span>
                 </li>
                 <li>
-                  <div class="drop-down-wrapper" id="drop-down-notifications">
-                    <!-- <ul>
-                      <?php 
-                        foreach ($r['result'] as $key => $value) {
-                      ?>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span class="label label-success"><i class="fa fa-comment"></i></span>
-                          <span class="message"> <?=$value['name']?></span>
-                          <! -- <span class="time"> 1 min</span> -- >
-                        </a>
-                      </li>
-                      <?php
-                        }
-                      ?>
-                    </ul> -->
-                  </div>
+                  <div class="drop-down-wrapper" id="drop-down-notifications"></div>
                 </li>
                 <li class="view-all">
                   <a href="?Eventos">
+                  <?php if(in_array('801', $objPermOpc->getRolPermissions($id_rol))) {   ?>
                     Ver todoas las notificaciones <i class="fa fa-arrow-circle-o-right"></i>
+                  <?php } ?>
                   </a>
                 </li>
               </ul>
@@ -165,7 +152,7 @@
             <!-- end: NOTIFICATION DROPDOWN -->
 
             <!-- start: MESSAGE DROPDOWN -->
-             <li class="dropdown">
+             <!-- <li class="dropdown">
               <a class="dropdown-toggle" data-close-others="true" data-hover="dropdown" data-toggle="dropdown" href="#">
                 <i class="clip-bubble-3"></i>
                 <span class="badge"> 9</span>
@@ -251,12 +238,12 @@
                   </div>
                 </li>
                 <li class="view-all">
-                  <a href="#"><!-- pages_messages.html -->
+                  <a href="#">< !-- pages_messages.html -- >
                     Todos los mensajes <i class="fa fa-arrow-circle-o-right"></i>
                   </a>
                 </li>
               </ul>
-            </li> 
+            </li>  -->
             <!-- end: MESSAGE DROPDOWN -->
             <?php /**/ ?>
 
@@ -264,7 +251,8 @@
 
             <li class="dropdown current-user">
               <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                <img src="assets/images/template/logo_mgmt.png" class="circle-img circle-img-size" alt="">
+                <?php if ($_SESSION['user_photo']) { $photo = 'repositorio/profile_photos/'.$_SESSION['user_photo'];} else { $photo = 'assets/images/template/logo_mgmt.png';}?>
+                <img src="<?=$photo?>" class="circle-img circle-img-size" alt="">
                 <span class="username"><?=$_SESSION['username']?></span>
                 <i class="clip-chevron-down"></i>
               </a>

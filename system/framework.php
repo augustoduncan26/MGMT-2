@@ -117,6 +117,9 @@ $ObjUser =  new Users();
 $nickN 	 = 	$_POST["nick"]; 
 $passN 	 = 	$_POST["password"]; 
 
+/**
+ * Login
+ */
 $busco 	 =	$ObjUser->verificarUsuario ($nickN, $passN);
 
 if ( $busco == 1 ) { 
@@ -147,6 +150,7 @@ if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
     $_SESSION['user_id'] 			= 	$saco['id_usuario'];
 	$_SESSION['user_name'] 			= 	$nombredesesion;
     $_SESSION['user_email'] 		= 	$saco['email'];
+	$_SESSION['user_photo'] 		= 	$saco['photo'];
     $_SESSION['user_login_status'] 	= 	1;
 
     // SESSION FOR MODULE INVENTARIO

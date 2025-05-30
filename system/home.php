@@ -95,12 +95,15 @@ include ( dirname(__FILE__).'/load.php' );
    <script type="text/babel" src="components/Events.js"></script>
    <script type="text/babel" src="components/ListEvents.js"></script>
    <script type="text/babel">
-    const dropNotification  = ReactDOM.createRoot(document.getElementById("drop-down-notifications"));
-    const notification      = ReactDOM.createRoot(document.getElementById("total-eventos"));
-    const notificationB     = ReactDOM.createRoot(document.getElementById("total-eventos-b"));
-    notificationB.render(<Events path="<?=$_ENV['URL_API'];?>" />);
-    notification.render(<Events path="<?=$_ENV['URL_API'];?>" />);
-    dropNotification.render(<ListEvents path="<?=$_ENV['URL_API'];?>" />);
+    const dropDownNotification  = ReactDOM.createRoot(document.getElementById("drop-down-notifications"));
+    const notification          = ReactDOM.createRoot(document.getElementById("total-eventos"));
+    const notificationText      = ReactDOM.createRoot(document.getElementById("total-eventos-text"));
+    //notificationB.render(<Events path="<?=$_ENV['URL_API'];?>" />);
+    setTimeout(()=>{
+      notification.render(<Events path="<?=$_ENV['URL_API'];?>" />);
+      notificationText.render(<Events path="<?=$_ENV['URL_API'];?>" />);
+      dropDownNotification.render(<ListEvents path="<?=$_ENV['URL_API'];?>" />);
+    },1000);
     </script>
 
   </body>

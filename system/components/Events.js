@@ -10,7 +10,6 @@ const Events = (path) => {
         .then((data) => setNotif(data))
         .catch(err => console.error("Error:", err));
     }, []);
-    //console.log(notificaciones)
     return (<span>{notificaciones.total}</span>
     );
 }

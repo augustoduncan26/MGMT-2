@@ -7,6 +7,9 @@
 	$ObjEjec    = 	new ejecutorSQL();
 	$objCons	=	new consultor();
 
+	/**
+	 * Check if user (email) exists
+	 */
 	if (isset($_GET['check']) && $_GET['r1']!='') {
 		$exito['result'] 	= 0;
 		$where 				= 'usuario = "'.$_GET['r1'].'"';
@@ -14,12 +17,12 @@
 		if ($selQ['usuario']) {
 			$exito['result']= 1;
 		}
-		// echo json_encode($exito);
 		echo $exito['result'];
 		exit;
 	}
 	
 	get_template_part ( 'header' );
+
 	/** 
 	* Sign Up User
 	*/
@@ -49,30 +52,16 @@
 			$display	=	'block';
 
 		} else {
-			
-			//$RUTA	=	'companies/';
-			
-			// REGISTER BLOCK USER
+
+			/**
+			 * Sign Up User
+			 */
 			$clave 		=	encrypt_decrypt('encrypt', $_POST['password']);
-			//$PCLAVE		=	"AES_ENCRYPT('".htmlentities($_POST['password'])."','toga')";//CryptPass( $POST_clave );
-			//$REALNAME	=	'Usuario_'.$CARACTERES;
 
 			$P_Tabla 	=	PREFIX.'usuarios';
 			$P_Campos 	=	'usuario,contrasena,nombre,apellido,email,id_perfil,name_perfil,created_at,updated_at,id_cia,superadmin,principal,caracteres,activo';
 			$P_Valores 	=	"'".$_POST['email']."', '".$clave."','".$_POST['full_nombre']."','','".$_POST['email']."','6','Usuario',NOW(),NOW(),0,0,0,'".$CARACTERES."','0'";
 			$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-			
-			// Setear Permisos
-			$permisosNormalUser = [];
-			$DataUser       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','email = "'.$_POST['email'].'" and activo=0', 'extract');
-
-			$DataPerm       = 	$ObjMante->BuscarLoQueSea('*',PREFIX.'new_users_permissions',false,'array');
-			foreach ($DataPerm['resultado'] as $key => $value) {
-				$P_Tabla 	=	PREFIX.'permisos';
-				$P_Campos 	=	'id_perfil,id_definicion_permiso,id_cia,activo';
-				$P_Valores 	=	"'".$DataUser['id_perfil']."', '".$value['permiso']."','".$DataUser['id_cia']."','1'";
-				$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-			}
 
 			$Obj		=	new EnviarCorreo();
 
@@ -84,20 +73,17 @@
 							&nbsp;&nbsp;Para confirmar tu registro, sigue este enlace: <a h	ref='".ENV['URL_NAME']."/system/login.php?pag=login&q=finReg&W=".$IDFALSE."&X=000".$IDFALSE."000000000".$DESPISTAR."&Y=".$IDFALSE."&Z=000-000-".$CARACTERES."-000-".$_POST['email']."000000SI'> Aqui </a><br /><br />
 							&nbsp;&nbsp;Esta confirmación estará activa durante 7 días.<br />
 							";
-			
-			//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
-			
-			$mail_to_send_to = $_POST['email'];
-			$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
-			$subject		 = "Confirma tu registro";
-			//$message		= "\r\n" . "Name: TEST" . "\r\n";
-			$headers  = "From: " . strip_tags($from_email) . "\r\n";
-			$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
-			$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
-			$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-			$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
-			$mensaje	=	'Debes confirmar tu cuenta para ingresar. <br />Revisa tu buzón de (entrada / no deseados) para confirmarlo.';
+						
+			$mail_to_send_to= $_POST['email'];
+			$from_email 	= $_ENV['MAIL_FROM_ADDRESS'];
+			$subject		= "Confirma tu registro";
+			$headers  		= "From: " . strip_tags($from_email) . "\r\n";
+			$headers 		.= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+			$headers 		.= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
+			$headers 		.= "MIME-Version: 1.0\r\n";
+			$headers 		.= "Content-Type: text/html; charset=UTF-8\r\n";
+			$a 				= mail( $mail_to_send_to, $subject, $mensaG, $headers );
+			$mensaje		='Debes confirmar tu cuenta para ingresar. <br />Revisa tu buzón de (entrada / no deseados) para confirmarlo.';
 		}
 	}
 
@@ -105,32 +91,34 @@
 	* Validate Sign Up User
 	*/
 	if (isset($_GET['Z']) && $_GET['Z']!='') {
-		//include_once ( dirname(__FILE__) .'/ajax/ajax_confirm_register_users.php' );
 		
 		$PCod			=	explode('-000-',$_GET['Z']);
 
 		$Data       	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','caracteres = "'.$PCod[1].'" and activo=0');
 		
 		if ( $Data["total"] == 1 ):
-			// Activate user
+			/**
+			 * Activate User
+			 */
 			$Data       		= 	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','caracteres = "'.$PCod[1].'" and activo=0','extract');
 			$Hecho 				=	$ObjEjec->ejecutarSQL("Update ".PREFIX."usuarios SET activo=1, id_cia='".$Data['id_usuario']."', updated_at=NOW()  Where id_usuario = '".$Data['id_usuario']."'");
 				
 			if($Hecho==true):
-				// Setear Permisos
+				/**
+				 * Set Permissions
+				 */
 				$permisosNormalUser = [];
+				$DataUser       = $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','email = "'.$_POST['email'].'" and activo=0', 'extract');
+
 				$DataPerm       = 	$ObjMante->BuscarLoQueSea('*',PREFIX.'new_users_permissions',false,'array');
-				foreach ($DataPerm as $key => $value) {
+				foreach ($DataPerm['resultado'] as $key => $value) {
 					$P_Tabla 	=	PREFIX.'permisos';
 					$P_Campos 	=	'id_perfil,id_definicion_permiso,id_cia,activo';
-					$P_Valores 	=	"'".$Data['id_perfil']."', '".$value['permiso']."','".$Data['id_cia']."','1'";
+					$P_Valores 	=	"'".$DataUser['id_perfil']."', '".$value['permiso']."','".$DataUser['id_cia']."','1'";
 					$ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-				}
-				
-				//$mensaje	=	'Activation has been successfully. <br> Now you can login with your user account and password.';
-				$mensaje	=	'Hemos activado su cuenta con éxito. Ahora puedes disfrutar de H&HSys';
+				}			
+				$mensaje	=	'Hemos activado su cuenta con éxito.';
 			;else:
-				//$mensaje	=	'¡Error!,Could not validate the activation.';
 				$mensaje	=	'¡Error!, No hemos podido validar su activación.';
 			endif;
 		endif; 
@@ -147,7 +135,9 @@
 <link href="assets/css/style_login.css" rel="stylesheet">
 
 <?php
-// Change Password
+/**
+ *  Change Password
+ */ 
 	if (isset($_GET['ADZ']) && isset($_GET['kracts'])) {
 		include_once ( dirname(__FILE__) .'/reset-password.php' );
 	} else {
