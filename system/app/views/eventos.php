@@ -58,15 +58,15 @@
       <div class="col-md-5 text-right">
         <?php if(in_array('51', $objPermOpc->getRolPermissions($id_rol))) { ?><a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a><?php } ?>
         <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
+        <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
       </div>
     </div>
 
     <div class="container text-rigth">
       <div class="clearfix col-md-6"></div>
       <div class="col-md-6 text-right">
-        <a class="btn btn-xs btn-teal tooltips" title="Ver - Editar"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar registro</label> &nbsp;
-        <a class="btn btn-xs btn-bricky tooltips" title="Eliminar"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label>
+        <a class="btn btn-xs btn-teal tooltips" title="Ver - Editar"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips" title="Eliminar"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar</label>
       </div>
     </div>
     
@@ -216,7 +216,7 @@
                           }
                         ?>
                     </select>
-                    <lable class="color-gray">Seleccionar todos <input type="checkbox" id="select_classes" /> </lable>
+                    <input type="checkbox" id="select_classes" /> <lable class="color-gray">Seleccionar todos </lable>
                     <!-- <small class="color-gray">Clase(s) que puedan ver este evento. </small> -->
                    </td>
                    <td width="15%">Perfil</td>
@@ -231,7 +231,7 @@
                         ?>
                     </select>
                     <!-- <small class="color-gray">Perfil(es) que puedan ver este evento. </small> -->
-                    <label class="color-gray">Seleccionar todos <input type="checkbox" id="select_perfiles" /> </label>
+                    <input type="checkbox" id="select_perfiles" />  <label class="color-gray">Seleccionar todos</label>
                    </td>
                  </tr>
                  <tr>
@@ -525,7 +525,6 @@ $("#select_perfiles_edit").click(function(){
 /** 
  * Add
  */
-//function addEvent () {
 $('#agregar_evento').on('click', ()=> {
   var nombre      = $('#nombre_add').val();
   var clase       = $('#event_class_add').val();
@@ -695,9 +694,6 @@ $('.btn-edit-evento').on('click', ()=>{
   let id            = $('#id_row').val();
   let perfil        = $('#text_event_perfil_edit').val();
   let tipo_color    = $('#tipo_color_edit').val();
-
-  // console.log(perfil);
-  //  return false
 
   if (nombre == "" || dateI == "" || dateF == "") {
     $("#mssg-edit-eventos").removeClass('alert-success').removeClass('alert-info').addClass('alert-danger').show().html('<h5>Los campos con (*) son necesarios.</h5>');

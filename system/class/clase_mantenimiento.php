@@ -520,11 +520,6 @@ class Mantenimientos
 
 		$objCons->consultar($P_select, $P_tablas , $where);
 
-		// 'SELECT us.id_usuario, us.id_perfil, us.nombre, us.apellido, us.email, p.name, p.description'
-        //     . ' FROM '.PREFIX.'usuarios us'
-        //     . ' LEFT JOIN '.PREFIX.'perfiles p ON us.id_perfil = p.id'
-		// 	. ' WHERE p.name like "%profesore%"'
-
 	}
 
 	//FUNCION UTILIZADA PARA HACER UN JOIN A CUALQUIER TABLA SEGUN CODIGO DEL EMPLEADO

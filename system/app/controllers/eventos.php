@@ -16,14 +16,6 @@ $selectClases  = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id
 $selectPerfiles= $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id <> 100 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectEventos = $ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_cia = '.$id_cia,'array');
 
-// $sql = mysqli_query($mysqli,'SELECT us.id_usuario, us.activo, us.id_perfil, us.nombre, 
-// 			us.apellido, us.email, p.name, p.description'
-//             . ' FROM '.PREFIX.'usuarios us'
-//             . ' LEFT JOIN '.PREFIX.'perfiles p ON us.id_perfil = p.id'
-// 			. ' WHERE p.name like "%profesore%"')or die(mysqli_error($mysqli));
-// $selectEventos['resultado'] = $sql; 
-// $d=mysqli_fetch_array($sql);
-
 /**
  * Add
  */
@@ -108,6 +100,8 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
 		</tr>
 	<?php
 		}
+	} else {
+		echo '<tr><td colspan="8" class="text-center">Ningún dato disponible en esta tabla</td></tr>';
 	}
 }
 
@@ -151,7 +145,7 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['r1'] !='') {
 
 	$P_Valores = "name = '".$_POST['r1']."', date_start='".$_POST['r3']."', time_start='T".$_POST['r4']."', date_end='".$_POST['r5']."', time_end='T".$_POST['r6']."', activo = '".$_POST['r8']."', class_id='".$classArr."', perfil_id='".$perfilArr."', tipo_color='".$_POST['r10']."', description = '".$_POST['r2']."'";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['r_r'].'"');
-	//var_dump($l);
+
 	if($l == 1){
 		echo 'ok';
 	} else {

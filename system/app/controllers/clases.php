@@ -29,8 +29,8 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 	if ($sql['total'] > 0 ) {
 		echo 'Ya existe este registro.';
 	} else {
-		$P_Valores 	= 	"'".$_GET['nombre']."','".$_GET['cantidad']."','".$_GET['superv']."','".$_GET['grado']."','".$id_cia."',NOW(),NOW(),'".$_GET['estado']."'";
-		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'class_name,capacity,supervisor_id,grade,id_cia,created_at,updated_at,activo', $P_Valores);
+		$P_Valores 	= 	"'".$_GET['nombre']."','".$_GET['cantidad']."','".$_GET['grado']."','".$id_cia."',NOW(),NOW(),'".$_GET['estado']."'";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'class_name,capacity,grade,id_cia,created_at,updated_at,activo', $P_Valores);
 		echo 'Se ingreso el registro con éxito';
 	}
 }
@@ -46,9 +46,9 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_name']?></td>
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['capacity']?></td>
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grade']?></td>
-            <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$sel2['nombre']?></td>
+            <!-- <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$sel2['nombre']?></td> -->
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
-            <td class="text-center" style="width:10% !important;">
+            <td class="text-center">
             <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
             <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
             </td>
@@ -66,7 +66,7 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 
 // Edit 
 if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
-	$P_Valores = "class_name = '".Reemplazar_letras($_POST['nombre'])."', capacity='".$_POST['cantidad']."', supervisor_id='".$_POST['superv']."', grade='".$_POST['grado']."', activo = '".$_POST['estado']."', updated_at=NOW()";
+	$P_Valores = "class_name = '".Reemplazar_letras($_POST['nombre'])."', capacity='".$_POST['cantidad']."', grade='".$_POST['grado']."', activo = '".$_POST['estado']."', updated_at=NOW()";
 	$l = $ObjEjec->actualizarRegistro($P_Valores, $P_Tabla, 'id = "'.$_POST['id'].'"');
   	if($l == 1){
 		echo 'ok';

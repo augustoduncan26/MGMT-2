@@ -1,6 +1,6 @@
-// FUNCIONES REUTILIZABLES
-// *************************
-
+/**
+ * Re-Util Functions
+ */
 function goToTopPage () {
   $("html, body").animate({
     scrollTop: 0
@@ -76,7 +76,10 @@ const validate = (resultInput, emailInput) => {
 //   });
 // }
 // End: Validate Email
-
+/**
+ * 
+ * @param {*} id 
+ */
 function selectUseLike ( id ) {
   if ( $('#' + id).is(":checked") ) {
     $('#use-sistem-as').val('rooms');
@@ -96,8 +99,8 @@ function selectUseLike ( id ) {
  */
 const evaluarFechas = (dateI, dateF) => {
   //Formato MES/DIA/AÑO
-  var primera = Date.parse(dateI); //01 de Octubre del 2013
-  var segunda = Date.parse(dateF); //03 de Octubre del 2013
+  var primera = Date.parse(dateI);
+  var segunda = Date.parse(dateF);
   
   if (primera == segunda){
       return true;

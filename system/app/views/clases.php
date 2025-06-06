@@ -76,7 +76,7 @@
               <th>Nombre</th>
               <th>Capacidad</th> 
               <th>Grado</th>
-              <th>Maestro / Supervisor</th> 
+              <!-- <th>Maestro / Supervisor</th>  -->
               <th>Estado</th>
               <th></th>
               </tr>
@@ -92,10 +92,10 @@
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_name']?></td>
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['capacity']?></td>
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['grade'].' &deg;'?></td>
-                    <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$userName['nombre'].' '.$userName['apellido']?></td>
+                    <!-- <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$userName['nombre'].' '.$userName['apellido']?></td> -->
                     <!-- <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['end_time']?></td> -->
                     <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
-                    <td class="text-center" style="width:10% !important;">
+                    <td class="text-center">
                     <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $datos['id']; ?>');"><i class="fa fa-edit"></i></a>
                     <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                     </td>
@@ -150,15 +150,15 @@
 
                  <tr>
                    <td width="30%">Grado <span class="symbol required"></span><br />
-                   
+                   <small class="color-gray">Representa el nivel o grado.</small>
                   </td> 
                    <td width="70%">
                     <input autofocus="" name="event_add_grade" onchange="" type="number" class="form-control" id="event_add_grade" pattern="[09]" onkeyup="if(value<0 || value==0) value=1;" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Grado" step="1"  min="1" max="100" value="1">
-                    <small class="color-gray">Representa el nivel o grado.</small>
+                    
                   </td>
                  </tr>
 
-                 <tr>
+                 <tr class="hide">
                    <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
                    <td width="70%">
                    <select name="event_add_supervisor" id="event_add_supervisor">
@@ -238,7 +238,7 @@
                   </td>
                  </tr>
 
-                 <tr>
+                 <tr class="hide">
                    <td width="30%">Profesor / Supervisor <span class="symbol required"></span></td>
                    <td width="70%">
                    <select name="event_edit_supervisor" id="event_edit_supervisor">
@@ -305,12 +305,12 @@ runNavigationToggler();
  */
 $('.btn-add-class').on('click', ()=>{  
   let nombre      = $('#nombre_add').val();
-  let supervisor  = $('#event_add_supervisor').val();
+  //let supervisor  = $('#event_add_supervisor').val();
   let cantidad    = $('#event_add_capacity').val();
   let grade       = $('#event_add_grade').val();
   let estado      = $('#event_estado_add').val();
 
-  if ( nombre == '' || supervisor.length < 1) {
+  if ( nombre == '') {
     $(".mssg-add-clases").removeClass('alert-success').addClass('alert-danger').show().html('Los campos con (*) son necesarios.');
     //$('#nombre').focus();
     setTimeout(()=>{
@@ -333,7 +333,7 @@ $('.btn-add-class').on('click', ()=>{
       nombre  : nombre,
       cantidad : cantidad,
       grado : grade,
-      superv: supervisor,
+      //superv: supervisor,
       estado: estado,
       cache : '<?php echo rand(99999,66666)?>'
     },
@@ -516,9 +516,9 @@ function deleteRow ( id ) {
         columnDefs: 
         [
         {
-        targets: 5,
+        targets: 4,
         orderable: false
-        },{ width: "20%", targets: 0 },{ width: "5%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "20%", targets: 3 },{ width: "10%", targets: 4 },{ width: "8%", targets: 5 }
+        },{ width: "20%", targets: 0 },{ width: "10%", targets: 1, },{ width: "10%", targets: 2, } ,{ width: "10%", targets: 3 },{ width: "10%", targets: 4 }
       ]
       });
   } ); 

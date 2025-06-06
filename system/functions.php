@@ -185,7 +185,9 @@ function get_theClass () {
 
 /* System Utilities functions */
 function dump ( $name ) {
+	echo "<pre class='pre-dump'>";
 	var_dump($name);
+	exit;
 }
 
 /*  Function for Remove html characters */

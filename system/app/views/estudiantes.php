@@ -11,10 +11,6 @@
   div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
   }
-  /* .modal-xl {
-    width: 70%;
-   max-width:1350px;
-  } */
   .fade {
     overflow:hidden;
   }
@@ -52,10 +48,8 @@
       </h4>
       </div>
       <div class="col-md-5 text-right">
-        <!-- <a data-toggle="modal" class="btn btn-primary "  role="button" href="#formulario_nuevo">[+] Nuevo</a> -->
-        <!-- <div class=""> -->
-          <a data-toggle="modal" class="col-md-5 btn btn-primary btn-exportar float-right"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <!-- </div> -->
+          <a data-toggle="modal" class="btn btn-primary clean-all-inputs"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
+          <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
         <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
       </div>
     </div>
@@ -63,8 +57,9 @@
     <div class="container text-rigth">
       <div class="clearfix col-md-6"></div>
       <div class="col-md-6 text-right">
-        <a class="btn btn-xs btn-teal tooltips" title="Ver Información"><i class="fa fa-search"></i></a> <label class="color-gray">Ver Información</label> &nbsp;
-        <!-- <a class="btn btn-xs btn-bricky tooltips" title="Eliminar"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar registro</label> -->
+        <a class="btn btn-xs btn-teal tooltips" title="Editar Información"><i class="fa fa-edit"></i></a> <label class="color-gray">Editar</label> &nbsp;
+        <a class="btn btn-green btn-xs btn-teal tooltips" title="Ver Información"><i class="fa fa-search"></i></a> <label class="color-gray">Ver</label> &nbsp;
+        <a class="btn btn-xs btn-bricky tooltips" title="Eliminar"><i class="fa fa-times fa fa-white"></i></a><label class="color-gray">Eliminar</label>
       </div>
     </div>
 
@@ -80,55 +75,29 @@
               <table id="list-table-teachers" class="table table-striped table-bordered table-hover">
               <thead>
               <tr class="">
-              <th title="Nombre del Profesor">Nombre</th>
-              <th>Email</th>
+              <th>Nombre</th>
               <th>Materia</th> 
-              <th>Clases / Salones</th>
+              <th>Aula / Clases</th>
+              <th>Fecha</th>
               <th>Estado</th>
               <th></th>
               </tr>
               </thead>
               <tbody id="tbody-table-teachers">
               <?php
-                if ($selectTeachers['resultado']){
-                  foreach ($selectTeachers['resultado'] as $datos) {
-                    $subjects     = $ObjMante->BuscarLoQueSea('*',PREFIX.'associate_teacher_subjects','teacher_id="'.$datos['id_usuario'].'" and id_cia = '.$id_cia,'array');
-                    $classes      = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','supervisor_id="'.$datos['id_usuario'].'" and id_cia = '.$id_cia,'array');
-                    
-                    $resultClass    = false;
-                    $resultSubjects = false;
-
-                    if ($subjects['resultado']) {
-                      foreach ($subjects['resultado'] as $data) {
-                        if($resultSubjects != false) {
-                          $resultSubjects .=  ', ';
-                        }	
-                        $resultSubjects .= $data['class_name'];
-                        $resultSubjects = rtrim($resultSubjects, ", ");
-                      }
-                    }
-
-                    if ($classes['resultado']) {
-                      foreach ($classes['resultado'] as $data) {
-                        if($resultClass != false) {
-                          $resultClass .=  ', ';
-                        }	
-                        $resultClass .= $data['class_name'];
-                        $resultClass = rtrim($resultClass, ", ");
-                      }
-                    }
-                    if (empty($resultClass)) { $resultClass = '- - - -';}
-                    if (empty($resultSubjects)) { $resultSubjects = '- - - -';}
+                if ($sqlAssignment ['total'] > 0){
+                  foreach ($sqlAssignment['resultado'] as $key => $datos) {
               ?>
               <tr>
-              <td  title="Nombre del Profesor" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['nombre']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['email']?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$resultSubjects?></td>
-              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$resultClass?></td>
+              <td  title="Nombre del Profesor" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['teacher_name']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['asignment_name']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_name']?></td>
+              <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_ini'].' - '.$datos['date_end']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($datos['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td>
-              <td class="text-center" style="width:10% !important;">
-              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Información" data-toggle="modal" role="button" data-target="#myEditModal" href="#" onclick="editRow('<?php echo $datos['id_usuario']; ?>');"><i class="fa fa-search"></i></a>
-              <!-- <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a> -->
+              <td class="text-center">
+              <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Información" data-toggle="modal" role="button" data-target="#edit_event" href="#" onclick="editRow('<?php echo $datos['id']; ?>','modal-edit');"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-green btn-xs btn-teal tooltips" data-original-title="Ver Información" data-toggle="modal" role="button" data-target="#myEditModal" href="#" onclick="editRow('<?php echo $datos['id']; ?>','modal-info');"><i class="fa fa-search"></i></a>
+              <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $datos['id']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
               </td>
               </tr>
               <?php
@@ -166,13 +135,13 @@
                </thead>
                <tbody>
                  <tr>
-                   <td width="30%">Profesor <span class="symbol required"></span></td>
-                   <td width="70%">
+                   <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
+                   <td width="70%" colspan="3">
                     <select name="add_profesor[]" id="txt_add_profesor">
                         <?php 
-                          if ($selectProfPerfil['resultado']) {
+                          if ($selectTeachers['resultado']) {
                             echo '<option>seleccionar</option>';
-                            foreach ($selectProfPerfil['resultado'] as $key => $value) {
+                            foreach ($selectTeachers['resultado'] as $key => $value) {
                               echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
                             }
                           }
@@ -181,8 +150,8 @@
                  </tr>
 
                  <tr>
-                   <td width="30%">Asignaturas / Materias <!--<span class="symbol required"></span>--></td>
-                   <td width="70%">
+                   <td width="30%">Asignaturas / Materias <span class="symbol required"></span></td>
+                   <td width="70%" colspan="3">
                     <select name="event_asign_add[]" id="txt_event_asign_add" multiple>
                         <?php 
                           if ($selectAssignment['resultado']) {
@@ -192,11 +161,12 @@
                           }
                         ?>
                     </select>
+                     <lable class="text-center color-gray"> &nbsp; <input type="checkbox" id="select_materias_add" /> <label class="cursor" for="select_materias_add">Todos</label> </lable>
                    </td>
                  </tr>
                  <tr>
-                   <td width="30%">Clases <!--<span class="symbol required"></span>--></td>
-                   <td width="70%">
+                   <td width="30%">Clase / Aulas <span class="symbol required"></span></td>
+                   <td width="70%" colspan="3">
                     <select name="event_class_add[]" id="txt_event_class_add" multiple>
                         <?php 
                           if ($selectClases['resultado']) {
@@ -206,12 +176,26 @@
                           }
                         ?>
                     </select>
+                     <lable class="text-center color-gray"> &nbsp; <input type="checkbox" id="select_classes_add" /> <label class="cursor" for="select_classes_add">Todos</label> </lable>
                    </td>
                  </tr>
 
                  <tr>
+                  <td ><label class="tooltips" data-original-title="Fecha Desde">F. Desde </label><span class="symbol required"></span></td>
+                  <td>
+                    <input autofocus="" name="date_ini_add" onchange="" type="date" class="form-control" id="date_ini_add" placeholder="Fecha">
+                    <small class="color-gray">Formato: [mes/dia/año] </small>
+                  </td>
+                  <td><label class="tooltips" data-original-title="Fecha Desde">F. Hasta</label> <span class="symbol required"></span></td>
+                  <td>
+                    <input autofocus="" name="date_end_add" onchange="" type="date" class="form-control" id="date_end_add" placeholder="Fecha">
+                    <small class="color-gray">Formato: [mes/dia/año] </small>
+                  </td>
+                 </tr>
+
+                 <tr>
                    <td>Estado</td>
-                   <td>
+                   <td colspan="3">
                     <select name="event_estado_add"  class="form-control" id="event_estado_add">
                       <option value="1">Activo</option>
                       <option value="0" selected="">Inactivo</option>
@@ -223,8 +207,7 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="agregar_habitacion" type="button" class="btn btn-primary btn-add-prof" id="agregar_evento" value="Guardar datos">
-          
+          <input name="btn_add" type="button" class="btn btn-primary btn-add-prof" id="btn_add_action" value="Guardar datos">
         </div>
       </form>
       </div>
@@ -242,74 +225,91 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Profesor</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Asignación de Profesor</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
  <div class="alert alert-danger" id="mssg-edit"></div>
- <table class="table table-hover" id="table-add-prof">
-  <thead>
-  </thead>
-  <tbody>
-    <tr>
-      <td width="30%">Profesor <span class="symbol required"></span></td>
-      <td width="70%">
-      <select name="edit_profesor[]" id="txt_edit_profesor">
-          <?php 
-            if ($selectProfPerfil['resultado']) {
-              echo '<option>seleccionar</option>';
-              foreach ($selectProfPerfil['resultado'] as $key => $value) {
-                echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
+ <table class="table table-hover" id="table-edit-prof">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
+        <td width="70%" colspan="3">
+        <select name="edit_profesor[]" id="txt_edit_profesor">
+            <?php 
+              if ($selectTeachers['resultado']) {
+                echo '<option>seleccionar</option>';
+                foreach ($selectTeachers['resultado'] as $key => $value) {
+                  echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
+                }
               }
-            }
-          ?>
-      </select></td>
-    </tr>
-
-    <tr>
-      <td width="30%">Asignaturas / Materias <!--<span class="symbol required"></span>--></td>
-      <td width="70%">
-      <select name="event_subject_edit[]" id="txt_event_subject_edit" multiple>
-          <?php 
-            if ($selectSubjects['resultado']) {
-              foreach ($selectSubjects['resultado'] as $key => $value) {
-                echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
-              }
-            }
-          ?>
-      </select>
+            ?>
+        </select>
+      <input type="hidden" name="id_row" id="id_row" />
       </td>
-    </tr>
-    <tr>
-      <td width="30%">Clases <!--<span class="symbol required"></span>--></td>
-      <td width="70%">
-      <select name="event_class_edit[]" id="txt_event_class_edit" multiple>
-          <?php 
-            if ($selectClases['resultado']) {
-              foreach ($selectClases['resultado'] as $key => $value) {
-                echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
-              }
-            }
-          ?>
-      </select>
-      </td>
-    </tr>
+      </tr>
 
-    <tr>
-      <td>Estado</td>
+      <tr>
+        <td width="30%">Asignaturas / Materias <span class="symbol required"></span></td>
+        <td width="70%" colspan="3">
+        <select name="event_asign_edit[]" id="txt_event_asign_edit" multiple>
+            <?php 
+              if ($selectAssignment['resultado']) {
+                foreach ($selectAssignment['resultado'] as $key => $value) {
+                  echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+                }
+              }
+            ?>
+        </select>
+          <lable class="text-center color-gray"> &nbsp; <input type="checkbox" id="select_materias_edit" /> <label class="cursor" for="select_materias_edit">Todos</label> </lable>
+        </td>
+      </tr>
+      <tr>
+        <td width="30%">Clase / Aulas <span class="symbol required"></span></td>
+        <td width="70%" colspan="3">
+        <select name="event_class_edit[]" id="txt_event_class_edit" multiple>
+            <?php 
+              if ($selectClases['resultado']) {
+                foreach ($selectClases['resultado'] as $key => $value) {
+                  echo '<option value="'.$value['id'].'">'.$value['class_name'].'</option>';
+                }
+              }
+            ?>
+        </select>
+          <lable class="text-center color-gray"> &nbsp; <input type="checkbox" id="select_classes_edit" /> <label class="cursor" for="select_classes_edit">Todos</label> </lable>
+        </td>
+      </tr>
+
+      <tr>
+      <td ><label class="tooltips" data-original-title="Fecha Desde">F. Desde</label><span class="symbol required"></span></td>
       <td>
-      <select name="event_estado_edit"  class="form-control" id="event_estado_edit">
-        <option value="1">Activo</option>
-        <option value="0" selected="">Inactivo</option>
-      </select>
+        <input autofocus="" name="date_ini_edit" onchange="" type="date" class="form-control" id="date_ini_edit" placeholder="Fecha">
+        <small class="color-gray">Formato: [mes/dia/año] </small>
       </td>
-    </tr>
-  </tbody>
-</table>
+      <td><label class="tooltips" data-original-title="Fecha Desde">F. Hasta</label><span class="symbol required"></span></td>
+      <td>
+        <input autofocus="" name="date_end_edit" onchange="" type="date" class="form-control" id="date_end_edit" placeholder="Fecha">
+        <small class="color-gray">Formato: [mes/dia/año] </small>
+      </td>
+      </tr>
+
+      <tr>
+        <td>Estado</td>
+        <td colspan="3">
+        <select name="event_estado_edit"  class="form-control" id="event_estado_edit">
+          <option value="1">Activo</option>
+          <option value="0" selected="">Inactivo</option>
+        </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="agregar_habitacion" type="button" class="btn btn-primary" id="agregar_evento" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
+      <input name="edit_prof" type="button" class="btn-edit-prof btn btn-primary" id="edit_prof" value="Modificar datos">
 </div>
 </form>
 </div>
@@ -340,62 +340,64 @@
     <div class="modal-dialog" role="document" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
                 <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Profesor: <label class="nombre-del-profesor h4"></label></h4>
             </div>
             <div class="modal-body" style="height: 100% !important">
-              <!-- <input name="guardar_data" type="button" class="btn btn-primary float-right" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos"> -->
               
               <!-- Row 1 -->
               <div class="row f1" style="font-size: 14px;">
                 <!-- section 1 -->
                 <div class="col-md-3 flex " style="padding: 5px;">
                   <div class="col-md-12 col-sm-12 ">
-                    <img id="blah-photo-user" class="photo-user" style="width: 100px; height: 100px" src="repositorio/profile_photos/user.png" alt="Foto">
+                    <img id="blah-photo-user" class="photo-user" style="width: 120px; height: 130px; border-radius: 5px;" src="repositorio/profile_photos/user.png" alt="Foto">
                   </div>
                 </div>
                 <!-- section 2 -->
-                <div class="col-md-5 flex bg-color-gray-transp border-radius" style="padding: 5px;">
-                  <div class="col-md-12"><i class="fa fa-envelope"></i> <label class="email-del-profesor"></label></div>
-                  <div class="col-md-12"><i class="clip-calendar"></i> <label class="cumple-del-profesor"></label></div>
-                  <div class="col-md-12"><i class="clip-phone"></i> <label class="telefono-del-profesor"></label></div>
-                  <div class="col-md-12"><i class="fa fa-medkit"></i> <label class="tiposangre-del-profesor"></label></div>
-                </div>
-                <!-- section 3 -->
-                <div class="col-md-4 flex" style="padding: 5px;">
-                  <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-list-2"></i> <a href="#">Clases</a></div>
-                  <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-indent"></i> <a href="#">Materias</a></div>
-                  <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-users-2"></i> <a href="#">Estudiantes</a></div>
-                  <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-envelope"></i> <a href="#">Asignaciones</a></div>
-                </div>
-              </div>
-
-              <!-- Row 2 Calendar -->
-              <hr />
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <i class="clip-calendar"></i>
-                      Calendar
-                      <div class="panel-tools">
-                        <!-- <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
-                        <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal"> <i class="fa fa-wrench"></i> </a> -->
-                        <a class="btn btn-xs btn-link panel-refresh" href="#">
-                          <i class="fa fa-refresh"></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="panel-body">
-                    <div id='calendar'></div>
-                    </div>
+                <div class="col-md-9 flex bg-color-gray-transp border-radius" style="padding: 5px;">
+                  <div class="col-md-7" style="padding: 1px;">
+                    <div class="col-md-12"><i class="fa fa-envelope"></i> <label class="email-del-profesor"></label></div>
+                    <div class="col-md-12"><i class="clip-calendar"></i> <label class="cumple-del-profesor"></label></div>
+                    <div class="col-md-12"><i class="clip-phone"></i> <label class="telefono-del-profesor"></label></div>
+                    <div class="col-md-12"><i class="fa fa-medkit"></i> <label class="tiposangre-del-profesor"></label></div>
+                  </div>
+                  <div class="col-md-5" style="padding: 1px;">
+                    <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-list-2"></i> Clases <label id="total-class-info"> 0 </label></div>
+                    <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-indent"></i> Materias <label id="total-assignments-info"> 0 </label></div>
+                    <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-users-2"></i> Estudiantes <label id="total-students-info"> 0 </label></div>
+                    <div class="col-md-12 bg-color-yellow-transp border-radius"><i class="fa fa-envelope"></i> Mensajes  <label id="total-message-info"> 0 </label></div>
                   </div>
                 </div>
               </div>
-              <!-- End Calendar -->
 
+              <!-- Row 2 -->
+              <hr />
+              <div class="row bg-color-yellow-transp" style="padding: 5px;">
+                <div class="col-sm-12">
+                  <label class="text-clases-info"></label>
+                </div>
+                <div class="col-sm-12">
+                  <label class="text-assignments-info"></label>
+                </div>
+                <div class="col-sm-12">
+                  <label class="text-messages-info"></label>
+                </div>
+              </div>
+
+              <hr />
+
+              <div class="row">
+                <div class="col-md-12 text-right">Print</div>
+              </div>
             </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Modificar datos</button>
+            </div> -->
+            <!-- <div class="modal-footer">
+                <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+                <input name="guardar_data" type="button" class="btn btn-primary" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
+          </div> -->
         </div>
     </div>
 </div>
@@ -413,14 +415,63 @@
             <div class="modal-body">
                 ...
             </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
         </div>
     </div>
 </div>
 
 <?php get_template_part('footer_scripts');?>
 
-
 <script>
+
+$('#mssg-edit').hide();
+
+/** 
+ * Select All clases or Materias - ADD
+ */
+$("#select_classes_add").click(function(){
+  if($("#select_classes_add").is(':checked') ){
+      $("#txt_event_class_add > option").prop("selected","selected");
+      $("#txt_event_class_add").trigger("change");
+  }else{
+      $("#txt_event_class_add > option").removeAttr("selected");
+        $("#txt_event_class_add").trigger("change");
+  }
+});
+$("#select_materias_add").click(function(){
+  if($("#select_materias_add").is(':checked') ){
+      $("#txt_event_asign_add > option").prop("selected","selected");
+      $("#txt_event_asign_add").trigger("change");
+  }else{
+      $("#txt_event_asign_add > option").removeAttr("selected");
+        $("#txt_event_asign_add").trigger("change");
+  }
+});
+/** 
+ * Select All clases or Materias - EDIT
+ */
+$("#select_classes_edit").click(function(){
+  if($("#select_classes_edit").is(':checked') ){
+      $("#txt_event_class_edit > option").prop("selected","selected");
+      $("#txt_event_class_edit").trigger("change");
+  }else{
+      $("#txt_event_class_edit > option").removeAttr("selected");
+        $("#txt_event_class_edit").trigger("change");
+  }
+});
+$("#select_materias_edit").click(function(){
+  if($("#select_materias_edit").is(':checked') ){
+      $("#txt_event_asign_edit > option").prop("selected","selected");
+      $("#txt_event_asign_edit").trigger("change");
+  }else{
+      $("#txt_event_asign_edit > option").removeAttr("selected");
+        $("#txt_event_asign_edit").trigger("change");
+  }
+});
+
 /** 
  * Open Asistant Modal 
 */
@@ -436,6 +487,7 @@ $('.btn-exportar').on('click', ()=>{
     $('.messg-exportar-process').removeClass('hide').fadeIn('slow');
   }
 });
+
 /** 
  * Acept Exportar
  */
@@ -464,26 +516,6 @@ var runNavigationToggler = function () {
 runNavigationToggler();
 
 
-// Delete Event
-function deleteRow ( id ) {
-    ajax2   = nuevoAjax();
-    ajax2.open("GET", "app/controllers/eventos.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>",true);
-    ajax2.onreadystatechange=function() {
-    if (ajax2.readyState==4) {
-      $('html, body').animate({scrollTop: '0px'},'slow');
-      $('#label-mssg').html(ajax2.responseText);
-      listEvents();
-      if ($('.alert-danger').is(':visible')) {
-        setTimeout(() => {
-          $('.alert-danger').html('');
-          $('.alert-danger').hide();
-        }, 4000);
-      }
-    }
-  }
-  ajax2.send(null);
-}
-
 /**
  * Add
  */
@@ -492,13 +524,22 @@ $('.btn-add-prof').on('click', ()=>{
   let nombre      = $('#txt_add_profesor').val();
   let asign       = $('#txt_event_asign_add').val();
   let classes     = $('#txt_event_class_add').val();
+  let dateini     = $('#date_ini_add').val();
+  let dateend     = $('#date_end_add').val();
   let estado      = $('#event_estado_add').val();
 
-  if ( nombre == 'seleccionar' || nombre == '') { // || asign == '' || classes == '') {
+  if ( nombre == 'seleccionar' || nombre == '' || nombre == null || asign == '' || classes == '' || dateini == '' || dateend == '') { // || asign == '' || classes == '') {
     $("#mssg-add").show().html('<h5>Los campos con (*) son necesarios</h5>');
     setTimeout(() => {
       $("#mssg-add").hide()
       }, 3000);
+    return false
+  }
+  if (evaluarFechas(dateini, dateend) == false) {
+    $("#mssg-add").show().html('<h5>La fecha final debe ser mayor o igual a la fecha de inicio</h5>');
+    setTimeout(() => {
+        $("#mssg-add").hide();
+      }, 4000);
     return false
   }
 
@@ -513,6 +554,8 @@ $('.btn-add-prof').on('click', ()=>{
       r2 : asign,
       r3 : classes,
       r4 : estado,
+      r5 : dateini,
+      r6 : dateend,
     },
     dataType        : 'html',
     beforeSend: function () {
@@ -525,16 +568,16 @@ $('.btn-add-prof').on('click', ()=>{
         $("#mssg-add").removeClass('alert-success').addClass('alert-danger').show().html('<h5>Ya existe un registro con este mismo nombre.<h5>');
       }
 
-      //listEvents();
+      listRows();
       setTimeout(() => {
-        $("#mssg-add").hide();
+        $("#mssg-add").removeClass('alert-success').addClass('alert-danger').hide();
       }, 4000);
   
-      $("#add_nombre").val('');
-      $("#add_email").val('');
-      $("#add_telephone").val('');
-      $("#txt_event_asign_add").val('');
-      $("#txt_event_class_add").focus();
+      $("#txt_add_profesor").val('').change();
+      $("#txt_event_asign_add").val('').change();
+      $("#txt_event_class_add").val('').change();
+      $("#date_ini_add").val('');
+      $("#date_end_add").val('');
     },
     error           : function (error) {
       console.log(error);
@@ -542,14 +585,24 @@ $('.btn-add-prof').on('click', ()=>{
   });
 });
 
-// Edit Event
-const editRow = ( id ) => {
-  $('.fa-refresh').trigger('click');
-  setTimeout(()=>{
-    $('.fc-button-month').trigger('click');
-  },1000);
-  $("#mssg-edit-eventos").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
-  $("#table-eventos-edit *").prop('disabled',true);
+/**
+ * Open Edit Modal
+ * @param {*} id  
+ */
+const editRow = ( id , tipo ) => {
+
+  if ( tipo == 'modal-info' ) {
+    $('.fa-refresh').trigger('click');
+    setTimeout(()=>{
+      $('.fc-button-month').trigger('click');
+    },1000);
+  }
+ 
+  if ( tipo == 'modal-edit' ) {
+    $("#mssg-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
+    $("#table-edit-prof *").prop('disabled',true);
+  }
+
   let route = "app/controllers/profesores.php";
   $.ajax({
     headers: {
@@ -565,45 +618,83 @@ const editRow = ( id ) => {
     },
     dataType        : 'json',
     success         : function (response) {
-      $('.nombre-del-profesor').html(response['nombre']);
-      if (response['photo']=='' || response['photo']==null) {
-        $('.photo-user').prop('src', 'repositorio/profile_photos/user.png');
-      } else {
-        $('.photo-user').prop('src', 'repositorio/profile_photos/' + response['photo']);
-      }
-      $('.email-del-profesor').html(response['email']);
-      $('.cumple-del-profesor').html(response['birthday']);
-      $('.telefono-del-profesor').html(response['telefono']);
-      $('.tiposangre-del-profesor').html(response['tipo_sangre']);
-      // $("#text_event_perfil_edit").trigger('change');
-      // $('#id_row').val(response['id']);
-      // $('#nombre_edit').val(response['name']);
-      // $('#descripcion_edit').val(response['description']);
-      // $('#event_edit_date_ini').val(response['date_start']);
-      // $('#event_edit_hora_ini').val(response['time_start']);
-      // $('#event_edit_date_fin').val(response['date_end']);
-      // $('#event_edit_hora_fin').val(response['time_end']);
-      // $('#event_estado_edit').select2('val',response['activo']);
-      // $('#event_class_edit').select2('val',response['class_id']);
-
-      
-      if (response['perfil_id']!= null && response['perfil_id']!='' && response['perfil_id']!='NULL') {
-        let arr   = response['perfil_id'].split (",");
-        let keys  = Object.keys(arr).length;
-        let r  = "";
-        arr.forEach((item,key)=>{
-          if (item) {
-            r =  arr + ',';
-            $('#text_event_perfil_edit').val(arr).change();
+      switch (tipo) {
+        case 'modal-edit':
+          if (response['teacher_id']!= null && response['teacher_id']!='' && response['teacher_id']!='NULL') {
+            let arr   = response['teacher_id'].split (",");
+            let keys  = Object.keys(arr).length;
+            let r  = "";
+            arr.forEach((item,key)=>{
+              if (item) {
+                r =  arr + ',';
+                $('#txt_edit_profesor').val(arr).change();
+              }
+            });
           }
-        });
-      }
+          if (response['assignment_id']!= null && response['assignment_id']!='' && response['assignment_id']!='NULL') {
+            let arr   = response['assignment_id'].split (",");
+            let keys  = Object.keys(arr).length;
+            let r  = "";
+            arr.forEach((item,key)=>{
+              if (item) {
+                r =  arr + ',';
+                $('#txt_event_asign_edit').val(arr).change();
+              }
+            });
+          }
+          if (response['class_id']!= null && response['class_id']!='' && response['class_id']!='NULL') {
+            let arr   = response['class_id'].split (",");
+            let keys  = Object.keys(arr).length;
+            let r  = "";
+            arr.forEach((item,key)=>{
+              if (item) {
+                r =  arr + ',';
+                $('#txt_event_class_edit').val(arr).change();
+              }
+            });
+          }
+          $('#id_row').val(response['id']);
+          $('#date_ini_edit').val(response['date_ini']);
+          $('#date_end_edit').val(response['date_end']);
+          $('#event_estado_edit').val(response['activo']).change();
+
+          setTimeout(() => {
+            $("#table-edit-prof *").prop('disabled',false);
+            $("#mssg-edit").hide();
+            $("#table-edit-prof").css('pointer-event','all');
+          }, 1000);
+
+        break;
+
+        // Modal Info
+        case 'modal-info':
+          //console.log(response['resultado'][0]['asignment_name'])
+          $('.nombre-del-profesor').html(response['teacher_name']);
+          if (response['photo']=='' || response['photo']==null) {
+            $('.photo-user').prop('src', 'repositorio/profile_photos/user.png');
+          } else {
+            $('.photo-user').prop('src', 'repositorio/profile_photos/' + response['photo']);
+          }
+          if (response['telefono']=='') { response['telefono'] = '000000000';}
+          if (response['tipo_sangre']=='') { response['tipo_sangre'] = '-';}
+          $('.email-del-profesor').html(response['email']);
+          $('.cumple-del-profesor').html(response['birthday']);
+          $('.telefono-del-profesor').html(response['telefono']);
+          $('.tiposangre-del-profesor').html(response['tipo_sangre']);
+          if (response['asignment_name'] =='') { response['asignment_name'] = 'No posee materias asignadas';}
+
+          $('#total-class-info').html(': ' + response['total_class']);
+          $('#total-assignments-info').html(': ' + response['total_assignm']);
+          $('#total-message-info').html(': ' + response['total_message']);
+
+          $('.text-clases-info').html(' <strong class="size-20">Aulas / Clases:</strong> &nbsp; ' + response['class_name']);
+          $('.text-assignments-info').html(' <strong>Materias:</strong> &nbsp; ' + response['asignment_name']);
+          $('.text-messages-info').html(' <strong>Mensajes:</strong> &nbsp; ' + response['messages']);
+        break;
       
-      setTimeout(() => {
-        $("#table-eventos-edit *").prop('disabled',false);
-        $("#mssg-edit-eventos").hide();
-        $("#table-eventos-edit").css('pointer-event','all');
-      }, 1000);
+        default:
+        break;
+      }
     },
     error           : function (error) {
       console.log(error);
@@ -611,65 +702,152 @@ const editRow = ( id ) => {
   });
 }
 
-// Update Event
-function updateEvent ( id ) {
-  var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-  var nombre      = $('#txt_nombre').val();
-  var precio      = $('#txt_precio').val();
-  var estado      = $('#txt_estado').val();
-  ajax3   = nuevoAjax();
-  ajax3.open("GET", "app/controllers/eventos.php?edit=1&id="+id+"&precio="+precio+"&nombre="+nombre+"&activo="+estado+"&dml=editar&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
-  ajax3.onreadystatechange=function() {
+/**
+ * Update
+ * @param {*} id  
+ */
+$('.btn-edit-prof').on('click', ()=>{ 
+  let id      = $('#id_row').val();
+  let nombre      = $('#txt_edit_profesor').val();
+  let asign       = $('#txt_event_asign_edit').val();
+  let classes     = $('#txt_event_class_edit').val();
+  let dateini     = $('#date_ini_edit').val();
+  let dateend     = $('#date_end_edit').val();
+  let estado      = $('#event_estado_edit').val();
 
-    if (ajax3.readyState==4) {
-      //contenido_editor.innerHTML = ajax2.responseText;
-      $("#mssg-edit-eventos").html('<uppercase>Los datos fueron actualizados con éxito</uppercase>');
-      listEvents();
-    }
+  if ( nombre == 'seleccionar' || nombre == '' || nombre == null || asign == '' || classes == '' || dateini == '' || dateend == '') { // || asign == '' || classes == '') {
+    $("#mssg-edit").addClass('alert-danger').show().html('<h5>Los campos con (*) son necesarios</h5>');
+    setTimeout(() => {
+      $("#mssg-edit").hide()
+      }, 3000);
+    return false
   }
-  ajax3.send(null);
-}
+  if (evaluarFechas(dateini, dateend) == false) {
+    $("#mssg-edit").addClass('alert-danger').show().html('<h5>La fecha final debe ser mayor o igual a la fecha de inicio</h5>');
+    setTimeout(() => {
+        $("#mssg-edit").hide();
+      }, 4000);
+    return false
+  }
+  let route = "app/controllers/profesores.php"; 
 
+  var parametros = {
+    edit : 1, r1 : nombre, r_r : id, r2:asign, r3:classes, r4: dateini, r5: dateend, r6: estado,
+  };
 
-// List Events
-const listEvents = () => {
-  let route = "app/controllers/profesores.php";
   $.ajax({
-    headers: {
-      Accept        : "application/json; charset=utf-8",
-      "Content-Type": "application/json: charset=utf-8"
+    data: parametros,
+    url:   route,
+    type:  'post',
+    dataType : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
     },
-    url: route,
-    type: "GET",
-    data: {
-      all         : 1,
-      nocache     : '<?php echo rand(99999,66666)?>',
+    success:  function (response) {
+      if (response == 'ok') {
+        jQuery('html, body').animate({scrollTop: '0px'}, 'slow');
+        $("#mssg-edit").removeClass('alert-danger').removeClass('alert-info').addClass('alert-success').show().html('<h5>Los datos fueron actualizados con éxito.</h5>');
+        listRows();
+        setTimeout(() => {
+          $("#mssg-edit").hide();
+          //window.location.reload();
+        }, 4000);
+      } else {
+        $("#mssg-edit").removeClass('alert-success').removeClass('alert-info').addClass('alert-danger').show().html('<h5>No se ha podido actualizar el registro.</h5>');
+        console.log(response);
+         setTimeout(() => {
+          $("#mssg-edit").removeClass('alert-danger').hide();
+        }, 4000);
+      }
     },
-    dataType        : 'html',
-    success         : function (response) { 
-      $('#tbody-table-teachers').empty().append(response);
+    error: function (e) {
+        console.log(e)
+    }
+  });
+});
+
+/**
+ * Delete 
+ * @param {*} id 
+ */
+function deleteRow ( id ) {
+  let route = "app/controllers/profesores.php";
+  let parametros = {
+    id : id,
+    delete : 1
+  }
+  $.ajax({
+    data: parametros,
+    url:   route,
+    type:  'post',
+    dataType : 'html',
+    beforeSend: function () {
+      console.log("Procesando, espere por favor...");
     },
-    error           : function (error) {
-      console.log(error);
+    success:  function (response) {
+      if (response == 'ok') {
+        $(".result-mssg").removeClass('alert-danger').removeClass('alert-info').addClass('alert-success').show().html('<h5>Los datos fueron eliminados con éxito.</h5>');
+        listRows();
+        setTimeout(() => {
+          $(".result-mssg").hide();
+          //window.location.reload();
+        }, 4000);
+      }
+    },
+    error: function (e) {
+        console.log(e)
     }
   });
 }
 
-// Clean
-function limpiar () {
-  $("#nombre").val('');
-  $("#precio").val('');
-  $("#txt_nombre").val('');
-  $("#txt_precio").val('');
-  $('#mssg-edit-eventos').html('');
+/** 
+ * List All
+ */
+function listRows() {
+let route = "app/controllers/profesores.php";
+$.ajax({
+  headers: {
+    Accept        : "application/json; charset=utf-8",
+    "Content-Type": "application/json: charset=utf-8"
+  },
+  url: route,
+  type: "GET",
+  data: {
+    all         : 1,
+    nocache     : '<?php echo rand(99999,66666)?>',
+  },
+  dataType        : 'html',
+  success         : function (response) { 
+    $('#tbody-table-teachers').empty().append(response);
+  },
+  error           : function (error) {
+    console.log(error);
+  }
+});
 }
+
+// Clean inputs
+$('.clean-all-inputs').on('click', ()=>{
+  $('#txt_add_profesor').val('').change();
+  $('#txt_event_asign_add').val('').change();
+  $('#txt_event_class_add').val('').change();
+  $('#select_materias_add').prop('checked', false);
+  $('#select_classes_add').prop('checked', false);
+  $('#date_ini_add').prop('value', false);
+  $('#date_end_add').prop('value', false);
+
+  $('#txt_edit_profesor').val('').change();
+  $('#txt_event_asign_edit').val('').change();
+  $('#txt_event_class_edit').val('').change();
+  $('#select_materias_edit').prop('checked', false);
+  $('#select_classes_edit').prop('checked', false);
+  $('#date_ini_edit').prop('value', false);
+  $('#date_end_edit').prop('value', false);
+});
 
 // Make some default options
-$("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-$("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-
-
+// $("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
+// $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 
 $(document).ready( function () {
     $('#list-table-teachers').DataTable({
@@ -685,19 +863,19 @@ $(document).ready( function () {
       {
       targets: 5,
       orderable: false
-      },{ width: "15%", targets: 0 },{ width: "15%", targets: 1, },{ width: "15%", targets: 2, } ,{ width: "15%", targets: 3 },{ width: "8%", targets: 4 }
+      },{ width: "15%", targets: 0 },{ width: "18%", targets: 1, } ,{ width: "18%", targets: 2 },{ width: "10%", targets: 3 },{ width: "10%", targets: 4 },{ width: "12%", targets: 5 }
     ]
     });
 } );
 
 $("#txt_add_profesor").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#txt_event_asign_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#txt_event_class_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_event_asign_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
+$("#txt_event_class_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 $("#txt_edit_profesor").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#txt_event_asign_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
-$("#txt_event_class_edit").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_event_asign_edit").select2({ width: '80%', dropdownCssClass: "bigdrop"});
+$("#txt_event_class_edit").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
 

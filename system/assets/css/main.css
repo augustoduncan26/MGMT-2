@@ -4879,3 +4879,17 @@ td.column-right{
 	background-color: #428bca !important;
 	border-color: #bce8f1 !important;
 }
+.pre-dump {
+	display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.428571429;
+    color: #16ff16;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #0d0d0d;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: 700 !important;
+}
