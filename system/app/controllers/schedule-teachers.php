@@ -1,7 +1,7 @@
 <?PHP 
 	include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 
-	$P_TablePlanning = PREFIX.'events';
+	$P_TablePlanning = 	PREFIX.'events';
 	$ObjMante		 =	new Mantenimientos();
 	$ObjEjec    	 = 	new ejecutorSQL();
 	$ObjDate 		 =  new fecha();
@@ -18,8 +18,12 @@
 	$IDEMPRESA 		= 	$_SESSION['id_cia'];
 	
 	 // Search in events
-	 $events = $ObjMante->BuscarLoQueSea('*',$P_TablePlanning,'perfil_id IN ('.$id_user.') and activo=1 and id_cia='.$_SESSION['id_cia'],'array');
-	 $events = $events['resultado'];
+	 $events = $ObjMante->BuscarLoQueSea('*',$P_TablePlanning,'FIND_IN_SET('.$id_user.', perfil_id) > 0 and activo=1 and id_cia='.$_SESSION['id_cia'],'array');
+	 if ($events['total'] > 0) {
+		$events = $events['resultado'];
+	 } else {
+		$events = 0;
+	 }
 	 $date   = date('Y-m-d');
 	
 	$selectClases  = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array');

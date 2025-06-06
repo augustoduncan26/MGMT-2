@@ -50,7 +50,7 @@
       <div class="col-md-5 text-right">
           <a data-toggle="modal" class="btn btn-primary clean-all-inputs"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
           <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
+          <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
       </div>
     </div>
 
@@ -72,7 +72,7 @@
 
         <div class="x_content">
             <div class="table-responsive">
-              <table id="list-table-teachers" class="table table-striped table-bordered table-hover">
+              <table id="list-table-students" class="table table-striped table-bordered table-hover">
               <thead>
               <tr class="">
               <th>Nombre</th>
@@ -83,7 +83,7 @@
               <th></th>
               </tr>
               </thead>
-              <tbody id="tbody-table-teachers">
+              <tbody id="tbody-table-students">
               <?php
                 if ($sqlAssignment ['total'] > 0){
                   foreach ($sqlAssignment['resultado'] as $key => $datos) {
@@ -125,9 +125,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Asignación de Profesor</h3>
+          <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Asignación de Estudiante</h3>
         </div>
-         <form name="form_profesores" id="form_profesores" method="post" action="#SELF" enctype="multipart/form-data">
+         <form name="form_alumno" id="form_alumno" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
              <div class="alert alert-danger" id="mssg-add"></div>
              <table class="table table-hover" id="table-add-prof">
@@ -135,13 +135,13 @@
                </thead>
                <tbody>
                  <tr>
-                   <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
+                   <td width="30%">Estudiante / Alumno <span class="symbol required"></span></td>
                    <td width="70%" colspan="3">
-                    <select name="add_profesor[]" id="txt_add_profesor">
+                    <select name="add_alumno[]" id="txt_add_alumno">
                         <?php 
-                          if ($selectTeachers['resultado']) {
+                          if ($selectStudents['resultado']) {
                             echo '<option>seleccionar</option>';
-                            foreach ($selectTeachers['resultado'] as $key => $value) {
+                            foreach ($selectStudents['resultado'] as $key => $value) {
                               echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
                             }
                           }
@@ -207,7 +207,7 @@
            </div>
         <div class="modal-footer">
           <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-          <input name="btn_add" type="button" class="btn btn-primary btn-add-prof" id="btn_add_action" value="Guardar datos">
+          <input name="btn_add" type="button" class="btn btn-primary btn-add-alumno" id="btn_add_action" value="Guardar datos">
         </div>
       </form>
       </div>
@@ -225,23 +225,23 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 &times;
 </button>
-<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Asignación de Profesor</h3>
+<h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Editar Asignación de Estudiante</h3>
 </div>
 <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
  <div class="modal-body" id="contenido_editar">
  <div class="alert alert-danger" id="mssg-edit"></div>
- <table class="table table-hover" id="table-edit-prof">
+ <table class="table table-hover" id="table-edit-alumno">
     <thead>
     </thead>
     <tbody>
       <tr>
-        <td width="30%">Maestro / Profesor <span class="symbol required"></span></td>
+        <td width="30%">Estudiante / Alumno <span class="symbol required"></span></td>
         <td width="70%" colspan="3">
-        <select name="edit_profesor[]" id="txt_edit_profesor">
+        <select name="edit_alumno[]" id="txt_edit_alumno">
             <?php 
-              if ($selectTeachers['resultado']) {
+              if ($selectStudents['resultado']) {
                 echo '<option>seleccionar</option>';
-                foreach ($selectTeachers['resultado'] as $key => $value) {
+                foreach ($selectStudents['resultado'] as $key => $value) {
                   echo '<option value="'.$value['id_usuario'].'">'.$value['nombre'].' '.$value['apellido'].'</option>';
                 }
               }
@@ -309,7 +309,7 @@
 </div>
  <div class="modal-footer">
       <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-      <input name="edit_prof" type="button" class="btn-edit-prof btn btn-primary" id="edit_prof" value="Modificar datos">
+      <input name="edit_aalumno" type="button" class="btn-edit-alumno btn btn-primary" id="edit_alumno" value="Modificar datos">
 </div>
 </form>
 </div>
@@ -341,7 +341,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
-                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Profesor: <label class="nombre-del-profesor h4"></label></h4>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Estudiante: <label class="nombre-del-alumno h4"></label></h4>
             </div>
             <div class="modal-body" style="height: 100% !important">
               
@@ -356,10 +356,10 @@
                 <!-- section 2 -->
                 <div class="col-md-9 flex bg-color-gray-transp border-radius" style="padding: 5px;">
                   <div class="col-md-7" style="padding: 1px;">
-                    <div class="col-md-12"><i class="fa fa-envelope"></i> <label class="email-del-profesor"></label></div>
-                    <div class="col-md-12"><i class="clip-calendar"></i> <label class="cumple-del-profesor"></label></div>
-                    <div class="col-md-12"><i class="clip-phone"></i> <label class="telefono-del-profesor"></label></div>
-                    <div class="col-md-12"><i class="fa fa-medkit"></i> <label class="tiposangre-del-profesor"></label></div>
+                    <div class="col-md-12"><i class="fa fa-envelope"></i> <label class="email-del-alumno"></label></div>
+                    <div class="col-md-12"><i class="clip-calendar"></i> <label class="cumple-del-alumno"></label></div>
+                    <div class="col-md-12"><i class="clip-phone"></i> <label class="telefono-del-alumno"></label></div>
+                    <div class="col-md-12"><i class="fa fa-medkit"></i> <label class="tiposangre-del-alumno"></label></div>
                   </div>
                   <div class="col-md-5" style="padding: 1px;">
                     <div class="col-md-12 bg-color-purple-transp border-radius"><i class="clip-list-2"></i> Clases <label id="total-class-info"> 0 </label></div>
@@ -390,14 +390,6 @@
                 <div class="col-md-12 text-right">Print</div>
               </div>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Modificar datos</button>
-            </div> -->
-            <!-- <div class="modal-footer">
-                <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-                <input name="guardar_data" type="button" class="btn btn-primary" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
-          </div> -->
         </div>
     </div>
 </div>
@@ -415,10 +407,10 @@
             <div class="modal-body">
                 ...
             </div>
-            <!-- <div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
@@ -519,9 +511,9 @@ runNavigationToggler();
 /**
  * Add
  */
-$('.btn-add-prof').on('click', ()=>{ 
+$('.btn-add-alumno').on('click', ()=>{ 
 
-  let nombre      = $('#txt_add_profesor').val();
+  let nombre      = $('#txt_add_alumno').val();
   let asign       = $('#txt_event_asign_add').val();
   let classes     = $('#txt_event_class_add').val();
   let dateini     = $('#date_ini_add').val();
@@ -543,7 +535,7 @@ $('.btn-add-prof').on('click', ()=>{
     return false
   }
 
-  let route = "app/controllers/profesores.php";
+  let route = "app/controllers/estudiantes.php";
 
   $.ajax({
     url: route,
@@ -573,7 +565,7 @@ $('.btn-add-prof').on('click', ()=>{
         $("#mssg-add").removeClass('alert-success').addClass('alert-danger').hide();
       }, 4000);
   
-      $("#txt_add_profesor").val('').change();
+      $("#txt_add_alumno").val('').change();
       $("#txt_event_asign_add").val('').change();
       $("#txt_event_class_add").val('').change();
       $("#date_ini_add").val('');
@@ -600,10 +592,10 @@ const editRow = ( id , tipo ) => {
  
   if ( tipo == 'modal-edit' ) {
     $("#mssg-edit").removeClass('alert-success').removeClass('alert-danger').addClass('alert-info').show().html('<h5>Cargando información. &nbsp; <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i></h5>');
-    $("#table-edit-prof *").prop('disabled',true);
+    $("#table-edit-alumno *").prop('disabled',true);
   }
 
-  let route = "app/controllers/profesores.php";
+  let route = "app/controllers/estudiantes.php";
   $.ajax({
     headers: {
       Accept        : "application/json; charset=utf-8",
@@ -620,14 +612,14 @@ const editRow = ( id , tipo ) => {
     success         : function (response) {
       switch (tipo) {
         case 'modal-edit':
-          if (response['teacher_id']!= null && response['teacher_id']!='' && response['teacher_id']!='NULL') {
-            let arr   = response['teacher_id'].split (",");
+          if (response['student_id']!= null && response['student_id']!='' && response['student_id']!='NULL') {
+            let arr   = response['student_id'].split (",");
             let keys  = Object.keys(arr).length;
             let r  = "";
             arr.forEach((item,key)=>{
               if (item) {
                 r =  arr + ',';
-                $('#txt_edit_profesor').val(arr).change();
+                $('#txt_edit_alumno').val(arr).change();
               }
             });
           }
@@ -659,9 +651,9 @@ const editRow = ( id , tipo ) => {
           $('#event_estado_edit').val(response['activo']).change();
 
           setTimeout(() => {
-            $("#table-edit-prof *").prop('disabled',false);
+            $("#table-edit-alumno *").prop('disabled',false);
             $("#mssg-edit").hide();
-            $("#table-edit-prof").css('pointer-event','all');
+            $("#table-edit-alumno").css('pointer-event','all');
           }, 1000);
 
         break;
@@ -669,7 +661,7 @@ const editRow = ( id , tipo ) => {
         // Modal Info
         case 'modal-info':
           //console.log(response['resultado'][0]['asignment_name'])
-          $('.nombre-del-profesor').html(response['teacher_name']);
+          $('.nombre-del-alumno').html(response['student_name']);
           if (response['photo']=='' || response['photo']==null) {
             $('.photo-user').prop('src', 'repositorio/profile_photos/user.png');
           } else {
@@ -677,10 +669,10 @@ const editRow = ( id , tipo ) => {
           }
           if (response['telefono']=='') { response['telefono'] = '000000000';}
           if (response['tipo_sangre']=='') { response['tipo_sangre'] = '-';}
-          $('.email-del-profesor').html(response['email']);
-          $('.cumple-del-profesor').html(response['birthday']);
-          $('.telefono-del-profesor').html(response['telefono']);
-          $('.tiposangre-del-profesor').html(response['tipo_sangre']);
+          $('.email-del-alumno').html(response['email']);
+          $('.cumple-del-alumno').html(response['birthday']);
+          $('.telefono-del-alumno').html(response['telefono']);
+          $('.tiposangre-del-alumno').html(response['tipo_sangre']);
           if (response['asignment_name'] =='') { response['asignment_name'] = 'No posee materias asignadas';}
 
           $('#total-class-info').html(': ' + response['total_class']);
@@ -706,9 +698,9 @@ const editRow = ( id , tipo ) => {
  * Update
  * @param {*} id  
  */
-$('.btn-edit-prof').on('click', ()=>{ 
+$('.btn-edit-alumno').on('click', ()=>{ 
   let id      = $('#id_row').val();
-  let nombre      = $('#txt_edit_profesor').val();
+  let nombre      = $('#txt_edit_alumno').val();
   let asign       = $('#txt_event_asign_edit').val();
   let classes     = $('#txt_event_class_edit').val();
   let dateini     = $('#date_ini_edit').val();
@@ -729,7 +721,7 @@ $('.btn-edit-prof').on('click', ()=>{
       }, 4000);
     return false
   }
-  let route = "app/controllers/profesores.php"; 
+  let route = "app/controllers/estudiantes.php"; 
 
   var parametros = {
     edit : 1, r1 : nombre, r_r : id, r2:asign, r3:classes, r4: dateini, r5: dateend, r6: estado,
@@ -749,7 +741,7 @@ $('.btn-edit-prof').on('click', ()=>{
         $("#mssg-edit").removeClass('alert-danger').removeClass('alert-info').addClass('alert-success').show().html('<h5>Los datos fueron actualizados con éxito.</h5>');
         listRows();
         setTimeout(() => {
-          $("#mssg-edit").hide();
+          $("#mssg-edit").hide('slow');
           //window.location.reload();
         }, 4000);
       } else {
@@ -771,7 +763,7 @@ $('.btn-edit-prof').on('click', ()=>{
  * @param {*} id 
  */
 function deleteRow ( id ) {
-  let route = "app/controllers/profesores.php";
+  let route = "app/controllers/estudiantes.php";
   let parametros = {
     id : id,
     delete : 1
@@ -804,7 +796,7 @@ function deleteRow ( id ) {
  * List All
  */
 function listRows() {
-let route = "app/controllers/profesores.php";
+let route = "app/controllers/estudiantes.php";
 $.ajax({
   headers: {
     Accept        : "application/json; charset=utf-8",
@@ -818,7 +810,7 @@ $.ajax({
   },
   dataType        : 'html',
   success         : function (response) { 
-    $('#tbody-table-teachers').empty().append(response);
+    $('#tbody-table-students').empty().append(response);
   },
   error           : function (error) {
     console.log(error);
@@ -828,7 +820,7 @@ $.ajax({
 
 // Clean inputs
 $('.clean-all-inputs').on('click', ()=>{
-  $('#txt_add_profesor').val('').change();
+  $('#txt_add_alumno').val('').change();
   $('#txt_event_asign_add').val('').change();
   $('#txt_event_class_add').val('').change();
   $('#select_materias_add').prop('checked', false);
@@ -836,7 +828,7 @@ $('.clean-all-inputs').on('click', ()=>{
   $('#date_ini_add').prop('value', false);
   $('#date_end_add').prop('value', false);
 
-  $('#txt_edit_profesor').val('').change();
+  $('#txt_edit_alumno').val('').change();
   $('#txt_event_asign_edit').val('').change();
   $('#txt_event_class_edit').val('').change();
   $('#select_materias_edit').prop('checked', false);
@@ -850,7 +842,7 @@ $('.clean-all-inputs').on('click', ()=>{
 // $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
 
 $(document).ready( function () {
-    $('#list-table-teachers').DataTable({
+    $('#list-table-students').DataTable({
       pageLength: 25,
       language: {
           url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
@@ -868,12 +860,12 @@ $(document).ready( function () {
     });
 } );
 
-$("#txt_add_profesor").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_add_alumno").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#txt_event_asign_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("#txt_event_class_add").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_add']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 
-$("#txt_edit_profesor").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("#txt_edit_alumno").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("#txt_event_asign_edit").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("#txt_event_class_edit").select2({ width: '80%', dropdownCssClass: "bigdrop"});
 $("[name='event_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});

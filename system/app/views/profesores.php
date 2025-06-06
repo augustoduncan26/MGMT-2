@@ -50,7 +50,7 @@
       <div class="col-md-5 text-right">
           <a data-toggle="modal" class="btn btn-primary clean-all-inputs"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
           <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
+          <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
       </div>
     </div>
 
@@ -390,14 +390,6 @@
                 <div class="col-md-12 text-right">Print</div>
               </div>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Modificar datos</button>
-            </div> -->
-            <!-- <div class="modal-footer">
-                <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
-                <input name="guardar_data" type="button" class="btn btn-primary" id="guardar_data" onClick="var id_row = $('#id_row').val(); updateEvent(id_row)" value="Modificar datos">
-          </div> -->
         </div>
     </div>
 </div>
@@ -415,10 +407,10 @@
             <div class="modal-body">
                 ...
             </div>
-            <!-- <div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
+                <button type="button" class="btn btn-primary">Importar</button>
+            </div>
         </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ class Students
      * list All Students Assignments
      * @return $sqlAssignment
      */
-    public function listAssignments () {
+    public function listStudentsAssignments () {
         $ObjMante      =    new Mantenimientos();
         $sqlAssignment =    $ObjMante->BuscarLoQueSea('*', $this->tableStudentAssignment,'id_cia = '.$this->idCia,'array');
         
@@ -74,7 +74,7 @@ class Students
     public function listAssignmentsById ( $id ) {
         $ObjMante   =   new Mantenimientos();
         $data       =   $ObjMante->BuscarLoQueSea('*',$this->tableStudentAssignment,'id="'.$id.'" and id_cia = '.$this->idCia,'extract');
-        $userInfo 	=   $ObjMante->BuscarLoQueSea('nombre,apellido,email,birthday,photo,telefono,tipo_sangre,genero,direccion',PREFIX.'usuarios','id_usuario="'.$data['teacher_id'].'" and id_cia = '.$this->idCia,'extract');
+        $userInfo 	=   $ObjMante->BuscarLoQueSea('nombre,apellido,email,birthday,photo,telefono,tipo_sangre,genero,direccion',PREFIX.'usuarios','id_usuario="'.$data['student_id'].'" and id_cia = '.$this->idCia,'extract');
         
         $datos 		=	array('nombre','apellido','email','birthday','photo','telefono','tipo_sangre','genero','direccion');
 
@@ -154,10 +154,10 @@ class Students
                 }
             }
 
-            $teacher_name 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_cia="'.$this->idCia.'" and id_usuario = "'.$POST['r1'].'"','extract');
-            $tName 			= 	$teacher_name['nombre']. ' ' .$teacher_name['apellido'];
+            $student_name 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_cia="'.$this->idCia.'" and id_usuario = "'.$POST['r1'].'"','extract');
+            $tName 			= 	$student_name['nombre']. ' ' .$student_name['apellido'];
 
-            $P_Campos 		=	'id_cia,teacher_id,teacher_name,assignment_id,class_id,date_ini,date_end,created_at,activo';
+            $P_Campos 		=	'id_cia,student_id,student_name,assignment_id,class_id,date_ini,date_end,created_at,activo';
             $P_Valores 		=	"'".$this->idCia."','".$POST['r1']."','".$tName."','".$asignArr."','".$classesArr."','".$POST['r5']."','".$POST['r6']."',NOW(),'".$POST['r4']."'";
             $ObjEjec->insertarRegistro($this->tableStudentAssignment, $P_Campos, $P_Valores);
             $this->exito = "ok";
@@ -193,10 +193,10 @@ class Students
             }
         }
 
-        $teacher_name 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_cia="'.$this->idCia.'" and id_usuario = "'.$POST['r1'].'"','extract');
-        $tName 			= 	$teacher_name['nombre']. ' ' .$teacher_name['apellido'];
+        $student_name 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_cia="'.$this->idCia.'" and id_usuario = "'.$POST['r1'].'"','extract');
+        $tName 			= 	$student_name['nombre']. ' ' .$student_name['apellido'];
 
-        $P_Valores = "teacher_id='".$POST['r1']."', teacher_name = '".$tName."', assignment_id='".$asignArr."', class_id='".$classesArr."', date_ini='".$POST['r4']."', date_end='".$POST['r5']."', activo='".$POST['r6']."'";
+        $P_Valores = "student_id='".$POST['r1']."', student_name = '".$tName."', assignment_id='".$asignArr."', class_id='".$classesArr."', date_ini='".$POST['r4']."', date_end='".$POST['r5']."', activo='".$POST['r6']."'";
         $l = $ObjEjec->actualizarRegistro($P_Valores,$this->tableStudentAssignment, 'id = "'.$POST['r_r'].'"');
         if($l == 1){
             $this->exito = 'ok';
@@ -223,12 +223,12 @@ class Students
 	}
 
     public function showAll () {
-        $listAll 	=	$this->listAssignments();
+        $listAll 	=	$this->listStudentsAssignments();
         if ($listAll['total'] > 0) {
             foreach ($listAll['resultado'] as $key => $datos) {
         ?>
             <tr>
-            <td  title="Nombre del Profesor" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['teacher_name'];?></td>
+            <td  title="Nombre del Estudiante" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['student_name'];?></td>
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=isset($datos['asignment_name'])?$datos['asignment_name']:'';?></td>
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=isset($datos['class_name'])?$datos['class_name']:''?></td>
             <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_ini'].' - '.$datos['date_end']?></td>

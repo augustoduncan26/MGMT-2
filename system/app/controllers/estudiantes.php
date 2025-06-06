@@ -3,24 +3,27 @@ include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
-$ObjAssignm = new Assignments();
+$ObjAssignm = new Students();
 
 $id_user    = $_SESSION["id_user"];
 $id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
 $P_Tabla 	= PREFIX.'assoc_teacher_assignment';
-$mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
+//$mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 /**
  * Show All
  */
-$sqlAssignment 		= $ObjAssignm->listAssignments();
+$sqlAssignment 		= $ObjAssignm->listStudentsAssignments();
+$selectPerfil   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles',' (name like "%estudia%" or name like "%alumno%" or name like "%student%") and activo = 1 and id_cia = '.$id_cia,'extract');
+$selectStudents 	= false;
+if (isset($selectPerfil)) {
+	$selectStudents   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_perfil = "'.$selectPerfil['id'].'" and activo = 1 and id_cia = '.$id_cia,'array');
+}
 
-$selectTeachers   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_perfil = 3 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectClases       = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array');
 $selectAssignment   = $ObjMante->BuscarLoQueSea('*',PREFIX.'assignment','activo = 1 and id_cia = '.$id_cia,'array');
-$selectPerfiles     = $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo = 1 and id_cia = '.$id_cia,'array');
 
 /**
  * Add

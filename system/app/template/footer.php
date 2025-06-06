@@ -19,7 +19,7 @@
     <!-- start: FOOTER -->
         <div class="footer clearfix">
             <div class="footer-inner" style="color:black">
-                 DC System &copy; <?php echo date('Y')?>
+                MGMT System &copy; <?php echo date('Y')?>
             </div>
             <div class="footer-items">
                 <span class="go-top"><i class="clip-chevron-up"></i></span>

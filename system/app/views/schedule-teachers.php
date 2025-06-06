@@ -445,6 +445,7 @@ setTimeout(()=>{
       dayMaxEvents: true, // allow "more" link when too many events
       events: [
       <?php 
+      if (!empty($events)) {
       foreach($events as $event):
       ?> 
         { 
@@ -461,7 +462,7 @@ setTimeout(()=>{
           color:  '<?php echo $event['tipo_color']; ?>',
           allDay: false,
         },
-      <?php endforeach;?>
+      <?php endforeach; } ?>
       // Examples
       // {
       //     title: 'Long Event',
