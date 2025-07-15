@@ -1,30 +1,58 @@
-<!-- <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/css/bootstrap_modal_right_sider_bar.css" /> -->
-
 <style>
 @media (min-width: 768px) {
+  .dataTables_filter {
+  width: 30%;
+  /* text-align:justify !important; */
+  /* margin-right: -20px !important; */
+  }
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: 98%;
+  }
+  div.dataTables_wrapper div.dataTables_filter label {
+  width: 200px !important;
+  }
   .modal-xl {
     width: 70%;
-   max-width:1350px;
+    max-width:1350px;
   }
-}
-.dataTables_filter {
-  width: 30%;
-}
-div.dataTables_wrapper div.dataTables_filter input {
-      width: 100%;
-}
-div.dataTables_wrapper div.dataTables_filter label {
-  width: 300px !important;
 }
 .fade {
-    overflow:hidden;
-  }
+  overflow:hidden;
+}
+
+.modal-body {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+.tabla-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  display: none; /* Oculto por defecto */
+}
 </style>
 
 <body>
+
+<!-- Message Exportar -->
+<div class="alert alert-block alert-info fade in hide messg-exportar-process">
+  <button data-dismiss="alert" class="close btn-cancelar-exportar" type="button"> × </button>
+  <p><h4 class="alert-heading mssg-label-exportar"> Esta seguro de querer exportar todos los <?=getPageRealName()?>? </h4></p>
+  <p>
+    <a href="#" class="btn btn-primary btn-acept-exportar"> Aceptar </a>
+    <a href="#" class="btn btn-danger btn-cancelar-exportar"> Cancelar </a>
+  </p>
+</div>
+
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -32,18 +60,20 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="x_title">
       <h3></h3>
       <div class="clearfix"></div>
-      <label id="label-mssg"><?=$mssg?></label>
+       <div class="alert result-mssg"></div>
     </div>
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-list-2"></i> Lista de Usuarios</h4>
+      <h4>
+        <i class="clip-list-2"></i> Lista de Usuarios
+      <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green tooltips"><i class="clip-info"></i></button>
+      </h4>
       </div>
       <div class="col-md-5 text-right">
-        <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos('usuario_listar');$('#usuario_acceso').focus();">[+] Nuevo Usuario</a>
-        <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
-        <!-- <div class="clearfix"></div> -->
+        <?php if(in_array('51', $objPermOpc->getRolPermissions($id_rol))) { ?><a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a><?php } ?>
+        <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+        <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
       </div>
     </div>
 
@@ -57,17 +87,44 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 <div class="row">
   <div class="col-sm-12">
-    <div class=""><!-- panel panel-default -->
-      <!-- <div class="panel-heading">
-        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
-      </div> -->
+    <div class="">
       <div class="panel-body">
         <div class="col-sm-12">
           <div style="height:10px;"></div>
 
-              <div class="x_content">
+          <form method="post" id="filter_form">
+          <div class="row">
+            <div class="col-md-3">
+              <span>Perfil</span>
+              <select class="form-control" name="perfil_select_filter" id="perfil_select_filter">
+                <?php 
+                  if ($listPerfiles['resultado']) {
+                    echo "<option>Todos</option>";
+                    foreach ($listPerfiles['resultado'] as $key => $value) {
+                      echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                    }
+                  }
+                ?>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <span>Buscar</span>
+              <button id="searchButton" class="btn btn-primary form-control"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+          </div>
+          </form>
 
+           <div class="clearfix">&nbsp;</div>
+
+              <div class="x_content">
 			        <div class="table-responsive">
+                <div id="loader" class="tabla-loader">
+                  <div class="spinner-border text-primary" role="status"></div>
+                </div>
+
                 <table id="tabla-list-usuarios" class="table table-striped table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
@@ -84,12 +141,9 @@ div.dataTables_wrapper div.dataTables_filter label {
                         foreach ($listUsers['resultado'] as $key => $value) {
                     ?>
                       <tr>
-                        <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$key+1?></td> -->
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['nombre'].' '.$value['apellido']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['email']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
-                          <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td> -->
-                          <!--'<span class="label label-sm label-success">Activo</span>'-->
                         <td  <?php if($value['activo']==0){?> class="row-yellow-transp" <?php } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
                         <td class="text-center" >
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>
@@ -165,9 +219,9 @@ div.dataTables_wrapper div.dataTables_filter label {
             <input autofocus="" name="cumple_edit" required="" type="date" class="form-control" id="cumple_edit" placeholder="">
             </div>
 
-            <div class="col-md-2 col-sm-3">Foto <!--<span class="symbol required">--></div> 
+            <div class="col-md-2 col-sm-3">Contacto <span class="symbol required"></div> 
             <div class="col-md-4 col-sm-3">
-            <input autofocus="" name="photo_edit" required="" type="file" class="form-control" id="photo_edit" placeholder="">
+            <input autofocus="" name="contacto_edit" required="" type="text" class="form-control" id="contacto_edit" placeholder="">
             </div>
           </div>
 
@@ -235,10 +289,15 @@ div.dataTables_wrapper div.dataTables_filter label {
             <div class="col-md-12 col-sm-12"><input type="checkbox" name="usuario_director_edit" id="usuario_director_edit" /> <i class="clip-user-5"></i> <label for="usuario_director" class="cursor"> Es el director.<small><i>(Es el director del colegio.)</i></small></label></div>
             <div class="col-md-12 col-sm-12" style="display: none;"><input type="checkbox" name="enviar_email_edit" id="enviar_email_edit" /> <i class="clip-bubble-4"></i> <label for="enviar_email" class="cursor">Enviar notificación? <small>(Enviar notificación de creación de cuenta por correo.)</small></label></div>
           </div>
-          <div class="col-md-6 col-sm-6">
-            <small class="color-gray">Imagen de perfil</small>
+          
+          <div class="col-md-2 col-sm-3">
+            <small class="color-gray">Foto de Perfil</small>
             <br />
             <img id="blah" style="width: 100px; height: 100px" src="" alt="" />
+          </div>
+
+          <div class="col-md-4 col-sm-4">Actualizar Foto 
+          <input autofocus="" name="photo_edit" required="" type="file" class="form-control" id="photo_edit" placeholder="">
           </div>
           
         </div>
@@ -266,7 +325,24 @@ div.dataTables_wrapper div.dataTables_filter label {
         </div>
          <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
            <div class="modal-body">
-           <div id="mssg-alert" class="alert"></div>
+            
+          <!-- NAV TAB -->
+          <ul class="nav nav-tabs menu-tabs mb-3" id="myTab" role="tablist">
+            <li class="nav-item cursor" role="presentation">
+              <a class="nav-link active info-personal" onclick="navtablinkclick('info-personal')" style="border-radius: 3px 0 0 0 !important;" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Información Personal</a>
+            </li>
+            <li class="nav-item cursor" role="presentation">
+              <a class="nav-link info-assignment" onclick="navtablinkclick('info-assignment')" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Asignaturas</a>
+            </li>
+            <li class="nav-item cursor" role="presentation">
+              <a class="nav-link info-attendance" onclick="navtablinkclick('info-attendance')" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Asistencias</a>
+            </li>
+          </ul>
+
+          <div class="clearfix">&nbsp;</div>
+
+           <div id="info-personal" class="tabs-contents">
+            <div id="mssg-alert" class="alert"></div>
             <div class="row">
               <div class="col-md-2 col-sm-3">Usuario de acceso <span class="symbol required"> </div>
               <div class="col-md-4 col-sm-3">
@@ -282,9 +358,9 @@ div.dataTables_wrapper div.dataTables_filter label {
             <div class="clearfix">&nbsp;</div>
             <div class="row">
               <div class="col-md-2 col-sm-3">Nombre <span class="symbol required"></div>
-              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_nombre" required="" type="text" class="form-control" id="usuario_nombre" placeholder="Nombre"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_nombre" required="" type="text" maxlength="25" minlength="3" class="form-control" id="usuario_nombre" placeholder="Nombre"></div>
               <div class="col-md-2 col-sm-3">Apellido <span class="symbol required"></div>
-              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_apellido" required="" type="text" maxlength="12" class="form-control" id="usuario_apellido" placeholder="Apellido"></div>
+              <div class="col-md-4 col-sm-3"><input autofocus="" name="usuario_apellido" required="" type="text" maxlength="25" minlength="5" class="form-control" id="usuario_apellido" placeholder="Apellido"></div>
             </div>
 
             
@@ -296,9 +372,9 @@ div.dataTables_wrapper div.dataTables_filter label {
               <input autofocus="" name="cumple_add" required="" type="date" class="form-control" id="cumple_add" >
               </div>
 
-              <div class="col-md-2 col-sm-3">Foto <!--<span class="symbol required">--></div> 
+              <div class="col-md-2 col-sm-3">Contácto <span class="symbol required"></div> 
               <div class="col-md-4 col-sm-3">
-              <input autofocus="" name="photo_add" required="" type="file" class="form-control" id="photo_add">
+              <input name="contacto" required="" placeholder="Contácto de Emergencia" maxlength="50" type="text" class="form-control" id="contacto">
               </div>
             </div>
 
@@ -311,7 +387,18 @@ div.dataTables_wrapper div.dataTables_filter label {
               </div>
               <div class="col-md-2 col-sm-3">Tipo de Sangre </div>
               <div class="col-md-4 col-sm-3">
-                <input type="text" class="form-control" maxlength="30" name="usuario_tiposangre_add" id="usuario_tiposangre_add" />
+                <select class="form-control" name="usuario_tiposangre_add" id="usuario_tiposangre_add" >
+                  <option></option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+                <!-- <input type="text" class="form-control" maxlength="30" name="usuario_tiposangre_add" id="usuario_tiposangre_add" /> -->
               </div>
             </div>
             <div class="clearfix ">&nbsp;</div>
@@ -323,6 +410,7 @@ div.dataTables_wrapper div.dataTables_filter label {
                   <option value="">seleccionar</option>
                   <option value="femenino">Femenino</option>
                   <option value="masculino">Masculino</option>
+                  <option value="otro">Otro</option>
                 </select>
               </div>
               <div class="col-md-2 col-sm-3">Dirección </div>
@@ -334,19 +422,19 @@ div.dataTables_wrapper div.dataTables_filter label {
             <div class="clearfix">&nbsp;</div>
 
             <div class="row">
-            <div class="col-md-2 col-sm-3">Perfil <span class="symbol required"></div>
-              <div class="col-md-4 col-sm-3">
-                <select name="usuario_perfil" id="usuario_perfil">
-                <?php
-                    if (isset($listPerfiles['resultado'])) {
-                      echo "<option></option>";
-                      foreach ($listPerfiles['resultado'] as $key => $value) {
-                        echo "<option value='".$value['id']."'>".$value['name']."</option>";
+              <div class="col-md-2 col-sm-3">Perfil <span class="symbol required"></div>
+                <div class="col-md-4 col-sm-3">
+                  <select name="usuario_perfil" id="usuario_perfil">
+                  <?php
+                      if (isset($listPerfiles['resultado'])) {
+                        echo "<option></option>";
+                        foreach ($listPerfiles['resultado'] as $key => $value) {
+                          echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                        }
                       }
-                    }
-                ?>
-                </select>
-              </div>
+                  ?>
+                  </select>
+                </div>
 
               <div class="col-md-2 col-sm-3">Estado <!--<span class="symbol required">--></div> 
               <div class="col-md-4 col-sm-3">
@@ -362,10 +450,26 @@ div.dataTables_wrapper div.dataTables_filter label {
             
             <hr />
             <div class="row">
-              <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_principal" /> <i class="clip-user-4"></i> Usuario principal. <small><i>(Usuario principal de la sección, área o departamento.)</i></small></div>
-              <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_director" /> <i class="clip-user-5"></i> Es el director.<small><i>(Es el director del establecimiento)</i></small></div>
-              <div class="col-md-12 col-sm-12"><input type="checkbox" id="enviar_email" checked /> <i class="clip-bubble-4"></i> Enviar notificación. <small><i>(Enviar notificación de creación de cuenta por correo.)</i></small></div>
+              <div class="col-md-6">
+                <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_principal" /> <i class="clip-user-4"></i> Usuario principal. <small><i>(Usuario principal de la sección, área o departamento.)</i></small></div>
+                <div class="col-md-12 col-sm-12"><input type="checkbox" id="usuario_director" /> <i class="clip-user-5"></i> Es el director.<small><i>(Es el director del establecimiento)</i></small></div>
+                <div class="col-md-12 col-sm-12"><input type="checkbox" id="enviar_email" checked /> <i class="clip-bubble-4"></i> Enviar notificación. <small><i>(Enviar notificación de creación de cuenta por correo.)</i></small></div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-4 col-sm-4">Foto <!--<span class="symbol required">--></div> 
+                <div class="col-md-8 col-sm-8">
+                <input autofocus="" name="photo_add" required="" type="file" class="form-control" id="photo_add">
+              </div>
+              </div>
+              
             </div>
+           </div>
+
+           <div id="info-assignment" class="tabs-contents">Asignaturas</div>
+
+           <div id="info-attendance" class="tabs-contents">Asistencias</div>
+
+
            </div>
         <div class="modal-footer">
         <button aria-hidden="true" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
@@ -378,29 +482,58 @@ div.dataTables_wrapper div.dataTables_filter label {
 <!-- End Add Modal -->
 
 
-<!-- Side Bar Modal -->
-<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-</button> -->
-
-<div class="modal fade  come-from-modal right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Assistant -->
+<div class="modal fade  come-from-modal right" id="myAssistant" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!-- <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div> -->
-            <div class="modal-body">
-                ...
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Asistente</h4>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
+            <div class="modal-body" >
+                <div class="table-responsive-xxl">          
+                        <div class="col-md-10">
+                        What is Lorem Ipsum?
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+
+Where does it come from?
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+
+                        </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<!-- container -->
+
+<!-- Importar -->
+<div class="modal fade  come-from-modal right" id="myImporter" role="dialog" aria-labelledby="myModalImporter">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalImporter"><i class="clip-download-3"></i> Importador</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div id="loader" style="display:none; text-align: center;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div> -->
 
 <?php get_template_part('footer_scripts');?>
 
@@ -410,6 +543,32 @@ div.dataTables_wrapper div.dataTables_filter label {
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
+/** 
+ * Open Asistant Modal 
+*/
+$('.open-assistant').on('click', ()=>{
+  $('#myAssistant').modal('show'); 
+});
+
+/** Btn Exportar */
+$('.btn-exportar').on('click', ()=>{
+  if ($('.messg-exportar-process').is(':visible')) {
+    $('.messg-exportar-process').removeClass('hide');
+  } else {
+    $('.messg-exportar-process').removeClass('hide').fadeIn('slow');
+  }
+});
+/** 
+ * Acept Exportar
+ */
+$('.btn-acept-exportar').on('click',()=>{
+  $('.btn-acept-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.btn-cancelar-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.mssg-label-exportar').html('Estamos exportando los datos, espere por favor... <img src="assets/images/loading.gif" id="cargando_list" />');
+  console.log('Procesando Exportar')
+});
+
+
 
 $('#cargando_add').hide();
 $('#usuario_area').prop('disabled',true);
@@ -420,6 +579,7 @@ $('#usuario_acceso').on('input', ()=>{
   console.log(res)
 });
 
+$('.result-mssg').hide();
 $('#mssg-alert').hide();
 
 $("[name='generar-clave']").on('click', ()=> {
@@ -439,6 +599,7 @@ $("[name='agregar_usuario']").on('click', ()=>{
   let clave       =   $('#usuario_clave').val();
   let nombre      =   $('#usuario_nombre').val();
   let genero      =   $('#usuario_genero').val();
+  let contacto    =   $('#contacto').val();
   let direccion   =   $('#usuario_direccion').val();
   let apellido    =   $('#usuario_apellido').val();
   let telef       =   $('#usuario_telefono_add').val();
@@ -469,7 +630,7 @@ $("[name='agregar_usuario']").on('click', ()=>{
     return false
   }
 
-  if (user_acceso.length < 1 ||  clave.length < 1 || nombre.length < 1 || apellido.length < 1 || perfil.length < 1) {
+  if (user_acceso.length < 1 ||  clave.length < 1 || nombre.length < 1 || apellido.length < 1 || perfil.length < 1 || contacto.length < 1) {
     $("#mssg-alert").show().removeClass('alert-success').addClass('alert-danger').html('Los campos con (*) son necesarios');
     setTimeout(()=>{
       $("#mssg-alert").hide();
@@ -501,6 +662,7 @@ $("[name='agregar_usuario']").on('click', ()=>{
   form_data.append('clave', clave);
   form_data.append('nombre', nombre);
   form_data.append('genero', genero);
+  form_data.append('contacto', contacto);
   form_data.append('direccion', direccion);
   form_data.append('apellido', apellido);
   form_data.append('perfil', perfil);
@@ -765,22 +927,79 @@ function deleteRow () {
  * Datatable
  */
 $(document).ready( function () {
+    $('#loader').show();
     $('#tabla-list-usuarios').DataTable({
+      lengthMenu: [10, 25, 50, 75, 100],
+      order: [0, 'desc'],
+      processing: true,
+      // serverSide: true,
+      responsive: true,
       pageLength: 25,
       language: {
           url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
           search: '',
           searchPlaceholder: "Buscar",
       },
+      initComplete: function () {
+        setTimeout(() => {
+          $('#loader').hide();
+        }, 300); // muestra el loader por 300ms aunque sea
+      },
       columnDefs: 
       [ 
         {
           targets: 4,
           orderable: false
-        }, { width: "15%", targets: 0 } , { width: "15%", targets: 1 } , { width: "15%", targets: 2 } , { width: "8%", targets: 3 } , { width: "10%", targets: 4 } 
-      ]
+        }, 
+        { width: "15%", targets: 0 } , 
+        { width: "15%", targets: 1 } , 
+        { width: "15%", targets: 2 } , 
+        { width: "8%", targets: 3 } , 
+        { width: "10%", targets: 4 } 
+      ],
+        drawCallback: function () {
+        // if (!$('#searchButton').length) {
+        //   $("#tabla-list-usuarios_filter").append(
+        //     `<button id="searchButton" class="btn btn-primary" style="margin-left:10px;"><i class="fas fa-search"></i></button>`
+        //   );
+        // }
+        
+        // $('#searchButton').on('click', function () {
+        //     $('#filter_form').submit();
+        //  });
+
+        }
     });
-} );
+});
+
+
+/**
+ * Search and brind specific filter
+ */
+$('#searchButton').on('click', function (e) {
+    e.preventDefault();
+    $('#loader').show();
+    let perfil = $('#perfil_select_filter').val();
+    let route = 
+    $.ajax({
+      url: 'app/controllers/usuarios-listar.php', // point to server-side PHP script 
+      dataType: 'html',
+      data: {
+        r1  : 'query',
+        r2  : perfil,
+      },
+      type: 'post',
+      success: function (response) {
+         setTimeout(() => {
+          $('#loader').hide();
+        }, 300); // muestra el loader por 300ms aunque sea
+        $('#tbody-table-perfiles').empty().append(response);
+      },
+      error: function (response) {
+      }
+    });
+});
+
 
 // Clean
 function limpiarCampos (form = false) {
@@ -800,12 +1019,28 @@ function limpiarCampos (form = false) {
   }
 }
 
+$('.tabs-contents').hide();
+$('#info-personal').show();
+
+const navtablinkclick = (name) => {
+  $('.nav-link').removeClass('active');
+  $('.'+name).addClass('active');
+  var x = document.getElementsByClassName("tabs-contents");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(name).style.display = "block"; 
+}
+
+$("[name='perfil_select_filter']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+
 $("[name='usuario_estado']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil']").select2({width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_estado_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_perfil_edit']").select2({width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_genero']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 $("[name='usuario_genero_edit']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
+$("[name='usuario_tiposangre_add']").select2({width:'100%', dropdownCssClass:"bigdrop"});
 
 </script>
 

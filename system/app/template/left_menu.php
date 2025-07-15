@@ -61,11 +61,11 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Teachers -->
 		<?PHP if(in_array('100', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li <?php if(GET()[0] == 'Profesores'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Profesores" data-placement="right" title="Lista de Profesores">
+			<li <?php if(GET()[0] == 'Profesores'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Asignación de Profesores" data-placement="right" title="Asignación de Profesores">
 			<a href="?Profesores" class="nav__link">
 			<div class="list__button">
 				<img src="assets/images/teacher.png" class="icon-teachers" />
-				<span class="title">Profesores</span>
+				<span class="title">Asig. Profesores</span>
 			</div>
 			</a>
 		</li>
@@ -85,11 +85,11 @@ $id_cia     	= $_SESSION['id_cia'];
 
 		<!-- Students / Estudiantes-->
 		<?PHP if(in_array('150', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li <?php if(GET()[0] == 'Estudiantes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Lista de Estudiantes" data-placement="right" title="Lista de Estudiantes">
+			<li <?php if(GET()[0] == 'Estudiantes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Asignación de Estudiantes" data-placement="right" title="Asignación de Estudiantes">
 			<a href="?Estudiantes" class="nav__link">
 			<div class="list__button">
 				<i class="clip-users-2"></i>
-				<span class="title">Estudiantes</span>
+				<span class="title">Asig. Estudiantes</span>
 				<!-- <span class="selected"></span> -->
 			</div>
 			</a>

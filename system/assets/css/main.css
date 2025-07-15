@@ -4893,3 +4893,12 @@ td.column-right{
     border-radius: 4px;
     font-weight: 700 !important;
 }
+.menut-tabs, .nav-item > a {
+	color: #428bca !important;
+    text-decoration: none;
+}
+.menut-tabs, .nav-link.active {
+	color: #495057 !important;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}

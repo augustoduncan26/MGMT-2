@@ -9,7 +9,7 @@ $email 			= $_SESSION['email'];
 $username 		= $_SESSION['username'];
 $P_tabla   		= PREFIX.'usuarios';
 
-$evensLists 	= $ObjMante->BuscarLoQueSea('*',PREFIX.'events',false,'array');
+$evensLists 	= $ObjMante->BuscarLoQueSea('*',PREFIX.'events','activo=1','array');
 $totalStudents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=2',false);
 $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
 
@@ -184,12 +184,13 @@ $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
                 <ul class="todo">
                     <?php
                         foreach ($evensLists['resultado'] as $key => $value) {
+                            $date = explode(' ',$value['created_at']);
                     ?>
                     <li>
                         <a class="todo-actions" href="javascript:void(0)">
                             <i class="fa fa-square-o"></i>
                             <span class="desc" style="opacity: 1; text-decoration: none;"><?=$value['name']?></span>
-                            <span class="label label-danger" style="opacity: 1;"> today</span>
+                            <span class="label label-success" style="opacity: 1;"> <?=$date[0]?></span>
                         </a>
                     </li>
                     <?php

@@ -31,7 +31,7 @@ class Attendances
         }
             $this->exito    =   $ObjMante->BuscarLoQueSea('*',$this->tableAttendance,'id_cia = '.$this->idCia.$where,'array');
         if ($this->exito['total'] > 0) {
-            return $this->exito['resultado'];
+            return $this->exito;
         } else {
             return false;    
         }

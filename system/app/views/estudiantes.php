@@ -43,7 +43,7 @@
     <div class="container">
       <div class="col-md-7">
       <h4>
-      <img src="assets/images/teacher.png" class="icon-teachers" /> Listado de <?=getPageRealName()?> 
+      <img src="assets/images/teacher.png" class="icon-teachers" /> Listado de Asignaciones de <?=getPageRealName()?> 
         <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green tooltips"><i class="clip-info"></i></button>
       </h4>
       </div>
