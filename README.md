@@ -1,6 +1,7 @@
 # MGMT-2
 Free framework for Beginners
-(Feel free to use)
+FF2U
+(Feel free 2 use)
 
 # Setting
 To change the settings use the .env file
