@@ -7,6 +7,7 @@ FF2U
 
 # Architecture
 Model Vista U-Controller
+PHP - React Web - Bootstrap - CSS3 - Ajax
 
 # Setting
 To change the settings use the .env file
