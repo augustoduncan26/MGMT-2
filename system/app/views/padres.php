@@ -67,9 +67,6 @@
 <div class="row">
   <div class="col-sm-12">
     <div class=""><!-- panel panel-default -->
-      <!-- <div class="panel-heading">
-        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
-      </div> -->
       <div class="panel-body">
         <div class="col-sm-12">
           <div style="height:10px;"></div>
@@ -79,7 +76,6 @@
               <table id="list-table-teachers" class="table table-striped table-bordered table-hover">
               <thead>
               <tr class=""><!-- header-list-table -->
-              <!-- <th style="width:10px"><input type="checkbox" /></th> -->
               <th title="Nombre del Profesor">Nombre</th>
               <th>Email</th>
               <th>Materia</th> 

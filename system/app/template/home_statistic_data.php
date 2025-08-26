@@ -35,7 +35,6 @@ $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
 	<div class="col-sm-4">
 		<div class="core-box core-box-top-menu">
 			<div class="heading">
-				<!-- <i class="clip-user-4 circle-icon circle-green"></i> -->
 				<i class="clip-users-2 circle-icon circle-green"></i>
 				<h2 style="text-align: left;">Estudiantes</h2>
 			</div>

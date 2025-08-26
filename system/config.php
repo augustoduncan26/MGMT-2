@@ -43,7 +43,6 @@ define("DB_CLAVE_S"	,	"");
 $linkServidor 	=	$mysqli; 
 
 // SHOW ERRORS / PHP
-//error_reporting(E_ALL);
 //ini_set('error_reporting', E_ALL);
 $PROTOCOLO      =   stripos($_SERVER['SERVER_PROTOCOL'],'http') === true ? 'https://' : 'http://';
 $URL 			=	$PROTOCOLO.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

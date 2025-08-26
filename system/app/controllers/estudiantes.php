@@ -10,7 +10,6 @@ $id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
 $P_Tabla 	= PREFIX.'assoc_teacher_assignment';
-//$mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 /**
  * Show All

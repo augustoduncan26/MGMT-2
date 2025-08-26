@@ -1,1 +1,0 @@
-Su pago esta en proceso

@@ -16,8 +16,6 @@ $P_Tabla 	= PREFIX.'events';
 $selectClases  = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array','class_name,grade');
 $selectPerfiles= $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id <> 100 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectEventos = $ObjEvents->list();
-//dump($selectEventos);
-//$ObjMante->BuscarLoQueSea('*',PREFIX.'events','id_cia = '.$id_cia,'array');
 
 /**
  * Add
@@ -30,6 +28,7 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
  * Select All
 */
 if (isset($_GET['all']) && $_GET['all'] == 1) {
+	$resultClass    = false;
 	$where 			= 	'id_cia="'.$id_cia.'"';
     $listEvents 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,$where,'array','name');
 	if ($listEvents['total'] > 0) {

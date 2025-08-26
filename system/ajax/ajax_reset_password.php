@@ -9,11 +9,6 @@
 
 		$Data       	= $ObjMante->BuscarLoQueSea('AES_DECRYPT(contrasena,"toga") as decript,id_usuario,nombre,email,usuario,caracteres,id_usuario',PREFIX.'users','usuario = "'.$_POST['emailReset'].'" and activo=1');
 		
-		//var_dump($Data["resultado"][0]['nombre']);
-		//echo $SQ['total'];
-		//exit;
-		//$SQ		=	mysql_query("Select AES_DECRYPT(contrasena,'toga') as decript,nombre,email,usuario,caracteres,id_usuario FROM usuarios WHERE usuario ='".$_POST['emailReset']."' AND activo = 1");
-
 		if ( $Data['total']==1 ) {
 
 			$P_Valores = "caracteres = '".$CARACTERES."', token='".$CARACTERES."', updated_at=NOW()";
@@ -29,14 +24,6 @@
 						&nbsp;&nbsp;Este enlace estar&aacute; activo por 24 horas<br />
 						";
 
-				// $P_Tabla 	=	PREFIX.'users';
-				// $P_Campos 	=	'usuario,contrasena,nombre,apellido,email,created_at,updated_at,fecha_ult_acceso,principal,caracteres,activo,telephone,direcction';
-				// $P_Valores 	=	"'".$_POST['email']."', AES_ENCRYPT('".$_POST['password']."','toga'),'".$_POST['full_nombre']."','','".$_POST['email']."','".date('Y-m-d H:i:s')."','".date('Y-m-d H:i:s')."','".date('Y-m-d H:i:s')."',1,'".$CARACTERES."','0','',''";
-				// $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);
-
-				//mysql_query("Insert into usuarios_reset_passwd (id_usuario,caracters,date,active) values ('".$Data['id_usuario']."','".$CARACTERES."',NOW(),1)")or die('Error: '.mysql_error());
-
-
 				$mail_to_send_to= $_POST['emailReset'];
 				$from_email 	= $_ENV['MAIL_FROM_ADDRESS'];
 				$subject		= "Restablecer Contraseña";
@@ -47,10 +34,7 @@
 				$headers 		.= "Content-Type: text/html; charset=UTF-8\r\n";
 				$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
 				$mensaje		=	'Te hemos enviado un correo a: '.$_POST['emailReset'].', solo sigue las instrucciones';
-
-				// $Obj->Enviar($Data['email'], $asunto , $mensaG , 'augustoduncan26@hotmail.com' ,false,false);
-				// $mensaje		=	'Te hemos enviado un correo a: '.$_POST['emailReset'].', solo sigue las instrucciones';
-								//Hemos enviado tu clave de acceso a tu correo electronico.';
+				//Hemos enviado tu clave de acceso a tu correo electronico.';
 				$_POST		=	'';
 		}else
 		{

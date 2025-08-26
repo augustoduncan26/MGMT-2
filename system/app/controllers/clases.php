@@ -1,8 +1,4 @@
 <?php
-// if(!defined('MyConst')) {
-//     die('Direct access not permitted');
-//  }
-//  define('MyConst', TRUE);
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 include_once ( dirname(dirname(__DIR__)) . '/functions.php');
 $ObjMante   = new Mantenimientos();

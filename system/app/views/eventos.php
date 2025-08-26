@@ -58,7 +58,6 @@
       <div class="col-md-5 text-right">
         <?php if(in_array('51', $objPermOpc->getRolPermissions($id_rol))) { ?><a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo">[+] Nuevo</a><?php } ?>
         <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-        <!-- <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a> -->
       </div>
     </div>
 
@@ -217,7 +216,6 @@
                         ?>
                     </select>
                     <input type="checkbox" id="select_classes" /> <lable class="color-gray">Seleccionar todos </lable>
-                    <!-- <small class="color-gray">Clase(s) que puedan ver este evento. </small> -->
                    </td>
                    <td width="15%">Perfil</td>
                  <td width="35%">
@@ -230,7 +228,6 @@
                           }
                         ?>
                     </select>
-                    <!-- <small class="color-gray">Perfil(es) que puedan ver este evento. </small> -->
                     <input type="checkbox" id="select_perfiles" />  <label class="color-gray">Seleccionar todos</label>
                    </td>
                  </tr>
@@ -283,7 +280,6 @@
 </div>
 <form name="add_eventos" id="add_eventos" method="post" action="#SELF" enctype="multipart/form-data">
       <div class="modal-body">
-        <!-- <div id="mssg-add-eventos" style="color:red;"></div> -->
         <table class="table table-hover" id="table-eventos-edit">
           <thead>
           </thead>
@@ -389,25 +385,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
                 <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Asistente</h4>
             </div>
             <div class="modal-body" >
                 <div class="table-responsive-xxl">          
-                        <div class="col-md-10">
-                        What is Lorem Ipsum?
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-
-Where does it come from?
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-
-                        </div>
+                  <div class="col-md-10">
+                  What is Lorem Ipsum?
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                  Why do we use it?
+                  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                  Where does it come from?
+                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                  </div>
                 </div>
             </div>
         </div>
@@ -419,7 +409,6 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
                 <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalImporter"><i class="clip-download-3"></i> Importador</h4>
             </div>
@@ -639,7 +628,6 @@ function editRow ( id ) {
       $('#event_edit_hora_fin').val(hora2[1]);
       $('#event_estado_edit').select2('val',response['activo']);
       $('#event_class_edit').select2('val',response['class_id']);
-      //$('#tipo_color_edit').select2('val', response['tipo_color']).change();
       $('#tipo_color_edit').val(response['tipo_color']).change();
 
       if (response['class_id']!= null && response['class_id']!='' && response['class_id']!='NULL') {
@@ -832,9 +820,7 @@ $(document).ready( function () {
 
 
 function goToTopPage(){
-  //jQuery('.go-top').on('click', ()=> {
-      jQuery('html, #add_eventos').animate({scrollTop: '0px'}, 'slow');
-  //});
+  jQuery('html, #add_eventos').animate({scrollTop: '0px'}, 'slow');
 }
 
 $("#text_event_perfil_add").select2({ width: '100%', dropdownCssClass: "bigdrop"});
