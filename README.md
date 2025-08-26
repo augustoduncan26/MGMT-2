@@ -1,5 +1,5 @@
 # MGMT-2
-Free Fframework for Beginners
+Free framework for Beginners
 (Feel free to use)
 
 # Setting
