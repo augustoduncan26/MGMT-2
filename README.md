@@ -6,7 +6,10 @@ FF2U
 (Feel free 2 use)
 
 # Architecture
+MV U-C
+
 Model Vista U-Controller
+
 PHP - React Web - Bootstrap - CSS3 - Ajax
 
 # Setting
