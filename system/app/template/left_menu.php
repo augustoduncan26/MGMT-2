@@ -90,7 +90,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-users-2"></i>
 				<span class="title">Asig. Estudiantes</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -114,7 +113,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="fa fa-group"></i>
 				<span class="title">Padres</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -127,7 +125,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="fa fa-indent"></i>
 				<span class="title">Asignaturas / Materias</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -140,7 +137,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-list-2"></i>
 				<span class="title">Clases</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -154,7 +150,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-calendar-3"></i>
 				<span class="title">Examenes</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -167,7 +162,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="fa fa-tasks"></i>
 				<span class="title">Tareas</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -180,7 +174,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-list-2"></i>
 				<span class="title">Resultados</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -193,7 +186,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			<div class="list__button">
 				<i class="clip-checkbox"></i>
 				<span class="title">Asistencias</span>
-				<!-- <span class="selected"></span> -->
 			</div>
 			</a>
 		</li>
@@ -210,18 +202,6 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
-
-		<!-- Announcements -->
-		<!-- <?PHP if(in_array('650', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-			<li class="list_item">
-			<a href="?Anuncios" class="nav__link">
-			<div class="list__button">
-				<i class="fa fa-bell"></i>
-				<span class="title">Anuncios</span>
-			</div>
-			</a>
-		</li>
-		<?php } ?> -->
 
 
 		<!-- Planning -->
@@ -242,18 +222,6 @@ $id_cia     	= $_SESSION['id_cia'];
 						<i class="clip-calendar"></i><span class="title"> Planner </span>
 					</a>
 				</li>
-
-				<!-- <li <?php if(GET()[0] == 'planning-bookers'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?planning-bookers" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Agencias / Bookers </span>
-					</a>
-				</li> -->
-
-				<!-- <li <?php if(GET()[0] == 'planning-clientes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?planning-clientes" class="nav__link nav__link--inside">
-						<i class="clip-calendar"></i><span class="title"> Clientes </span>
-					</a>
-				</li> -->
 			</ul>
 		</li>
 		<?php } ?>
@@ -268,7 +236,6 @@ $id_cia     	= $_SESSION['id_cia'];
 				<i class="clip-settings"></i>
 				<span class="title" >&nbsp;&nbsp;Mantenimientos</span>
 				<i class="fa icon-arrow"></i>
-				<!-- <span class="selected"></span> -->
 			</a>
 			<img src="assets/images/arrow.svg" class="list__arrow arrow_usuarios">
 			</div>
@@ -309,249 +276,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		<!-- End: Menun Usuarios -->
 
 
-		<!-- 
-		/**
-		* Caja
-		*/
-		-->
-		<?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
-		<?PHP if(in_array('900', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-		<li class="list_item list__item--click <?php if (strpos(GET()[0],'caja')!==false) { echo  'active open'; }?>" >
-			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="fa fa-money"></i>
-				<span class="title" >&nbsp;Caja </span>
-				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
-			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_caja">
-			</div>
-
-			<ul class="list__show">
-				<li <?php if(GET()[0] == 'caja'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?caja" class="nav__link nav__link--inside">
-						<i class="fa fa-money"></i><span class="title"> Caja </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'caja-pagos'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?caja-pagos" class="nav__link nav__link--inside">
-						<i class="fa fa-money"></i><span class="title"> Pagos </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'caja-compras'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?caja-comparas" class="nav__link nav__link--inside">
-						<i class="fa fa-money"></i><span class="title"> Compras </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'caja-ventas'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?caja-ventas" class="nav__link nav__link--inside">
-						<i class="fa fa-money"></i><span class="title"> Ventas </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'caja-productos'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?caja-productos" class="nav__link nav__link--inside">
-						<i class="fa fa-money"></i><span class="title"> Productos </span>
-					</a>
-				</li>
-				
-				<ul class="list__show">
-					<li <?php if(GET()[0] == 'caja-categorias'){ echo ' class="menu-backg-item"';}?>>
-						<a href="?caja-categorias" class="nav__link nav__link--inside">
-							<i class="fa fa-tasks"></i><span class="title"> Categorías </span>
-						</a>
-					</li>
-					<li <?php if(GET()[0] == 'caja-clientes'){ echo ' class="menu-backg-item"';}?>>
-						<a href="?caja-clientes" class="nav__link nav__link--inside">
-							<i class="fa fa-user"></i><span class="title"> Clientes </span>
-						</a>
-					</li>
-					<li <?php if(GET()[0] == 'caja-proveedores'){ echo ' class="menu-backg-item"';}?>>
-						<a href="?caja-proveedores" class="nav__link nav__link--inside">
-							<i class="fa fa-truck"></i><span class="title"> Proveedores </span>
-						</a>
-					</li>
-				</ul>
-
-			</ul>
-
-		</li>
-		<?php } ?>
-		<!-- End: Caja -->
-
-
-		<!-- 
-		/**
-		* Modulo Facturacion
-		*/
-		-->
-        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
-		<?PHP if(in_array('950', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-		<li class="list_item list__item--click <?php if (strpos(GET()[0],'facturacion')!==false) { echo  'active open'; }?>" >
-			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="clip-file-2"></i>
-				<span class="title" >&nbsp;Módulo Facturación </span>
-				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
-			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_facturacion">
-			</div>
-
-			<ul class="list__show">
-				<li <?php if(GET()[0] == 'facturacion'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?facturacion" class="nav__link nav__link--inside">
-						<i class="clip-file-2"></i><span class="title"> Facturación </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'facturacion-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?facturacion-reportes" class="nav__link nav__link--inside">
-						<i class="fa fa-file"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-			</ul>
-
-		</li>
-		<?php } ?>
-		<!-- End: Facturacion -->
-
-
-		<!-- 
-		/**
-		* Modulo Inventario
-		*/
-		-->
-        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
-		<?PHP if(in_array('1000', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-		<li class="list_item list__item--click <?php if (strpos(GET()[0],'inventario')!==false) { echo  'active open'; }?>" >
-			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="clip-list-2"></i>
-				<span class="title" >&nbsp;Módulo Inventario </span>
-				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
-			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_inventario">
-			</div>
-
-			<ul class="list__show">
-				<li <?php if(GET()[0] == 'inventario'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?inventario" class="nav__link nav__link--inside">
-						<i class="clip-list-2"></i><span class="title"> Inventario </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'inventrio-contabilizar'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?inventrio-contabilizar" class="nav__link nav__link--inside">
-						<i class="clip-list-2"></i><span class="title"> Contabilizar </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'inventrio-categorias'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?inventrio-categorias" class="nav__link nav__link--inside">
-						<i class="clip-list-2"></i><span class="title"> Categorías </span>
-					</a>
-				</li>
-			</ul>
-
-		</li>
-		<?php } ?>
-		<!-- End: Inventario -->
-
-
-		<!-- 
-		/**
-		* Modulo Contabilidad
-		*/
-		-->
-        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
-		<?PHP if(in_array('1050', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-		<li class="list_item list__item--click <?php if (strpos(GET()[0],'contabilidad')!==false) { echo  'active open'; }?>" >
-			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="clip-stack-empty"></i>
-				<span class="title" >&nbsp;Módulo Contabilidad </span>
-				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
-			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_contabilidad">
-			</div>
-
-			<ul class="list__show">
-				<li <?php if(GET()[0] == 'contabilidad'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?contabilidad" class="nav__link nav__link--inside">
-						<i class="clip-stack-empty"></i><span class="title"> Contabilidad </span>
-					</a>
-				</li>
-			</ul>
-		</li>
-		<?php } ?>
-		<!-- End Contabilidad -->
-
-		<!-- Reportes -->
-        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
-		<?PHP if(in_array('1100', $objPermOpc->getRolPermissions($id_rol))) {   ?>
-		<li class="list_item list__item--click <?php if (strpos(GET()[0],'reportes')!==false) { echo  'active open'; }?>" >
-			<div class="list__button list__button--click">
-			<a href="javascript:void(0)" class="nav__link"><i class="clip-stack-2"></i>
-				<span class="title" >&nbsp;Reportes </span>
-				<i class="fa icon-arrow"></i>
-				<span class="selected"></span>
-			</a>
-			<img src="assets/images/arrow.svg" class="list__arrow arrow_reportes">
-			</div>
-
-			<ul class="list__show">
-				<li <?php if(GET()[0] == 'reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes/" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-				<li <?php if(GET()[0] == 'reportes-reportes'){ echo ' class="menu-backg-item"';}?>>
-					<a href="?reportes-reportes" class="nav__link nav__link--inside">
-						<i class="clip-stack-2"></i><span class="title"> Reportes </span>
-					</a>
-				</li>
-			</ul>
-
-		</li>
-		<?php } ?>
-		<!-- End Reportes -->
-
 		<!-- Configurations -->
-        <?php //if ($objPermOpc->checkUserRol($_SESSION['id_user']) == 100 ) { ?>
 		<?PHP if(in_array('9999', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 		<li class="list_item list__item--click tooltips" data-original-title="Configuraciones" data-placement="right" title="Configuraciones" <?php if (strpos(GET()[0],'configurar')!==false) { echo  'class = "active open"'; }?> >
 			<div class="list__button list__button--click">
@@ -564,34 +289,30 @@ $id_cia     	= $_SESSION['id_cia'];
 			</div>
 
 			<ul class="list__show">
-				<?php //if ($objPermOpc->tienePermiso(5001)) { ?>
 				<li <?php if(GET()[0] == 'configurar-datos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-datos" class="nav__link nav__link--inside">
 						<i class="clip-settings"></i><span class="title"> Configuración </span>
 					</a>
 				</li>
-				<?php //} ?>
-				<?php //if ($objPermOpc->tienePermiso(5002)) { ?>
+		
 				<li <?php if(GET()[0] == 'configurar-users'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-users" class="nav__link nav__link--inside">
 						<i class="clip-user-plus"></i><span class="title"> Usuarios </span>
 					</a>
 				</li>
-				<?php //} ?>
-				<?php //if ($objPermOpc->tienePermiso(5003)) { ?>
+			
 				<li <?php if(GET()[0] == 'configurar-perfiles'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-perfiles" class="nav__link nav__link--inside">
 						<i class="clip-users-2"></i><span class="title"> Perfiles </span>
 					</a>
 				</li>
-				<?php //} ?>
-				<?php //if ($objPermOpc->tienePermiso(5004)) { ?>
+			
 				<li <?php if(GET()[0] == 'configurar-permisos'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-permisos" class="nav__link nav__link--inside">
 						<i class="clip-key"></i><span class="title"> Permisos </span>
 					</a>
 				</li>
-				<?php //} ?>
+				
 				<li <?php if(GET()[0] == 'configurar-notificaciones'){ echo ' class="menu-backg-item"';}?>>
 					<a href="?configurar-notificaciones" class="nav__link nav__link--inside">
 						<i class="clip-list-4"></i><span class="title"> Notificaciones </span>
@@ -628,8 +349,6 @@ $(document).ready(()=>{
 		let explode = queryString.split('-');
 		explode.forEach (function (name , i) {
 			if (name) {
-				//console.log(name)
-				//goToEspecificTag('#'+name);
 				let linkMenu = '.arrow_'+name;
 				$(linkMenu).trigger('click');
 			}

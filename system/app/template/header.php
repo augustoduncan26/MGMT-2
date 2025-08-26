@@ -2,9 +2,7 @@
         <title><?=$_ENV['APP_NAME']?></title>
         <!-- start: META -->
         <meta charset="utf-8" />
-        <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-        <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta content="" name="description" />
         <meta content="" name="author" />
@@ -36,25 +34,12 @@
         
         <!-- End JQuery -->
 
-        <!--[if IE 7]>
-        <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome-ie7.min.css">
-        <![endif]-->
-        <!-- end: MAIN CSS -->
-
     
         <!-- JS -->
         <script src="assets/js/functions.js"></script>
 
         <script src="assets/js/jquery-validate/jquery.validate.min.js"></script>
         <script src="assets/js/jquery-validate/additional-methods.min.js"></script>
-       
-        <!--[if IE 7]>
-        <link rel="stylesheet" href="../assets/plugins/font-awesome/css/font-awesome-ie7.min.css">
-        <![endif]-->
-
-
-      <!--   <link rel="stylesheet" href="assets/css/custom.min.css"> -->
-
 
         <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
         <link rel="icon" type="image/x-icon" href="assets/images/template/mgmt_logo_transparent.ico" />
@@ -71,7 +56,6 @@
         <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
         <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
-        <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
         <!-- // End load react -->
 
         <!-- 

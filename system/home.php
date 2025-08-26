@@ -2,20 +2,6 @@
 header("Content-Type: text/html;charset=utf-8");
 include ( dirname(__FILE__).'/load.php' );
 
-// Rooms en uso + salas de eventos
-// $TblBooking  = 'ad_'.$_SESSION['id_user'].'_reservas';
-
-// $date_today =   date('Y-m-d');
-// $ObjMante   =   new Mantenimientos();
-// $inUser     =   $ObjMante->BuscarLoQueSea('*' , $TblBooking ," DATE(fecha_s) >= '".$date_today."' and color='#008000' and activo = 1 and tipo = 'R'",false);
-// $reserved   =   $ObjMante->BuscarLoQueSea('*' , $TblBooking ," DATE(fecha_s) >= '".$date_today."' and color='#FF0000' and activo = 1 and tipo = 'R'",false);
-// $total_rooms=   $ObjMante->BuscarLoQueSea('*' , $TblBooking ," DATE(fecha_s) >= '".$date_today."' and activo = 1 and tipo = 'R'",false);
-// $sum_total  =   $ObjMante->BuscarLoQueSea('*' , $TblBooking ," DATE(fecha_s) >= '".$date_today."' and activo = 1 and tipo = 'E'",false);
-// $total_event=   $ObjMante->BuscarLoQueSea(' SUM(total_price) as total_price' , $TblBooking ," DATE(fecha_s) >= '".$date_today."' and activo = 1 and tipo = 'E'",'extract');
-
-//$tmoneda    =   $ObjMante->BuscarLoQueSea('*' , 'ad_admin_empresas' ," id_empresa = '".$_SESSION['id_empresa']."'",'extract');
-//$moneda     =   $ObjMante->BuscarLoQueSea('*' , 'ad_type_moneda' ," id = '".$tmoneda['tipo_moneda']."'",'extract');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +84,6 @@ include ( dirname(__FILE__).'/load.php' );
     const dropDownNotification  = ReactDOM.createRoot(document.getElementById("drop-down-notifications"));
     const notification          = ReactDOM.createRoot(document.getElementById("total-eventos"));
     const notificationText      = ReactDOM.createRoot(document.getElementById("total-eventos-text"));
-    //notificationB.render(<Events path="<?=$_ENV['URL_API'];?>" />);
     setTimeout(()=>{
       notification.render(<Events path="<?=$_ENV['URL_API'];?>" />);
       notificationText.render(<Events path="<?=$_ENV['URL_API'];?>" />);

@@ -87,9 +87,10 @@
               <?php
                 if ($sqlAssignment ['total'] > 0){
                   foreach ($sqlAssignment['resultado'] as $key => $datos) {
+                    $nameStudent   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_usuario = "'.$datos['student_id'].'" and id_cia = '.$id_cia,'extract');
               ?>
               <tr>
-              <td  title="Nombre del Profesor" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['teacher_name']?></td>
+              <td  title="Nombre del Profesor" <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$nameStudent['nombre'].'&nbsp;'.$nameStudent['apellido']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['asignment_name']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class_name']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date_ini'].' - '.$datos['date_end']?></td>

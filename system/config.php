@@ -17,23 +17,23 @@ define("ENV",$dotenv->load());
 
 
 
-define("SAD_DIR", getcwd()."//");							//DIRECTORIO RAIZ DE LA APLICACION			-	*
-define("SAD_DIR_TMP", SAD_DIR."tmp\\");						//DIRECTORIO PARA DESCARGAR LOS TEMP		-	*
-define("SAD_URL","http://localhost/MGMT/");			        //URL DE LA PALICACION						
-define("SAD_URL_BASE","/system/");						        //DIRECTORIO BASE SOBRE EL QUE ESTA LA APLICACION	
-define("SAD_URL_AMIGABLE",false);							//SI SE UTILIZA URL AMIGABLE						-	*
-															//False, PARA DESACTIVAR URL AMIGABLE				-	*
-define("SAD_CARPETA_IMAGENES","assets/images");				//CARPETA EN DONDE ESTAN LAS IMAGENES				-	*
+define("SAD_DIR", getcwd()."//");		
+define("SAD_DIR_TMP", SAD_DIR."tmp\\");		
+define("SAD_URL","http://localhost/".$_ENV['APP_NAME']."/");	
+define("SAD_URL_BASE","/system/");	
+define("SAD_URL_AMIGABLE",false);	
+										
+define("SAD_CARPETA_IMAGENES","assets/images");		
 
-define('ROOT_DIR', __DIR__);								//CARPETA DONDE CORRE EL PROYECTO
-define('REPOSITORY',$_ENV['FLD_REPOSITORY']);				//CARPETA SE GUARDAN LAS IMAGENES
+define('ROOT_DIR', __DIR__);							
+define('REPOSITORY',$_ENV['FLD_REPOSITORY']);		
 
-$link       = @mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']) or die("<h1>No existe conección a la Base de Datos</h1>");
+$link       = @mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']) or die("<h1>There is no connection to the database</h1>");
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 $mysqli->set_charset("utf8");
 if ($mysqli->connect_error) {
-	die('Error de Conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+	die('Connections Error. (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
 define("DB_HOST_S"	,	"");

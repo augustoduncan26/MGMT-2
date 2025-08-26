@@ -1,10 +1,4 @@
 <!-- start: MAIN JAVASCRIPTS -->
-        <!--[if lt IE 9]>
-        <script src="assets/plugins/respond.min.js"></script>
-        <script src="assets/plugins/excanvas.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <![endif]-->
-        <!--[if gte IE 9]><!-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <!--<![endif]-->
@@ -74,9 +68,4 @@
             window.location.reload();
         });
 
-        // function reedNotifications () {
-        //     alert()
-        // }
         </script>
-
-<!-- <script src="components/like_buton.js"></script> -->

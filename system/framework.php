@@ -8,10 +8,6 @@ include ('config.php') ;
 
 $mysqli = $mysqli;
 
-// include_once ("class/enviar_correo.php");
-// include_once("class/class.phpmailer.php");
-// include_once("class/class.smtp.php");
-
 // Otras yerbas
 $caja_prefix 		=	'caja_';
 $fcatura_prefix 	=	'fact_';
@@ -66,21 +62,6 @@ foreach ($arrFiles as $File){
 }
 unset ($nombCarp, $arrFiles, $File);
 
-#=============================================
-#   Process Api Files                        =
-#=============================================
-// $nombCarp = "api";
-// $arrFiles = scandir (dirname(__FILE__).'/'.$nombCarp);
-	
-// foreach ($arrFiles as $File){
-// 	if ($File != "." AND $File != ".."){
-// 		if (mb_ereg(".php$", $File)) {
-// 			include_once $nombCarp.DIRECTORY_SEPARATOR.$File;
-// 		}
-// 	}
-// }
-// unset ($nombCarp, $arrFiles, $File);
-
 $url_server		=	$_SERVER['HTTP_HOST']; 
 $url 			= 	$_SERVER['PHP_SELF'];
 $ip 			=	$_SERVER['REMOTE_ADDR'];
@@ -133,7 +114,6 @@ if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
 	setcookie("Soporte_Nick",$nickN); 
 	setcookie("Soporte_Pass",$passN);
 
-	//str_replace(" ", "_", $saco['nombre']);
 	$nombredesesion =	$saco['nombre'];
 
 	// SESSION FOR THE APP
@@ -177,7 +157,6 @@ if ( encrypt_decrypt('decrypt', $saco['contrasena']) == $passN) {
 }
 
 function checkUserLogin ( $id_sess ) {
- 	//global $link, $mysqli ;
 	$ObjMant 	=	new Mantenimientos();
 	$query 		=	$ObjMant->BuscarLoQueSea('COUNT(*) as total',PREFIX.'session','id_session = "'.$id_sess.'"','extract');
 
