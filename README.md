@@ -2,11 +2,47 @@
 Free framework for Beginners
 
 FF2U
+# ==========
+Read the doc.ini file to learn how to use this simple framework
 
-(Feel free 2 use)
+(Feel free 2 use 4 yours projects)
 
 # Architecture
 MV U-C
+
+# Folders structure:
+
+system:
+
+  ajax
+
+  api-folder
+
+  app
+    
+    -> controllers
+
+    -> template
+
+    -> vendor
+
+    --> views
+
+  assets
+
+  class
+
+  class_db
+
+  repositorio
+
+  others files
+
+vendors (packages 2 use)
+
+.htacess  
+
+index.php
 
 Model Vista U-Controller
 
