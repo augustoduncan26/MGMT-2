@@ -18,7 +18,7 @@ To change the settings use the .env file
 # Database
 Data is only for testing or examples
 
-# Login User / Usuario de acceso
+# User 2 Login
 User: admin@admin.com
 
 Pass: framework
