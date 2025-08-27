@@ -1,12 +1,9 @@
 <?php
 
-//use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Assignments
  */
 
-// namespace class\Assignments;
 
 class Assignments
 {

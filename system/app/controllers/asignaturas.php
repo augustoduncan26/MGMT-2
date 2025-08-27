@@ -28,23 +28,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 		$perfilArr = $_POST['r3'];
 		$perfilArr1 = $_POST['r2'];
 
-		// if ($_POST['r2'] && strlen($_POST['r2']) > 1) {
-		// 	foreach ($_POST['r2'] as $key => $value) {
-		// 		if($perfilArr1 != '') {
-		// 			$perfilArr1 .=  ',';
-		// 		}	
-		// 		$perfilArr1		.=	 $value;
-		// 	}
-		// } else { $perfilArr1 = $_POST['r2'];}
-		// if ($_POST['r3'] && strlen($_POST['r3']) > 1) {
-		// 	foreach ($_POST['r3'] as $key => $value) {
-		// 		if($perfilArr != '') {
-		// 			$perfilArr .=  ',';
-		// 		}	
-		// 		$perfilArr		.=	 $value;
-		// 	}
-		// } else { $perfilArr = $_POST['r3'];}
-
 		$P_Campos 	=	'id_cia,name,class_id,teacher_id,created_at,activo';
 		$P_Valores 	=	"'".$id_cia."','".$_POST['r1']."','".$perfilArr1."','".$perfilArr."',NOW(),'".$_POST['r4']."'";
 		$l = $ObjEjec->insertarRegistro($P_Tabla, $P_Campos, $P_Valores);

@@ -1,68 +1,66 @@
 <?php
-/* Definition of Users class */
-
-//use DComputer;
-
 
 class Users {
 
-////////////////////////////////////////////////////////////////////
-	// Atributos
-	////////////////////////////////////////////////////////////////////
 	/**
-	* @var string Nombre de la tabla de la base de datos donde se almacenan los usuarios del sistema
+	* @var string
 	*/
 	var $tablaUsuarios;
 	
 	/**
-	* @var string Campo llave de la tabla de la base de datos donde se almacenan los usuarios del sistema
+	* @var string 
 	*/
 	var $id_usuarios;
 	
 	/**
-	* @var string Campo que contiene los usuarios de acceso de los usuarios del sistema
+	* @var string 
 	*/
 	var $campoUser;
 	
 	/**
-	* @var string Campo que contiene las contraseñas de acceso de los usuarios del sistema
+	* @var string 
 	*/
 	var $campoClave;
 	
 	/**
-	* @var string Campo que contiene el nombre del usuario
+	* @var string
 	*/
 	var $campoNombre;
 
 	/**
-	* @var string Campo que contiene el email del usuario
+	* @var string
 	*/
 	var $campoEmail;
 
 	/**
-	* @var string Nombre del campo que indica si un usuario esta activo o no
+	* @var string
 	*/
 	var $flagActivo;
 	
 	
 	/**
-	* @var string Mensajes que el objeto deja despues de una operacion
+	* @var string 
 	*/
 	var $msg;
 	
-	/**
-	* Parametro que retorna un valor true
-	*/
+	var $tablaEmpresa;
+
+	var $tablaUserEmpresa;
+
+	var $campoLlave;
+
 	var $exito;
+
+	var $resultOk; 
 		
 	var $idLlave;
 
+	var $tablaPersonal_otros;
 
-	// Constructor
+
 	function __construct ( $tablaUsuarios = false) {
 
 		$this->tablaUsuarios 		= $_ENV['DB_PREFIX'] . "usuarios";
-		//$this->tablaUsuarios_otros 	= "usuario_otros";
 		$this->tablaEmpresa 		= $_ENV['DB_PREFIX'] ."admin_empresas";
 		$this->tablaUserEmpresa		= $_ENV['DB_PREFIX'] ."admin_empresas_users";
 		$this->campoLlave 			= "id_usuario";
@@ -84,13 +82,9 @@ class Users {
 
 
 	/**
-	* Consult active user infomation
-	*   
-	* Función que obtiene el registro (row) del usuario según el parámetro dado
-	* 
-	* @param string $P_Param Usuario Parametro que sirve  como criterio de búsqueda, que según el segundo argumento de la función puede ser el id o el user
-	* @param integer $P_modo Modo en que se utiliza la función. Sus valores posibles pueden ser: idUsuario y Usuario
-	* @return array|boolean FALSE en caso de no existir ningun usuario, y en caso de devolver resultados un arreglo
+	* @param string 
+	* @param integer 
+	* @return array|boolean 
 	*/
 	function getUser ( $P_ParamUsuario, $P_modo = "idUsuario" ) {
 		
@@ -107,7 +101,6 @@ class Users {
 		
 		}
 		
-		// Realizando consulta a tabla usuario
 		$objCons->consultar("*", $this->tablaUsuarios, $where);
 
 	    	$objCons->sql;
@@ -121,26 +114,20 @@ class Users {
 	}
 
 
-	/* Update user information */
 	function updateUser ( $P_infoUsuario , $idUser ) {
 
 		$objEjecSql = new ejecutorSQL();
 		$objCms 	= new cms ();
 		$objCons 	= new consultor();
-		//$objPermiso = new permisos ();
 
-		// Patrones de inserción
-		// , id_usuario_act=".$objCms->consultarID()
 		$tbl = $this->tablaUsuarios;
 		$val = vsprintf("usuario='%s', nombre='%s', direcction='%s', telephone='%s', fecha_ult_act='".date('Y-m-d H:i:s')."'", $P_infoUsuario);
 
 		$whr = $this->campoLlave."=".$idUser;
 			
 		$result = $objEjecSql->actualizarRegistro($val, $tbl, $whr);
-		//echo $objCons->sql;
 		if ( $result ) {
 				$msj 		= 	"Datos actualizados con éxito.";
-				//unset($_SESSION['username']);
 				$_SESSION['username'] 	=   '';
 				$_SESSION['username']	=	$_POST['full_name'];
 				$idUsuario 	= 	$objEjecSql->generado;
@@ -163,10 +150,6 @@ class Users {
 	}
 
 	
-/** 
-	* Función que verifica si el usuario y contraseña dados coinciden con los registros de la tabla de usuarios.
-	* Verifica la existencia de ese usuario con la contraseño correspondiente
-	*/
 	function verificarUsuario ($usuario, $contrasena, $tipo = false){
 		$exito 		= 	false;
 		$extract	=	false;
@@ -188,7 +171,6 @@ class Users {
 		
 		$extract 		= $objCons->extraerRegistro();
 
-		//md5($contrasena)
 		if($extract['contrasena']) {
 			$exito = 1;
 		} else {
@@ -198,9 +180,7 @@ class Users {
 		return($exito);
 	}
 
-	/** 
-	* Función que obtiene el listado de usuarios registrados en el sistema
-	*/
+
 	function consultarUsuario($P_idUsuario) { 
 		$exito = false;
 		
@@ -211,28 +191,7 @@ class Users {
 		
 		$where = $prefTab.$this->campoLlave." = ".$P_idUsuario;
 		
-		// Realizando consulta a tabla usuario
 		$ope = $objCons->consultar($this->tablaUsuarios.".*", $this->tablaUsuarios, $where);
-		
-		if ($ope){ 
-			$exito = $objCons->extraerRegistro();
-		}
-		
-		return($exito);
-	}
-
-	/** 
-	* Consultar Usuario de una empresa
-	*/
-	function consultarUsuarioEmpresa( $P_emailUsuario , $P_empresa ) { 
-
-		$exito = false;
-		
-		$objCons = new consultor();
-		
-		$where = " email = ".$P_emailUsuario;
-
-		$ope = $objCons->consultar("*", $this->tablaUserEmpresa, $where);
 		
 		if ($ope){ 
 			$exito = $objCons->extraerRegistro();
@@ -243,5 +202,3 @@ class Users {
 	
 }
 
-
-?>

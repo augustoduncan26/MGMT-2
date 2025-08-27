@@ -393,14 +393,12 @@ function addUser () {
     $('#email').css({'border-color': '#007AFF'});
     return false;
   }
-    //$('#cargando_add').show()
     ajax2   = nuevoAjax();
     ajax2.open("GET", "app/controllers/editar-perfil.php?add=1&nombre="+nombre+"&direccion="+direccion+"&telefono="+telefono+"&email="+email+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);
     ajax2.onreadystatechange=function() {
 
     if (ajax2.readyState==4) {
       $('#mssg-label').html(ajax2.responseText);
-      //$('#cargando_add').hide();
       listCategory();
       $('#nombre').val('');
     }
@@ -416,14 +414,12 @@ function listarUsuarios () {
   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
 
   var contenido_editor = $('#list-of-users')[0];
-  //$('#cargando_list').show()
   ajax1   = nuevoAjax();
   ajax1.open("GET", "ajax/ajax_list_company_users.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>",true);
   ajax1.onreadystatechange=function() {
 
     if (ajax1.readyState==4) {
       contenido_editor.innerHTML = ajax1.responseText;
-      //$('#cargando_list').hide()
       $('#list-table-users').dataTable({aaSorting : [[0, 'desc']]});
     }
   }

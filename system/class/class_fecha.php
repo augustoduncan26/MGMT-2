@@ -1,32 +1,17 @@
 <?php
-// Capa de Libreria 
-
-// Interfaz Fecha
-// Maneja diferentes funciones con la hora / fecha
 
 class fecha{
-	////////////////////////////////////////////////////////////////////
-	// Atributos
-	////////////////////////////////////////////////////////////////////
+	
 	var $salid			=	false;
 	
 
-	////////////////////////////////////////////////////////////////////
-	// Constructores
-	////////////////////////////////////////////////////////////////////
 	function fecha(){
 		
 	}
 
-	////////////////////////////////////////////////////////////////////
-	// Functions
-	///////////////////////////////////////////////////////////////////
 	
 	function fecha_pan($P_cad, $P_visualizarHora=true){
-		// fecha en formato 15-Ene-2006
-		/*$anio = substr($P_cad, 0, 4);
-		$mes = substr($P_cad, 5, 2);
-		$dia = substr($P_cad, 8, 2);*/
+
 		$salid			=	FALSE;
 		
 		$arrFechaComp = explode(" ", $P_cad);
@@ -88,10 +73,7 @@ class fecha{
 	}// Metodo fecha_esp
 	
 	function fecha_carta($P_cad){
-		// fecha en formato 15-Ene-2006
-		/*$anio = substr($P_cad, 0, 4);
-		$mes = substr($P_cad, 5, 2);
-		$dia = substr($P_cad, 8, 2);*/
+
 		$salid		=	false;
 		
 		$arrFechaComp = explode(" ", $P_cad);
@@ -148,11 +130,7 @@ class fecha{
 		
 	}// Metodo fecha_esp
 	
-	/**
-	 * Dar formato a la hora. De 24hr a 12hr
-	 * Ejm: 14:00 -> 2:00 p.m.
-	 * 
-	 */
+
 	function hora_pan($P_cad){
 		$aHora = explode(":", $P_cad);
 		
@@ -240,10 +218,9 @@ class fecha{
 			return ($result);
 		}	
 		
-	}// Metodo fecha_fin_mes
+	}
 
 	function fechaHoy(){
-		// Obtenemos y traducimos el nombre del d&iacute;a
 		$dia=date("l");
 		if ($dia=="Monday") $dia="Lunes";
 		if ($dia=="Tuesday") $dia="Martes";
@@ -380,8 +357,6 @@ class fecha{
    } 
    
 }	
-	//Calcular dias transcurridos entre dos fechas dadas
-	//===================================================
 	
 	function diasEntreFechas($fechainicio, $fechafin){
     	return ((strtotime($fechafin)-strtotime($fechainicio))/86400);
@@ -397,19 +372,16 @@ class fecha{
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha1))
 		
 
-		//list($a�o1,$mes1,$dia1)=split("-",$fecha1);
-		$Res1	=	explode("-",$fecha1);	//	0 = A�o ; 1 = Mes ; 2 = Dia
+		$Res1	=	explode("-",$fecha1);
 		if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha2))
 		
 
-		//list($a�o2,$mes2,$dia2)=explode("/",$fecha2);
-		$Res2	=	explode("-",$fecha2);	//	0 = A�o ; 1 = Mes ; 2 = Dia
+		$Res2	=	explode("-",$fecha2);	
 
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha2))
 		
 
-		//list($a�o2,$mes2,$dia2)=explode("-",$fecha2);
-		$Res3	=	explode("-",$fecha2);	//	0 = A�o ; 1 = Mes ; 2 = Dia
+		$Res3	=	explode("-",$fecha2);	
 		$dif = mktime(0,0,0,$Res1[1],$Res1[2],$Res1[0]) - mktime(0,0,0,$Res3[1],$Res3[2],$Res3[0]);
 		
 		
@@ -428,31 +400,29 @@ class fecha{
 		if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha1))
 		
 
-		list($a�o1,$mes1,$dia1)=explode("/",$fecha1);
+		list($año1,$mes1,$dia1)=explode("/",$fecha1);
 		
 
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha1))
 		
 
-		list($a�o1,$mes1,$dia1)=explode("-",$fecha1);
+		list($año1,$mes1,$dia1)=explode("-",$fecha1);
 		if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha2))
 		
 
-		list($a�o2,$mes2,$dia2)=explode("/",$fecha2);
+		list($año2,$mes2,$dia2)=explode("/",$fecha2);
 		
 
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha2))
 		
 
-		//list($a�o2,$mes2,$dia2)=split("-",$fecha2);
-		$Res3	=explode("-",$fecha2);	//	0 = A�o ; 1 = Mes ; 2 = Dia
+		$Res3	=explode("-",$fecha2);
 		$dif = mktime(0,0,0,$Res3[1],$Res3[2],$Res3[0]) - mktime(0,0,0,$Res3[1],$Res3[2],$Res3[0]);
 		
 		
 		
 		$dif = $dif / (60*60*24);
 		
-		//$dif = ($absoluto)?abs($dif):$dif; 
 		$ndias=floor($dif);
 		
 
@@ -468,8 +438,7 @@ class fecha{
 		$prefijo	=	array('ce','dieci','veinte y','treinta y');
 		$combina10	=	array('','once','doce','trece','catorce','quince');
 		$comb_diez	=	array(9=>'nueve',10=>'diez',20=>'veinte',30=>'treinta',40=>'cuarenta',50=>'cincuenta',80=>'ochenta',90=>'noventa');
-		
-		//$mesArreglo	=	array();
+	
 		
 		
 		switch($dia)
@@ -619,14 +588,11 @@ class fecha{
 			}
 		}
 
-		//$dosmil		=	substr($anyo,-4,2);
 		$fecha_texto	=	$dia.'('.date("d").') de '.$mes.' del '.$anyo.' '.date("Y");
 		return($fecha_texto);
 	}
 
 
-	// Obtener nombre del dia segun mes y año
-	// =======================================
 	public function NombreDelDia($P_mes , $P_dia , $P_anyo)
 	{
 		$arrDias 	= 	array('','Lunes','Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado','Domingo');
@@ -653,50 +619,37 @@ class fecha{
 		
 	}
 	
-	// SUMAR HORA Y/O MINUTOS A LA HORA DATE
-	// Parametros:
-	// $Hora		=	La hora actual a sumarle lo que deseo (En formato: 08:30)
-	// $Add_hora	=	La hora a sumarle
-	// $Add_mint	=	Los minutos a sumarles
+
 	function SumarHoras($HorayMin , $Add_hora = false , $Add_mint = false )
 	{
-		// SUMAR HORAS Y MINUTOS A LA HORA
-		// $Hora	=	"08:30"; 
-		// supongamos que esta es la hora de inicio a la cual sumaremos el tiempo deseado
-		// bien ahora vamos a partir la cadena para poder sumarle el tiempo
-		//echo $HorayMin;
+
 		$Hrs 	= 	explode(':', $HorayMin);
-		//echo $Hrs[0];
-		//bien ahora vamos a sumarle una hora con 30 min como lo ponemos acontinuacion
-		//usamos la funcion mktime para convertir nuestro tiempo a fecha y poder darle un formato deseado
 		
 		$hora2	=	date("H:i", mktime($Hrs[0]+$Add_hora, $Hrs[1]+$Add_mint, 0));
-		//Vamos a imprimir la variable para ver que nos arroja
 		return $hora2;
-		//bien espero no fallar en este script y que les sirva de algo al que lo lea
 	
 	}
 	
-	// Restar 1 valor al mes
+
 	function NuevaFecha()
 	{
-		$MES_HOY		=	date('m');			// Mes en 2 digitos
+		$MES_HOY		=	date('m');			
 		$ANYO			=	date("Y");
 		$MES_EXPL1		=	substr($MES_HOY,0,1);
 		$MES_EXPL2		=	substr($MES_HOY,1,1);
 		
-		if($MES_EXPL1[0]=='0'):					// Si el primer digito del mes actual es 0
+		if($MES_EXPL1[0]=='0'):					
 			
-			$MES_HOY	=	$MES_EXPL2[0]-1;	// Resto 1
+			$MES_HOY	=	$MES_EXPL2[0]-1;
 			
 			if(strlen($MES_HOY)==1)
 			{
 				$MES_HOY	= '0'.$MES_HOY;	
 			}
 			
-			if($MES_HOY == 0):					// Si al restarle 1 es cero (0), entonces
-				$MES_HOY	=	12;				// Es el mes pasado del a�o pasado
-				$ANYO		=	date('Y')-1;	// A�o pasado
+			if($MES_HOY == 0):					
+				$MES_HOY	=	12;				
+				$ANYO		=	date('Y')-1;	
 			endif;
 		;else:
 			$MES_HOY	=	$MES_HOY-1;
@@ -708,8 +661,7 @@ class fecha{
 		
 	}
 	
-	// Recorrer dos fechas
-	// *******************
+
 	function DevolverFechasEntreDos($fechaInicio, $fechaFin)
 	{
 		$arrayFechas	=	array();
@@ -722,28 +674,20 @@ class fecha{
 	
 	return $arrayFechas;
 	}
-	
-	// Sumar dias a una fecha
-	// **********************
+
 	function SumarDiasAFecha($fecha,$dia)
 	{
 		$fechamasdiasdespues = date('Y-m-d',strtotime('+'.$dia.' days', strtotime($fecha)));
-		//$fecha5mesesantes = date('Y-m-d',strtotime('-20 months', strtotime($fecha)));
-		//$fecha3semanasdespues = date('Y-m-d',strtotime('+3 weeks', strtotime($fecha)));
 		
 		return $fechamasdiasdespues;
 	}
-	// Restar dias a una fecha
-	// **********************
+
 	function RestarDiasAFecha($fecha,$dia)
 	{
 		$fechamasdiasdespues = date('Y-m-d',strtotime('-'.$dia.' days', strtotime($fecha)));
-		//$fecha5mesesantes = date('Y-m-d',strtotime('-20 months', strtotime($fecha)));
-		//$fecha3semanasdespues = date('Y-m-d',strtotime('+3 weeks', strtotime($fecha)));
+		
 		return $fechamasdiasdespues;
 	}
 	
 	
-} // Clase fecha
-
-?>
+}

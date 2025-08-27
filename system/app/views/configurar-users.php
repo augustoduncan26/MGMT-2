@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.css" />
 
 <style>
 @media (min-width: 768px) {
@@ -31,7 +28,7 @@ div.dataTables_wrapper div.dataTables_filter label {
     <div class="x_title">
       <h3></h3>
       <div class="clearfix"></div>
-      <label id="label-mssg"><?=$mssg?></label>
+      <div id="label-mssg"></div>
     </div>
 
     <div class="container">
@@ -394,10 +391,6 @@ $('#usuario_acceso').on('input', ()=>{
 
 $('#mssg-alert').hide();
 
-// $('#agregar-emal').on('click',()=>{
-// //$("[name='agregar_usuario']").on('click', ()=>{
-//   $('#usuario_email').hide();
-// });
 
 $("[name='generar-clave']").on('click', ()=> {
   if ($("[name='generar-clave']").is(':checked')) {
@@ -491,10 +484,6 @@ $("[name='agregar_usuario']").on('click', ()=>{
   form_data.append('estado', estado);
 
   $.ajax({
-    // headers: {
-    //   Accept        : "application/json; charset=utf-8",
-    //   "Content-Type": "application/json: charset=utf-8"
-    // },
     url: route,
     type: "POST",
     data: form_data,
@@ -505,8 +494,6 @@ $("[name='agregar_usuario']").on('click', ()=>{
     success         : function (response) { 
       if (response != "Ya existe este registro.") {
         $("#mssg-alert").removeClass('alert-danger').addClass('alert-success').show().html(response);
-        //limpiarCampos ();
-        //listUsuarios();
       } else {
         $('#mssg-alert').removeClass('alert-success').addClass('alert-danger').show().html(response);
       }
@@ -573,7 +560,6 @@ $.ajax({
     }
 
     setTimeout(()=>{
-      //$("#edit_usuarios").find("*").prop("disabled", false);
       $("#edit_usuarios *").prop('disabled',false);
       $('#agregar_usuario_edit').prop('disabled',false);
       $('#usuario_area_edit').val(response['id_area']).change();
@@ -659,10 +645,6 @@ form_data.append('file', photo);
 form_data.append('estado', estado);
 
 $.ajax({
-  // headers: {
-  //   Accept        : "application/json; charset=utf-8",
-  //   "Content-Type": "application/json: charset=utf-8"
-  // },
   url: route,
   type: "POST",
   data: form_data,
@@ -677,12 +659,10 @@ $.ajax({
       $("#mssg-alert-edit").show().removeClass('alert-warning').removeClass('alert-success').addClass('alert-danger').html('Hubo un error al tratar de actualizar el registro.');
       console.log(response);
     }
-    //limpiarCampos();
     setTimeout(()=>{
         $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').hide();
         window.location.reload()
       },3000);    
-      //listUsuarios();
   },
   error           : function (error) {
     //console.log(error);
@@ -735,8 +715,34 @@ $.ajax({
   });
 }
 
-function deleteRow () {
-  
+/**
+ * Delete
+ */
+function deleteRow ( id ) {
+  let route = "app/controllers/configurar-users.php"; 
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: {
+      delete : 1,
+      id  : id
+    },
+    dataType        : 'html',
+    success         : function (response) { 
+      $("#mssg-alert-edit").addClass('alert-success').removeClass('alert-warning').show().html('Se elimino el registro con éxito');
+      setTimeout(()=>{
+        $("#mssg-alert-edit").removeClass('alert-warning').removeClass('alert-success').hide();
+        window.location.reload()
+      },3000); 
+    },
+    error           : function (error) {
+      console.log(error);
+    }
+  });
 }
 
 /**
@@ -760,28 +766,6 @@ $(document).ready( function () {
     });
 } );
 
-// /**
-//  * Show Permisos
-// */ 
-// function showUserPermisos ( id ) {
-
-// var id_user     = '<?php echo $_SESSION["id_user"]?>';
-// var id_cia      = '<?php echo $_SESSION["id_cia"]?>';
-// var contenido_editor = $('#show-permisos')[0];
-
-// //$('#cargando_list').show()
-// ajax1   = nuevoAjax();
-// ajax1.open("GET", "ajax/ajax_list_users_permisos.php?id_user="+id_user+"&id="+id+"&id_cia="+id_cia+"&nocache=<?php echo rand(99999,66666)?>",true);    
-// ajax1.onreadystatechange=function() {
-
-// if (ajax1.readyState==4) {
-//   contenido_editor.innerHTML = ajax1.responseText;
-// }
-// }
-
-// ajax1.send(null);
-
-// }
 
 // Clean
 function limpiarCampos (form = false) {

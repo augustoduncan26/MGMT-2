@@ -3,7 +3,6 @@
  * Events
  */
 
-// namespace class\Events;
 
 class Events
 {

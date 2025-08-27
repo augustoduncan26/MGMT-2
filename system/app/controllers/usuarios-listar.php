@@ -67,103 +67,100 @@ if (isset($_GET['all']) && $_GET['all'] == 1) {
  * Add
  */
 if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') {
-	echo $ObjUsers->save($_POST,$_FILES);
-	// $sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email="'.$_POST['user_acceso'].'"','array');
+	// This can be use in class Usuario
+	//echo $ObjUsers->save($_POST,$_FILES);
+	$sql 			=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email="'.$_POST['user_acceso'].'"','array');
 
-	// if (is_dir($path)) {
-	// 	@chmod($path, 0755);
-	// }
-	// if ($sql['total'] > 0 ) {
-	// 	echo $mssg	=	'Ya existe este registro.';
-	// } else {
+	if (is_dir($path)) {
+		@chmod($path, 0755);
+	}
+	if ($sql['total'] > 0 ) {
+		echo $mssg	=	'Ya existe este registro.';
+	} else {
 
-	// 	if (file_exists(REPOSITORY."profile_photos/")) {
-	// 		echo "The directory ".REPOSITORY."profile_photos/ exists.";
-	// 		exit;
-	// 	}
+		if (file_exists(REPOSITORY."profile_photos/")) {
+			echo "The directory ".REPOSITORY."profile_photos/ exists.";
+			exit;
+		}
 
-	// 	// Insert Photo
-	// 	if ($_FILES['file']['name']) {
-	// 		$rand 			=	rand('1234567890','0987654321');
-	// 		$rand2 			=	rand('0987654321','1234567890');
-	// 		$image 			= 	getimagesize($_FILES['file']['tmp_name']);
-	// 		$extension 		=	explode('/',$image['mime']);
-	// 		$temp 			= 	explode(".", $_FILES['file']['name']);
-	// 		$newfilename    =   $id_cia.'-foto-'.$rand.'-'.date('Y-m-d').'-'.$rand2. '.' . $extension[1];//$temp[1];
-	// 		$fileTempName 	= 	$_FILES['file']['tmp_name'];
+		// Insert Photo
+		if (isset($_FILES) && $_FILES['file']['name']) {
+			$rand 			=	rand('1234567890','0987654321');
+			$rand2 			=	rand('0987654321','1234567890');
+			$image 			= 	getimagesize($_FILES['file']['tmp_name']);
+			$extension 		=	explode('/',$image['mime']);
+			$temp 			= 	explode(".", $_FILES['file']['name']);
+			$newfilename    =   $id_cia.'-foto-'.$rand.'-'.date('Y-m-d').'-'.$rand2. '.' . $extension[1];//$temp[1];
+			$fileTempName 	= 	$_FILES['file']['tmp_name'];
 			
 
-	// 		// check if there is an error for particular entry in array
-	// 		if(!empty($file['error']))  {
-	// 			// some error occurred with the file in index $index
-	// 			// yield an error here
-	// 			echo 'error en foto';
-	// 			return false;
-	// 		}
-	// 	}
+			// check if there is an error for particular entry in array
+			if(!empty($file['error']))  {
+				// some error occurred with the file in index $index
+				// yield an error here
+				echo 'error en foto';
+				return false;
+			}
+		}
 
-	// 	$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
-	// 	$perfilData =	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id="'.$_POST['perfil'].'"');
-	// 	$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".$perfilData['name']."','".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
-	// 	$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,name_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
+		$clave 		=	encrypt_decrypt('encrypt', $_POST['clave']);
+		$perfilData =	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id='.$_POST['perfil']);
+		$P_Valores 	= 	"'".$_POST['user_acceso']."','".$_POST['user_acceso']."','".$_POST['nombre']."','".$_POST['apellido']."','".$id_cia."','".$_POST['director']."','".$_POST['principal']."','".$_POST['perfil']."','".@$perfilData['name']."',0,'".$clave."',NOW(),NOW(),'0','".$_POST['estado']."'";
+		$sql 		=	$ObjEjec->insertarRegistro($P_Tabla, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,name_perfil,id_contacto,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
 		
-	// 	if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-	// 		move_uploaded_file($fileTempName, $path . $newfilename);
-	// 		$clave 		= 	"photo='".$newfilename."'";
-	// 		$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'email = "'.$_POST['user_acceso'].'"');
-	// 	}
+		if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+			move_uploaded_file($fileTempName, $path . $newfilename);
+			$clave 		= 	"photo='".$newfilename."'";
+			$l 			= 	$ObjEjec->actualizarRegistro($clave, $P_Tabla, 'email = "'.$_POST['user_acceso'].'"');
+		}
 
-	// 	$dataUser 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email = "'.$_POST['user_acceso'].'"','extract');
+		$dataUser 	=	$ObjMante->BuscarLoQueSea('*',$P_Tabla,'email = "'.$_POST['user_acceso'].'"','extract');
 
-	// 	// Add permissions
-	// 	if ($_POST['perfil']) {
-	// 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
-	// 		if ($selPerms['resultado']) {
-	// 			foreach ($selPerms['resultado'] as $key => $perm) {
-	// 				if (is_numeric($perm['id_definicion_permiso'])) {
-	// 					$P_Campos 		=	'id_user,id_permission,id_cia,created_at';
-	// 					$P_Valores 		=	"'".$_POST['id']."','".$perm['id_definicion_permiso']."','".$id_cia."',NOW()";
-	// 					$ObjEjec->insertarRegistro(PREFIX.'users_permissions', $P_Campos, $P_Valores);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
+		// Add permissions
+		if ($_POST['perfil']) {
+			$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
+			if ($selPerms['resultado']) {
+				foreach ($selPerms['resultado'] as $key => $perm) {
+					if (is_numeric($perm['id_definicion_permiso'])) {
+						$P_Campos 		=	'id_user,id_permission,id_cia,created_at';
+						$P_Valores 		=	"'".$dataUser['id_usuario']."','".$perm['id_definicion_permiso']."','".$id_cia."',NOW()";
+						$ObjEjec->insertarRegistro(PREFIX.'users_permissions', $P_Campos, $P_Valores);
+					}
+				}
+			}
+		}
 
-	// 	// Save Parents Data
-	// 	if ($_POST['contacto']) {
-	// 		//$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
-	// 		$selPerfile 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','name like "%Padre%" or name like "%emergencia%"','extract');
-	// 		// Save to table parents
-	// 		$P_Valores 		=	"'".$_POST['contacto']."','".$selPerfile['id']."','".$dataUser['id']."',NOW(),NOW()";
-	// 		$ObjEjec->insertarRegistro(PREFIX.'emergency_contact', 'name,id_perfil,id_students,created_at,updated_at', $P_Valores);
-	// 	}
+		// Save Parents Data
+		// if ($_POST['contacto']) {
+		// 	$selPerfile 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','name like "%Padre%" or name like "%emergencia%"','extract');
+		// 	// Save to table parents
+		// 	$P_Valores 		=	"'".$_POST['contacto']."','".$selPerfile['id']."','".$dataUser['id']."',NOW(),NOW()";
+		// 	$ObjEjec->insertarRegistro(PREFIX.'emergency_contact', 'name,id_perfil,id_students,created_at,updated_at', $P_Valores);
+		// }
 
-	// 	echo 'Se ingreso el registro con éxito';
+		echo 'Se ingreso el registro con éxito';
 
-	// 	if ($_POST['enviar_email']) {
-	// 		$Obj		=	new EnviarCorreo();
-	// 		$mensaG		=	"<font face=verdana size=1.5 />Hola ".$_POST['nombre']."&nbsp;<br /><br />
-	// 						&nbsp;&nbsp;Se ha creado su usuario con éxito.<br><br>
-	// 						&nbsp;&nbsp;Sus datos de acceso son:<br>
-	// 						&nbsp;&nbsp;Nombre de usuario: ".$_POST['user_acceso']."<br>			
-	// 						&nbsp;&nbsp;Clave de acceso: ".$_POST['clave']."<br>
-	// 						";
-			
-	// 		//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
-			
-	// 		$mail_to_send_to = $_POST['user_acceso'];
-	// 		$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
-	// 		$subject		 = "Usuario creado";
-	// 		//$message		= "\r\n" . "Name: TEST" . "\r\n";
-	// 		$headers  = "From: " . strip_tags($from_email) . "\r\n";
-	// 		$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
-	// 		$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
-	// 		$headers .= "MIME-Version: 1.0\r\n";
-	// 		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-	// 		$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
-	// 		$mensaje	=	'Usuario creado con éxito. <br />';
-	// 	}
-	// }
+		if ($_POST['enviar_email']) {
+			$Obj		=	new EnviarCorreo();
+			$mensaG		=	"<font face=verdana size=1.5 />Hola ".$_POST['nombre']."&nbsp;<br /><br />
+							&nbsp;&nbsp;Se ha creado su usuario con éxito.<br><br>
+							&nbsp;&nbsp;Sus datos de acceso son:<br>
+							&nbsp;&nbsp;Nombre de usuario: ".$_POST['user_acceso']."<br>			
+							&nbsp;&nbsp;Clave de acceso: ".$_POST['clave']."<br>
+							";
+
+			$mail_to_send_to = $_POST['user_acceso'];
+			$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
+			$subject		 = "Usuario creado";
+			$headers  = "From: " . strip_tags($from_email) . "\r\n";
+			$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
+			$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
+			$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+			$a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
+			$mensaje	=	'Usuario creado con éxito. <br />';
+		}
+	}
 }
 
 /**
@@ -172,8 +169,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	$data       = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	echo json_encode($data);
-	// $data 		= $ObjAssignm->listAssignmentsById($_GET['id']);
-	// echo json_encode($data);
 }
 
 /**
@@ -200,8 +195,6 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 		
 		// check if there is an error for particular entry in array
 		if(!empty($file['error']))  {
-			// some error occurred with the file in index $index
-			// yield an error here
 			echo 'error en foto';
 			return false;
 		}

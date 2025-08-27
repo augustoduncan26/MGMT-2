@@ -1,71 +1,62 @@
 <?php
-/** 
-* Clase que contiene definicion CMS, maneja los contenidos de
-* vistas y controladores dentro del sistema
-* clase extendida de sesion
+/**
 */
 class cms extends sesion{
-	////////////////////////////////////////////////////////////////////
-	// Atributos
-	////////////////////////////////////////////////////////////////////
 	/**
-	* @var string C�digo de p�gina predeterminada a cargar, cuando NO se esta autenticado
+	* @var string
 	*/
 	var $predet;
 	
 	/**
-	* @var string C�digo de p�gina predeterminada a cargar, cuando se esta autenticado
+	* @var string
 	*/
 	var $predet_Autorizado;
 	
 	/**
-	* @var string C�digo de p�gina que se muestra cuando el usuario no tiene acceso a un codigo de p�gina
+	* @var string
 	*/
 	var $noAutorizado;
 	
 	/**
-	* @var string C�digo de p�gina que se muestra al usuario para indicarle que necesita estar logueado
+	* @var string
 	*/
 	var $reqLogin;
 	
 	/**
-	* @var string C�digo de p�gina que contiene la forma de login
+	* @var string
 	*/
 	var $login;
 	
 	/**
-	* @var string C�digo de p�gina que muestra al usuario mensaje de logout ademas realiza el logout del usuario autenticado
+	* @var string
 	*/
 	var $logout;
 	
 	/**
-	* @var string Nombre de archivo php que contiene vista de c�digo de p�gina
+	* @var string
 	*/
 	var $vista;
 	
 	/**
-	* @var string Nombre de archivo php que contiene controlador de c�digo de p�gina
+	* @var string
 	*/
 	var $controlador;
 	
 	/**
-	* @var string T�tulo de c�digo de p�gina
+	* @var string
 	*/
 	var $titulo;
 	
 	/**
-	* @var string C�digo de P�gina
+	* @var string
 	*/
 	var $codPag;
 	
 	var $admin;
+	var $pagNoReg;
 	////////////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////////////
-	/** 
-	* Constructor de la clase cms. 
-	* Inicializa los atributos de la clase e instacia la clase padre. 
-	*/
 	function cms($P_pag = false){
 		$this->predet						=	"login";
 		$this->predet_Autorizado 			= 	"defaultAdmin";
@@ -98,16 +89,10 @@ class cms extends sesion{
 		return (true);
 	}
 	
-	
-	////////////////////////////////////////////////////////////////////
-	// M�todos
-	///////////////////////////////////////////////////////////////////
 	/** 
-	* Consulta en base de datos (tabla cms), la informaci�n respectiva de un c�digo de 
-	* p�gina.
 	* 
-	* @param string $P_param_url C�digo de p�gina a cargar
-	* @return array|boolean En caso de NO encontrarlo retorna FALSE, caso contratio retorna el arreglo con la informacion. 
+	* @param string 
+	* @return array|boolean
 	*/
 	function recibirInfoParam ($P_param_url){
 		$objConsultor = new consultor();
@@ -129,15 +114,11 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Recibe el t�tulo, la vista y controlador correspondiente a un codigo de p�gina dado
-	* Valida si el usuario necesita estar logueado, si necesita alg�n permiso en particular y si el c�digo de p�gina es v�lido
-	* 
-	* @param string $P_param_url C�digo de p�gina a cargar
-	* @return boolean Retorna TRUE, y setea los atributos del objeto vista, controlador y titulo
+	* @param string
+	* @return boolean
 	*/
 	function recibirArchivos($P_param_url){
 		$objPermisos = new  permisos();
-		// agregar default
 		$idi		=	new idioma();
 		$sel		=	$idi->BuscarActualizarIdioma();
 		
@@ -145,12 +126,11 @@ class cms extends sesion{
 			
 			$cmsReg = $this->recibirInfoParam ($P_param_url) ;
 			
-			// Retorna pagina que se encuentra registrado en el arreglo
 			if ($cmsReg != false){
 				if ($cmsReg['flagProtegido'] == 1){
 					
 					if ($this->esAutorizado()){
-						// Devuelve p�gina registrada en arreglo							
+									
 						if ($objPermisos->tienePermiso($cmsReg['permiso']) OR is_null($cmsReg['permiso']) ){
 							$this->titulo = $cmsReg["titulo"];
 								if($sel=='ing'){$this->titulo = $cmsReg["titulo_ing"];}
@@ -159,7 +139,6 @@ class cms extends sesion{
 							$this->controlador = $cmsReg["controlador"];
 						}
 						else{
-							// no autorizado
 							$regNoAuth =  $this->recibirInfoParam ($this->noAutorizado) ;
 							
 							$this->titulo = $regNoAuth["titulo"];
@@ -170,7 +149,7 @@ class cms extends sesion{
 						
 					}
 					else{
-						// Necesita loguearse 
+						
 						$regLogin =  $this->recibirInfoParam ($this->reqLogin) ;
 						
 						$this->titulo = $regLogin["titulo"];
@@ -180,7 +159,6 @@ class cms extends sesion{
 					}
 				}
 				else{
-					// Devuelve p�gina registrada en arreglo
 					
 					$this->titulo = $cmsReg["titulo"];
 					if($sel=='ing'){$this->titulo = $cmsReg["titulo_ing"];}
@@ -189,7 +167,6 @@ class cms extends sesion{
 				}
 			}
 			else{
-				// P�gina no registrada
 				$regPagNR =  $this->recibirInfoParam ($this->pagNoReg) ;
 				
 				$this->titulo = $regPagNR["titulo"];
@@ -199,7 +176,6 @@ class cms extends sesion{
 			}
 		}
 		else{
-			//Devuelve defecto
 			if ($this->esAutorizado()){				
 				$regDef =  $this->recibirInfoParam ($this->predet_Autorizado);
 			}
@@ -214,13 +190,10 @@ class cms extends sesion{
 		
 			
 		return(true);
-	} // Metodo recibirArchivo
+	}
 	
 	/** 
-	* Devuelve el archivo de la vista a cargar 
-	* Este valor lo toma del atributo vista.
-	* 
-	* @return string Ruta del archivo a cargar que contiene la vista
+	* @return string
 	*/
 	function devolverArchivoVista (){
 		$exito = false;
@@ -233,10 +206,7 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Devuelve el archivo del controlador a cargar 
-	* Este valor lo toma del atributo controlador.
-	* 
-	* @return string Ruta del archivo a cargar que contiene el controlador
+	* @return string
 	*/
 	function devolverArchivoControlador (){
 		$exito = false;
@@ -249,10 +219,8 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Funcion que busca el registro padre de un c�digo de p�gina
-	* 
-	* @param string $P_paramPadre C�digo de p�gina a cargar
-	* @return boolean|array Retorna FALSE en caso de NO encontrar el padre, y en caso de encontrarlo devuelve el arrreglo con la info del mismo 
+	* @param string 
+	* @return boolean|array
 	*/
 	function buscarPadre($P_paramPadre){
 		$objConsultor = new consultor();
@@ -265,13 +233,10 @@ class cms extends sesion{
 		}
 		
 		return ($exito);
-	}// Metodo buscarPadre
+	}
 	
 	/** 
-	* Funcion que crea el cumbread del c�digo, bas�ndose en el padre.
-	* Ej; Inicio -> Pagina 1 -> Pagina 2
-	* 
-	* @return string Cadena que contiene Cumbread de p�gina
+	* @return string
 	*/
 	function crearCumbread(){		
 		$P_pag = $this->codPag;
@@ -310,15 +275,12 @@ class cms extends sesion{
 		
 		return $cadCumbread;
 		
-	}//crearCumbread	
+	}
 	
 	/**  
-	* Autoriza o da acceso a un usuario, utilizando el objeto de usuario, 
-	* crea las variables de sesion
-	* 
-	* @param string $P_Usuario Usuario del sistema
-	* @param string $P_Clave Clave del sistema 
-	* @return boolean Retorna TRUE o FALSE dependiendo de si se pudo o no realizar la operaci�n 
+	* @param string
+	* @param string
+	* @return boolean
 	*/
 	function autorizar($P_Usuario, $P_Clave , $P_idioma = false, $P_Tipo = false){
 		$exito = false; 
@@ -329,19 +291,10 @@ class cms extends sesion{
 		if ($exito == 1 || $exito == true){
 			$reg = $objUsuario->obtenerUsuario($P_Usuario, "Usuario");
 			
-			// Crear variables de sesion
-			//$this->registrarVariableSesion("autorizado",  $this->consultarIdSesion());
 			$_SESSION["autorizado"] = $this->consultarIdSesion();
 			$_SESSION["idUsuario"] = $reg[$objUsuario->campoLlave];
 			$_SESSION["nombreUsuario"] = $reg[$objUsuario->campoNombre];
 
-
-			//$this->registrarVariableSesion("autorizado",  $this->consultarIdSesion());
-			//$this->registrarVariableSesion("idUsuario", $reg[$objUsuario->campoLlave]);
-			//$this->registrarVariableSesion("nombreUsuario", $reg[$objUsuario->campoNombre]." ". $reg[$objUsuario->campoApellido] );
-			
-			//Dejar log en bitacora
-			//bitacora::registrar('El usuario acceso a la aplicaci�n');
 			$ObjetoBitacora		=	new bitacora();
 			$ObjetoBitacora->registrar('El usuario acceso a la aplicaci�n');
 			$exito = 1;
@@ -352,9 +305,7 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Funcion que verifica si un usuario esta auntenticado o no en la aplicacion
-	* 
-	* @return boolean TRUE o FALSE dependiendo si esta autenticado o no
+	* @return boolean TRUE - FALSE
 	*/
 	function esAutorizado(){
 		$exito = false; 
@@ -369,18 +320,12 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Funcion que genera un boton de atras (hacia el padre del c�digo de p�gina dado)
-	* 
-	* @param string $P_texto Opcional, texto que llevara el boton o link
-	* @param string $P_estilo Opcional, forma de visualizar el boton atr�s, puede ser: 'boton' genera un bot�n (INPUT), 'link' genera un link  (A), 'imagen' genera una imagen con su link (A, IMG)
-	* @return string Cadena HTML de bot�n de atr�s
+	* @param string
+	* @param string
+	* @return string
 	*/
-	function generarAtras($P_texto="Atr�s", $P_estilo="link"){
-		//$estilo: Variable que da comportamiento del control que se genera 
-		// boton: genera un boton
-		// link:  genera un link
-		// imagen: genera una imagen
-		
+	function generarAtras($P_texto="Atrás", $P_estilo="link"){
+	
 		$P_pag_Actual =  $this->codPag;
 		
 		$atrasLnk = $this->buscarPadre($P_pag_Actual);
@@ -404,16 +349,12 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Funcion que destruye las variables de sesion (retira autenticacion del usuario en aplicacion)
-	* 
-	* @return boolean TRUE o FALSE dependiendo si realizo la operacion o no
+	* @return boolean
 	*/
 	function desconectar(){
-		//Dejar log en bitacora
 		$ObjetoBitacora		=	new bitacora();
 		$objEjecSQL 		= 	new ejecutorSQL();
 		$ObjetoBitacora->registrar('El usuario cerro el acceso a la aplicacion');
-		//bitacora::registrar('El usuario cerr� el acceso a la aplicaci�n');
 		mysql_query('DELETE FROM ad_session WHERE id_session="'.$this->consultarIdSesion().'"',CONEXIONBD);
 		mysql_query('UPDATE ad_session set id_session="", expires="" WHERE id_session="'.$this->consultarIdSesion().'"',CONEXIONBD);
 		
@@ -432,11 +373,9 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Funcion que genera un boton para cerrar sesi�n
-	* 
-	* @param string $P_texto Opcional, texto que llevara el boton o link
-	* @param string $P_estilo Opcional, forma de visualizar el boton atr�s, puede ser: 'boton' genera un bot�n (INPUT), 'link' genera un link  (A), 'imagen' genera una imagen con su link (A, IMG)
-	* @return string Cadena HTML de bot�n de cerrar sesi�n
+	* @param string
+	* @param string
+	* @return string
 	*/
 	function generarCerrarSesion($P_texto="Cerrar Sesi�n", $P_estilo="boton"){
 		switch ($P_estilo){			
@@ -471,10 +410,9 @@ class cms extends sesion{
 		return (true);
 	}
 	
-	/** 
-	* Funcion que devuelve nombre de usuario que se ha autenticado 
+	/**
 	* 
-	* @return string Cadena con el nombre del usuario autenticado
+	* @return string
 	*/
 	function consultarNombreActivo(){
 		$exito = false; 
@@ -483,10 +421,9 @@ class cms extends sesion{
 		return $exito;		
 	}
 	
-	/** 
-	* Funcion que devuelve id de usuario que se ha autenticado 
+	/**
 	* 
-	* @return integer ID del usuario autenticado
+	* @return integer
 	*/
 	function consultarID(){
 		$exito = false;		
@@ -495,10 +432,9 @@ class cms extends sesion{
 		return $exito;
 	}
 	
-	/** 
-	* Para utilizar o invocar dentro de <head>, imprime titulo de c�digo de p�gina proporcionado
+	/**
 	* 
-	* @return string HTML con tags de title con el t�tulo asociado al c�digo de p�gina
+	* @return string
 	*/
 	function consultarTitulo(){
 		print "<title>".$this->titulo."</title>";
@@ -507,10 +443,8 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Para utilizar o invocar dentro de <head>, realiza includes de archivos js 
-	* encontrados en la carpeta js
 	* 
-	* @return boolean Esta funci�n devuelve true
+	* @return boolean
 	*/
 	function incluirJavascript($nombCarp = "ad_js"){
 		$arrFiles = scandir (SAD_DIR.$nombCarp);
@@ -542,10 +476,8 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Para utilizar o invocar dentro de <head>, realiza includes de archivos css 
-	* encontrados en la carpeta css
 	* 
-	* @return boolean Esta funci�n devuelve true
+	* @return boolean
 	*/
 	function incluirCSS(){
 		$nombCarp = "ad_css";
@@ -563,11 +495,9 @@ class cms extends sesion{
 	
 	
 	/** 
-	* Redirect to a specific page
-	* Only use in controller page
 	* 
-	* @param string $P_codPag : Page code
-	* @return boolean Return FALSE if no redirect the page
+	* @param string
+	* @return boolean
 	*/
 	function direccionarPagina($P_codPag){
 		$exito = false;
@@ -583,11 +513,10 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Imprime en la p�gina generada el link con URL a p�gina  
 	* 
-	* @param string $P_codPag C�digo de p�gina 
-	* @param string $P_extra Parametros extras pasados por el URL
-	* @return string Cadena con el href de la p�gina a direccionar
+	* @param string
+	* @param string
+	* @return string
 	*/
 	function ubicarURL($P_codPag, $P_extra=""){
 		if (!SAD_URL_AMIGABLE)
@@ -615,11 +544,10 @@ class cms extends sesion{
 	}
 	
 	/** 
-	* Devuelve cadena para el link con URL a p�gina  
 	* 
-	* @param string $P_codPag C�digo de p�gina 
-	* @param string $P_extra Parametros extras pasados por el URL
-	* @return string Cadena con el href de la p�gina a direccionar
+	* @param string
+	* @param string
+	* @return string
 	*/
 	function ubicarCadenaURL($P_codPag, $P_extra=""){
 		if (!SAD_URL_AMIGABLE)
@@ -644,24 +572,7 @@ class cms extends sesion{
 			return ($cad);
 		}
 		
-		//return (true);
 	}
 	
-	/** 
-	* Devuelve cadena para el link con URL a ARCHIVO o Imagen  
-	* 
-	* @param string $P_codPag Codigo de pagina 
-	* @param string $P_extra Parametros extras pasados por el URL
-	* @return string Cadena con el href de la pagina a direccionar
-	*/
-	function imagenURL($P_nombreArchivo){
-		print (SAD_URL_BASE.SAD_CARPETA_IMAGENES.'/'.$P_nombreArchivo);
-	}
-
-	function imagenURLicons($P_nombreArchivo){
-		print (SAD_URL_BASE.SAD_CARPETA_IMAGENES.'/icons/'.$P_nombreArchivo);
-	}
-	
-	
-} // Clase cms 
+}
 ?>

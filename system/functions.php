@@ -223,8 +223,6 @@ function get_page_section ( $slug ) {
 }
 
 
-//Calcular dias transcurridos entre dos fechas dadas
-//===================================================
 	
 function diasEntreFechas($fechainicio, $fechafin){
   	return ((strtotime($fechafin)-strtotime($fechainicio))/86400);
@@ -248,7 +246,6 @@ $horadehoy		=	"$hora:$minuto:$segundo";
 $ip 			=	$_SERVER['REMOTE_ADDR'];
 
 
-// Quitar caracteres raros en el mensaje
 function quitar($mensaje) { 
 
 	$mensaje = str_replace("<","&lt;",$mensaje); 
@@ -270,23 +267,16 @@ function resta_fechasF($fecha1,$fecha2, $absoluto = true){
 
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha1))
 		
-
-		//list($año1,$mes1,$dia1)=split("-",$fecha1);
 		$Res1	=	explode("-",$fecha1);	//	0 = Año ; 1 = Mes ; 2 = Dia
 		if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha2))
 		
-
-		//list($año2,$mes2,$dia2)=explode("/",$fecha2);
 		$Res2	=	explode("-",$fecha2);	//	0 = Año ; 1 = Mes ; 2 = Dia
 
 		if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha2))
 		
-
-		//list($año2,$mes2,$dia2)=explode("-",$fecha2);
 		$Res3	=	explode("-",$fecha2);	//	0 = Año ; 1 = Mes ; 2 = Dia
 		$dif = mktime(0,0,0,$Res1[1],$Res1[2],$Res1[0]) - mktime(0,0,0,$Res3[1],$Res3[2],$Res3[0]);
-		
-		
+	
 		
 		$dif = $dif / (60*60*24);
 		
@@ -298,9 +288,6 @@ function resta_fechasF($fecha1,$fecha2, $absoluto = true){
 	}
 
 
-/* Sumar dias a una fecha 
-   @Param (2017-08-26 , +5 )  
-*/
 function suma_fechas($fecha,$ndias){
 
 	if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
@@ -314,7 +301,8 @@ function suma_fechas($fecha,$ndias){
 }
 
 
-/* Restar dias a una fecha 
+/* 
+	Restar dias a una fecha 
    @Param (2017-08-26 , -5 )  
 */
 function resta_fechas ( $fecha , $ndias ) {
@@ -684,13 +672,4 @@ function encrypt_decrypt($action, $string) {
 	return $output;
 }
 
-/**
- * Get eventos
- */
-// function getNotifications () {
-// 	$ObjMant 	=	new Mantenimientos();
-// 	$query 		=	$ObjMant->BuscarLoQueSea('*',PREFIX.'events','activo =1','array');
-// 	$result 	= array('total'=>$query['total'], 'result'=>$query['resultado']);
-// 	return $result;
-// }
 ?>

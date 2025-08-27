@@ -4,6 +4,7 @@ include_once ( dirname(dirname(__DIR__)) . '/framework.php');
 include_once ( dirname(dirname(__DIR__)) . '/functions.php');
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
+$ObjUsers 	=	new Usuarios();
 $id_user 	=	$_SESSION['id_user'];
 $id_cia 	=	$_SESSION['id_cia'];
 $P_Tabla 	=	PREFIX.'usuarios';
@@ -99,13 +100,10 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 							&nbsp;&nbsp;Nombre de usuario: ".$_POST['user_acceso']."<br>			
 							&nbsp;&nbsp;Clave de acceso: ".$_POST['clave']."<br>
 							";
-			
-			//$Obj->Enviar($_POST['email'] ,"Confirmar Registro" , $mensaG ,'augustoduncan26@hotmail.com' , false, false ,false,false);
-			
+		
 			$mail_to_send_to = $_POST['user_acceso'];
 			$from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
 			$subject		 = "Usuario creado";
-			//$message		= "\r\n" . "Name: TEST" . "\r\n";
 			$headers  = "From: " . strip_tags($from_email) . "\r\n";
 			$headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
 			$headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
@@ -181,7 +179,6 @@ if ( isset($_POST['edit']) && $_POST['edit'] == 1 && $_POST['nombre'] !='') {
 		}
 		
 		$ObjEjec->ejecutarSQL("Delete from ".PREFIX."users_permissions Where id_user = '".$_POST['id']."' and id_cia='".$id_cia."'");
-		//$ObjEjec->ejecutarSQL("Delete from ".PREFIX."permisos Where id_pefil = '".$_POST['perfil']."' and id_cia='".$id_cia."'");
 		$selPerms 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'permisos','id_cia="'.$id_cia.'" and id_perfil="'.$_POST['perfil'].'"','array');
 		if ($selPerms['resultado']) {
 			foreach ($selPerms['resultado'] as $key => $perm) {
@@ -220,8 +217,9 @@ if (isset($_POST['editperm']) && $_POST['editperm']==1) {
 
 // Delete 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
-	$ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."'");
-	echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
+	// $ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id_usuario = '".$_GET['id']."'");
+	// echo $mssg 		=	'<div class="alert alert-danger">Se elimino el registro con éxito</div>';
+	echo $ObjUsers->delete($_GET);
 }
 
 ?>

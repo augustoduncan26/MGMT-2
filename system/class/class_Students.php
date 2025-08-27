@@ -1,12 +1,9 @@
 <?php
 
-//use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Students
  */
 
-// namespace class\Students;
 
 class Students
 {

@@ -14,13 +14,6 @@
   .fade {
     overflow:hidden;
   }
-/* .dataTables_filter {
-   float: left !important;
-} */
-  /* .modal-xl {
-    width: 70%;
-   max-width:1350px;
-  } */
 }
 </style>
 
@@ -71,26 +64,20 @@
     
 <div class="row">
   <div class="col-sm-12">
-    <div class=""><!-- panel panel-default -->
-      <!-- <div class="panel-heading">
-        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
-      </div> -->
+    <div class="">
       <div class="panel-body">
         <div class="col-sm-12">
           <div style="height:10px;"></div>
 
         <div class="x_content">
-        <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
-        <!-- <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i> -->
+       
             <div class="table-responsive">
               <table id="list-table-events" class="table table-striped table-bordered table-hover">
               <thead>
-              <tr class=""><!-- header-list-table -->
-              <!-- <th style="width:10px"><input type="checkbox" /></th> -->
+              <tr class="">
               <th>Nombre</th>
               <th>Capacidad</th> 
               <th>Grado</th>
-              <!-- <th>Maestro / Supervisor</th>  -->
               <th>Estado</th>
               <th></th>
               </tr>
@@ -577,7 +564,6 @@ function deleteRow ( id ) {
 /**
  * Datatable
  */
-//const dataTableLoad = () => {
   $(document).ready( function () {
       $('#list-table-events').DataTable({
         pageLength: 25,
@@ -599,8 +585,6 @@ function deleteRow ( id ) {
       ]
       });
   } ); 
-//}
-//dataTableLoad();
 
 
 $('.close').on('click', ()=>{
@@ -617,11 +601,8 @@ function limpiarCampos (form = false) {
 switch (form) {
   case 'add_clase':
     $("#nombre_add").val('');
-    //$("#nombre_add").focus();
   break;
   case "usuario_listar":
-    // $("#result_email_validate").html('');
-    // $("#usuario_acceso").val('');
   default:
     break;
 }

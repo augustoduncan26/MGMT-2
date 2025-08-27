@@ -3,7 +3,6 @@
  * Usuarios
  */
 
-// namespace class\Usuarios;
 
 class Usuarios
 {
@@ -42,7 +41,6 @@ class Usuarios
     public function listAllAsync () {
         $objPermOpc = new permisos();
         $ObjMante   = new Mantenimientos();
-        //$ObjEjec    = new ejecutorSQL();
         $where 			= 	'id_cia="'.$this->idCia.'"';
         $listEvents 	=	$ObjMante->BuscarLoQueSea('*',$this->tableUsuarios,$where,'array','name');
         $resultClass    =   false;
@@ -93,9 +91,7 @@ class Usuarios
         $ObjMante   =   new Mantenimientos();
         $ObjEjec    =   new ejecutorSQL();
         $path 		=  	ROOT_DIR.REPOSITORY."profile_photos/";
-        // if (is_dir($path)) {
-        //     @chmod($path, 0755);
-        // }
+  
 		$sql 			=	$ObjMante->BuscarLoQueSea('*',$this->tableUsuarios,'email="'.$POST['user_acceso'].'"','array');
 
         if (is_dir($path)) {
@@ -111,7 +107,7 @@ class Usuarios
 		}
 
 		// Insert Photo
-		if ($FILES['file']['name']) {
+		if (isset($FILES) && $FILES['file']['name']) {
 			$rand 			=	rand('1234567890','0987654321');
 			$rand2 			=	rand('0987654321','1234567890');
 			$image 			= 	getimagesize($FILES['file']['tmp_name']);
@@ -123,8 +119,7 @@ class Usuarios
 
 			// check if there is an error for particular entry in array
 			if(!empty($file['error']))  {
-				// some error occurred with the file in index $index
-				// yield an error here
+
 				echo 'error en foto';
 				return false;
 			}
@@ -132,6 +127,7 @@ class Usuarios
 
 		$clave 		=	encrypt_decrypt('encrypt', $POST['clave']);
 		$perfilData =	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','id="'.$POST['perfil'].'"');
+        echo $POST['perfil'];
 		$P_Valores 	= 	"'".$POST['user_acceso']."','".$POST['user_acceso']."','".$POST['nombre']."','".$POST['apellido']."','".$this->idCia."','".$POST['director']."','".$POST['principal']."','".$POST['perfil']."','".$perfilData['name']."','".$clave."',NOW(),NOW(),'0','".$POST['estado']."'";
 		$ObjEjec->insertarRegistro($this->tableUsuarios, 'usuario,email,nombre,apellido,id_cia,es_director,principal,id_perfil,name_perfil,contrasena,created_at,updated_at,superadmin,activo', $P_Valores);
 		
@@ -168,7 +164,6 @@ class Usuarios
 		$this->exito	= 'Se ingreso el registro con éxito';
 
             if ($POST['enviar_email']) {
-                // $Obj		=	new EnviarCorreo();
                 $mensaG		=	"<font face=verdana size=1.5 />Hola ".$POST['nombre']."&nbsp;<br /><br />
                                 &nbsp;&nbsp;Se ha creado su usuario con éxito.<br><br>
                                 &nbsp;&nbsp;Sus datos de acceso son:<br>
@@ -179,7 +174,6 @@ class Usuarios
                 $mail_to_send_to = $POST['user_acceso'];
                 $from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
                 $subject		 = "Usuario creado";
-                //$message		= "\r\n" . "Name: TEST" . "\r\n";
                 $headers  = "From: " . strip_tags($from_email) . "\r\n";
                 $headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
                 $headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
@@ -200,7 +194,7 @@ class Usuarios
     public function delete ($GET) 
 	{
         $ObjEjec    =   new ejecutorSQL();
-		$ObjEjec->ejecutarSQL("Delete from ".$this->tableUsuarios." Where id = '".$GET['id']."'");
+		$ObjEjec->ejecutarSQL("Delete from ".$this->tableUsuarios." Where id_usuario = '".$GET['id']."'");
 	    $this->exito = '<div class="alert alert-danger">Se elimino el registro con éxito</div>';
         return $this->exito;
 	}

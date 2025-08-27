@@ -477,8 +477,6 @@ $('.mssg-edit-clases').hide();
     success         : function (response) {
       $('#id_row').val(response['id']);
       $('#nombre_edit').val(response['name']);
-      //$('#class_edit').select2('val',response['class_id']);
-      //$('#teacher_edit').select2('val',response['teacher_id']);
       $('#estado_edit').select2('val',response['activo']);
       
       if (response['class_id']!= null && response['class_id']!='' && response['class_id']!='NULL') {
@@ -516,7 +514,6 @@ $('.mssg-edit-clases').hide();
  * @param {*} id  
 */
 $('.btn-edit-asignatura').on('click', ()=>{
-//function updateEvent ( id ) {
   let id          = $('#id_row').val();
   let nombre      = $('#nombre_edit').val();
   let clase       = $('#class_edit').val();
@@ -552,52 +549,39 @@ $('.btn-edit-asignatura').on('click', ()=>{
         listAll();
         setTimeout(() => {
           $(".mssg-edit-modal").hide();
-          //window.location.reload();
         }, 4000);
       }
     }
   });
 });
 
-// Delete Event
+
+/**
+ * Delete
+ */
 function deleteRow ( id ) {
-    ajax2   = nuevoAjax();
-    ajax2.open("GET", "app/controllers/eventos.php?delete=1&id="+id+"&nocache=<?php echo rand(99999,66666)?>",true);
-    ajax2.onreadystatechange=function() {
-    if (ajax2.readyState==4) {
-      $('html, body').animate({scrollTop: '0px'},'slow');
-      $('#label-mssg').html(ajax2.responseText);
+  let route = "app/controllers/asignaturas.php"; 
+  $.ajax({
+    headers: {
+      Accept        : "application/json; charset=utf-8",
+      "Content-Type": "application/json: charset=utf-8"
+    },
+    url: route,
+    type: "GET",
+    data: {
+      delete : 1,
+      id  : id
+    },
+    dataType        : 'html',
+    success         : function (response) { 
       listAll();
-      if ($('.alert-danger').is(':visible')) {
-        setTimeout(() => {
-          $('.alert-danger').html('');
-          $('.alert-danger').hide();
-        }, 4000);
-      }
+    },
+    error           : function (error) {
+      console.log(error);
     }
-  }
-  ajax2.send(null);
+  });
 }
 
-/** 
- * Select all options
- */
-// $('.select-all-prof-options').on('click', ()=>{
-//   if ($('.select-all-prof-options').is(':checked')) {
-//     $("#teacher_add > option").prop("selected","selected");
-//     $("#teacher_add").trigger("change");
-//   } else {
-//     $("#teacher_add").val([]).trigger('change')
-//   }
-// });
-// $('.select-all-class-options').on('click', ()=>{
-//   if ($('.select-all-class-options').is(':checked')) {
-//     $("#class_add > option").prop("selected","selected");
-//     $("#class_add").trigger("change");
-//   } else {
-//     $("#class_add").val([]).trigger('change')
-//   }
-// });
 
 $(".select-all-class-options, .select-all-prof-options").on('click' , function() {
   if (this.id == 'select-all-class') {
@@ -616,7 +600,6 @@ $(".select-all-class-options, .select-all-prof-options").on('click' , function()
       $("#teacher_add").val([]).trigger('change')
     }
   }
-  //console.log("Clicked:", this.id); // 'this' refers to the clicked element
 });
 
 $(".select-all-class-options, .select-all-prof-options").on('click' , function() {
@@ -636,24 +619,7 @@ $(".select-all-class-options, .select-all-prof-options").on('click' , function()
       $("#teacher_add").val([]).trigger('change')
     }
   }
-  //console.log("Clicked:", this.id); // 'this' refers to the clicked element
 });
-
-
-
-// Clean
-// function limpiar () {
-//   $("#nombre").val('');
-//   $("#precio").val('');
-//   $("#txt_nombre").val('');
-//   $("#txt_precio").val('');
-//   $('#mssg-edit-eventos').html('');
-// }
-
-// Make some default options
-// $("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-// $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-
 
 
 $(document).ready( function () {
