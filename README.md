@@ -1,3 +1,6 @@
+https://es.wikipedia.org/wiki/C%C3%B3digo_abierto
+
+
 # MGMT-2
 Free framework for Beginners
 Complete code is in Final_Code branch
