@@ -450,6 +450,10 @@
 		border-radius: 0px 0px 5px 5px;
 		border-style: groove;
 		position: fixed;
+
+		overflow-x: auto;
+		height: 75%;
+		top: 100px;
 	}
 
 }

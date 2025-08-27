@@ -167,7 +167,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		</li>
 		<?php } ?>
 
-		<!-- Results -->
+		<!-- Results
 		<?PHP if(in_array('500', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li <?php if(GET()[0] == 'Resultados'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Resultados" data-placement="right" title="Resultados">
 			<a href="?Resultados" class="nav__link">
@@ -178,6 +178,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
+		 -->
 
 		<!-- Attendance / % de Asistencia -->
 		<?PHP if(in_array('550', $objPermOpc->getRolPermissions($id_rol))) {   ?>
@@ -191,7 +192,7 @@ $id_cia     	= $_SESSION['id_cia'];
 		</li>
 		<?php } ?>
 
-		<!-- Messages -->
+		<!-- Messages 
 		<?PHP if(in_array('600', $objPermOpc->getRolPermissions($id_rol))) {   ?>
 			<li <?php if(GET()[0] == 'Mensajes'){ echo ' class="menu-backg-item list_item tooltips"'; } else { echo 'class="list_item tooltips"' ;}?> data-original-title="Mensajes" data-placement="right" title="Mensajes">
 			<a href="?Mensajes" class="nav__link">
@@ -202,7 +203,7 @@ $id_cia     	= $_SESSION['id_cia'];
 			</a>
 		</li>
 		<?php } ?>
-
+		-->
 
 		<!-- Planning -->
 		<?PHP if(in_array('750', $objPermOpc->getRolPermissions($id_rol))) {   ?>

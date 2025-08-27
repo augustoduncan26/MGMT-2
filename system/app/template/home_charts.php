@@ -55,7 +55,7 @@ $totalParents 	= $ObjMante->BuscarLoQueSea('*',$P_tabla,'id_perfil=1',false);
             </li>
             <li class="messages-item">
                 <!-- Image -->
-                <img alt="" src="assets/images/avatar-2.jpg" class="messages-item-avatar">
+                <img alt="" src="assets/images/avatar-1.jpg" class="messages-item-avatar">
                 <!-- From -->
                 <span class="messages-item-from">Jhon Doe</span>
                 <!-- Date -->

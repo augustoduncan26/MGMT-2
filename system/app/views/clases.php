@@ -26,6 +26,16 @@
 
 <body>
 
+<!-- Message Exportar -->
+<div class="alert alert-block alert-info fade in hide messg-exportar-process">
+  <button data-dismiss="alert" class="close btn-cancelar-exportar" type="button"> × </button>
+  <p><h4 class="alert-heading mssg-label-exportar"> Esta seguro de querer exportar todos los <?=getPageRealName()?>? </h4></p>
+  <p>
+    <a href="#" class="btn btn-primary btn-acept-exportar"> Aceptar </a>
+    <a href="#" class="btn btn-danger btn-cancelar-exportar"> Cancelar </a>
+  </p>
+</div>
+
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -38,12 +48,16 @@
 
     <div class="container">
       <div class="col-md-7">
-      <h4><i class="clip-list-2"></i> Lista de Clases</h4>
+      <h4><i class="clip-list-2"></i> 
+      <img src="assets/images/teacher.png" class="icon-teachers" />
+      Lista de Clases
+    <button data-original-title="Asistente en línea" data-content="Click para ver el asistente" data-placement="right" data-toggle="modal"  data-trigger="hover" class="btn open-assistant btn-xs btn-green tooltips"><i class="clip-info"></i></button>
+  </h4>
       </div>
       <div class="col-md-5 text-right">
       <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="limpiarCampos('add_clase');  ">[+] Nueva Clase</a>
-      <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-      <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+      <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+      <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
     </div>
     </div>
 
@@ -276,6 +290,44 @@
 </div>  <?php //////  Fin de editor ?>
 <!-- End Edit Modal -->
 
+<!-- Importar -->
+<div class="modal fade  come-from-modal right" id="myImporter" role="dialog" aria-labelledby="myModalImporter">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalImporter"><i class="clip-download-3"></i> Importador</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assistant -->
+<div class="modal fade  come-from-modal right" id="myAssistant" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
+                <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalLabel"><i class="clip-info"></i> Asistentess</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <?php get_template_part('footer_scripts');?>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
@@ -283,9 +335,39 @@
 <script src="<?php echo $_ENV['FLD_ASSETS']?>/plugins/select2/select2-new.min.js"></script>
 
 <script>
+//setTimeout(() => {
+  $('.mssg-add-modal').hide();
+  $('.mssg-edit-modal').hide();
+//}, 3000);
 
-// var today = new Date().toISOString().slice(0, 10);
-// document.getElementsByName("event_add_date")[0].min = today;
+/** 
+ * Open Asistant Modal 
+*/
+$('.open-assistant').on('click', ()=>{
+  $('#myAssistant').modal('show'); 
+});
+
+/** Btn Exportar */
+$('.btn-exportar').on('click', ()=>{
+  if ($('.messg-exportar-process').is(':visible')) {
+    $('.messg-exportar-process').removeClass('hide');
+  } else {
+    $('.messg-exportar-process').removeClass('hide').fadeIn('slow');
+  }
+});
+
+/** 
+ * Acept Exportar
+ */
+$('.btn-acept-exportar').on('click',()=>{
+  $('.btn-acept-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.btn-cancelar-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.mssg-label-exportar').html('Estamos exportando los datos, espere por favor... <img src="assets/images/loading.gif" id="cargando_list" />');
+  console.log('Procesando Exportar')
+});
+
+$('.result-mssg').hide();
+$('#mssg-add').hide();
 
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
@@ -465,11 +547,6 @@ function listClasses() {
   });
 }
 
-
-// Make some default options
-// $("#txt_precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-// $("#precio").change(function(){this.value = parseFloat(this.value).toFixed(2);});
-
 /**
  * Delete
  */
@@ -532,12 +609,7 @@ $('.close').on('click', ()=>{
 $('.btn-danger').on('click', ()=>{
   window.location.reload();
 });
-// $(document).keyup(function(e) {
-//   console.log(e)
-//     if (e.key === "Escape") { // escape key maps to keycode `27`
-//       window.location.reload();
-//   }
-// });
+
 
 // Clean
 function limpiarCampos (form = false) {

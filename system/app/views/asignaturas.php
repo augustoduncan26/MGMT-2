@@ -26,6 +26,16 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 <body>
 
+<!-- Message Exportar -->
+<div class="alert alert-block alert-info fade in hide messg-exportar-process">
+  <button data-dismiss="alert" class="close btn-cancelar-exportar" type="button"> × </button>
+  <p><h4 class="alert-heading mssg-label-exportar"> Esta seguro de querer exportar todos los <?=getPageRealName()?>? </h4></p>
+  <p>
+    <a href="#" class="btn btn-primary btn-acept-exportar"> Aceptar </a>
+    <a href="#" class="btn btn-danger btn-cancelar-exportar"> Cancelar </a>
+  </p>
+</div>
+
 <div class="row view-container">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -45,8 +55,8 @@ div.dataTables_wrapper div.dataTables_filter label {
       </div>
       <div class="col-md-5 text-right">
       <a data-toggle="modal" data-original-title="Agregar Asignaturas" data-placement="top" class="btn btn-primary tooltips"  role="button" href="#formulario_nuevo">[+] Nuevo</a>
-      <a data-toggle="modal" data-original-title="Exportar a CSV" data-placement="top" class="btn btn-info tooltips"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-      <a data-toggle="modal" data-original-title="Importar a CSV" data-placement="top" class="btn btn-success tooltips"  role="button" href="#"><i class="clip-download-3"></i> Importar</a>
+      <a data-toggle="modal" class="btn btn-info btn-exportar"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
+      <a data-toggle="modal" class="btn btn-success"  role="button" href="#myImporter"><i class="clip-download-3"></i> Importar</a>
     </div>
     </div>
 
@@ -302,10 +312,6 @@ div.dataTables_wrapper div.dataTables_filter label {
             <div class="modal-body">
                 ...
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -331,9 +337,28 @@ $('.open-assistant').on('click', ()=>{
   $('#myAssistant').modal('show'); 
 });
 
-// var today = new Date().toISOString().slice(0, 10);
-// document.getElementsByName("event_add_date")[0].min = today;
 
+/** Btn Exportar */
+$('.btn-exportar').on('click', ()=>{
+  if ($('.messg-exportar-process').is(':visible')) {
+    $('.messg-exportar-process').removeClass('hide');
+  } else {
+    $('.messg-exportar-process').removeClass('hide').fadeIn('slow');
+  }
+});
+
+/** 
+ * Acept Exportar
+ */
+$('.btn-acept-exportar').on('click',()=>{
+  $('.btn-acept-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.btn-cancelar-exportar').prop('disabled',true).css("pointer-events", "none").css("color","gray");
+  $('.mssg-label-exportar').html('Estamos exportando los datos, espere por favor... <img src="assets/images/loading.gif" id="cargando_list" />');
+  console.log('Procesando Exportar')
+});
+
+$('.result-mssg').hide();
+$('#mssg-add').hide();
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
     $('.navigation-toggler').bind('click', function () {

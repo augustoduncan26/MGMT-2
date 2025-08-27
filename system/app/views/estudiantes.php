@@ -36,7 +36,6 @@
     <div class="x_title">
       <h3></h3>
       <div class="clearfix"></div>
-      <!-- <label id="label-mssg"><?=$mssg?></label> -->
       <div class="alert result-mssg"></div>
     </div>
 
@@ -493,8 +492,6 @@ $('.btn-acept-exportar').on('click',()=>{
 
 $('.result-mssg').hide();
 $('#mssg-add').hide();
-// var today = new Date().toISOString().slice(0, 10);
-// document.getElementsByName("event_add_date")[0].min = today;
 
 // Hacer toggle el: Left Menu
 var runNavigationToggler = function () {
