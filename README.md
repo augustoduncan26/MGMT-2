@@ -1,4 +1,4 @@
-https://es.wikipedia.org/wiki/C%C3%B3digo_abierto
+<img src="https://www.acvmultimedia.com/images/blog/internet/open-source.jpg" widt="200px" height="200x" />
 
 
 # MGMT-2
