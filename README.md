@@ -7,6 +7,7 @@ Complete code is in Final_Code branch
 
 FF2U
 # ==========
+You can use this environment for your own projects
 Read the doc.ini file to learn how to use this simple framework
 
 (Feel free 2 use 4 yours projects)
