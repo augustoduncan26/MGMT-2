@@ -13,33 +13,7 @@
     }
   }
 
-  // function addUser() {
-
-  //   var nombre    =   $("#nombre").val();
-  //   var usuario   =   $("#usuario").val();
-  //   var email     =   $("#emailail").val();
-  //   var telefono  =   $("#telefono").val();
-  //   var direccion =   $("#direccion").val();
-  //   var estado    =   $("#estado").val();
-
-  //   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-  //   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-    
-  //   var contenido_editor = $('#list-rooms')[0];
-  //   ajax1   = nuevoAjax();
-  //   ajax1.open("GET", "ajax/ajax_add_users.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nombre="+nombre+"&usuario="+usuario+"&email="+email+"&telefono="+telefono+"&direccion="+direccion+"&estado="+estado+"&nocache=<?php echo rand(99999,66666)?>",true);    
-  //   ajax1.onreadystatechange=function() {
-
-  //     if (ajax1.readyState==4) {
-  //       if(ajax1.responseText == 1) {
-  //         $("#label-mssg").val('Se ha ingresado el usuario con éxito');
-  //       }
-        
-  //     }
-  //   }
-
-  //   ajax1.send(null);
-  // }
+  
 
 </script>
 <!-- Switchery -->
@@ -271,112 +245,10 @@
 
 <!-- End Modal List Cia User -->
 
-<!-- <head>
-<style>
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
 
-.switch input {display:none;}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-</style>
-</head>
-<body>
-
-<h2>Toggle Switch</h2>
-
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider"></span>
-</label>
-
-<label class="switch">
-  <input type="checkbox" checked>
-  <span class="slider"></span>
-</label><br><br>
-
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>
-
-<label class="switch">
-  <input type="checkbox" checked>
-  <span class="slider round"></span>
-</label>
-
-</body> -->
-
-
-<!-- Modal Add user to company -->
-
-<!-- End Add user to company -->
-
-
-<!-- Modal Add user to company -->
-
-<!-- End Add user to company -->
-
-
-<!-- Modal Add user to company -->
-
-<!-- End Add user to company -->
-<!-- Switchery -->
 <script src="../vendors/switchery/dist/switchery.min.js"></script>
 
 <script>
   $("[name='moneda']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
   $("[name='idioma']").select2({ width: '100%', dropdownCssClass: "bigdrop"});
 </script>
-<!--  <script src="../vendors/switchery/dist/switchery.min.js"></script> -->
-<!-- validator -->
-    <!-- <script src="../vendors/validator/validator.js"></script> -->

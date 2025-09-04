@@ -6,7 +6,6 @@
 	$ObjEjec    	 = 	new ejecutorSQL();
 	$ObjDate 		 =  new fecha();
 	$objcmsIndx		 = 	new cms();
-	//$objcmsIndx->consultarID();
 	$idusIndex 		= 	$_SESSION['id_user'];
 	$id_rol     	= 	$_SESSION["id_rol"];
 	$id_user    	= 	$_SESSION["id_user"];
@@ -67,77 +66,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['r1'] !='') {
 		echo "ok";
 	}
 }
-
-/*
-// DELETE 
-if (isset($_POST['delete']) && isset($_POST['id'])){	
-	$id = $_POST['id'];
-	
-	$sql = "UPDATE ".$TblBooking." set activo = 0 WHERE id = $id";
-	$query = $connPDO->prepare( $sql );
-	if ($query == false) {
-	 print_r($bdd->errorInfo());
-	 die ('Erreur prepare');
-	}
-	$res = $query->execute();
-	if ($res == false) {
-	 print_r($query->errorInfo());
-	 die ('Erreur execute');
-	}
-
-} // EDIT
- elseif (isset($_POST['title']) && isset($_POST['color']) && isset($_POST['id'])){
-	
-	$id 		= $_POST['id'];			$last_name 	=	$_POST['apellido_edit'];
-	$title 		= $_POST['title'];		$rooms 		=	$_POST['habitacion_edit'];
-	$color 		= $_POST['color'];		$totpersons =   $_POST['tot_personas'];
-	$email 		= $_POST['email'];		$precio 	=	$_POST['precio_edit'];
-	$descuento 	= $_POST['descuento_edit'];
-
-	$fecha_e 	=	$_POST['fecha_e_editar'];
-	$fecha_s 	=	$_POST['fecha_s_editar'];
-
-	$nacionalidad = $_POST['nacionalidad_edit'];
-	$documento 	=	$_POST['documento_edit'];
-	$ndocumento =	$_POST['n_documento_edit'];
-	$observacion =  $_POST['observacion_edit'];
-
-	if ($_POST['tot_personas']=='') { $_POST['tot_personas'] = 0;}
-
-	// Aritmetic
-	//$total_dias	=	diasEntreFechass($start_n[0],$end_n[0]);
-	//$sub_total 	=	($total_dias * $_REQUEST['precio_edit']);
-	//$discounts_t= 	number_format($sub_total*$_REQUEST['precio_edit']/100 , 2);
-	//$total_price= 	number_format($sub_total-$discounts_t,2);
-
-
-	$sel_hb 	=	mysqli_query($link,"Select * From ".$TblRooms." Where id = '".$rooms."'") or die (mysqli_error($link));
-	$data_hb 	=	mysqli_fetch_array($sel_hb);
-
-	// Reservas
-	if ( $_POST['tipo_reserva_edit'] == 'R') {
-
-	 $sql = "UPDATE ".$TblBooking." SET  title = '$title', color = '$color', email='$email', last_name='$last_name', rooms='$rooms', name_room = '".$data_hb['codigo']."', total_persons = '".$_POST['tot_personas']."', price = '$precio', discounts = '$descuento', nationality = '$nacionalidad', type_doc = '$documento', number_doc = '$ndocumento', observation = '$observacion', fecha_e = '".$fecha_e."', fecha_s = '".$fecha_s."'  WHERE id = '$id' ";
-
-	// Eventos
-	} elseif ( $_POST['tipo_reserva_edit'] == 'E' ) {
-
-		$sql 	= "UPDATE ".$TblBooking." SET  title = '$title', color = '$color',fecha_e = '".$fecha_e."', fecha_s = '".$fecha_s."'  WHERE id = $id";
-	}
-
-	$query = $connPDO->prepare( $sql );
-	if ($query == false) {
-	 print_r($query->errorInfo());
-	 die ('Erreur prepare');
-	}
-	$sth = $query->execute();
-	if ($sth == false) {
-	 print_r($query->errorInfo());
-	 die ('Erreur execute');
-	}
-
-}
-*/
 
 /**
  * Edit when user move the event

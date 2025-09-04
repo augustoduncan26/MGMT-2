@@ -84,11 +84,9 @@ div.dataTables_wrapper div.dataTables_filter label {
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['email']?></td>
                         <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$value['created_at']?></td>
                           <!-- <td <?php if($value['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<label style="color:red">Inactivo</label>';} ?></td> -->
-                          <!--'<span class="label label-sm label-success">Activo</span>'-->
                         <td  <?php if($value['activo']==0){?> class="row-yellow-transp" <?php } ?>><?php if($value['activo'] ==1) { echo 'Activo'; } else { echo '<span class="label label-sm label-danger">Inactivo</span>';} ?></td>
                         <td class="text-center" >
                           <a class="btn btn-xs btn-teal tooltips" data-original-title="Ver Detalle" data-toggle="modal" role="button" href="#edit_event" onclick="editRow('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-edit"></i></a>
-                          <!-- <a class="btn btn-xs btn-green " data-original-title="Permisos" data-toggle="modal" role="button" href="#user-permission" onclick="limpiarCampos('edit_usuario');showUserPermisos('<?php echo $value['id_usuario']; ?>');"><i class="fa fa-key"></i></a> -->
                           <a class="btn btn-xs btn-bricky tooltips" data-original-title="Eliminar" href="Javascript:void(0);" onclick="if (confirm('Está seguro que desea eliminar este registro?')) { deleteRow('<?php echo $value['id_usuario']; ?>'); } else { return false; }"><i class="fa fa-times fa fa-white"></i></a>
                         </td>
                       </tr>
@@ -98,7 +96,6 @@ div.dataTables_wrapper div.dataTables_filter label {
                     ?>
                   </tbody>
                 </table>
-                <!-- <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i> -->
               </div>
               
               </div>

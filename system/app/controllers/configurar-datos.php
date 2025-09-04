@@ -62,9 +62,3 @@
 	}
 
 	$DatosUser		=	$objUser->consultarUsuario($_SESSION['id_user']);
-//var_dump($DatosUser);
- // if($DatosUser['work_as']=='rooms') { 
- //    $UseLike      =   '<font color="red">Hotel</font>';
- // } else {
- //   $UseLike      =   '<font color="green">Hostel</font>';
- // }

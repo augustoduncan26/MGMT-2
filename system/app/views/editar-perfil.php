@@ -510,7 +510,6 @@ $( document ).ready(function() {
           } else { 
 
             ChangePasswd();
-            //$('#lbl-mssg').html('<font color="red">Ha cambiado su contraseña con éxito</font>');
             $('#btnUpdatePassword').attr('type', 'submit'); 
           }
       }

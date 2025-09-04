@@ -23,17 +23,7 @@ if (isset($_POST['btn-modificar-clave'])) {
             Derechos Reservados ".date('Y')."
             ";
             sendAnEmail ($mensaG,$DataUser['email'],$_ENV['MAIL_FROM_ADDRESS'],"Contraseña actualizada.");
-            // $ObjEjec->insertarRegistro(PREFIX.'users', $P_Campos, $P_Valores);
-            // $mail_to_send_to = $DataUser['email'];
-            // $from_email 	 = $_ENV['MAIL_FROM_ADDRESS'];
-            // $subject		 = "Contraseña actualizada.";
-            // $headers  = "From: " . strip_tags($from_email) . "\r\n";
-            // $headers .= "Reply-To: " . strip_tags($_ENV["MAIL_USERNAME"]) . "\r\n";
-            // $headers .= "BCC: ".$_ENV["MAIL_BBC"]."\r\n";
-            // $headers .= "MIME-Version: 1.0\r\n";
-            // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-            // $a = mail( $mail_to_send_to, $subject, $mensaG, $headers );
-            //echo '<div class="alert alert-success">Se ha creado el registro con éxito. <br />Se envó un email al usuario creado, con sus datos de acceso.</div>';
+        
             $mssg = 'ok';
         } else {
             $mssg = 'error';

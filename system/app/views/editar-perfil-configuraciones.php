@@ -27,33 +27,7 @@
           </div>
         </a>
 
-        <!-- <a data-toggle="modal" role="button" href="#list-users" onClick="listarUsuarios()">
-          <div class="col-sm-2">
-            <button class="btn btn-icon btn-block btn-warning box-shadow">
-              <i class="fa fa-group"></i>
-              Lista de Usuarios 
-            </button>
-          </div>
-        </a> -->
-
-          <!-- <a data-toggle="modal" role="button" href="#logo-empresa" onClick="">
-          <div class="col-sm-2">
-            <button class="btn btn-icon btn-block btn-warning box-shadow">
-              <i class="fa fa-picture-o"></i>
-              Logo de Empresa
-            </button>
-          </div>
-          </a> -->
-
-          <!-- <a data-toggle="modal" role="button" href="#copia-respaldo" onClick="">
-          <div class="col-sm-2">
-            <button class="btn btn-icon btn-block btn-warning box-shadow">
-              <i class="clip-data"></i>
-              Copia de Respaldo
-            </button>
-          </div>
-          </a> -->
-
+       
 
         </div>
 
@@ -62,7 +36,6 @@
     </div>
 
 <br />
-<!-- onclick="$('#myModal').modal({'backdrop': 'static'});" -->
 
    <div class="row">
       <div class="col-sm-12">
@@ -138,7 +111,6 @@
                       }
                     ?> 
                     </select> 
-                   <!-- <input name="deptoModal" type="text" maxlength="30" class="form-control" id="depto" placeholder="Departamento"> -->
                   </td>
                  </tr>
 
@@ -219,7 +191,6 @@
             }
             ?> 
             </select>
-            <!-- <input name="depto" type="text" maxlength="30" class="form-control" id="txt_depto" placeholder="Departamento" value="<?=$depto['name']?>"> -->
             </td>
             </tr>
             <tr>
@@ -393,31 +364,6 @@
 <!-- End Edit Room -->
 
 
-<!-- Modal List Cia User -->
-<!-- Modal Add user to company -->
-<!-- <div class="modal fade" id="list-users" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          ×
-        </button>
-        <h3 class="modal-title"> <i class="glyphicon glyphicon-edit"></i> Lista de Usuarios</h3>
-      </div>
-      <form name="clientes" id="clientes" method="post" action="#SELF" enctype="multipart/form-data">
-        <div class="modal-body">
-         <div id="list-of-users">
-         Cargando...
-         </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div> -->
-
-<!-- End Modal List Cia User -->
-
-
 <!-- Modal Subir Logo -->
 <div class="modal fade" id="logo-empresa" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
@@ -478,11 +424,6 @@
 </body>
 <script src="assets/js/datatable-config.js"></script>
 <script>
-
-// function validateEmail($email) {
-//   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-//   return emailReg.test( $email );
-// }
 
 // Add
 function addUser () {

@@ -8,8 +8,6 @@
 @media (min-width: 768px) {
   .dataTables_filter {
   width: 30%;
-  /* text-align:justify !important; */
-  /* margin-right: -20px !important; */
   }
   div.dataTables_wrapper div.dataTables_filter input {
     width: 98%;
@@ -17,10 +15,6 @@
   div.dataTables_wrapper div.dataTables_filter label {
   width: 300px !important;
   }
-  /* .modal-xl {
-    width: 70%;
-   max-width:1350px;
-  } */
 }
 </style>
 
@@ -42,29 +36,24 @@
       </div>
       <div class="col-md-5 text-right">
       <a data-toggle="modal" class="btn btn-primary"  role="button" href="#formulario_nuevo" onclick="$('#nombre').focus();">[+] Nuevo Anuncio</a>
-      <!-- <a data-toggle="modal" class="btn btn-info"  role="button" href="#"><i class="clip-upload-3"></i> Exportar</a>
-      <a data-toggle="modal" class="btn btn-success"  role="button" href="#"><i class="clip-download-3"></i> Importar</a> -->
+
     </div>
     </div>
 
 <div class="row">
   <div class="col-sm-12">
     <div class=""><!-- panel panel-default -->
-      <!-- <div class="panel-heading">
-        <h4><i class="clip-calendar"></i> Administrar Eventos</h4>
-      </div> -->
+      
       <div class="panel-body">
         <div class="col-sm-12">
           <div style="height:10px;"></div>
 
         <div class="x_content">
-        <!-- <img src="images/ajax-loader.gif" id="cargando_list" /> -->
-        <!-- <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i> -->
+       
             <div class="table-responsive">
               <table id="list-table-events" class="table table-striped table-bordered table-hover">
               <thead>
               <tr class=""><!-- header-list-table -->
-              <!-- <th style="width:10px"><input type="checkbox" /></th> -->
               <th>Nombre</th>
               <th>Clase</th> 
               <th>Fecha</th>
@@ -80,7 +69,7 @@
               foreach ($sel1['resultado'] as $datos) {
               ?>
               <tr>
-              <!-- <td><input type="checkbox" /></td> -->
+              
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['class']?></td>
               <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['date']?></td>
@@ -228,34 +217,6 @@ var runNavigationToggler = function () {
     });
 };
 runNavigationToggler();
-
-// const listEventsResult = () => {
-//   var id_user     = '<?php echo $_SESSION["id_user"]?>';
-//   var id_empresa  = '<?php echo $_SESSION["id_empresa"]?>';
-//   $('.fa-spinner').show();
-//   var contenido_editor = $('#list-events')[0];
-//   let route = "ajax/ajax_list_events.php?id_user="+id_user+"&id_empresa="+id_empresa+"&nocache=<?php echo rand(99999,66666)?>";
-//   $.ajax({
-//     headers: {
-//       Accept        : "application/json; charset=utf-8",
-//       "Content-Type": "application/json: charset=utf-8"
-//     },
-//     url: route,
-//     type: "GET",
-//     data: "",
-//     dataType        : 'html',
-//     success         : function (response) { 
-//       contenido_editor.innerHTML = response;
-//       $('.fa-spinner').hide();
-//       //loadDataTable()
-//     },
-//     error           : function (error) {
-//       console.log(error);
-//     }
-//   });
-// }
-
-//listEventsResult();
 
 // Delete Event
 function deleteRow ( id ) {

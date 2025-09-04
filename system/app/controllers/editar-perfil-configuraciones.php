@@ -29,7 +29,7 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 		&nbsp;&nbsp;Nombre de usuario: ".$_GET['email']."<br>			
 		&nbsp;&nbsp;Contraseña: ".$_GET['contrasena']."<br><br />
 		Bienvenido a H&HSystem<br />
-		Copia este enlace en tu navegador para entrar: https://hhs.cocabo.org/system/login<br />
+		Copia este enlace en tu navegador para entrar: https://dominio.com/system/login<br />
 		Derechos Reservados ".date('Y')."
 		";
 		$ObjEjec->insertarRegistro(PREFIX.'users', $P_Campos, $P_Valores);
@@ -48,7 +48,6 @@ if ( isset($_GET['add']) && $_GET['add'] == 1 && $_GET['nombre'] != '') {
 
 // Show Edit info
 if ( isset($_GET['showEdit']) && $_GET['id']) {
-	//nombre,email,id_depto,telephone,direcction,activo
 	$data       = $ObjMante->BuscarLoQueSea('id_usuario,nombre,email,id_depto,telephone,direcction,activo',PREFIX.'users','id_usuario="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	$deptos     = $ObjMante->BuscarLoQueSea('*',PREFIX.'mant_departamentos','active = 1 and id_cia = '.$id_cia,'array');
 	echo json_encode($data);

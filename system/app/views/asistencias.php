@@ -93,8 +93,6 @@
               <?php
                 if ($assignment['resultado']) {
                   foreach ($assignment as $key => $datos) {
-                    // $totalStudents = new Attendances();
-                    // $total = $totalStudents->getTotalStudents($assignment_id);
               ?>
                   <tr>
                   <td <?php if($datos['activo']==0) { echo 'class="row-yellow-transp"'; } ?>><?=$datos['name']?></td>
@@ -239,7 +237,6 @@
               }
             ?>
         </select>
-        <!-- <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-class-edit-options" id="select-all-class-edit" /> <label class="select-all-label cursor" for="select-all-class-edit">Todos</label></label> -->
         </td>
       </tr>
 
@@ -255,7 +252,6 @@
               }
             ?>
         </select>
-        <!-- <label class="text-center"> &nbsp; <input type="checkbox" class="select-all-prof-edit-options " id="select-all-prof-edit" /> <label class="select-all-label cursor" for="select-all-prof-edit">Todos</label></label> -->
         </td>
       </tr>
       
@@ -317,7 +313,6 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">  × </button>
                 <h4 class="modal-title" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" id="myModalImporter"><i class="clip-download-3"></i> Importador</h4>
             </div>
@@ -367,20 +362,6 @@ $('.result-mssg').hide();
 $('#mssg-add-eventos').hide();
 $('#mssg-edit-eventos').hide();
 
-// var today = new Date().toISOString().slice(0, 10);
-// document.getElementsByName("event_add_date_ini")[0].min = today;
-
-// // Hacer toggle el: Left Menu
-// var runNavigationToggler = function () {
-//     $('.navigation-toggler').bind('click', function () {
-//         if (!$('body').hasClass('navigation-small')) {
-//             $('body').addClass('navigation-small');
-//         } else {
-//             $('body').removeClass('navigation-small');
-//         };
-//     });
-// };
-// runNavigationToggler();
 
 /** 
  * Select All clases or Perfiles

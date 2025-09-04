@@ -295,12 +295,6 @@ div.dataTables_wrapper div.dataTables_filter label {
 <!-- End Edit Events -->
 
 <!-- Help Side Bar Modal -->
-<!-- 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-</button> 
--->
-
 <!-- Assistant Modal -->
 <div class="modal fade  come-from-modal right" id="myAssistant" tabindex="-1" role="dialog" aria-labelledby="myAssistant">
     <div class="modal-dialog" role="document">

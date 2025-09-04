@@ -6,8 +6,7 @@
 @media (min-width: 768px) {
   .dataTables_filter {
   width: 30%;
-  /* text-align:justify !important; */
-  /* margin-right: -20px !important; */
+
   }
   div.dataTables_wrapper div.dataTables_filter input {
     width: 98%;
@@ -50,9 +49,6 @@
     <div class="row">
       <div class="col-sm-12">
       <div class=""><!-- panel panel-default -->
-          <!-- <div class="panel-heading">
-            <h4><i class="clip-calendar"></i> Administrar Perfiles</h4>
-          </div> -->
           <div class="panel-body">
               <div class="col-sm-12">
               <div style="height:10px;"></div>
@@ -91,7 +87,6 @@
                     ?>
                   </tbody>
                 </table>
-                <!-- <i class="fas fa-spin fa-spinner fa-spinner-tbl-rec" style="position: absolute;"></i> -->
               </div>
               
               </div>

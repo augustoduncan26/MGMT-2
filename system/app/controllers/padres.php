@@ -1,7 +1,6 @@
 <?php
 
 include_once ( dirname(dirname(__DIR__)) . '/framework.php');
-// include_once ( dirname(dirname(__DIR__)) . '/config.php');
 
 $ObjMante   = new Mantenimientos();
 $ObjEjec    = new ejecutorSQL();
@@ -14,7 +13,6 @@ $P_Tabla 	= PREFIX.'parents';
 $mysqli     = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'], $_ENV['DB_NAME']);
 
 // All
-//$sel = $ObjMante->ConsultaTipoJoin('usuarios,perfil,', $P_Id = false, $P_codigo = false, $P_salida = false);
 $sql = mysqli_query($mysqli,'SELECT us.id_usuario, us.activo, us.id_perfil, us.nombre, 
 			us.apellido, us.email, p.name, p.description'
             . ' FROM '.PREFIX.'usuarios us'
@@ -22,11 +20,9 @@ $sql = mysqli_query($mysqli,'SELECT us.id_usuario, us.activo, us.id_perfil, us.n
 			. ' WHERE p.name like "%padres%"')or die(mysqli_error($mysqli));
 $selectTeachers['resultado'] = $sql; $d=mysqli_fetch_array($sql);
 
-//$selectTeachers   	= $ObjMante->BuscarLoQueSea('*',PREFIX.'usuarios','id_perfil = 3 and activo = 1 and id_cia = '.$id_cia,'array');
 $selectClases       = $ObjMante->BuscarLoQueSea('*',PREFIX.'class','activo = 1 and id_cia = '.$id_cia,'array');
 $selectAssignment   = $ObjMante->BuscarLoQueSea('*',PREFIX.'assignment','activo = 1 and id_cia = '.$id_cia,'array');
 $selectPerfiles     = $ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','activo = 1 and id_cia = '.$id_cia,'array');
-//$selectTeachers     = $ObjMante->BuscarLoQueSea('*',PREFIX.'teachers','id_cia = '.$id_cia,'array');
 
 /**
  * Add
@@ -109,7 +105,6 @@ if (isset($_GET['showEdit']) && $_GET['id'] != "") {
 	$selectTeachers['resultado'] = $sql; 
 	$d=mysqli_fetch_array($sql);
 
-	//$data       = $ObjMante->BuscarLoQueSea('*',$P_Tabla,'id="'.$_GET['id'].'" and id_cia = '.$id_cia,'extract');
 	echo json_encode($d);
 }
 

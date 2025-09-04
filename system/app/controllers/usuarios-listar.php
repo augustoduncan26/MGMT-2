@@ -130,14 +130,6 @@ if ( isset($_POST['add']) && $_POST['add'] == 1 && $_POST['user_acceso'] != '') 
 			}
 		}
 
-		// Save Parents Data
-		// if ($_POST['contacto']) {
-		// 	$selPerfile 	=	$ObjMante->BuscarLoQueSea('*',PREFIX.'perfiles','name like "%Padre%" or name like "%emergencia%"','extract');
-		// 	// Save to table parents
-		// 	$P_Valores 		=	"'".$_POST['contacto']."','".$selPerfile['id']."','".$dataUser['id']."',NOW(),NOW()";
-		// 	$ObjEjec->insertarRegistro(PREFIX.'emergency_contact', 'name,id_perfil,id_students,created_at,updated_at', $P_Valores);
-		// }
-
 		echo 'Se ingreso el registro con éxito';
 
 		if ($_POST['enviar_email']) {
@@ -265,8 +257,6 @@ if (isset($_POST['editperm']) && $_POST['editperm']==1) {
 * Delete  
 */ 
 if ( isset($_GET['delete']) && $_GET['delete'] == 1 ) { 
-	// $ObjEjec->ejecutarSQL("Delete from ".$P_Tabla." Where id = '".$_GET['id']."'");
-	// echo '<div class="alert alert-danger">Se elimino el registro con éxito</div>';
 	echo $ObjUsers->delete($_GET);
 }
 

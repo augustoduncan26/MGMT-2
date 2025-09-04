@@ -9,7 +9,6 @@ $id_cia 	= $_SESSION['id_cia'];
 $email 		= $_SESSION['email'];
 $username 	= $_SESSION['username'];
 $P_Tabla    = PREFIX.'class';
-//$lastname 	= $_SESSION['apellido'];
 
 
 // All
