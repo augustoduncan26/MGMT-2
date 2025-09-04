@@ -11,8 +11,6 @@ $QUE		=	isset($_GET['QUE'])				?	$_GET['QUE']:'';				//	Si solo quiero INSERT y 
 $GET_id		=	isset($_GET['idCod'])			?	$_GET['idCod']	:'';
 
 
-//$Obliga		=	isset($_GET['obliga'])?$_GET['obliga']:'';
-
 //Validar que el en campo de texto se introduzca solo lo permitido
 //================================================================
 function validaValor($cadena)
@@ -21,18 +19,6 @@ function validaValor($cadena)
 	if(@eregi('^[a-zA-Z0-9._������!�? -+]{1,40}$', $cadena)){ return TRUE;
 	}else{ return FALSE;}
 }
-
-	//ACTUALIZAR LOS DATOS
-	//================================
-	// include_once('Config/connect_auxiliar.php');
-	// $HOST1		=	isset($HOST1)?$HOST1:'';
-	// $USUARIO1	=	isset($USUARIO1)?$USUARIO1:'';
-	// $CLAVE1		=	isset($CLAVE1)?$CLAVE1:'';
-	// $BD1		=	isset($BD1)?$BD1:'';
-	// @$link		=	mysqli_connect('200.106.151.148','admindb','sume911$$2013db') ;//or die('SIN CONECCION A LA BASE DE DATOS');//admindb // sume911$$
-	//@$link		=	mysql_connect('localhost','root','') ;
-	//@mysqli_select_db($link,'sume911db');
-
 
 		if($P_campo !='' && $P_valorc!='')
 		{
@@ -49,8 +35,6 @@ function validaValor($cadena)
 			}
 		}
 		
-	//}
-// @mysqli_close($link);
 //INGRESAR LOS DATOS
 //PARA INSERTAR DATOS ASINCRONICAMENTE
 //=====================================
